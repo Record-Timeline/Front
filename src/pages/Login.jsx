@@ -9,7 +9,6 @@ export default function Login() {
     <LogoImg src={recodeTimelineLogo} alt="레코드 타임라인" /> 
     <LoginInput placeholder="이메일을 입력하세요"></LoginInput>
     <LoginInput placeholder="비밀번호를 입력하세요"></LoginInput>
-
     </LoginBox>
     </LoginWrap>
   );

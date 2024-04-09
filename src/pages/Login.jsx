@@ -53,10 +53,10 @@ const LoginWrap = styled.div`
   text-align: center;
   height: 100vh;
   font-size: 18px;
-  padding-top: 30px;
 `;
 
 const LoginBox = styled.div`
+  margin-top: 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -1,17 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import recodeTimelineLogo from "../assets/images/recodeTimelineLogo.svg";
 import styled from "styled-components";
 import Button from "../components/common/Button";
 import { Link } from "react-router-dom";
 import KaKaoIcon from "../assets/images/kakaoLoginIcon.svg";
 export default function Login() {
+  const [username, setUsername] = useState(""); // 아이디
+  const [password, setPassword] = useState(""); // 비밀번호
+
+  // 아이디 입력
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
+  };
+  // 비밀번호 입력
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
   return (
     <LoginWrap>
       <LoginBox>
         <LogoImg src={recodeTimelineLogo} alt="레코드 타임라인" />
-        <LoginInput placeholder="아이디를 입력하세요"></LoginInput>
+        <LoginInput
+          placeholder="아이디를 입력하세요"
+          onChange={handleUsernameChange}
+        ></LoginInput>
         <LoginInput placeholder="비밀번호를 입력하세요"></LoginInput>
-        <Button margin="10px 0px 15px 0px">로그인</Button>
+        <Button margin="10px 0px 15px 0px" onChange={handlePasswordChange}>
+          로그인
+        </Button>
         <ButtonWrap>
           <FindButton borderRight="1px solid black" to="/find">
             아이디 찾기

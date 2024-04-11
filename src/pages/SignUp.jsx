@@ -12,7 +12,9 @@ import {
 } from "@mui/material/";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Button from "../components/common/Button";
+
 export default function SignUp() {
+  const [passwordError, setPasswordError] = useState(false); // 에러 상태
   //폰트 설정
   const theme = createTheme({
     typography: {
@@ -28,7 +30,6 @@ export default function SignUp() {
       },
       "& .MuiOutlinedInput-root": {
         "&.Mui-focused fieldset": {
-          borderColor: "#829FD7",
           color: "#829FD7",
         },
       },
@@ -36,8 +37,17 @@ export default function SignUp() {
         // 에러 상태일 때
         borderColor: "#f44336",
       },
+      position: "relative",
     },
   })(TextField);
+
+  // 비밀번호 입력 시 유효성 검사
+  const handlePasswordChange = useCallback((e) => {
+    const password = e.target.value;
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d).{8,}$/;
+    const isValidPassword = passwordRegex.test(password);
+    setPasswordError(!isValidPassword);
+  }, []);
 
   return (
     <SignUpWrap>
@@ -49,32 +59,40 @@ export default function SignUp() {
           <StageWrap>
             <NumCircle marginLeft="20px">1</NumCircle>
             <NumLine />
-            <NumCircle>2</NumCircle> <NumLine />
-            <NumCircle>3</NumCircle> <NumLine />
-            <NumCircle marginRight="20px">4</NumCircle>
+            <NumCircle marginRight="20px">2</NumCircle>
           </StageWrap>
-          <NumText>아이디/비밀번호 입력</NumText>
+          <NumText>이메일/비밀번호 입력</NumText>
         </NumBox>
         <ThemeProvider theme={theme}>
-          <Container component="main" maxWidth="xs">
+          <Container
+            component="main"
+            sx={{
+              margin: "0px 16px 0px 0px",
+              maxWidth: "560px",
+              width: "560px",
+            }}
+          >
             <CssBaseline />
-            <Box
+            <FormControl
+              component="fieldset"
+              variant="standard"
               sx={{
                 marginTop: 8,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
               }}
             >
-              <FormControl
-                component="fieldset"
-                variant="standard"
-                sx={{
-                  marginTop: 8,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
+              <Grid container spacing={2}>
+                <EmailBox>
+                  <Grid
+                    item
+                    xs={12}
+                    sm={9}
+                    sx={{
+                      padding: "16px 0px 0px 13px",
+                    }}
+                  >
                     <StyledTextField
                       required
                       autoFocus
@@ -82,50 +100,62 @@ export default function SignUp() {
                       type="email"
                       id="email"
                       name="email"
-                      label="아이디"
+                      label="이메일"
                       InputProps={{
                         style: {
                           borderRadius: "15px",
+                          width: "380px",
                         },
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12}>
-                    <StyledTextField
-                      required
-                      fullWidth
-                      type="password"
-                      id="password"
-                      name="password"
-                      label="비밀번호 (숫자+영문 8자리 이상)"
-                      InputProps={{
-                        style: {
-                          borderRadius: "15px",
-                        },
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <StyledTextField
-                      required
-                      fullWidth
-                      type="password"
-                      id="rePassword"
-                      name="rePassword"
-                      label="비밀번호 재입력"
-                      InputProps={{
-                        style: {
-                          borderRadius: "15px",
-                        },
-                      }}
-                    />
-                  </Grid>
+                  <ConfirmButton>중복확인</ConfirmButton>
+                  <SendButton>인증번호 발송</SendButton>
+                </EmailBox>
+                <Grid item xs={12}>
+                  <StyledTextField
+                    required
+                    fullWidth
+                    type="password"
+                    id="password"
+                    name="password"
+                    label="비밀번호 (숫자+영문 8자리 이상)"
+                    InputProps={{
+                      style: {
+                        borderRadius: "15px",
+                        width: "510px",
+                      },
+                    }}
+                    onChange={handlePasswordChange}
+                    error={passwordError}
+                    helperText={
+                      passwordError
+                        ? "숫자와 영문자를 포함한 8자리 이상의 비밀번호를 입력하세요."
+                        : ""
+                    }
+                  />
                 </Grid>
-                <Button width="396px" height="50px" margin="30px 0px 0px 0px">
-                  다음
-                </Button>
-              </FormControl>
-            </Box>
+                <Grid item xs={12}>
+                  <StyledTextField
+                    required
+                    fullWidth
+                    type="password"
+                    id="rePassword"
+                    name="rePassword"
+                    label="비밀번호 재입력"
+                    InputProps={{
+                      style: {
+                        borderRadius: "15px",
+                        width: "510px",
+                      },
+                    }}
+                  />
+                </Grid>
+              </Grid>
+              <Button width="170px" height="50px" margin="40px 0px 0px 0px">
+                다음
+              </Button>
+            </FormControl>
           </Container>
         </ThemeProvider>
       </SignUpBox>
@@ -184,7 +214,7 @@ const NumCircle = styled.div`
   margin-right: ${(props) => props.marginRight};
 `;
 const NumBox = styled.div`
-  width: 560px;
+  width: 260px;
 `;
 
 const NumLine = styled.div`
@@ -196,4 +226,43 @@ const NumLine = styled.div`
 const NumText = styled.div`
   font-size: 14px;
   margin-right: auto;
+`;
+
+const ConfirmButton = styled.div`
+  width: 80px;
+  height: 35px;
+  background-color: #d9d9d9;
+  border-radius: 15px;
+  color: #3d3d3d;
+  font-size: 15px;
+  text-align: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 145px;
+`;
+
+const SendButton = styled.div`
+  background-color: #829fd7;
+  color: white;
+  font-size: 15px;
+  text-align: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  width: 120px;
+  height: 50px;
+  border-radius: 15px;
+  margin-left: 8px;
+  margin-top: 12px;
+`;
+
+const EmailBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

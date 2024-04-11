@@ -53,6 +53,7 @@ const LoginWrap = styled.div`
   text-align: center;
   height: 100vh;
   font-size: 18px;
+  color: #272727;
 `;
 
 const LoginBox = styled.div`
@@ -88,7 +89,7 @@ const ButtonWrap = styled.div`
 
 const FindButton = styled(Link)`
   text-decoration: none;
-  color: black;
+  color: #272727;
   cursor: pointer;
   border-right: ${(props) => props.borderRight};
   padding: 0px 20px;
@@ -102,7 +103,7 @@ const Signup = styled(Link)`
   font-weight: 800;
   cursor: pointer;
   text-decoration: none;
-  color: black;
+  color: #272727;
   margin-left: 12px;
 `;
 

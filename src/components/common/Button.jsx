@@ -11,7 +11,6 @@ const StyledButton = styled(Link)`
   margin: ${(props) => props.margin};
   background-color: ${(props) => props.backgroundColor || "#829FD7"};
   color: ${(props) => props.textColor || "white"};
-  color: white;
   font-size: 18px;
   font-weight: 500;
   border-radius: 20px;

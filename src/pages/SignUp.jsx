@@ -30,11 +30,15 @@ export default function SignUp() {
   const getCircleColor = (step) => {
     return currentStep === step ? "#829FD7" : "#ECECEE";
   };
+  const numLineStyle = {
+    borderBottom: `4px solid ${getCircleColor(1)}`,
+  };
   // 다음 버튼 클릭
   const handleNextStep = () => {
     setCurrentStep(currentStep + 1);
   };
-
+  // 가입하기 버튼 클릭
+  const handleSignup = () => {};
   //폰트 설정
   const theme = createTheme({
     typography: {
@@ -83,7 +87,7 @@ export default function SignUp() {
             >
               1
             </NumCircle>
-            <NumLine />
+            <NumLine style={numLineStyle} />
             <NumCircle
               marginRight="20px"
               style={{ backgroundColor: getCircleColor(2) }}
@@ -91,8 +95,10 @@ export default function SignUp() {
               2
             </NumCircle>
           </StageWrap>
-
-          <NumText>이메일/비밀번호 입력</NumText>
+          {currentStep === 1 && <NumText>이메일/비밀번호 입력</NumText>}
+          {currentStep === 2 && (
+            <NumText marginLeft="165px">관심분야 설정</NumText>
+          )}
         </NumBox>
         {currentStep === 1 && (
           <>
@@ -234,6 +240,71 @@ export default function SignUp() {
             </ThemeProvider>
           </>
         )}
+        {currentStep === 2 && (
+          <>
+            <ThemeProvider theme={theme}>
+              <Container
+                component="main"
+                sx={{
+                  margin: "0px 16px 0px 0px",
+                  maxWidth: "560px",
+                  width: "560px",
+                }}
+              >
+                <CssBaseline />
+                <FormControl
+                  component="fieldset"
+                  variant="standard"
+                  sx={{
+                    marginTop: 8,
+                    marginLeft: 4,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <Grid container spacing={2}>
+                    <EmailBox>
+                      <Grid
+                        item
+                        xs={12}
+                        sm={9}
+                        sx={{
+                          padding: "16px 0px 0px 13px",
+                        }}
+                      >
+                        <StyledTextField
+                          required
+                          autoFocus
+                          fullWidth
+                          type="nickname"
+                          id="nickname"
+                          name="nickname"
+                          label="닉네임"
+                          InputProps={{
+                            style: {
+                              borderRadius: "15px",
+                              width: "380px",
+                            },
+                          }}
+                        />
+                      </Grid>
+                      <ConfirmButton right="70px">중복확인</ConfirmButton>
+                    </EmailBox>
+                  </Grid>
+                  <Button
+                    width="170px"
+                    height="50px"
+                    margin="40px 0px 0px 0px"
+                    onClick={handleSignup}
+                  >
+                    가입하기
+                  </Button>
+                </FormControl>
+              </Container>
+            </ThemeProvider>
+          </>
+        )}
       </SignUpBox>
     </SignUpWrap>
   );
@@ -294,7 +365,6 @@ const NumBox = styled.div`
 `;
 
 const NumLine = styled.div`
-  border-bottom: 4px solid #829fd7;
   width: 80px;
   height: 39px;
   position: relative;
@@ -302,6 +372,7 @@ const NumLine = styled.div`
 const NumText = styled.div`
   font-size: 14px;
   margin-right: auto;
+  margin-left: ${(props) => props.marginLeft};
 `;
 
 const ConfirmButton = styled.div`
@@ -318,7 +389,7 @@ const ConfirmButton = styled.div`
   cursor: pointer;
   position: absolute;
   top: 10px;
-  right: 145px;
+  right: ${(props) => props.right || "145px"};
 `;
 
 const SendButton = styled.div`

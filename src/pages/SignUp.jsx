@@ -1,27 +1,20 @@
 import React, { useState, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Logo from "../assets/images/recodeTimelineLogo.svg";
 import { withStyles } from "@material-ui/core/styles";
-import {
-  CssBaseline,
-  TextField,
-  FormControl,
-  Grid,
-  Container,
-} from "@mui/material/";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Button from "../components/common/Button";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
+import { TextField } from "@mui/material/";
+import { createTheme } from "@mui/material/styles";
 import EmailStep from "../components/signUp/EmailStep";
 import FieldStep from "../components/signUp/FieldStep";
+
 export default function SignUp() {
   const [passwordError, setPasswordError] = useState(false); // 비밀번호 유효성 에러 상태
   const [showVerificationInput, setShowVerificationInput] = useState(false); // 인증번호 창 뜨기/안뜨기 상태
   const [confirmVerificationCode, setConfirmVerificationCode] = useState(false); // 인증번호 확인 완료 상태
   const [currentStep, setCurrentStep] = useState(1); // 현재 회원가입 단계 상태
   const [field, setField] = useState("");
+  const navigate = useNavigate();
 
   // 인증번호 발송 버튼
   const handleSendButtonClick = () => {
@@ -46,9 +39,10 @@ export default function SignUp() {
   const handleNextStep = () => {
     setCurrentStep(currentStep + 1);
   };
-
   // 가입하기 버튼 클릭
-  const handleSignup = () => {};
+  const handleSignup = () => {
+    navigate("/signup/complete");
+  };
 
   //폰트 설정
   const theme = createTheme({
@@ -57,7 +51,7 @@ export default function SignUp() {
     },
   });
 
-  //분야
+  // 분야
   const handleFieldChange = (event: SelectChangeEvent) => {
     setField(event.target.value);
   };
@@ -104,10 +98,7 @@ export default function SignUp() {
               1
             </NumCircle>
             <NumLine style={numLineStyle} />
-            <NumCircle
-              marginRight="20px"
-              style={{ backgroundColor: getCircleColor(2) }}
-            >
+            <NumCircle style={{ backgroundColor: getCircleColor(2) }}>
               2
             </NumCircle>
           </StageWrap>
@@ -127,7 +118,13 @@ export default function SignUp() {
             handleNextStep={handleNextStep}
           />
         )}
-        {currentStep === 2 && <FieldStep />}
+        {currentStep === 2 && (
+          <FieldStep
+            handleSignup={handleSignup}
+            handleFieldChange={handleFieldChange}
+            field={field}
+          />
+        )}
       </SignUpBox>
     </SignUpWrap>
   );

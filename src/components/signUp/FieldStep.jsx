@@ -16,7 +16,7 @@ import InputLabel from "@mui/material/InputLabel";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 
-const InterestStep = ({ handleFieldChange, field, handleSignup }) => {
+const FieldStep = ({ handleFieldChange, handleSignup, field }) => {
   //폰트 설정
   const theme = createTheme({
     typography: {
@@ -140,8 +140,8 @@ const InterestStep = ({ handleFieldChange, field, handleSignup }) => {
                 <Select
                   labelId="field"
                   id="field"
-                  value={field}
                   label="field"
+                  value={field}
                   onChange={handleFieldChange}
                   sx={{
                     borderRadius: "15px",
@@ -173,7 +173,7 @@ const InterestStep = ({ handleFieldChange, field, handleSignup }) => {
   );
 };
 
-export default InterestStep;
+export default FieldStep;
 
 const EmailBox = styled.div`
   display: flex;

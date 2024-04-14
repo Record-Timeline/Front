@@ -42,6 +42,31 @@ const InterestStep = ({ handleFieldChange, field, handleSignup }) => {
     },
   })(TextField);
 
+  // 관심 분야 목록
+  const categories = [
+    "기획/전략",
+    "마케팅/홍보/조사",
+    "회계/세무/재무",
+    "인사/노무/HRD",
+    "총무/법무/사무",
+    "IT/개발/데이터",
+    "디자인",
+    "영업/판매/무역",
+    "고객/상담/TM",
+    "구매/자재/물류",
+    "상품/기획/MD",
+    "운전/운송/배송",
+    "서비스",
+    "생산",
+    "건설/건축",
+    "의료",
+    "연구/R&D",
+    "교육",
+    "미디어/문화/스포츠",
+    "금융/보험",
+    "공공/복지",
+  ];
+
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -125,27 +150,11 @@ const InterestStep = ({ handleFieldChange, field, handleSignup }) => {
                   <MenuItem value="">
                     <em>관심분야/직종 선택</em>
                   </MenuItem>
-                  <MenuItem value={1}>기획/전략</MenuItem>
-                  <MenuItem value={2}>마케팅/홍보/조사</MenuItem>
-                  <MenuItem value={3}>회계/세무/재무</MenuItem>
-                  <MenuItem value={4}>인사/노무/HRD</MenuItem>
-                  <MenuItem value={5}>총무/법무/사무</MenuItem>
-                  <MenuItem value={6}>IT/개발/데이터</MenuItem>
-                  <MenuItem value={7}>디자인</MenuItem>
-                  <MenuItem value={8}>영업/판매/무역</MenuItem>
-                  <MenuItem value={9}>고객/상담/TM</MenuItem>
-                  <MenuItem value={10}>구매/자재/물류</MenuItem>
-                  <MenuItem value={11}>상품/기획/MD</MenuItem>
-                  <MenuItem value={12}>운전/운송/배송</MenuItem>
-                  <MenuItem value={13}>서비스</MenuItem>
-                  <MenuItem value={14}>생산</MenuItem>
-                  <MenuItem value={15}>건설/건축</MenuItem>
-                  <MenuItem value={16}>의료</MenuItem>
-                  <MenuItem value={17}>연구/R&D</MenuItem>
-                  <MenuItem value={18}>교육</MenuItem>
-                  <MenuItem value={19}>미디어/문화/스포츠</MenuItem>
-                  <MenuItem value={20}>금융/보험</MenuItem>
-                  <MenuItem value={21}>공공/복지</MenuItem>
+                  {[...Array(21)].map((_, index) => (
+                    <MenuItem key={index} value={index + 1}>
+                      {categories[index]}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </>

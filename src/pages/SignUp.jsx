@@ -1,21 +1,11 @@
-import React, { useState, useCallback } from "react";
+import React, {useCallback, useState} from "react";
 import styled from "styled-components";
 import Logo from "../assets/images/recodeTimelineLogo.svg";
-import { styled as withStyles } from "@mui/material/styles";
-import {
-  CssBaseline,
-  TextField,
-  FormControl,
-  Grid,
-  Container,
-} from "@mui/material/";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Button from "../components/common/Button";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
+import {createTheme, styled as withStyles} from "@mui/material/styles";
+import {TextField,} from "@mui/material/";
 import EmailStep from "../components/signUp/EmailStep";
 import FieldStep from "../components/signUp/FieldStep";
+
 export default function SignUp() {
   const [passwordError, setPasswordError] = useState(false); // 비밀번호 유효성 에러 상태
   const [showVerificationInput, setShowVerificationInput] = useState(false); // 인증번호 창 뜨기/안뜨기 상태
@@ -63,23 +53,21 @@ export default function SignUp() {
   };
 
   // text field 색 바꾸기
-  const StyledTextField = withStyles({
-    root: {
-      "& .MuiInput-underline:after": {
-        borderBottomColor: "#829FD7",
-      },
-      "& .MuiOutlinedInput-root": {
-        "&.Mui-focused fieldset": {
-          color: "#829FD7",
-        },
-      },
-      "&.Mui-error .MuiOutlinedInput-root": {
-        // 에러 상태일 때
-        borderColor: "#f44336",
-      },
-      position: "relative",
+  const StyledTextField = withStyles(TextField)({
+    "& .MuiInput-underline:after": {
+      borderBottomColor: "#829FD7",
     },
-  })(TextField);
+    "& .MuiOutlinedInput-root": {
+      "&.Mui-focused fieldset": {
+        color: "#829FD7",
+      },
+    },
+    "&.Mui-error .MuiOutlinedInput-root": {
+      // 에러 상태일 때
+      borderColor: "#f44336",
+    },
+    position: "relative",
+  });
 
   // 비밀번호 입력 시 유효성 검사
   const handlePasswordChange = useCallback((e) => {

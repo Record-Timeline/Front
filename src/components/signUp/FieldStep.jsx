@@ -1,19 +1,11 @@
 import React from "react";
-import { useState } from "react";
-import {
-  Container,
-  CssBaseline,
-  FormControl,
-  Grid,
-  TextField,
-} from "@mui/material";
+import {Container, CssBaseline, FormControl, Grid, TextField,} from "@mui/material";
 
 import styled from "styled-components";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+import {createTheme, styled as withStyles, ThemeProvider} from "@mui/material/styles";
 import Button from "../common/Button";
-import { styled as withStyles } from "@mui/material/styles";
 import InputLabel from "@mui/material/InputLabel";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 
 const InterestStep = ({ handleFieldChange, field, handleSignup }) => {
@@ -24,23 +16,21 @@ const InterestStep = ({ handleFieldChange, field, handleSignup }) => {
     },
   });
   // text field 색 바꾸기
-  const StyledTextField = withStyles({
-    root: {
-      "& .MuiInput-underline:after": {
-        borderBottomColor: "#829FD7",
-      },
-      "& .MuiOutlinedInput-root": {
-        "&.Mui-focused fieldset": {
-          color: "#829FD7",
-        },
-      },
-      "&.Mui-error .MuiOutlinedInput-root": {
-        // 에러 상태일 때
-        borderColor: "#f44336",
-      },
-      position: "relative",
+  const StyledTextField = withStyles(TextField)({
+    "& .MuiInput-underline:after": {
+      borderBottomColor: "#829FD7",
     },
-  })(TextField);
+    "& .MuiOutlinedInput-root": {
+      "&.Mui-focused fieldset": {
+        color: "#829FD7",
+      },
+    },
+    "&.Mui-error .MuiOutlinedInput-root": {
+      // 에러 상태일 때
+      borderColor: "#f44336",
+    },
+    position: "relative",
+  });
 
   // 관심 분야 목록
   const categories = [

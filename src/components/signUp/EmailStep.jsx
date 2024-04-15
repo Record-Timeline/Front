@@ -1,16 +1,9 @@
 import React from "react";
-import { useState, useCallback } from "react";
-import { styled as withStyles } from "@mui/material/styles";
-import {
-  CssBaseline,
-  FormControl,
-  Grid,
-  Container,
-  TextField,
-} from "@mui/material/";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+import {createTheme, styled as withStyles, ThemeProvider} from "@mui/material/styles";
+import {Container, CssBaseline, FormControl, Grid, TextField,} from "@mui/material/";
 import Button from "../common/Button";
 import styled from "styled-components";
+
 const EmailAndPasswordStep = ({
   handleSendButtonClick,
   handlePasswordChange,
@@ -28,23 +21,22 @@ const EmailAndPasswordStep = ({
   });
 
   // text field 색 바꾸기
-  const StyledTextField = withStyles({
-    root: {
-      "& .MuiInput-underline:after": {
-        borderBottomColor: "#829FD7",
-      },
-      "& .MuiOutlinedInput-root": {
-        "&.Mui-focused fieldset": {
-          color: "#829FD7",
-        },
-      },
-      "&.Mui-error .MuiOutlinedInput-root": {
-        // 에러 상태일 때
-        borderColor: "#f44336",
-      },
-      position: "relative",
+  const StyledTextField = withStyles(TextField)({
+    "& .MuiInput-underline:after": {
+      borderBottomColor: "#829FD7",
     },
-  })(TextField);
+    "& .MuiOutlinedInput-root": {
+      "&.Mui-focused fieldset": {
+        color: "#829FD7",
+      },
+    },
+    "&.Mui-error .MuiOutlinedInput-root": {
+      // 에러 상태일 때
+      borderColor: "#f44336",
+    },
+    position: "relative",
+  });
+
   return (
     <ThemeProvider theme={theme}>
       <Container

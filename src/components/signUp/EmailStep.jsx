@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useCallback } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import { styled as withStyles } from "@mui/material/styles";
 import {
   CssBaseline,
   FormControl,

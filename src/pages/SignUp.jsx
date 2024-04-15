@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import Logo from "../assets/images/recodeTimelineLogo.svg";
-import { withStyles } from "@material-ui/core/styles";
+import { styled as withStyles } from "@mui/material/styles";
 import {
   CssBaseline,
   TextField,
@@ -58,7 +58,7 @@ export default function SignUp() {
   });
 
   //분야
-  const handleFieldChange = (event: SelectChangeEvent) => {
+  const handleFieldChange = (event) => {
     setField(event.target.value);
   };
 

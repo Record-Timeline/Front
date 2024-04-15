@@ -11,7 +11,7 @@ import {
 import styled from "styled-components";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Button from "../common/Button";
-import { withStyles } from "@material-ui/core/styles";
+import { styled as withStyles } from "@mui/material/styles";
 import InputLabel from "@mui/material/InputLabel";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";

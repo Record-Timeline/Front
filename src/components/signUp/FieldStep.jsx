@@ -1,5 +1,5 @@
+/** @jsxImportSource @emotion/react */
 import React from "react";
-import { useState } from "react";
 import {
   Container,
   CssBaseline,
@@ -7,14 +7,17 @@ import {
   Grid,
   TextField,
 } from "@mui/material";
-
 import styled from "styled-components";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+import {
+  createTheme,
+  styled as withStyles,
+  ThemeProvider,
+} from "@mui/material/styles";
 import Button from "../common/Button";
-import { withStyles } from "@material-ui/core/styles";
 import InputLabel from "@mui/material/InputLabel";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import { css } from "@emotion/react";
 
 const FieldStep = ({ handleFieldChange, handleSignup, field }) => {
   //폰트 설정
@@ -24,23 +27,21 @@ const FieldStep = ({ handleFieldChange, handleSignup, field }) => {
     },
   });
   // text field 색 바꾸기
-  const StyledTextField = withStyles({
-    root: {
-      "& .MuiInput-underline:after": {
-        borderBottomColor: "#829FD7",
-      },
-      "& .MuiOutlinedInput-root": {
-        "&.Mui-focused fieldset": {
-          color: "#829FD7",
-        },
-      },
-      "&.Mui-error .MuiOutlinedInput-root": {
-        // 에러 상태일 때
-        borderColor: "#f44336",
-      },
-      position: "relative",
+  const StyledTextField = withStyles(TextField)({
+    "& .MuiInput-underline:after": {
+      borderBottomColor: "#829FD7",
     },
-  })(TextField);
+    "& .MuiOutlinedInput-root": {
+      "&.Mui-focused fieldset": {
+        color: "#829FD7",
+      },
+    },
+    "&.Mui-error .MuiOutlinedInput-root": {
+      // 에러 상태일 때
+      borderColor: "#f44336",
+    },
+    position: "relative",
+  });
 
   // 관심 분야 목록
   const categories = [
@@ -91,7 +92,13 @@ const FieldStep = ({ handleFieldChange, handleSignup, field }) => {
             }}
           >
             <Grid container spacing={2}>
-              <EmailBox>
+              <div
+                css={css({
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                })}
+              >
                 <Grid
                   item
                   xs={12}
@@ -116,8 +123,27 @@ const FieldStep = ({ handleFieldChange, handleSignup, field }) => {
                     }}
                   />
                 </Grid>
-                <ConfirmButton right="64px">중복확인</ConfirmButton>
-              </EmailBox>
+                <div
+                  css={css({
+                    right: "64px",
+                    width: "80px",
+                    height: "35px",
+                    backgroundColor: "#d9d9d9",
+                    borderRadius: "15px",
+                    color: "#3d3d3d",
+                    fontSize: "15px",
+                    textAlign: "center",
+                    alignItems: "center",
+                    display: "flex",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                    position: "absolute",
+                    top: "10px",
+                  })}
+                >
+                  중복확인
+                </div>
+              </div>
             </Grid>
             <>
               <FormControl
@@ -175,24 +201,6 @@ const FieldStep = ({ handleFieldChange, handleSignup, field }) => {
 
 export default FieldStep;
 
-const EmailBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
 const ConfirmButton = styled.div`
-  width: 80px;
-  height: 35px;
-  background-color: #d9d9d9;
-  border-radius: 15px;
-  color: #3d3d3d;
-  font-size: 15px;
-  text-align: center;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  cursor: pointer;
-  position: absolute;
-  top: 10px;
   right: ${(props) => props.right || "145px"};
 `;

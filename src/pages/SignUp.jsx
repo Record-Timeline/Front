@@ -1,13 +1,12 @@
-import React, { useState, useCallback } from "react";
+/** @jsxImportSource @emotion/react */
+import React, { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import Logo from "../assets/images/recodeTimelineLogo.svg";
-import { withStyles } from "@material-ui/core/styles";
+import { createTheme, styled as withStyles } from "@mui/material/styles";
 import { TextField } from "@mui/material/";
-import { createTheme } from "@mui/material/styles";
 import EmailStep from "../components/signUp/EmailStep";
 import FieldStep from "../components/signUp/FieldStep";
-
+import { css } from "@emotion/react";
 export default function SignUp() {
   const [passwordError, setPasswordError] = useState(false); // 비밀번호 유효성 에러 상태
   const [showVerificationInput, setShowVerificationInput] = useState(false); // 인증번호 창 뜨기/안뜨기 상태
@@ -41,7 +40,7 @@ export default function SignUp() {
   };
   // 가입하기 버튼 클릭
   const handleSignup = () => {
-    navigate("/signup/complete");
+    navigate("/signupcomplete");
   };
 
   //폰트 설정
@@ -52,28 +51,26 @@ export default function SignUp() {
   });
 
   // 분야
-  const handleFieldChange = (event: SelectChangeEvent) => {
+  const handleFieldChange = (event) => {
     setField(event.target.value);
   };
 
   // text field 색 바꾸기
-  const StyledTextField = withStyles({
-    root: {
-      "& .MuiInput-underline:after": {
-        borderBottomColor: "#829FD7",
-      },
-      "& .MuiOutlinedInput-root": {
-        "&.Mui-focused fieldset": {
-          color: "#829FD7",
-        },
-      },
-      "&.Mui-error .MuiOutlinedInput-root": {
-        // 에러 상태일 때
-        borderColor: "#f44336",
-      },
-      position: "relative",
+  const StyledTextField = withStyles(TextField)({
+    "& .MuiInput-underline:after": {
+      borderBottomColor: "#829FD7",
     },
-  })(TextField);
+    "& .MuiOutlinedInput-root": {
+      "&.Mui-focused fieldset": {
+        color: "#829FD7",
+      },
+    },
+    "&.Mui-error .MuiOutlinedInput-root": {
+      // 에러 상태일 때
+      borderColor: "#f44336",
+    },
+    position: "relative",
+  });
 
   // 비밀번호 입력 시 유효성 검사
   const handlePasswordChange = useCallback((e) => {
@@ -84,29 +81,127 @@ export default function SignUp() {
   }, []);
 
   return (
-    <SignUpWrap>
-      <StyledLogo src={Logo} alt="레코드 타임라인" />
-      <SignUpBox>
-        <MainText>회원가입</MainText>
-        <SubText>레코드 타임라인의 회원이 되어 함께 성장해요!</SubText>
-        <NumBox>
-          <StageWrap>
-            <NumCircle
-              marginLeft="20px"
+    <div
+      css={css({
+        height: "100vh",
+        fontSize: "18px",
+        color: "#272727",
+      })}
+    >
+      <img
+        css={css({
+          width: "200px",
+          margin: "30px 0px 0px 35px",
+        })}
+        src={Logo}
+        alt="레코드 타임라인"
+      />
+      <div
+        css={css({
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+          height: "80%",
+        })}
+      >
+        <div
+          css={css({
+            fontWeight: "700",
+            fontSize: "40px",
+          })}
+        >
+          회원가입
+        </div>
+        <div
+          css={css({
+            fontSize: "22px",
+            marginTop: "5px",
+          })}
+        >
+          레코드 타임라인의 회원이 되어 함께 성장해요!
+        </div>
+        <div
+          css={css({
+            width: "260px",
+          })}
+        >
+          <div
+            css={css({
+              display: "flex",
+              marginTop: "35px",
+            })}
+          >
+            <div
+              css={css({
+                backgroundColor: "#829fd7",
+                color: "white",
+                fontSize: "25px",
+                fontWeight: "600",
+                width: "70px",
+                height: "70px",
+                borderRadius: "50%",
+                textAlign: "center",
+                alignItems: "center",
+                display: "flex",
+                justifyContent: "center",
+                marginBottom: "10px",
+                marginLeft: "20px",
+              })}
               style={{ backgroundColor: getCircleColor(1) }}
             >
               1
-            </NumCircle>
-            <NumLine style={numLineStyle} />
-            <NumCircle style={{ backgroundColor: getCircleColor(2) }}>
+            </div>
+            <div
+              css={css({
+                width: "80px",
+                height: "39px",
+                position: "relative",
+              })}
+              style={numLineStyle}
+            />
+            <div
+              css={css({
+                backgroundColor: "#829fd7",
+                color: "white",
+                fontSize: "25px",
+                fontWeight: "600",
+                width: "70px",
+                height: "70px",
+                borderRadius: "50%",
+                textAlign: "center",
+                alignItems: "center",
+                display: "flex",
+                justifyContent: "center",
+                marginBottom: "10px",
+              })}
+              style={{ backgroundColor: getCircleColor(2) }}
+            >
               2
-            </NumCircle>
-          </StageWrap>
-          {currentStep === 1 && <NumText>이메일/비밀번호 입력</NumText>}
-          {currentStep === 2 && (
-            <NumText marginLeft="165px">관심분야 설정</NumText>
+            </div>
+          </div>
+          {currentStep === 1 && (
+            <div
+              css={css({
+                fontSize: "14px",
+                marginRight: "auto",
+              })}
+            >
+              이메일/비밀번호 입력
+            </div>
           )}
-        </NumBox>
+          {currentStep === 2 && (
+            <div
+              css={css({
+                marginLeft: "165px",
+                fontSize: "14px",
+                marginRight: "auto",
+              })}
+            >
+              관심분야 설정
+            </div>
+          )}
+        </div>
         {currentStep === 1 && (
           <EmailStep
             handleSendButtonClick={handleSendButtonClick}
@@ -125,95 +220,7 @@ export default function SignUp() {
             field={field}
           />
         )}
-      </SignUpBox>
-    </SignUpWrap>
+      </div>
+    </div>
   );
 }
-const SignUpWrap = styled.div`
-  height: 100vh;
-  font-size: 18px;
-  color: #272727;
-`;
-
-const StyledLogo = styled.img`
-  width: 200px;
-  margin: 30px 0px 0px 35px;
-`;
-
-const SignUpBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  height: 80%;
-`;
-const MainText = styled.div`
-  font-weight: 700;
-  font-size: 40px;
-`;
-
-const SubText = styled.div`
-  font-size: 22px;
-  margin-top: 5px;
-  font-weight: ${(props) => props.fontWeight};
-`;
-
-const StageWrap = styled.div`
-  display: flex;
-  margin-top: 35px;
-`;
-
-const NumCircle = styled.div`
-  background-color: #829fd7;
-  color: white;
-  font-size: 25px;
-  font-weight: 600;
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  text-align: center;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 10px;
-
-  margin-left: ${(props) => props.marginLeft};
-  margin-right: ${(props) => props.marginRight};
-`;
-const NumBox = styled.div`
-  width: 260px;
-`;
-
-const NumLine = styled.div`
-  width: 80px;
-  height: 39px;
-  position: relative;
-`;
-const NumText = styled.div`
-  font-size: 14px;
-  margin-right: auto;
-  margin-left: ${(props) => props.marginLeft};
-`;
-
-const ConfirmButton = styled.div`
-  width: 80px;
-  height: 35px;
-  background-color: #d9d9d9;
-  border-radius: 15px;
-  color: #3d3d3d;
-  font-size: 15px;
-  text-align: center;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  cursor: pointer;
-  position: absolute;
-  top: 10px;
-  right: ${(props) => props.right || "145px"};
-`;
-
-const EmailBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;

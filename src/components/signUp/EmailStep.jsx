@@ -1,16 +1,21 @@
+/** @jsxImportSource @emotion/react */
 import React from "react";
-import { useState, useCallback } from "react";
-import { withStyles } from "@material-ui/core/styles";
 import {
+  createTheme,
+  styled as withStyles,
+  ThemeProvider,
+} from "@mui/material/styles";
+import {
+  Container,
   CssBaseline,
   FormControl,
   Grid,
-  Container,
   TextField,
 } from "@mui/material/";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Button from "../common/Button";
 import styled from "styled-components";
+import { css } from "@emotion/react";
+
 const EmailAndPasswordStep = ({
   handleSendButtonClick,
   handlePasswordChange,
@@ -28,23 +33,22 @@ const EmailAndPasswordStep = ({
   });
 
   // text field 색 바꾸기
-  const StyledTextField = withStyles({
-    root: {
-      "& .MuiInput-underline:after": {
-        borderBottomColor: "#829FD7",
-      },
-      "& .MuiOutlinedInput-root": {
-        "&.Mui-focused fieldset": {
-          color: "#829FD7",
-        },
-      },
-      "&.Mui-error .MuiOutlinedInput-root": {
-        // 에러 상태일 때
-        borderColor: "#f44336",
-      },
-      position: "relative",
+  const StyledTextField = withStyles(TextField)({
+    "& .MuiInput-underline:after": {
+      borderBottomColor: "#829FD7",
     },
-  })(TextField);
+    "& .MuiOutlinedInput-root": {
+      "&.Mui-focused fieldset": {
+        color: "#829FD7",
+      },
+    },
+    "&.Mui-error .MuiOutlinedInput-root": {
+      // 에러 상태일 때
+      borderColor: "#f44336",
+    },
+    position: "relative",
+  });
+
   return (
     <ThemeProvider theme={theme}>
       <Container
@@ -67,7 +71,13 @@ const EmailAndPasswordStep = ({
           }}
         >
           <Grid container spacing={2}>
-            <EmailBox>
+            <div
+              css={css({
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              })}
+            >
               <Grid
                 item
                 xs={12}
@@ -92,13 +102,55 @@ const EmailAndPasswordStep = ({
                   }}
                 />
               </Grid>
-              <ConfirmButton>중복확인</ConfirmButton>
-              <SendButton onClick={handleSendButtonClick}>
+              <div
+                css={css({
+                  width: "80px",
+                  height: "35px",
+                  backgroundColor: "#d9d9d9",
+                  borderRadius: "15px",
+                  color: "#3d3d3d",
+                  fontSize: "15px",
+                  textAlign: "center",
+                  alignItems: "center",
+                  display: "flex",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  position: "absolute",
+                  top: "10px",
+                  right: "145px",
+                })}
+              >
+                중복확인
+              </div>
+              <div
+                onClick={handleSendButtonClick}
+                css={css({
+                  backgroundColor: "#829fd7",
+                  color: "white",
+                  fontSize: "15px",
+                  textAlign: "center",
+                  alignItems: "center",
+                  display: "flex",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  width: "120px",
+                  height: "50px",
+                  borderRadius: "15px",
+                  marginLeft: "8px",
+                  marginTop: "12px",
+                })}
+              >
                 인증번호 발송
-              </SendButton>
-            </EmailBox>
+              </div>
+            </div>
             {showVerificationInput && (
-              <EmailBox>
+              <div
+                css={css({
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                })}
+              >
                 <Grid
                   item
                   xs={12}
@@ -123,13 +175,38 @@ const EmailAndPasswordStep = ({
                     }}
                   />
                 </Grid>
-                <SendButton onClick={handleConfirmVerificationCode}>
+                <div
+                  onClick={handleConfirmVerificationCode}
+                  css={css({
+                    backgroundColor: "#829fd7",
+                    color: "white",
+                    fontSize: "15px",
+                    textAlign: "center",
+                    alignItems: "center",
+                    display: "flex",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                    width: "120px",
+                    height: "50px",
+                    borderRadius: "15px",
+                    marginLeft: "8px",
+                    marginTop: "12px",
+                  })}
+                >
                   확인
-                </SendButton>
-              </EmailBox>
+                </div>
+              </div>
             )}
             {confirmVerificationCode && (
-              <ConfirmMessage>인증번호가 일치합니다</ConfirmMessage>
+              <div
+                css={css({
+                  fontSize: "15px",
+                  color: "#0a8425",
+                  margin: "5px 0px 0px 20px",
+                })}
+              >
+                인증번호가 일치합니다
+              </div>
             )}
             <Grid item xs={12}>
               <StyledTextField
@@ -186,45 +263,3 @@ const EmailAndPasswordStep = ({
 };
 
 export default EmailAndPasswordStep;
-
-const EmailBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-const ConfirmButton = styled.div`
-  width: 80px;
-  height: 35px;
-  background-color: #d9d9d9;
-  border-radius: 15px;
-  color: #3d3d3d;
-  font-size: 15px;
-  text-align: center;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  cursor: pointer;
-  position: absolute;
-  top: 10px;
-  right: ${(props) => props.right || "145px"};
-`;
-const ConfirmMessage = styled.div`
-  font-size: 15px;
-  color: #0a8425;
-  margin: 5px 0px 0px 20px;
-`;
-const SendButton = styled.div`
-  background-color: #829fd7;
-  color: white;
-  font-size: 15px;
-  text-align: center;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  cursor: pointer;
-  width: 120px;
-  height: 50px;
-  border-radius: 15px;
-  margin-left: 8px;
-  margin-top: 12px;
-`;

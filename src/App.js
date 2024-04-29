@@ -8,7 +8,6 @@ function App() {
   return (
     <div className="App">
       <NavigationBar />
-
       <Routes>
         <Route path="/" element={<Main />} /> {/* 메인 */}
         <Route path="/login" element={<Login />} /> {/* 로그인 페이지 */}

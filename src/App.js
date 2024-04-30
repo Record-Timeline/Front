@@ -1,13 +1,20 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Main from "./pages/Main";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import SignUpComplete from "./pages/SignUpComplete";
 import NavigationBar from "./components/common/NavigationBar";
+
 function App() {
+  const location = useLocation();
+  const hideNavBarRoutes = ["/login", "/signup", "/signupcomplete"];
+  const shouldHideNavBar = () => {
+    return hideNavBarRoutes.includes(location.pathname);
+  };
+
   return (
     <div className="App">
-      <NavigationBar />
+      {!shouldHideNavBar() && <NavigationBar />}
       <Routes>
         <Route path="/" element={<Main />} /> {/* 메인 */}
         <Route path="/login" element={<Login />} /> {/* 로그인 페이지 */}

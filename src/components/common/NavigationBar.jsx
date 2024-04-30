@@ -185,6 +185,8 @@ export default function NavigationBar() {
                         <div
                           css={css({
                             whiteSpace: "pre-line",
+                            fontSize: "14px",
+                            width: "200px",
                           })}
                         >
                           소개글이 없습니다. {"\n"}나를 소개하는 한 마디를

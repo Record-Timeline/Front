@@ -1,3 +1,4 @@
+/*
 import "./Main.css"
 import React from "react";
 import MainTimeline from "../components/timeline/MainTimeline";
@@ -13,3 +14,4 @@ export default function Main() {
     </div>
   );
 }
+*/

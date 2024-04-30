@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 import { css } from "@emotion/react";
 
 export default function Button(props) {
-    return (
-        <Link
-            css={css`
+  return (
+    <Link
+      css={css`
         width: ${props.width || "350px"};
         height: ${props.height || "30px"};
         margin: ${props.margin};
@@ -23,9 +23,9 @@ export default function Button(props) {
         text-decoration: none;
         padding: 10px 20px;
       `}
-            {...props}
-        >
-            {props.children}
-        </Link>
-    );
+      {...props}
+    >
+      {props.children}
+    </Link>
+  );
 }

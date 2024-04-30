@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+
 import Logo from "../assets/images/recodeTimelineLogo.svg";
 import Button from "../components/common/Button";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";

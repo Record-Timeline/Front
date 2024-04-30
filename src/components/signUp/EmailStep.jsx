@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React from "react";
+
 import {
   createTheme,
   styled as withStyles,
@@ -13,7 +13,6 @@ import {
   TextField,
 } from "@mui/material/";
 import Button from "../common/Button";
-import styled from "styled-components";
 import { css } from "@emotion/react";
 
 const EmailAndPasswordStep = ({

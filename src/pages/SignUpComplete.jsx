@@ -1,8 +1,10 @@
 /** @jsxImportSource @emotion/react */
+
 import Logo from "../assets/images/recodeTimelineLogo.svg";
 import Button from "../components/common/Button";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { css } from "@emotion/react";
+
 export default function SignUpComplete() {
   const nickName = "레타";
   return (

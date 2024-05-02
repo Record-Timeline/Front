@@ -51,25 +51,25 @@ export default function NavigationBar() {
         position: fixed;
         top: 0;
         left: 0;
-        width: ${isExpanded ? "350px" : "300px"};
+        width: ${isExpanded ? "337px" : "300px"};
         box-shadow: ${isExpanded ? "1px 0px 5px -3px #8b8b8b" : "none"};
         height: 100vh;
         display: flex;
         flex-direction: column;
-        background-color: white;
       `}
     >
       <div
         css={css({
           display: "flex",
           alignItems: "center",
-          margin: "30px 20px 0px 38px",
         })}
       >
         {isExpanded ? (
           <div
             css={css({
               height: "100vh",
+              backgroundColor: "white",
+              padding: "30px 20px 0px 38px",
             })}
           >
             <div
@@ -343,7 +343,11 @@ export default function NavigationBar() {
             </div>
           </div>
         ) : (
-          <>
+          <div
+            css={css({
+              padding: "30px 20px 0px 38px",
+            })}
+          >
             <MenuIcon
               onClick={toggleNavigationBar}
               style={{
@@ -360,7 +364,7 @@ export default function NavigationBar() {
                 marginLeft: "10px",
               })}
             />
-          </>
+          </div>
         )}
       </div>
     </div>

@@ -56,6 +56,7 @@ export default function NavigationBar() {
         height: 100vh;
         display: flex;
         flex-direction: column;
+        background-color: white;
       `}
     >
       <div
@@ -280,6 +281,7 @@ export default function NavigationBar() {
                     text-decoration: none;
                     color: #161616;
                   `}
+                  to="/bookmark"
                 >
                   <BookmarkBorderIcon
                     style={{

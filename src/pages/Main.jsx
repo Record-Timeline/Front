@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import React from "react";
+import React, { useState } from "react";
 import { css } from "@emotion/react";
 import Header from "../components/common/Header";
 
@@ -17,9 +17,14 @@ export default function Main() {
     "교육",
     "미디어/문화/스포츠",
   ];
-  const handleClick = (text) => {
-    console.log(text);
+  const [hoveredInterest, setHoveredInterest] = useState(null);
+  const [selectedInterest, setSelectedInterest] = useState(null);
+
+  const handleClick = (interest) => {
+    setSelectedInterest(interest);
+    console.log(interest);
   };
+
   return (
     <div
       css={css`
@@ -42,6 +47,7 @@ export default function Main() {
           css={css`
             font-size: 20px;
             font-weight: 500;
+            margin-top: 30px;
           `}
         >
           관심 분야 / 직종
@@ -59,13 +65,30 @@ export default function Main() {
               key={index}
               css={css`
                 font-size: 16px;
-                font-weight: 500;
-                padding: 20px 5px;
-                border: "1px solid #D9D9D9";
-                background-color: #f0f0f0;
+                padding: 17px 5px;
                 cursor: pointer;
+                background-color: ${selectedInterest === interest
+                  ? "#2c2c2c"
+                  : hoveredInterest === interest
+                  ? "white"
+                  : "white"};
+
+                color: ${selectedInterest === interest
+                  ? "white"
+                  : hoveredInterest === interest
+                  ? "black"
+                  : "black"};
+                border: ${selectedInterest === interest
+                  ? "none"
+                  : hoveredInterest === interest
+                  ? "1px solid #636363"
+                  : "1px solid #bdbdbd"};
+                border-radius: 10px;
+                transition: background-color 0.3s, color 0.3s;
               `}
               onClick={() => handleClick(interest)}
+              onMouseEnter={() => setHoveredInterest(interest)}
+              onMouseLeave={() => setHoveredInterest(null)}
             >
               {interest}
             </button>

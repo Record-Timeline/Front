@@ -21,11 +21,11 @@ export default function Header() {
           align-items: center;
           justify-content: center;
           border-radius: 30px;
-          background: #e6edf9;
+          background: #829fd7;
           cursor: pointer;
-          color: #737373;
-          font-size: 17px;
-          font-weight: 400;
+          color: #ffffff;
+          font-size: 15px;
+          font-weight: 200;
         `}
       >
         시작하기

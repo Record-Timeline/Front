@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { css } from "@emotion/react";
 import Header from "../components/common/Header";
-
+import RecoderRecommendation from "../components/main/RecoderRecommendation";
 export default function Main() {
   const interestFields = [
     "마케팅/홍보/조사",
@@ -40,7 +40,7 @@ export default function Main() {
         css={css`
           display: flex;
           flex-direction: column;
-          width: 55%;
+          width: 53%;
         `}
       >
         <div
@@ -101,6 +101,7 @@ export default function Main() {
           `}
         >
           추천 레코더
+          <RecoderRecommendation />
         </div>
       </div>
     </div>

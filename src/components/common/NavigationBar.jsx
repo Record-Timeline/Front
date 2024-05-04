@@ -5,6 +5,7 @@ import { css } from "@emotion/react";
 import { useState } from "react";
 import testProfileImg from "../../assets/images/testProfileImg.png";
 import { Link } from "react-router-dom";
+import ProfileNickName from "../main/ProfileNickName";
 
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -68,16 +69,16 @@ export default function NavigationBar() {
           <div
             css={css({
               height: "100vh",
-              width: "250px",
+              width: "100%",
               backgroundColor: "white",
-              padding: "30px 0px 0px 30px",
+              padding: "30px",
+              boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
             })}
           >
             <div
               css={css({
                 display: "flex",
                 alignItems: "center",
-                width: "250px",
               })}
             >
               <img
@@ -107,15 +108,10 @@ export default function NavigationBar() {
                 fontWeight: "500",
               })}
             >
-              <img
-                src={testProfileImg}
-                alt="프로필 이미지"
-                css={css({
-                  width: "150px",
-                  marginBottom: "20px",
-                })}
+              <ProfileNickName
+                profileImgSrc={testProfileImg}
+                nickName={nickName}
               />
-              <div>{nickName}</div>
             </div>
             <div
               css={css({

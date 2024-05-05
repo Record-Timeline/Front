@@ -10,7 +10,7 @@ export default function ProfileNickName({ profileImgSrc, nickName }) {
         display: "flex",
         alignItems: "center",
         flexDirection: "column",
-        margin: "40px 0px 20px 0px",
+        marginBottom: "20px",
         fontSize: "21px",
         fontWeight: "500",
       })}

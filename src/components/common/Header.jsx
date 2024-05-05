@@ -18,7 +18,7 @@ export default function Header() {
       <div
         css={css`
           margin-left: auto;
-          padding: 6px 18px;
+          padding: 8px 18px;
           align-items: center;
           justify-content: center;
           border-radius: 30px;

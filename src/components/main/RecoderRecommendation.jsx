@@ -66,6 +66,7 @@ export default function RecoderRecommendation() {
     <div
       css={css`
         display: flex;
+        border-right: 1px solid #ffffff !important;
       `}
     >
       {testRecorderData.map((user, index) => (
@@ -73,10 +74,14 @@ export default function RecoderRecommendation() {
           key={index}
           css={css`
             width: 200px;
-            margin-right: 25px;
+            margin: 50px 0px;
+            padding: 0px 25px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            border-right: ${index < testRecorderData.length - 1
+              ? "1px solid #ededed"
+              : "none"};
           `}
         >
           <ProfileNickName

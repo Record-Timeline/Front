@@ -103,7 +103,7 @@ export default function NavigationBar() {
                 display: "flex",
                 alignItems: "center",
                 flexDirection: "column",
-                margin: "40px 0px 20px 0px",
+                margin: "45px 0px 20px 0px",
                 fontSize: "21px",
                 fontWeight: "500",
               })}

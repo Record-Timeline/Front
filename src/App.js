@@ -20,8 +20,7 @@ function App() {
         <Route path="/" element={<Main />} /> {/* 메인 */}
         <Route path="/login" element={<Login />} /> {/* 로그인 페이지 */}
         <Route path="/signup" element={<SignUp />} /> {/* 회원가입 페이지 */}
-        <Route path="/signupcomplete" element={<SignUpComplete />} />
-        {/* 회원가입 완료 페이지 */}
+        <Route path="/signupcomplete" element={<SignUpComplete />} /> {/* 회원가입 완료 페이지 */}
         <Route path="/maintimeline" element={<MainTimeline />} /> {/* 메인 타임라인 페이지 */}
       </Routes>
     </div>

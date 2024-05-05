@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { FiLock, FiUnlock } from "react-icons/fi";
 import { GoPencil } from "react-icons/go";
 import { FaRegTrashAlt } from "react-icons/fa";
+import AlertDialog from "../common/AlertDialog";
 
 const CheckCircle = styled.div` // 요거 emotion으로 수정해야되는데 조건부 스타일링 때문에 못바꿈
     width: 22px;
@@ -28,16 +29,16 @@ const CheckCircle = styled.div` // 요거 emotion으로 수정해야되는데 �
 function MainTimelineItem() {
     const [isChecked, setIsChecked] = useState(false);
 
-    const handleDelete = () => {
-        // eslint-disable-next-line no-restricted-globals
-        if (confirm("정말로 삭제하시겠습니까?")) {
-            // 삭제 로직을 수행
-            console.log("항목이 삭제되었습니다.");
-        } else {
-            // 삭제 취소
-            console.log("삭제가 취소되었습니다.");
-        }
-    }
+    // const handleDelete = () => {
+    //     // eslint-disable-next-line no-restricted-globals
+    //     if (confirm("정말로 삭제하시겠습니까?")) {
+    //         // 삭제 로직을 수행
+    //         console.log("항목이 삭제되었습니다.");
+    //     } else {
+    //         // 삭제 취소
+    //         console.log("삭제가 취소되었습니다.");
+    //     }
+    // }
 
     return (
         <div // 회색 타임라인 박스
@@ -61,12 +62,14 @@ function MainTimelineItem() {
             <div // 기간
                 css={css({
                     flex: "1",
+                    color: "#666",
+                    fontFamily: "Pretendard",
                     fontSize: "17px",
-                    //font-weight: 550;
-                    color: "#495057",
+                    fontStyle: "normal",
+                    fontWeight: "500",
+                    lineHeight: "94px",
                     //float: left;
                     textAlign: "left",
-                    lineHeight: "94px",
                     //margin-right: 30px;
                     display: "inline-block",
                     // border: "1px solid black",
@@ -90,7 +93,7 @@ function MainTimelineItem() {
                     flex: "1",
                     fontSize: "17px",
                     //font-weight: 550;
-                    color: "#495057",
+                    color: "#212121",
                     //float: left;
                     textAlign: "left",
                     lineHeight: "94px",
@@ -108,7 +111,7 @@ function MainTimelineItem() {
                     justifyContent: "center",
                     // margin: "0 25px", // 좌우 마진을 25px로 설정
                     marginLeft: "25px",
-                    marginRight: "12px",
+                    marginRight: "5px",
                     cursor: "pointer",
                     // border: "1px solid black",
                 })}
@@ -116,7 +119,7 @@ function MainTimelineItem() {
                 <GoPencil/>
             </div>
             <div // 삭제하기 (쓰레기통 아이콘)
-                onClick={handleDelete}
+                // onClick={handleDelete}
                 css={css({
                     color: "#829FD7",
                     display: "flex",
@@ -128,7 +131,8 @@ function MainTimelineItem() {
                     // border: "1px solid black",
                 })}
             >
-                <FaRegTrashAlt/>
+                {/*<FaRegTrashAlt/>*/}
+                <AlertDialog icon={<FaRegTrashAlt />} />
             </div>
         </div>
     );

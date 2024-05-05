@@ -1,12 +1,14 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+/** @jsxImportSource @emotion/react */
 
-export default function AlertDialog() {
+import * as React from "react";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+
+export default function AlertDialog(props) {
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -19,8 +21,8 @@ export default function AlertDialog() {
 
     return (
         <React.Fragment>
-            <Button variant="outlined" onClick={handleClickOpen}>
-                Open alert dialog
+            <Button onClick={handleClickOpen} sx={{ minWidth: "30px" }}>
+                {props.icon}
             </Button>
             <Dialog
                 open={open}
@@ -29,18 +31,18 @@ export default function AlertDialog() {
                 aria-describedby="alert-dialog-description"
             >
                 <DialogTitle id="alert-dialog-title">
-                    {"Use Google's location service?"}
+                    {"정말로 삭제하시겠습니까?"}
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        Let Google help apps determine location. This means sending anonymous
-                        location data to Google, even when no apps are running.
+                        메인 타임라인을 삭제하면 {"\n"}
+                        해당 타임라인 안에 들어있는 서브 타임라인들도 모두 삭제됩니다.
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>Disagree</Button>
+                    <Button onClick={handleClose}>삭제</Button>
                     <Button onClick={handleClose} autoFocus>
-                        Agree
+                        취소
                     </Button>
                 </DialogActions>
             </Dialog>

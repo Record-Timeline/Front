@@ -12,6 +12,7 @@ export default function Header() {
         height: 90px;
         display: flex;
         align-items: center;
+        margin-top: 30px;
       `}
     >
       <div

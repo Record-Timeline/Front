@@ -47,7 +47,7 @@ export default function Main() {
           css={css`
             font-size: 20px;
             font-weight: 500;
-            margin-top: 30px;
+            margin-top: 70px;
           `}
         >
           관심 분야 / 직종
@@ -57,7 +57,7 @@ export default function Main() {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             gap: 10px;
-            margin: 20px 0px 50px 0px;
+            margin: 20px 0px 80px 0px;
           `}
         >
           {interestFields.map((interest, index) => (

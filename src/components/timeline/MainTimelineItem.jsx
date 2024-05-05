@@ -28,6 +28,17 @@ const CheckCircle = styled.div` // 요거 emotion으로 수정해야되는데 �
 function MainTimelineItem() {
     const [isChecked, setIsChecked] = useState(false);
 
+    const handleDelete = () => {
+        // eslint-disable-next-line no-restricted-globals
+        if (confirm("정말로 삭제하시겠습니까?")) {
+            // 삭제 로직을 수행
+            console.log("항목이 삭제되었습니다.");
+        } else {
+            // 삭제 취소
+            console.log("삭제가 취소되었습니다.");
+        }
+    }
+
     return (
         <div // 회색 타임라인 박스
             css={css({
@@ -98,12 +109,14 @@ function MainTimelineItem() {
                     // margin: "0 25px", // 좌우 마진을 25px로 설정
                     marginLeft: "25px",
                     marginRight: "12px",
+                    cursor: "pointer",
                     // border: "1px solid black",
                 })}
             >
                 <GoPencil/>
             </div>
             <div // 삭제하기 (쓰레기통 아이콘)
+                onClick={handleDelete}
                 css={css({
                     color: "#829FD7",
                     display: "flex",
@@ -111,6 +124,7 @@ function MainTimelineItem() {
                     justifyContent: "center",
                     // margin: "0 25px", // 좌우 마진을 25px로 설정
                     marginRight: "45px",
+                    cursor: "pointer",
                     // border: "1px solid black",
                 })}
             >

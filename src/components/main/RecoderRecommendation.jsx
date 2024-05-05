@@ -74,7 +74,7 @@ export default function RecoderRecommendation() {
           key={index}
           css={css`
             width: 200px;
-            margin: 50px 0px;
+            margin: 50px 0px 80px 0px;
             padding: 0px 25px;
             display: flex;
             flex-direction: column;
@@ -97,7 +97,9 @@ export default function RecoderRecommendation() {
               word-break: keep-all;
             `}
           >
-            {user.introduce}
+            {user.introduce.length > 25
+              ? `${user.introduce.slice(0, 25)}...`
+              : user.introduce}
           </div>
           <div
             css={css`

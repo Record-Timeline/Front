@@ -27,7 +27,7 @@ const CheckCircle = styled.div` // 요거 emotion으로 수정해야되는데 �
     `}
 `;
 
-function MainTimelineItem() {
+function SubTimelineItem() {
     const [isChecked, setIsChecked] = useState(false);
 
     return (
@@ -103,4 +103,4 @@ function MainTimelineItem() {
     );
 }
 
-export default MainTimelineItem;
+export default SubTimelineItem;

@@ -5,12 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4e78fff8-965f-4a9a-b412-7c54129d79ca" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/pages/SubTimeline.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/post/PostEditor.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/subTimeline/SubTimelineInput.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/Button.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Button.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/subTimeline/SubTimelineItem.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/subTimeline/SubTimelineItem.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/timeline/CustomizedSelects.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/timeline/CustomizedSelects.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/MainTimeline.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MainTimeline.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/SubTimeline.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/SubTimeline.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,6 +62,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\saral\Desktop\recordTimeline_FE\Front\src\components\subTimeline" />
       <recent name="C:\Users\saral\Desktop\recordTimeline_FE\Front\src\components\timeline" />
       <recent name="C:\Users\saral\Desktop\recordTimeline_FE\Front\src\components\common" />
     </key>
@@ -88,7 +92,7 @@
       <workItem from="1714468268475" duration="3170000" />
       <workItem from="1714471501743" duration="4490000" />
       <workItem from="1714476122573" duration="10220000" />
-      <workItem from="1715014181643" duration="12742000" />
+      <workItem from="1715014181643" duration="23027000" />
     </task>
     <servers />
   </component>
@@ -147,5 +151,17 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/components/subTimeline/SubTimelineInput.jsx</url>
+          <line>14</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

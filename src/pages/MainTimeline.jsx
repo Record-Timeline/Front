@@ -54,7 +54,7 @@ export default function MainTimeline() {
             </div>
             <section>
                 <MainTimelineItem />
-                <MainTimelineItem />
+                {/*<MainTimelineItem />*/}
                 <MainTimelineItem />
                 <MainTimelineInput />
                 {inputs.map(input => input)} {/* 상태 배열에 저장된 모든 MainTimelineInput 렌더링 */}

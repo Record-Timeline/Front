@@ -40,7 +40,6 @@ function MainTimelineInput() {
     const [title, setTitle] = useState("");
     const [start, setStart] = useState("");
     const [finish, setFinish] = useState("");
-    const [isPublic, setIsPublic] = useState(true);
 
     const onChangeTitle = (e) => {
         setTitle(e.target.value);
@@ -52,10 +51,6 @@ function MainTimelineInput() {
 
     const onChangeFinish = (e) => {
         setFinish(e.target.value);
-    }
-
-    const onChangeIsPublic = (e) => {
-        setIsPublic(e.target.value);
     }
 
     return (

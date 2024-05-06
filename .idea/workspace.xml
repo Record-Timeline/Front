@@ -5,8 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4e78fff8-965f-4a9a-b412-7c54129d79ca" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/pages/SubTimeline.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/timeline/MainTimelineInput.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/timeline/MainTimelineInput.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/Button.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Button.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/subTimeline/SubTimelineItem.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/subTimeline/SubTimelineItem.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/MainTimeline.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MainTimeline.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +88,7 @@
       <workItem from="1714468268475" duration="3170000" />
       <workItem from="1714471501743" duration="4490000" />
       <workItem from="1714476122573" duration="10220000" />
-      <workItem from="1715014181643" duration="7353000" />
+      <workItem from="1715014181643" duration="12742000" />
     </task>
     <servers />
   </component>

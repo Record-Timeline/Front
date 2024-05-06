@@ -5,6 +5,7 @@ import SignUp from "./pages/SignUp";
 import SignUpComplete from "./pages/SignUpComplete";
 import NavigationBar from "./components/common/NavigationBar";
 import MainTimeline from "./pages/MainTimeline";
+import SubTimeline from "./pages/SubTimeline";
 
 function App() {
   const location = useLocation();
@@ -22,6 +23,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} /> {/* 회원가입 페이지 */}
         <Route path="/signupcomplete" element={<SignUpComplete />} /> {/* 회원가입 완료 페이지 */}
         <Route path="/maintimeline" element={<MainTimeline />} /> {/* 메인 타임라인 페이지 */}
+        <Route path="/subtimeline" element={<SubTimeline />} /> {/* 메인 타임라인 페이지 */}
       </Routes>
     </div>
   );

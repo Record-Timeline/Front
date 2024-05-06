@@ -62,10 +62,11 @@ export default function MainTimeline() {
                     onClick={addInput}  // 버튼 클릭 시 addInput 함수 호출
                     width="970px"
                     height="70px"
-                    margin="0 auto"
+                    margin="45px auto"
                     backgroundColor="#f8f6f6"
                     textColor="#717171"
                     fontSize="35px"
+                    borderRadius="30px"
                 >
                     +
                 </Button>

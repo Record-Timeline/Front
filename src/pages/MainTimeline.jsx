@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { css } from "@emotion/react";
 import MainTimelineItem from "../components/timeline/MainTimelineItem";
+import MainTimelineInput from "../components/timeline/MainTimelineInput";
 import Button from "../components/common/Button";
 
 export default function MainTimeline() {
@@ -46,6 +47,7 @@ export default function MainTimeline() {
                 <MainTimelineItem />
                 <MainTimelineItem />
                 <MainTimelineItem />
+                <MainTimelineInput />
                 <Button
                     width="760px"
                     height="70px"

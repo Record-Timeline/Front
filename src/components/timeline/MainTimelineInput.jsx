@@ -7,6 +7,13 @@ import { FiLock, FiUnlock } from "react-icons/fi";
 import { GoPencil } from "react-icons/go";
 import { FaRegTrashAlt } from "react-icons/fa";
 import AlertDialog from "../common/AlertDialog";
+import DatePickerValue from "../common/DatePickerValue";
+import SelectAutoWidth from "./SelectAutoWidth";
+import CustomizedSelects from "./CustomizedSelects"
+import Box from '@mui/material/Box';
+import Input from '@mui/material/Input';
+
+const ariaLabel = { 'aria-label': 'description' };
 
 const CheckCircle = styled.div` // 요거 emotion으로 수정해야되는데 조건부 스타일링 때문에 못바꿈
     width: 22px;
@@ -15,35 +22,45 @@ const CheckCircle = styled.div` // 요거 emotion으로 수정해야되는데 �
     border: 3px solid #829FD7;
     float: left;
     display: inline-block;
-    margin: 35px;
+    margin-top: 36px;
     margin-left: 45px;
+    margin-right: 23px;
     cursor: pointer;
-    ${props => 
-      props.done && 
-      css`
+    ${props =>
+    props.done &&
+    css`
         border: 3px solid #829FD7;
         background-color: #829FD7; /* 배경 색상을 테두리와 동일하게 적용 */
     `}
 `;
 
-function MainTimelineItem() {
+function MainTimelineInput() {
     const [isChecked, setIsChecked] = useState(false);
+    const [title, setTitle] = useState("");
+    const [start, setStart] = useState("");
+    const [finish, setFinish] = useState("");
+    const [isPublic, setIsPublic] = useState(true);
 
-    // const handleDelete = () => {
-    //     // eslint-disable-next-line no-restricted-globals
-    //     if (confirm("정말로 삭제하시겠습니까?")) {
-    //         // 삭제 로직을 수행
-    //         console.log("항목이 삭제되었습니다.");
-    //     } else {
-    //         // 삭제 취소
-    //         console.log("삭제가 취소되었습니다.");
-    //     }
-    // }
+    const onChangeTitle = (e) => {
+        setTitle(e.target.value);
+    }
+
+    const onChangeStart = (e) => {
+        setStart(e.target.value);
+    }
+
+    const onChangeFinish = (e) => {
+        setFinish(e.target.value);
+    }
+
+    const onChangeIsPublic = (e) => {
+        setIsPublic(e.target.value);
+    }
 
     return (
         <div // 회색 타임라인 박스
             css={css({
-                width: "800px",
+                width: "1005px", // 800px
                 height: "94px",
                 background: "#f8f6f6",
                 borderRadius: "30px",
@@ -61,48 +78,58 @@ function MainTimelineItem() {
             />
             <div // 기간
                 css={css({
-                    flex: "1",
+                    // flex: "1",
                     color: "#666",
-                    fontFamily: "Pretendard",
-                    fontSize: "20px",
-                    fontStyle: "normal",
-                    fontWeight: "500",
-                    lineHeight: "94px",
+                    // width: "450px",
+                    padding: "10px",
+                    fontSize: "17px",
                     //float: left;
                     textAlign: "left",
-                    //margin-right: 30px;
-                    display: "inline-block",
+                    marginRight: "10px",
+                    display: "flex",
                     // border: "1px solid black",
                 })}
             >
-                2024.01.16 ~ 2024.04.02
+                <DatePickerValue label="시작 날짜"/>
+                <p css={css({margin: "7px", lineHeight: "60px"})}>~</p> {/* 물결 있는 버전 */}
+                {/*<p css={css({margin: "6px", lineHeight: "60px"})} />*/} {/* 물결 없는 버전 */}
+                <DatePickerValue label="종료 날짜"/>
             </div>
             <div // 공개 여부 (자물쇠 아이콘)
                 css={css({
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    margin: "0 25px", // 좌우 마진을 25px로 설정
+                    // margin: "0 25px", // 좌우 마진을 25px로 설정
                     // border: "1px solid black",
                 })}
             >
-                <FiLock/>
+                {/*<SelectAutoWidth />*/}
+                <CustomizedSelects />
             </div>
             <div // 타임라인 제목
                 css={css({
-                    flex: "1",
+                    // flex: "1",
                     fontSize: "17px",
-                    //font-weight: 550;
                     color: "#212121",
-                    //float: left;
                     textAlign: "left",
-                    lineHeight: "94px",
-                    //margin-right: 30px;
                     display: "inline-block",
                     // border: "1px solid black",
                 })}
             >
-                졸업 프로젝트 - 캡스톤
+                <Box
+                    component="form"
+                    sx={{
+                        '& > :not(style)': {
+                            m: 1,
+                            width: "250px",
+                            marginTop: "30px"},
+                    }}
+                    noValidate
+                    autoComplete="off"
+                >
+                    <Input placeholder="제목을 입력하세요." inputProps={ariaLabel} />
+                </Box>
             </div>
             <div // 수정하기 (연필 아이콘)
                 css={css({
@@ -138,4 +165,4 @@ function MainTimelineItem() {
     );
 }
 
-export default MainTimelineItem;
+export default MainTimelineInput;

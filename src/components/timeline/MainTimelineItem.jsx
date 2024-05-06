@@ -43,7 +43,7 @@ function MainTimelineItem() {
     return (
         <div // 회색 타임라인 박스
             css={css({
-                width: "800px",
+                width: "1005px",
                 height: "94px",
                 background: "#f8f6f6",
                 borderRadius: "30px",
@@ -61,7 +61,8 @@ function MainTimelineItem() {
             />
             <div // 기간
                 css={css({
-                    flex: "1",
+                    // flex: "1.5",
+                    width: "420px",
                     color: "#666",
                     fontFamily: "Pretendard",
                     fontSize: "20px",
@@ -69,8 +70,8 @@ function MainTimelineItem() {
                     fontWeight: "500",
                     lineHeight: "94px",
                     //float: left;
-                    textAlign: "left",
-                    //margin-right: 30px;
+                    textAlign: "left", // center로 할 지 고민
+                    marginRight: "15px",
                     display: "inline-block",
                     // border: "1px solid black",
                 })}
@@ -82,7 +83,8 @@ function MainTimelineItem() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    margin: "0 25px", // 좌우 마진을 25px로 설정
+                    marginLeft: "30px",
+                    marginRight: "15px",
                     // border: "1px solid black",
                 })}
             >
@@ -97,7 +99,7 @@ function MainTimelineItem() {
                     //float: left;
                     textAlign: "left",
                     lineHeight: "94px",
-                    //margin-right: 30px;
+                    marginLeft: "23px",
                     display: "inline-block",
                     // border: "1px solid black",
                 })}

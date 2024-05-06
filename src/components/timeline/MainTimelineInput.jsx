@@ -12,6 +12,7 @@ import SelectAutoWidth from "./SelectAutoWidth";
 import CustomizedSelects from "./CustomizedSelects"
 import Box from '@mui/material/Box';
 import Input from '@mui/material/Input';
+import { FaRegCircleCheck } from "react-icons/fa6";
 
 const ariaLabel = { 'aria-label': 'description' };
 
@@ -131,7 +132,7 @@ function MainTimelineInput() {
                     <Input placeholder="제목을 입력하세요." inputProps={ariaLabel} />
                 </Box>
             </div>
-            <div // 수정하기 (연필 아이콘)
+            <div // 수정완료 (체크 아이콘)
                 css={css({
                     display: "flex",
                     alignItems: "center",
@@ -143,7 +144,7 @@ function MainTimelineInput() {
                     // border: "1px solid black",
                 })}
             >
-                <GoPencil/>
+                <FaRegCircleCheck />
             </div>
             <div // 삭제하기 (쓰레기통 아이콘)
                 // onClick={handleDelete}

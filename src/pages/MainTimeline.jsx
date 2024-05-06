@@ -7,11 +7,20 @@ import MainTimelineInput from "../components/timeline/MainTimelineInput";
 import Button from "../components/common/Button";
 
 export default function MainTimeline() {
+    // MainTimelineInput 컴포넌트들을 관리할 상태 생성
+    const [inputs, setInputs] = useState([]);
+
+    // 새 MainTimelineInput 컴포넌트를 추가하는 함수
+    const addInput = () => {
+        setInputs([...inputs, <MainTimelineInput key={inputs.length} />]);
+    };
+
     return (
         <div
             css={css({
                 margin: "0 auto",
                 marginTop: "70px",
+                marginBottom: "70px"
                 // border: "1px solid black"
             })}
         >
@@ -48,8 +57,10 @@ export default function MainTimeline() {
                 <MainTimelineItem />
                 <MainTimelineItem />
                 <MainTimelineInput />
+                {inputs.map(input => input)} {/* 상태 배열에 저장된 모든 MainTimelineInput 렌더링 */}
                 <Button
-                    width="760px"
+                    onClick={addInput}  // 버튼 클릭 시 addInput 함수 호출
+                    width="970px"
                     height="70px"
                     margin="0 auto"
                     backgroundColor="#f8f6f6"

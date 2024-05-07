@@ -5,9 +5,6 @@ import { css } from "@emotion/react";
 import ProfileInfo from "./ProfileInfo";
 import testProfileImg from "../../assets/images/testProfileImg.png";
 export default function RecoderRecommendation() {
-  const testNickName = "닉네임!";
-  const introduce = "리액트, spring 공부 개발 프로젝트 진행";
-  const testfollowers = 203;
   const testRecorderData = [
     {
       name: "Sara Kim",

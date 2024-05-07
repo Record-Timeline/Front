@@ -11,7 +11,7 @@ export default function ProfileNickName({ profileImgSrc, nickName }) {
         alignItems: "center",
         flexDirection: "column",
         marginBottom: "20px",
-        fontSize: "21px",
+        fontSize: "20px",
         fontWeight: "500",
       })}
     >
@@ -19,7 +19,7 @@ export default function ProfileNickName({ profileImgSrc, nickName }) {
         src={profileImgSrc}
         alt="프로필 이미지"
         css={css({
-          width: "150px",
+          width: "140px",
           marginBottom: "20px",
         })}
       />

@@ -21,7 +21,7 @@ export default function ProfileInfo({
       <ProfileNickName profileImgSrc={profileImgSrc} nickName={nickName} />
       <div
         css={css`
-          width: 150px;
+          width: 145px;
           text-align: center;
           font-size: 14px;
           font-weight: 400;

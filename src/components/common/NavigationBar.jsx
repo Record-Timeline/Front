@@ -94,7 +94,7 @@ export default function NavigationBar() {
                   fontSize: "27px",
                   color: "#666666",
                   cursor: "pointer",
-                  margin: "0px 0px -3px 70px",
+                  margin: "0px 0px -3px 72px",
                 }}
               />
             </div>
@@ -157,7 +157,7 @@ export default function NavigationBar() {
                     <CheckCircleIcon
                       onClick={handleIntroductionSave}
                       style={{
-                        fontSize: "25px",
+                        fontSize: "23px",
                         color: "#333333",
                         cursor: "pointer",
                         marginTop: "20px",
@@ -171,11 +171,11 @@ export default function NavigationBar() {
                       css={css({
                         display: "flex",
                         alignItems: "center",
-                        width: "190px",
+                        width: "200px",
                         borderLeft: "3px solid black",
                         height: "50px",
                         fontSize: "14px",
-                        padding: "5px 0px 5px 20px",
+                        padding: "5px 0px 5px 18px",
                         marginTop: "20px",
                         lineHeight: "140%",
                         wordBreak: "break-all",
@@ -200,7 +200,7 @@ export default function NavigationBar() {
                     <CreateIcon
                       onClick={toggleEditIntroduction}
                       style={{
-                        fontSize: "20px",
+                        fontSize: "19px",
                         color: "#333333",
                         cursor: "pointer",
                         marginTop: "20px",
@@ -256,7 +256,7 @@ export default function NavigationBar() {
                     align-items: center;
                     font-size: 15px;
                     border-top: 1px solid #e9e9e9;
-                    margin-top: 30px;
+                    margin-top: 20px;
                     cursor: pointer;
                     text-decoration: none;
                     color: #161616;

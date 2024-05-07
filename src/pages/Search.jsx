@@ -1,12 +1,15 @@
 /** @jsxImportSource @emotion/react */
 
-import React from "react";
+import React, { useState } from "react";
 import { css } from "@emotion/react";
 import SearchIcon from "@mui/icons-material/Search";
 import ProfileInfo from "../components/main/ProfileInfo";
 import testProfileImg from "../assets/images/testProfileImg.png";
-
+import { useNavigate } from "react-router-dom";
 export default function Search() {
+  const [searchKeyword, setSearchKeyword] = useState(""); // 검색어 상태
+  const navigate = useNavigate();
+  // 추천 레코더 더미데이터
   const testRecorderData = [
     {
       name: "Sara Kim",
@@ -42,6 +45,10 @@ export default function Search() {
       followers: 156,
     },
   ];
+  // 검색 아이콘
+  const handleSearch = () => {
+    navigate(`/search/result?keyword=${searchKeyword}`);
+  };
   return (
     <div
       css={css`
@@ -50,12 +57,11 @@ export default function Search() {
         align-items: center;
         height: 100vh;
         flex-direction: column;
-        padding-left: 5%;
+        padding-left: 10%;
       `}
     >
       <div
         css={css`
-          width: 800px;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -78,13 +84,15 @@ export default function Search() {
               font-weight: 400;
               outline: none;
               border: none;
-              width: 700px;
+              width: 680px;
               padding: 10px 20px;
               &::placeholder {
                 color: #cecece;
               }
             `}
             placeholder="검색어를 입력해주세요"
+            value={searchKeyword}
+            onChange={(e) => setSearchKeyword(e.target.value)}
           ></input>
           <SearchIcon
             style={{
@@ -92,6 +100,7 @@ export default function Search() {
               cursor: "pointer",
               color: "#525252",
             }}
+            onClick={handleSearch}
           />
         </div>
         <div

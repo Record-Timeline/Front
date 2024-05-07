@@ -6,7 +6,9 @@ import SignUpComplete from "./pages/SignUpComplete";
 import NavigationBar from "./components/common/NavigationBar";
 import Bookmark from "./pages/Bookmark";
 import Search from "./pages/Search";
+import SearchResult from "./pages/SearchResult";
 import { CssBaseline } from "@mui/material";
+
 function App() {
   const location = useLocation();
   const hideNavBarRoutes = ["/login", "/signup", "/signup/complete"];
@@ -28,6 +30,8 @@ function App() {
         {/* 북마크한 게시물 페이지 */}
         <Route path="/search" element={<Search />} />
         {/* 검색 페이지 */}
+        <Route path="/search/result/*" element={<SearchResult />} />
+        {/* 검색 결과 페이지 */}
       </Routes>
     </div>
   );

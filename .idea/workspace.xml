@@ -8,7 +8,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/timeline/MainTimelineInput.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/timeline/MainTimelineInput.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/timeline/MainTimelineItem.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/timeline/MainTimelineItem.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/MainTimeline.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MainTimeline.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,7 +17,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="RTL-50-FE-UI-" />
+        <entry key="$PROJECT_DIR$" value="RTL-79-fe-서브-타임라인-페이지-ui-구현" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />

@@ -6,7 +6,7 @@ import SignUpComplete from "./pages/SignUpComplete";
 import NavigationBar from "./components/common/NavigationBar";
 import Bookmark from "./pages/Bookmark";
 import Search from "./pages/Search";
-
+import { CssBaseline } from "@mui/material";
 function App() {
   const location = useLocation();
   const hideNavBarRoutes = ["/login", "/signup", "/signup/complete"];
@@ -16,6 +16,7 @@ function App() {
 
   return (
     <div className="App">
+      <CssBaseline></CssBaseline>
       {!shouldHideNavBar() && <NavigationBar />}
       <Routes>
         <Route path="/" element={<Main />} /> {/* 메인 */}

@@ -73,9 +73,8 @@ export default function RecoderRecommendation() {
         <div
           key={index}
           css={css`
-            width: 200px;
             margin: 50px 0px 80px 0px;
-            padding: 0px 25px;
+            padding: 0px 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -125,7 +124,7 @@ export default function RecoderRecommendation() {
                 key={idx}
                 css={css`
                   display: flex;
-                  width: 200px;
+                  width: 170px;
                   margin-top: 12px;
                   align-items: center;
                   background: #f5f5f5;
@@ -144,12 +143,12 @@ export default function RecoderRecommendation() {
                 />
                 <div
                   css={css`
-                    width: 120px;
+                    width: 100%;
                     text-align: center;
                     font-size: 15px;
                     font-weight: 400;
                     word-break: keep-all;
-                    margin: 14px 10px;
+                    margin: 10px 20px 10px 10px;
                   `}
                 >
                   {item}

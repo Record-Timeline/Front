@@ -43,7 +43,6 @@ export default function Main() {
           display: flex;
           flex-direction: column;
           width: 100%;
-          padding: 0px 70px;
           overflow-y: auto;
           max-height: calc(100vh - 80px);
           align-items: center;
@@ -51,7 +50,7 @@ export default function Main() {
       >
         <div
           css={css`
-            width: 57%;
+            margin: 0px 0px 0px 280px;
           `}
         >
           <div
@@ -65,6 +64,7 @@ export default function Main() {
           </div>
           <div
             css={css`
+              width: 950px;
               display: grid;
               grid-template-columns: repeat(5, 1fr);
               gap: 10px;
@@ -75,8 +75,8 @@ export default function Main() {
               <button
                 key={index}
                 css={css`
-                  font-size: 16px;
-                  padding: 17px 5px;
+                  font-size: 15px;
+                  padding: 17px 0px;
                   cursor: pointer;
                   background-color: ${selectedInterest === interest
                     ? "#2c2c2c"
@@ -118,7 +118,8 @@ export default function Main() {
             css={css`
               font-size: 20px;
               font-weight: 500;
-              width: 1050px;
+              display: flex;
+              flex-direction: column;
             `}
           >
             추천 게시물

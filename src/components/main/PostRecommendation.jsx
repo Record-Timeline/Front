@@ -73,13 +73,14 @@ export default function PostRecommendation() {
         display: flex;
         align-items: center;
         flex-direction: column;
-        margin: 30px 0px 50px 40px;
+        margin: 50px 60px 50px -70px;
       `}
     >
       <div
         css={css`
           display: flex;
           align-items: center;
+          width: 90%;
         `}
       >
         <ChevronLeftIcon
@@ -103,15 +104,16 @@ export default function PostRecommendation() {
             <div
               key={index}
               css={css`
-                padding: 25px 30px;
-                width: 200px;
+                width: 220px;
+                padding: 20px 25px;
                 border-right: ${index === 3 ? "none" : "1px solid #c4c4c4"};
               `}
             >
               <div
                 css={css`
-                  width: 180px;
+                  width: 170px;
                   word-break: keep-all;
+                  font-size: 19px;
                 `}
               >
                 {post.title}
@@ -165,6 +167,8 @@ export default function PostRecommendation() {
         css={css`
           display: flex;
           margin-top: 20px;
+          justify-content: center;
+          margin-left: 60px;
         `}
       >
         {/* 페이지 인덱스 원 */}

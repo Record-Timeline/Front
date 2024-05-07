@@ -62,7 +62,7 @@ function MainTimelineItem() {
             <div // 기간
                 css={css({
                     // flex: "1.5",
-                    width: "420px",
+                    width: "400px",
                     color: "#666",
                     fontFamily: "Pretendard",
                     fontSize: "20px",
@@ -72,6 +72,7 @@ function MainTimelineItem() {
                     //float: left;
                     textAlign: "left", // center로 할 지 고민
                     marginRight: "15px",
+                    marginLeft: "20px",
                     display: "inline-block",
                     // border: "1px solid black",
                 })}

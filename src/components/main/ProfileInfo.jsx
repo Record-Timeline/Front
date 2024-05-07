@@ -21,9 +21,9 @@ export default function ProfileInfo({
       <ProfileNickName profileImgSrc={profileImgSrc} nickName={nickName} />
       <div
         css={css`
-          width: 160px;
+          width: 150px;
           text-align: center;
-          font-size: 15px;
+          font-size: 14px;
           font-weight: 400;
           word-break: keep-all;
         `}
@@ -33,8 +33,8 @@ export default function ProfileInfo({
       <div
         css={css`
           text-align: center;
-          color: #535353;
-          font-size: 14px;
+          color: #6d6d6d;
+          font-size: 13px;
           font-weight: 400;
           margin-top: 10px;
         `}

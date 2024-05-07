@@ -68,18 +68,18 @@ export default function Search() {
             display: flex;
             justify-content: center;
             align-items: center;
+            margin-top: 70px;
           `}
         >
           <input
             css={css`
               color: #273b4a;
-              font-size: 35px;
+              font-size: 31px;
               font-weight: 400;
               outline: none;
               border: none;
               width: 700px;
               padding: 10px 20px;
-              margin-top: 50px;
               &::placeholder {
                 color: #cecece;
               }
@@ -88,7 +88,7 @@ export default function Search() {
           ></input>
           <SearchIcon
             style={{
-              fontSize: "35px",
+              fontSize: "34px",
               cursor: "pointer",
               color: "#525252",
             }}
@@ -97,9 +97,9 @@ export default function Search() {
         <div
           css={css`
             color: #6b6b6b;
-            font-size: 26px;
+            font-size: 24px;
             font-weight: 400;
-            margin-top: 100px;
+            margin-top: 70px;
 
             > span {
               color: #6089b9;

@@ -2,7 +2,7 @@
 
 import React from "react";
 import { css } from "@emotion/react";
-import ProfileNickName from "./ProfileNickName";
+import ProfileInfo from "./ProfileInfo";
 import testProfileImg from "../../assets/images/testProfileImg.png";
 export default function RecoderRecommendation() {
   const testNickName = "닉네임!";
@@ -83,35 +83,12 @@ export default function RecoderRecommendation() {
               : "none"};
           `}
         >
-          <ProfileNickName
+          <ProfileInfo
             profileImgSrc={testProfileImg}
             nickName={user.name}
+            introduce={user.introduce}
+            followers={user.followers}
           />
-          <div
-            css={css`
-              width: 170px;
-              text-align: center;
-              font-size: 16px;
-              font-weight: 400;
-              word-break: keep-all;
-            `}
-          >
-            {user.introduce.length > 25
-              ? `${user.introduce.slice(0, 25)}...`
-              : user.introduce}
-          </div>
-          <div
-            css={css`
-              text-align: center;
-              color: #535353;
-              font-size: 15px;
-              font-weight: 400;
-              margin-top: 10px;
-            `}
-          >
-            팔로워 {user.followers}명
-          </div>
-
           <div
             css={css`
               display: flex;

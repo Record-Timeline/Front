@@ -12,8 +12,8 @@ export default function Button(props) {
         margin: ${props.margin};
         background-color: ${props.backgroundColor || "#829FD7"};
         color: ${props.textColor || "white"};
-        font-size: 18px;
-        font-weight: 500;
+        font-size: ${props.fontSize || "18px"};
+        font-weight: ${props.fontWeight || "500"};
         border-radius: 20px;
         display: flex;
         justify-content: center;

@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import React from "react";
+import React, { useState } from "react";
 import { css } from "@emotion/react";
 import { useLocation } from "react-router-dom";
 import SearchPostBox from "../components/main/SearchPostBox";
@@ -8,9 +8,12 @@ export default function SearchResult() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const searchKeyword = queryParams.get("keyword");
+  const [selectedTab, setSelectedTab] = useState("posts"); // 검색 결과 글, 레코더 탭 선택
   console.log(searchKeyword);
 
-  const searchResultNum = 390;
+  const searchResultPostsNum = 390;
+  const searchResultRecorderssNum = 3870;
+
   // 검색 결과 더미데이터
   const testSearchDummy = [
     {
@@ -58,7 +61,8 @@ export default function SearchResult() {
         justify-content: center;
         height: 100vh;
         flex-direction: column;
-        padding-left: 5%;
+        margin-left: 25%;
+        margin-top: 40px;
       `}
     >
       <div
@@ -84,7 +88,12 @@ export default function SearchResult() {
             padding: 5px;
             border-bottom: 4px solid #829fd7;
             cursor: pointer;
+            border-bottom: ${selectedTab === "posts"
+              ? "4px solid #829fd7"
+              : "none"};
+            color: ${selectedTab === "posts" ? "#607fb9" : "#737373"};
           `}
+          onClick={() => setSelectedTab("posts")}
         >
           글
         </div>
@@ -94,32 +103,71 @@ export default function SearchResult() {
             width: 100px;
             padding: 5px;
             cursor: pointer;
+            border-bottom: ${selectedTab === "recorder"
+              ? "4px solid #829fd7"
+              : "none"};
+            color: ${selectedTab === "recorder" ? "#607fb9" : "#737373"};
           `}
+          onClick={() => setSelectedTab("recorder")}
         >
           레코더
         </div>
       </div>
-      <div
-        css={css`
-          color: #717171;
-          font-size: 14px;
-          font-weight: 400;
-          margin-top: 25px;
-        `}
-      >
-        글 검색 결과 {searchResultNum}건
-      </div>
-      {testSearchDummy.map((post, index) => (
-        <SearchPostBox
-          nickName={post.name}
-          title={post.title}
-          category={post.category}
-          commentNum={post.commentNum}
-          heartNum={post.heartNum}
-          scrapNum={post.scrapNum}
-          date={post.date}
-        />
-      ))}
+
+      {/* 글 탭 */}
+      {selectedTab === "posts" && (
+        <div>
+          <div
+            css={css`
+              color: #717171;
+              font-size: 14px;
+              font-weight: 400;
+              margin-top: 25px;
+            `}
+          >
+            글 검색 결과 {searchResultPostsNum}건
+          </div>
+          {testSearchDummy.map((post, index) => (
+            <SearchPostBox
+              key={index}
+              nickName={post.name}
+              title={post.title}
+              category={post.category}
+              commentNum={post.commentNum}
+              heartNum={post.heartNum}
+              scrapNum={post.scrapNum}
+              date={post.date}
+            />
+          ))}
+        </div>
+      )}
+      {/* 레코더 탭 */}
+      {selectedTab === "recorder" && (
+        <div>
+          <div
+            css={css`
+              color: #717171;
+              font-size: 14px;
+              font-weight: 400;
+              margin-top: 25px;
+            `}
+          >
+            계정 검색 결과 {searchResultRecorderssNum}건
+          </div>
+          {testSearchDummy.map((post, index) => (
+            <SearchPostBox
+              key={index}
+              nickName={post.name}
+              title={post.title}
+              category={post.category}
+              commentNum={post.commentNum}
+              heartNum={post.heartNum}
+              scrapNum={post.scrapNum}
+              date={post.date}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

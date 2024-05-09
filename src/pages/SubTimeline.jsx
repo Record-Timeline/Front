@@ -22,7 +22,7 @@ export default function SubTimeline() {
             <div // 포스팅 박스 전체
                 css={css({
                     width: "1100px",
-                    height: "930px",
+                    height: "1040px",
                     // height: "100%",
                     borderRadius: "30px",
                     background: "#FFF",
@@ -35,6 +35,39 @@ export default function SubTimeline() {
             >
                 <SubTimelineInput />
                 <PostEditor />
+                <div
+                    css={css({
+                        textAlign: "center",
+                    })}
+                >
+                    <Button
+                        width="155px"
+                        height="53px"
+                        margin="90px 20px"
+                        backgroundColor="#FFF"
+                        textColor="#646464"
+                        fontSize="20px"
+                        border="2px solid #959595"
+                        borderRadius="50px"
+                        display="inline-block"
+                        lineHeight="53px"
+                    >
+                        취소하기
+                    </Button>
+                    <Button
+                        width="155px"
+                        height="53px"
+                        margin="90px 20px"
+                        backgroundColor="#FFF"
+                        textColor="#7286AD"
+                        fontSize="20px"
+                        borderRadius="50px"
+                        display="inline-block"
+                        lineHeight="53px"
+                    >
+                        저장하기
+                    </Button>
+                </div>
             </div>
             <div // 서브 타임라인 박스
                 css={css({

@@ -12,7 +12,6 @@ import SelectAutoWidth from "../timeline/SelectAutoWidth";
 import CustomizedSelects from "../timeline/CustomizedSelects"
 import Box from '@mui/material/Box';
 import Input from '@mui/material/Input';
-import { FaRegCircleCheck } from "react-icons/fa6";
 
 const ariaLabel = { 'aria-label': 'description' };
 
@@ -89,7 +88,7 @@ function SubTimelineInput() {
                 <DatePickerValue label="시작 날짜"/>
                 <p css={css({margin: "7px", lineHeight: "60px"})}>~</p> {/* 물결 있는 버전 */}
                 {/*<p css={css({margin: "6px", lineHeight: "60px"})} />*/} {/* 물결 없는 버전 */}
-                <DatePickerValue label="종료 날짜"/>
+                <DatePickerValue label="종료 날짜" />
             </div>
             <div // 타임라인 제목
                 css={css({

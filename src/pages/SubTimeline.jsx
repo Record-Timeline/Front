@@ -2,8 +2,7 @@
 
 import React, { useState } from "react";
 import { css } from "@emotion/react";
-import SubTimelineInput from "../components/subTimeline/SubTimelineInput";
-import PostEditor from "../components/post/PostEditor";
+import CreateSubTimelinePost from "../components/subTimeline/CreateSubTimelinePost";
 import SubTimelineItem from "../components/subTimeline/SubTimelineItem";
 import Button from "../components/common/Button";
 
@@ -33,41 +32,7 @@ export default function SubTimeline() {
                     border: "4px solid #f8f6f6",
                 })}
             >
-                <SubTimelineInput />
-                <PostEditor />
-                <div
-                    css={css({
-                        textAlign: "center",
-                    })}
-                >
-                    <Button
-                        width="155px"
-                        height="53px"
-                        margin="90px 20px"
-                        backgroundColor="#FFF"
-                        textColor="#646464"
-                        fontSize="20px"
-                        border="2px solid #959595"
-                        borderRadius="50px"
-                        display="inline-block"
-                        lineHeight="53px"
-                    >
-                        취소하기
-                    </Button>
-                    <Button
-                        width="155px"
-                        height="53px"
-                        margin="90px 20px"
-                        backgroundColor="#FFF"
-                        textColor="#7286AD"
-                        fontSize="20px"
-                        borderRadius="50px"
-                        display="inline-block"
-                        lineHeight="53px"
-                    >
-                        저장하기
-                    </Button>
-                </div>
+                <CreateSubTimelinePost />
             </div>
             <div // 서브 타임라인 박스
                 css={css({

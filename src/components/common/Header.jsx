@@ -9,10 +9,10 @@ export default function Header() {
     <div
       css={css`
         width: 100%;
-        height: 90px;
+        height: 50px;
         display: flex;
         align-items: center;
-        margin-top: 30px;
+        margin: 30px 0px;
       `}
     >
       <div
@@ -37,7 +37,7 @@ export default function Header() {
             fontSize: "30px",
             cursor: "pointer",
             color: "#525252",
-            margin: "0px 40px 0px 12px",
+            margin: "5px 40px 0px 12px",
           }}
         />
       </Link>

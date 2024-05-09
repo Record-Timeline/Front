@@ -7,6 +7,7 @@ import NavigationBar from "./components/common/NavigationBar";
 import MainTimeline from "./pages/MainTimeline";
 import Bookmark from "./pages/Bookmark";
 import Search from "./pages/Search";
+import SearchResult from "./pages/SearchResult";
 import { CssBaseline } from "@mui/material";
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
         <Route path="/signup/complete" element={<SignUpComplete />} /> {/* 회원가입 완료 페이지 */}
         <Route path="/bookmark" element={<Bookmark />} /> {/* 북마크한 게시물 페이지 */}
         <Route path="/search" element={<Search />} /> {/* 검색 페이지 */}
+        <Route path="/search/result/*" element={<SearchResult />} />
         <Route path="/maintimeline" element={<MainTimeline />} />
       </Routes>
     </div>

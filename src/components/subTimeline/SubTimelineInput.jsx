@@ -22,7 +22,7 @@ const CheckCircle = styled.div` // 요거 emotion으로 수정해야되는데 �
     border: 3px solid #829FD7;
     float: left;
     display: inline-block;
-    margin-top: 36px;
+    margin-top: 35px;
     margin-left: 45px;
     margin-right: 23px;
     cursor: pointer;

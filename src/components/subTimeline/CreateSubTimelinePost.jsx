@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { css } from "@emotion/react";
 import SubTimelineInput from "./SubTimelineInput";
 import PostEditor from "../post/PostEditor"
-import SubTimelineItem from "./SubTimelineItem";
 import Button from "../common/Button";
 
 export default function CreateSubTimelinePost() {
@@ -15,12 +14,15 @@ export default function CreateSubTimelinePost() {
             <div
                 css={css({
                     textAlign: "center",
+                    marginTop: "90px",
+                    marginBottom: "50px",
+                    // border: "1px solid #f8f6f6",
                 })}
             >
                 <Button
                     width="155px"
                     height="53px"
-                    margin="90px 20px"
+                    margin="0px 20px"
                     backgroundColor="#FFF"
                     textColor="#646464"
                     fontSize="20px"
@@ -34,7 +36,7 @@ export default function CreateSubTimelinePost() {
                 <Button
                     width="155px"
                     height="53px"
-                    margin="90px 20px"
+                    margin="0px 20px"
                     backgroundColor="#FFF"
                     textColor="#7286AD"
                     fontSize="20px"

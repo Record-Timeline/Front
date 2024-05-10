@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { css } from "@emotion/react";
 import CreateSubTimelinePost from "../components/subTimeline/CreateSubTimelinePost";
+import ReadSubTimelinePost from "../components/subTimeline/ReadSubTimelinePost";
 import SubTimelineItem from "../components/subTimeline/SubTimelineItem";
 import Button from "../components/common/Button";
 
@@ -32,7 +33,8 @@ export default function SubTimeline() {
                     border: "4px solid #f8f6f6",
                 })}
             >
-                <CreateSubTimelinePost />
+                {/*<CreateSubTimelinePost />*/}
+                <ReadSubTimelinePost />
             </div>
             <div // 서브 타임라인 박스
                 css={css({
@@ -63,6 +65,7 @@ export default function SubTimeline() {
                     backgroundColor="#f8f6f6"
                     textColor="#717171"
                     fontSize="35px"
+                    border="none"
                     borderRadius="50px"
                 >
                     +

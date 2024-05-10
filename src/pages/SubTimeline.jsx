@@ -8,6 +8,27 @@ import SubTimelineItem from "../components/subTimeline/SubTimelineItem";
 import Button from "../components/common/Button";
 
 export default function SubTimeline() {
+    const [isCreating, setIsCreating] = useState(false);
+    const [editablePost, setEditablePost] = useState(null);
+
+    const handleCreateNew = () => {
+        setEditablePost(null); // 새 포스트 작성을 위해 editablePost를 null로 설정
+        setIsCreating(true);
+    }
+
+    const handleEdit = (post) => {
+        setEditablePost(post); // 수정할 포스트 데이터 설정
+        setIsCreating(true); // 생성 모드로 전환
+    };
+
+    const handleCancel = () => {
+        setIsCreating(false);
+    }
+
+    const handleSubmit = () => {
+        setIsCreating(false);
+    }
+
     return (
         <div
             css={css({
@@ -33,8 +54,16 @@ export default function SubTimeline() {
                     border: "4px solid #f8f6f6",
                 })}
             >
-                {/*<CreateSubTimelinePost />*/}
-                <ReadSubTimelinePost />
+                {isCreating ? (
+                    <CreateSubTimelinePost
+                        post={editablePost}
+                        setIsCreating={setIsCreating}
+                        onCancle={handleCancel}
+                        onSubmit={handleSubmit}
+                    />
+                ) : (
+                    <ReadSubTimelinePost onEdit={handleEdit} />
+                )}
             </div>
             <div // 서브 타임라인 박스
                 css={css({
@@ -59,6 +88,7 @@ export default function SubTimeline() {
                 <SubTimelineItem/>
                 <SubTimelineItem/>
                 <Button
+                    onClick={handleCreateNew}
                     width="460px"
                     height="95px"
                     margin="45px auto"

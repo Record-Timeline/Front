@@ -14,7 +14,7 @@ export default function Button(props) {
         color: ${props.textColor || "white"};
         font-size: ${props.fontSize || "18px"};
         font-weight: ${props.fontWeight || "500"};
-        border: ${props.border || "2px solid #829FD7"};  
+        border: ${props.border || "none"};  
         border-radius: ${props.borderRadius || "20px"};
         display: ${props.display || "flex"};
         justify-content: center;

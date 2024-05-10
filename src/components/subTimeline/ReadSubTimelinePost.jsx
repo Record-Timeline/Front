@@ -6,8 +6,9 @@ import Button from "../common/Button";
 import { FiLock, FiUnlock } from "react-icons/fi";
 import CustomizedSelects from "../timeline/CustomizedSelects";
 
-export default function ReadSubTimelinePost() {
+export default function ReadSubTimelinePost({ onEdit }) {
     const [isChecked, setIsChecked] = useState(false);
+    const post = {};
 
     return (
         <div>
@@ -53,7 +54,8 @@ export default function ReadSubTimelinePost() {
                         fontWeight: "500",
                         lineHeight: "94px",
                         //float: left;
-                        textAlign: "left", // center로 할 지 고민
+                        textAlign: "left",
+                        marginLeft: "10px",
                         marginRight: "15px",
                         display: "inline-block",
                         // border: "1px solid black",
@@ -77,7 +79,7 @@ export default function ReadSubTimelinePost() {
                 >
                     졸업 프로젝트 - 캡스톤
                 </div>
-                <div // 공개 여부 (자물쇠 아이콘)
+                <div // 공개 여부 (자물쇠 아이콘) (이 버전 vs 아래 버전 논의)
                     css={css({
                         display: "flex",
                         alignItems: "center",
@@ -177,13 +179,14 @@ export default function ReadSubTimelinePost() {
                     삭제하기
                 </Button>
                 <Button
+                    onClick={() => onEdit(post)}
                     width="155px"
                     height="53px"
                     margin="0px 20px"
                     backgroundColor="#FFF"
                     textColor="#7286AD"
                     fontSize="20px"
-                    // border="2px solid #959595"
+                    border="2px solid #829FD7"
                     borderRadius="50px"
                     display="inline-block"
                     lineHeight="53px"

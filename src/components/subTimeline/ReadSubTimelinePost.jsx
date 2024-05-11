@@ -1,14 +1,44 @@
 /** @jsxImportSource @emotion/react */
 
-import React, { useState } from "react";
+import * as React from 'react'
+import { useState } from "react";
 import { css } from "@emotion/react";
 import Button from "../common/Button";
 import { FiLock, FiUnlock } from "react-icons/fi";
 import CustomizedSelects from "../timeline/CustomizedSelects";
+import Checkbox from '@mui/material/Checkbox';
+import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
+import Favorite from '@mui/icons-material/Favorite';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+
+const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 export default function ReadSubTimelinePost({ onEdit }) {
-    const [isChecked, setIsChecked] = useState(false);
+    const [isChecked, setIsChecked] = useState(false); // 타임라인 체크 circle 상태
+    const [isLiked, setIsLiked] = useState(false);
+    const [isBookmarked, setIsBookmarked] = useState(false);
+    const [like, setLike] = useState(204); // 좋아요 수 임의로 설정
+    const [bookmark, setBookmark] = useState(53) // 북마크 수 임의로 설정
     const post = {};
+
+    const onClickLike = () => {
+        if (isLiked) {
+            setLike(like - 1); // 좋아요 해제 시 좋아요 수 감소
+        } else {
+            setLike(like + 1); // 좋아요 누를 시 좋아요 수 증가
+        }
+        setIsLiked(!isLiked); // 좋아요 상태 토글
+    }
+
+    const onClickBookmark = () => {
+        if (isBookmarked) {
+            setBookmark(bookmark - 1); // 북마크 해제 시 북마크 수 감소
+        } else {
+            setBookmark(bookmark + 1) // 북마크 누를 시 북마크 수 증가
+        }
+        setIsBookmarked(!isBookmarked); // 북마크 상태 토글
+    }
 
     return (
         <div>
@@ -156,10 +186,48 @@ export default function ReadSubTimelinePost({ onEdit }) {
                     {/*...*/}
                 </div>
             </div>
+            <div // 좋아요, 북마크 감싸는 div
+                css={css({
+                    width: "1005px",
+                    textAlign: "right",
+                    margin: "0 auto",
+                    marginTop: "20px",
+                    // border: "1px solid #f8f6f6",
+                })}
+            >
+                <Checkbox
+                    like={isLiked} // 좋아요 버튼 눌렀는지 여부
+                    onClick={onClickLike}
+                    {...label}
+                    icon={<FavoriteBorder/>}
+                    checkedIcon={<Favorite/>}
+                    css={css({
+                        display: "inline-block",
+                        "&.Mui-checked": {
+                            color: "#A9BDE5",
+                        },
+                    })}
+                />
+                <p css={css({display: "inline-block",})}>{like}</p>
+                <Checkbox
+                    bookmark={isBookmarked} // 북마크 버튼 눌렀는지 여부
+                    onClick={onClickBookmark}
+                    {...label}
+                    icon={<BookmarkBorderIcon/>}
+                    checkedIcon={<BookmarkIcon/>}
+                    css={css({
+                        "&.Mui-checked": {
+                            display: "inline-block",
+                            color: "#F7DB79",
+                        },
+                    })}
+                />
+                <p css={css({display: "inline-block", marginRight: "20px"})}>{bookmark}</p>
+            </div>
             <div // 수정, 삭제 버튼 감싸는 div
                 css={css({
                     textAlign: "center",
-                    marginTop: "50px",
+                    // marginTop: "20px",
                     marginBottom: "50px",
                     // border: "1px solid #f8f6f6",
                 })}

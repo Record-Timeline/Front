@@ -14,7 +14,7 @@ export default function CreateSubTimelinePost({ onCancle, onSubmit }) {
             <div
                 css={css({
                     textAlign: "center",
-                    marginTop: "90px",
+                    marginTop: "93px",
                     marginBottom: "50px",
                     // border: "1px solid #f8f6f6",
                 })}

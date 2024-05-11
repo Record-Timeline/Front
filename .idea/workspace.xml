@@ -6,10 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="4e78fff8-965f-4a9a-b412-7c54129d79ca" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/Button.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Button.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/subTimeline/CreateSubTimelinePost.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/subTimeline/CreateSubTimelinePost.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/subTimeline/ReadSubTimelinePost.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/subTimeline/ReadSubTimelinePost.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/SubTimeline.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/SubTimeline.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

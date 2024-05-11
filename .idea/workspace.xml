@@ -5,27 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4e78fff8-965f-4a9a-b412-7c54129d79ca" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/othersTimeline/OthersTimelineItem.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/post/PostEditor.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/subTimeline/CreateSubTimelinePost.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/subTimeline/ReadSubTimelinePost.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/subTimeline/SubTimelineInput.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/subTimeline/SubTimelineItem.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/OthersMainTimeline.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/SubTimeline.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/common/Profile.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GlobalStyles.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/GlobalStyles.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/Button.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Button.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/DatePickerValue.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/DatePickerValue.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/timeline/CustomizedSelects.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/timeline/CustomizedSelects.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/timeline/MainTimelineInput.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/timeline/MainTimelineInput.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/timeline/MainTimelineItem.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/timeline/MainTimelineItem.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/MainTimeline.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MainTimeline.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/OthersMainTimeline.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/OthersMainTimeline.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +41,7 @@
   "keyToString": {
     "Node.js.MainTimeline.jsx.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Merging RTL-80-FE-다른-사용자-메인-타임라인-페이지-구현",
+    "git-widget-placeholder": "RTL-80-FE-다른-사용자-메인-타임라인-페이지-구현",
     "last_opened_file_path": "C:/Users/saral/Desktop/recordTimeline_FE/Front",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.standard": "true",

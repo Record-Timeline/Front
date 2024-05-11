@@ -54,18 +54,19 @@ export default function MainTimeline() {
             </div>
             <section>
                 <MainTimelineItem />
-                <MainTimelineItem />
+                {/*<MainTimelineItem />*/}
                 <MainTimelineItem />
                 <MainTimelineInput />
                 {inputs.map(input => input)} {/* 상태 배열에 저장된 모든 MainTimelineInput 렌더링 */}
                 <Button
                     onClick={addInput}  // 버튼 클릭 시 addInput 함수 호출
-                    width="970px"
-                    height="70px"
-                    margin="0 auto"
+                    width="1005px"
+                    height="94px"
+                    margin="45px auto"
                     backgroundColor="#f8f6f6"
                     textColor="#717171"
                     fontSize="35px"
+                    borderRadius="30px"
                 >
                     +
                 </Button>

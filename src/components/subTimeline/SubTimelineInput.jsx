@@ -8,11 +8,10 @@ import { GoPencil } from "react-icons/go";
 import { FaRegTrashAlt } from "react-icons/fa";
 import AlertDialog from "../common/AlertDialog";
 import DatePickerValue from "../common/DatePickerValue";
-import SelectAutoWidth from "./SelectAutoWidth";
-import CustomizedSelects from "./CustomizedSelects"
+import SelectAutoWidth from "../timeline/SelectAutoWidth";
+import CustomizedSelects from "../timeline/CustomizedSelects"
 import Box from '@mui/material/Box';
 import Input from '@mui/material/Input';
-import { FaRegCircleCheck } from "react-icons/fa6";
 
 const ariaLabel = { 'aria-label': 'description' };
 
@@ -23,7 +22,7 @@ const CheckCircle = styled.div` // 요거 emotion으로 수정해야되는데 �
     border: 3px solid #829FD7;
     float: left;
     display: inline-block;
-    margin-top: 36px;
+    margin-top: 35px;
     margin-left: 45px;
     margin-right: 23px;
     cursor: pointer;
@@ -35,7 +34,7 @@ const CheckCircle = styled.div` // 요거 emotion으로 수정해야되는데 �
     `}
 `;
 
-function MainTimelineInput() {
+function SubTimelineInput() {
     const [isChecked, setIsChecked] = useState(false);
     const [title, setTitle] = useState("");
     const [start, setStart] = useState("");
@@ -56,8 +55,8 @@ function MainTimelineInput() {
     return (
         <div // 회색 타임라인 박스
             css={css({
-                width: "1005px", // 800px
-                height: "94px",
+                width: "1005px",
+                height: "94px", // 좀 더 굵게 만들기 - 다른 것도 다 수정해야 함 ㅡㅡ
                 background: "#f8f6f6",
                 borderRadius: "30px",
                 boxShadow: "0 0 8px 0 rgba(0, 0, 0, 0.04)",
@@ -89,19 +88,7 @@ function MainTimelineInput() {
                 <DatePickerValue label="시작 날짜"/>
                 <p css={css({margin: "7px", lineHeight: "60px"})}>~</p> {/* 물결 있는 버전 */}
                 {/*<p css={css({margin: "6px", lineHeight: "60px"})} />*/} {/* 물결 없는 버전 */}
-                <DatePickerValue label="종료 날짜"/>
-            </div>
-            <div // 공개 여부 (자물쇠 아이콘)
-                css={css({
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    // margin: "0 25px", // 좌우 마진을 25px로 설정
-                    // border: "1px solid black",
-                })}
-            >
-                {/*<SelectAutoWidth />*/}
-                <CustomizedSelects/>
+                <DatePickerValue label="종료 날짜" />
             </div>
             <div // 타임라인 제목
                 css={css({
@@ -118,8 +105,9 @@ function MainTimelineInput() {
                     sx={{
                         '& > :not(style)': {
                             m: 1,
-                            width: "250px",
-                            marginTop: "30px"
+                            width: "280px",
+                            marginTop: "30px",
+                            marginLeft: "30px",
                         },
                     }}
                     noValidate
@@ -128,38 +116,19 @@ function MainTimelineInput() {
                     <Input placeholder="제목을 입력하세요." inputProps={ariaLabel}/>
                 </Box>
             </div>
-            <div // 수정완료 (체크 아이콘)
+            <div // 공개 여부 (자물쇠 아이콘)
                 css={css({
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    // margin: "0 25px", // 좌우 마진을 25px로 설정
-                    marginLeft: "25px",
-                    marginRight: "5px",
-                    cursor: "pointer",
                     // border: "1px solid black",
                 })}
             >
-                <FaRegCircleCheck/>
-            </div>
-            <div // 삭제하기 (쓰레기통 아이콘)
-                // onClick={handleDelete}
-                css={css({
-                    color: "#829FD7",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    // margin: "0 25px", // 좌우 마진을 25px로 설정
-                    marginRight: "45px",
-                    cursor: "pointer",
-                    // border: "1px solid black",
-                })}
-            >
-                {/*<FaRegTrashAlt/>*/}
-                <AlertDialog icon={<FaRegTrashAlt/>}/>
+                {/*<SelectAutoWidth />*/}
+                <CustomizedSelects text1={" 공개"} text2={" 비공개"}/> {/* 여기 소희님한테 물어보기 text1, text2 말고 하나로 합치는 방법 */}
             </div>
         </div>
     );
 }
 
-export default MainTimelineInput;
+export default SubTimelineInput;

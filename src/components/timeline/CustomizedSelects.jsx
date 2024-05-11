@@ -45,7 +45,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-export default function CustomizedSelects() {
+export default function CustomizedSelects({ text1, text2}) {
     const [openStatus, setOpenStatus] = React.useState(true);
     const handleChange = (event: { target: { value: string } }) => {
         setOpenStatus(event.target.value);
@@ -60,8 +60,8 @@ export default function CustomizedSelects() {
                     onChange={handleChange}
                     input={<BootstrapInput />}
                 >
-                    <MenuItem value={true}><FiUnlock /></MenuItem>
-                    <MenuItem value={false}><FiLock /></MenuItem>
+                    <MenuItem value={true} text={text1}><FiUnlock />{text1}</MenuItem>
+                    <MenuItem value={false} text={text2}><FiLock />{text2}</MenuItem>
                 </Select>
             </FormControl>
         </div>

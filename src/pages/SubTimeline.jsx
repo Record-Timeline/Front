@@ -58,7 +58,7 @@ export default function SubTimeline() {
                     <CreateSubTimelinePost
                         post={editablePost}
                         setIsCreating={setIsCreating}
-                        onCancle={handleCancel}
+                        onCancel={handleCancel}
                         onSubmit={handleSubmit}
                     />
                 ) : (

@@ -6,7 +6,7 @@ import SubTimelineInput from "./SubTimelineInput";
 import PostEditor from "../post/PostEditor"
 import Button from "../common/Button";
 
-export default function CreateSubTimelinePost({ onCancle, onSubmit }) {
+export default function CreateSubTimelinePost({ onCancel, onSubmit }) {
     return (
         <div>
             <SubTimelineInput />
@@ -20,7 +20,7 @@ export default function CreateSubTimelinePost({ onCancle, onSubmit }) {
                 })}
             >
                 <Button
-                    onClick = {() => onCancle()}
+                    onClick = {() => onCancel()}
                     width="155px"
                     height="53px"
                     margin="0px 20px"

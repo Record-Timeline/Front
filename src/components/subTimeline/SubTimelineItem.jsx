@@ -8,34 +8,14 @@ import { GoPencil } from "react-icons/go";
 import { FaRegTrashAlt } from "react-icons/fa";
 import AlertDialog from "../common/AlertDialog";
 
-const CheckCircle = styled.div` // 요거 emotion으로 수정해야되는데 조건부 스타일링 때문에 못바꿈
-    width: 22px;
-    height: 22px;
-    border-radius: 20px;
-    border: 3px solid #829FD7;
-    float: left;
-    display: inline-block;
-    margin-top: 50px;
-    margin-left: 45px;
-    margin-right: 35px;
-    cursor: pointer;
-    ${props =>
-    props.done &&
-    css`
-        border: 3px solid #829FD7;
-        background-color: #829FD7; /* 배경 색상을 테두리와 동일하게 적용 */
-    `}
-`;
-
 function SubTimelineItem() {
     const [isChecked, setIsChecked] = useState(false);
 
     return (
-
         <div // 회색 타임라인 박스
             css={css({
-                width: "500px",
-                height: "125px",
+                width: "310px", // 300으로 맞추기
+                height: "100px",
                 background: "#f8f6f6",
                 borderRadius: "50px",
                 boxShadow: "0 0 8px 0 rgba(0, 0, 0, 0.04)",
@@ -46,9 +26,22 @@ function SubTimelineItem() {
                 display: "flex",
             })}
         >
-            <CheckCircle // 체크 표시
+            <div // 체크 표시
                 done={isChecked}
                 onClick={() => setIsChecked(!isChecked)}
+                css={css`
+                        width: 16px; // 21px
+                        height: 16px; // 21px
+                        border-radius: 50%;
+                        border: 3px solid #829FD7;
+                        float: left;
+                        display: inline-block;
+                        margin-top: 40px;
+                        margin-left: 30px;
+                        margin-right: 15px;
+                        cursor: pointer;
+                        background-color: ${isChecked ? "#829FD7" : "#f8f6f6"}; // 선 때문에 뚫린 원일 때도 배경 색 설정
+                    `}
             />
             <div
                 css={css({
@@ -59,13 +52,12 @@ function SubTimelineItem() {
                 <div // 기간
                     css={css({
                         color: "#666",
-                        fontFamily: "Pretendard",
-                        fontSize: "20px",
+                        fontSize: "15px",
                         fontStyle: "normal",
                         fontWeight: "500",
                         lineHeight: "normal",
                         textAlign: "left",
-                        marginTop: "30px",
+                        marginTop: "25px",
                         // border: "1px solid #829FD7",
                     })}
                 >
@@ -74,8 +66,7 @@ function SubTimelineItem() {
                 <div // 서브 타임라인 제목
                     css={css({
                         color: "#212121",
-                        fontFamily: "Pretendard",
-                        fontSize: "20px",
+                        fontSize: "15px",
                         fontStyle: "normal",
                         fontWeight: "600",
                         lineHeight: "normal",
@@ -93,7 +84,7 @@ function SubTimelineItem() {
                     alignItems: "center",
                     justifyContent: "center",
                     marginLeft: "10px",
-                    marginRight: "40px",
+                    marginRight: "25px",
                     // border: "1px solid black",
                 })}
             >

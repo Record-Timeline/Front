@@ -44,14 +44,14 @@ export default function ReadSubTimelinePost({ onEdit }) {
         <div>
             <div // SubTimelineItem2 (상단에 뜨는 아이템) (회색 박스)
                 css={css({
-                    width: "1005px",
-                    height: "94px",
+                    width: "680px",
+                    height: "65px",
                     background: "#f8f6f6",
                     borderRadius: "30px",
                     boxShadow: "0 0 8px 0 rgba(0, 0, 0, 0.04)",
                     textAlign: "center",
                     margin: "0 auto", /* 페이지 중앙에 나타나도록 설정 */
-                    marginTop: "45px",
+                    marginTop: "20px",
                     marginBottom: "32px",
                     display: "flex",
                 })}
@@ -60,33 +60,31 @@ export default function ReadSubTimelinePost({ onEdit }) {
                     done={isChecked}
                     onClick={() => setIsChecked(!isChecked)}
                     css={css`
-                        width: 22px;
-                        height: 22px;
-                        border-radius: 20px;
+                        width: 17px; // 21px
+                        height: 17px; // 21px
+                        border-radius: 50%;
                         border: 3px solid #829FD7;
                         float: left;
                         display: inline-block;
-                        margin: 35px;
-                        margin-left: 45px;
-                        margin-right: 23px;
+                        margin-top: 22px;
+                        margin-left: 40px;
+                        margin-right: 15px;
                         cursor: pointer;
-                        background-color: ${isChecked ? "#829FD7" : "none"};
+                        background-color: ${isChecked ? "#829FD7" : "#f8f6f6"}; // 선 때문에 뚫린 원일 때도 배경 색 설정
                     `}
                 />
                 <div // 기간
                     css={css({
                         // flex: "1.5",
-                        width: "280px",
+                        width: "200px",
                         color: "#666",
-                        fontFamily: "Pretendard",
-                        fontSize: "20px",
+                        fontSize: "15px",
                         fontStyle: "normal",
                         fontWeight: "500",
-                        lineHeight: "94px",
+                        lineHeight: "65px",
                         //float: left;
                         textAlign: "left",
                         marginLeft: "10px",
-                        marginRight: "15px",
                         display: "inline-block",
                         // border: "1px solid black",
                     })}
@@ -96,13 +94,12 @@ export default function ReadSubTimelinePost({ onEdit }) {
                 <div // 타임라인 제목
                     css={css({
                         flex: "1",
-                        fontSize: "20px",
+                        fontSize: "15px",
                         //font-weight: 550;
                         color: "#212121",
                         //float: left;
                         textAlign: "left",
-                        lineHeight: "94px",
-                        marginLeft: "23px",
+                        lineHeight: "65px",
                         display: "inline-block",
                         // border: "1px solid black",
                     })}
@@ -135,8 +132,8 @@ export default function ReadSubTimelinePost({ onEdit }) {
             </div>
             <div // 텍스트 나오는 박스
                 css={css({
-                    width: "1005px",
-                    height: "700px",
+                    width: "680px",
+                    height: "500px",
                     background: "#f8f6f6",
                     borderRadius: "30px",
                     boxShadow: "0 0 8px 0 rgba(0, 0, 0, 0.04)",
@@ -147,7 +144,7 @@ export default function ReadSubTimelinePost({ onEdit }) {
                 <div
                     css={css({
                         height: "550px",
-                        fontSize: "20px",
+                        fontSize: "15px",
                         color: "#525252",
                         padding: "50px",
                         // overflowY: "scroll",
@@ -188,7 +185,7 @@ export default function ReadSubTimelinePost({ onEdit }) {
             </div>
             <div // 좋아요, 북마크 감싸는 div
                 css={css({
-                    width: "1005px",
+                    width: "700px",
                     textAlign: "right",
                     margin: "0 auto",
                     marginTop: "20px",
@@ -233,31 +230,31 @@ export default function ReadSubTimelinePost({ onEdit }) {
                 })}
             >
                 <Button
-                    width="155px"
-                    height="53px"
+                    width="100px"
+                    height="25px"
                     margin="0px 20px"
                     backgroundColor="#FFF"
                     textColor="#F19797"
-                    fontSize="20px"
+                    fontSize="15px"
                     border="2px solid #FFBDBD"
                     borderRadius="50px"
                     display="inline-block"
-                    lineHeight="53px"
+                    lineHeight="25px"
                 >
                     삭제하기
                 </Button>
                 <Button
                     onClick={() => onEdit(post)}
-                    width="155px"
-                    height="53px"
+                    width="100px"
+                    height="25px"
                     margin="0px 20px"
                     backgroundColor="#FFF"
                     textColor="#7286AD"
-                    fontSize="20px"
+                    fontSize="15px"
                     border="2px solid #829FD7"
                     borderRadius="50px"
                     display="inline-block"
-                    lineHeight="53px"
+                    lineHeight="25px"
                 >
                     수정하기
                 </Button>

@@ -4,7 +4,6 @@ import * as React from "react";
 import {useState} from "react";
 import { css } from "@emotion/react";
 import Button from  "./Button"
-import ProfileNickName from "../main/ProfileNickName";
 import testProfileImg from "../../assets/images/testProfileImg.png";
 
 export default function Profile() {
@@ -99,7 +98,7 @@ export default function Profile() {
                     <Button
                         width="120px"
                         height="35px"
-                        lineHeight="15px" // 나중에 깨지면 지우기
+                        // lineHeight="15px" // 나중에 깨지면 지우기
                         margin="28px 0 0 0"
                         backgroundColor="#fff"
                         border="1px solid #D7D7D7"
@@ -112,7 +111,7 @@ export default function Profile() {
                     </Button>
                     <Button
                         width="150px"
-                        height="35px" // 나중에 깨지면 지우기
+                        // height="35px" // 나중에 깨지면 지우기
                         lineHeight="15px"
                         margin="28px 0 0 230px"
                         backgroundColor="none"

@@ -5,9 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4e78fff8-965f-4a9a-b412-7c54129d79ca" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/common/Profile.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/othersTimeline/OthersSubTimelineItem.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/othersTimeline/OthersSubTimelinePost.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/OthersSubTimeline.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/OthersMainTimeline.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/OthersMainTimeline.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/Profile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Profile.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/subTimeline/SubTimelineItem.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/subTimeline/SubTimelineItem.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +45,7 @@
   "keyToString": {
     "Node.js.MainTimeline.jsx.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "RTL-80-FE-다른-사용자-메인-타임라인-페이지-구현",
+    "git-widget-placeholder": "RTL-85-fe-다른-사용자-서브-타임라인-페이지-구현",
     "last_opened_file_path": "C:/Users/saral/Desktop/recordTimeline_FE/Front",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.standard": "true",

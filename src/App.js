@@ -10,6 +10,7 @@ import Search from "./pages/Search";
 import SearchResult from "./pages/SearchResult";
 import SubTimeline from "./pages/SubTimeline";
 import OthersMainTimeline from "./pages/OthersMainTimeline";
+import OthersSubTimeline from "./pages/OthersSubTimeline";
 import { CssBaseline } from "@mui/material";
 
 function App() {
@@ -34,7 +35,8 @@ function App() {
         <Route path="/maintimeline" element={<MainTimeline />} />
         <Route path="/maintimeline" element={<MainTimeline />} /> {/* 메인 타임라인 페이지 */}
         <Route path="/subtimeline" element={<SubTimeline />} /> {/* 서브 타임라인 페이지 */}
-        <Route path="/othersmain" element={<OthersMainTimeline />} /> {/* 서브 타임라인 페이지 */}
+        <Route path="/othersmain" element={<OthersMainTimeline />} /> {/* 다른 사람 메인 타임라인 페이지 */}
+        <Route path="/otherssub" element={<OthersSubTimeline />} /> {/* 다른 사람 서브 타임라인 페이지 */}
       </Routes>
     </div>
   );

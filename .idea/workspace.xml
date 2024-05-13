@@ -5,13 +5,37 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4e78fff8-965f-4a9a-b412-7c54129d79ca" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/common/Profile.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/main/PostRecommendation.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/main/ProfileInfo.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/main/ProfileNickName.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/main/RecoderRecommendation.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/main/SearchPostBox.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/main/SearchRecoderBox.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/othersTimeline/OthersSubTimelineItem.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/othersTimeline/OthersSubTimelinePost.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/othersTimeline/OthersTimelineItem.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Bookmark.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/OthersMainTimeline.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/OthersSubTimeline.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Search.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/SearchResult.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/DatePickerValue.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/DatePickerValue.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Header.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/NavigationBar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/NavigationBar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/Profile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Profile.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/post/PostEditor.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/post/PostEditor.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/subTimeline/CreateSubTimelinePost.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/subTimeline/CreateSubTimelinePost.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/subTimeline/ReadSubTimelinePost.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/subTimeline/ReadSubTimelinePost.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/subTimeline/SubTimelineInput.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/subTimeline/SubTimelineInput.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/subTimeline/SubTimelineItem.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/subTimeline/SubTimelineItem.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/timeline/MainTimelineInput.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/timeline/MainTimelineInput.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/timeline/MainTimelineItem.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/timeline/MainTimelineItem.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Main.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/MainTimeline.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MainTimeline.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/SubTimeline.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/SubTimeline.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -42,23 +66,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Node.js.MainTimeline.jsx.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;RTL-79-fe-서브-타임라인-페이지-ui-구현&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/saral/Desktop/recordTimeline_FE/Front&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\WebStorm 2024.1\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Node.js.MainTimeline.jsx.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "Merging RTL-79-fe-서브-타임라인-페이지-ui-구현",
+    "last_opened_file_path": "C:/Users/saral/Desktop/recordTimeline_FE/Front",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.standard": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.standard": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2024.1\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\saral\Desktop\recordTimeline_FE\Front\src\components\subTimeline" />

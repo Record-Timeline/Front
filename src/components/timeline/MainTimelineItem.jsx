@@ -8,23 +8,23 @@ import { GoPencil } from "react-icons/go";
 import { FaRegTrashAlt } from "react-icons/fa";
 import AlertDialog from "../common/AlertDialog";
 
-const CheckCircle = styled.div` // 요거 emotion으로 수정해야되는데 조건부 스타일링 때문에 못바꿈
-    width: 22px;
-    height: 22px;
-    border-radius: 20px;
-    border: 3px solid #829FD7;
-    float: left;
-    display: inline-block;
-    margin: 35px;
-    margin-left: 45px;
-    cursor: pointer;
-    ${props => 
-      props.done && 
-      css`
-        border: 3px solid #829FD7;
-        background-color: #829FD7; /* 배경 색상을 테두리와 동일하게 적용 */
-    `}
-`;
+// const CheckCircle = styled.div` // 요거 emotion으로 수정해야되는데 조건부 스타일링 때문에 못바꿈
+//     width: 22px;
+//     height: 22px;
+//     border-radius: 20px;
+//     border: 3px solid #829FD7;
+//     float: left;
+//     display: inline-block;
+//     margin: 35px;
+//     margin-left: 45px;
+//     cursor: pointer;
+//     ${props =>
+//       props.done &&
+//       css`
+//         border: 3px solid #829FD7;
+//         background-color: #829FD7; /* 배경 색상을 테두리와 동일하게 적용 */
+//     `}
+// `;
 
 function MainTimelineItem() {
     const [isChecked, setIsChecked] = useState(false);
@@ -55,10 +55,26 @@ function MainTimelineItem() {
                 display: "flex",
             })}
         >
-            <CheckCircle // 체크표시
+            <div // 체크표시
                 done={isChecked}
                 onClick={() => setIsChecked(!isChecked)}
+                css={css`
+                    width: 22px;
+                    height: 22px;
+                    border-radius: 20px;
+                    border: 3px solid #829FD7;
+                    float: left;
+                    display: inline-block;
+                    margin: 35px;
+                    margin-left: 45px;
+                    cursor: pointer;
+                    background-color: ${isChecked ? "#829FD7" : "none"};
+                `}
             />
+            {/*<CheckCircle // 체크표시*/}
+            {/*    done={isChecked}*/}
+            {/*    onClick={() => setIsChecked(!isChecked)}*/}
+            {/*/>*/}
             <div // 기간
                 css={css({
                     // flex: "1.5",

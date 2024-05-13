@@ -41,8 +41,8 @@ export default function SubTimeline() {
             <Profile />
             <div // 포스팅 박스 전체
                 css={css({
-                    width: "740px", // 760px
-                    height: "750px",
+                    width: "760px",
+                    height: "770px",
                     // height: "100%",
                     borderRadius: "30px",
                     background: "#FFF",

@@ -71,14 +71,14 @@ function SubTimelineInput() {
                 done={isChecked}
                 onClick={() => setIsChecked(!isChecked)}
                 css={css`
-                        width: 17px; // 21px
-                        height: 17px; // 21px
+                        width: 21px; 
+                        height: 21px; 
                         border-radius: 50%;
                         border: 3px solid #829FD7;
                         float: left;
                         display: inline-block;
                         margin-top: 22px;
-                        margin-left: 40px;
+                        margin-left: 35px;
                         margin-right: 15px;
                         cursor: pointer;
                         background-color: ${isChecked ? "#829FD7" : "#f8f6f6"}; // 선 때문에 뚫린 원일 때도 배경 색 설정
@@ -98,10 +98,7 @@ function SubTimelineInput() {
                     // border: "1px solid black",
                 })}
             >
-                <DatePickerValue
-                    label="시작 날짜"
-                    slotProps={{ textField: { size: 'small' } }}
-                />
+                <DatePickerValue label="시작 날짜" />
                 <p css={css({margin: "7px", lineHeight: "60px"})}>~</p> {/* 물결 있는 버전 */}
                 {/*<p css={css({margin: "6px", lineHeight: "60px"})} />*/} {/* 물결 없는 버전 */}
                 <DatePickerValue label="종료 날짜" />

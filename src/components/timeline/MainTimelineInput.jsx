@@ -101,7 +101,7 @@ function MainTimelineInput() {
                 })}
             >
                 {/*<SelectAutoWidth />*/}
-                <CustomizedSelects />
+                <CustomizedSelects/>
             </div>
             <div // 타임라인 제목
                 css={css({
@@ -119,12 +119,13 @@ function MainTimelineInput() {
                         '& > :not(style)': {
                             m: 1,
                             width: "250px",
-                            marginTop: "30px"},
+                            marginTop: "30px"
+                        },
                     }}
                     noValidate
                     autoComplete="off"
                 >
-                    <Input placeholder="제목을 입력하세요." inputProps={ariaLabel} />
+                    <Input placeholder="제목을 입력하세요." inputProps={ariaLabel}/>
                 </Box>
             </div>
             <div // 수정완료 (체크 아이콘)
@@ -139,7 +140,7 @@ function MainTimelineInput() {
                     // border: "1px solid black",
                 })}
             >
-                <FaRegCircleCheck />
+                <FaRegCircleCheck/>
             </div>
             <div // 삭제하기 (쓰레기통 아이콘)
                 // onClick={handleDelete}
@@ -155,7 +156,7 @@ function MainTimelineInput() {
                 })}
             >
                 {/*<FaRegTrashAlt/>*/}
-                <AlertDialog icon={<FaRegTrashAlt />} />
+                <AlertDialog icon={<FaRegTrashAlt/>}/>
             </div>
         </div>
     );

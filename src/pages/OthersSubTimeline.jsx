@@ -53,9 +53,9 @@ export default function OthersSubTimeline() {
                 >
                     <h1>졸업 프로젝트 캡스톤 - 레코드 타임라인</h1>
                 </div>
-                <OthersSubTimelineItem/>
-                <OthersSubTimelineItem/>
-                <OthersSubTimelineItem/>
+                <OthersSubTimelineItem isDone={true}/>
+                <OthersSubTimelineItem isDone={true}/>
+                <OthersSubTimelineItem isDone={false}/>
             </div>
         </div>
     )

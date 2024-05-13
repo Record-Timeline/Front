@@ -6,7 +6,7 @@ import { css } from "@emotion/react";
 import Button from  "./Button"
 import testProfileImg from "../../assets/images/testProfileImg.png";
 
-export default function Profile() {
+export default function OthersProfile() {
     const nickName = "닉네임"; // 테스트 닉네임
     const interestCategory = "개발자"; // 테스트 관심분야
     const [isFollowed, setIsFollowed] = useState(false);

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { css } from "@emotion/react";
-import Profile from "../components/common/Profile";
+import MyProfile from "../components/common/MyProfile";
 import CreateSubTimelinePost from "../components/subTimeline/CreateSubTimelinePost";
 import ReadSubTimelinePost from "../components/subTimeline/ReadSubTimelinePost";
 import SubTimelineItem from "../components/subTimeline/SubTimelineItem";
@@ -38,7 +38,7 @@ export default function SubTimeline() {
                 marginBottom: "150px",
             })}
         >
-            <Profile />
+            <MyProfile />
             <div // 포스팅 박스 전체
                 css={css({
                     width: "760px",

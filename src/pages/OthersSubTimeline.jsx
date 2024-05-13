@@ -2,10 +2,9 @@
 
 import React, { useState } from "react";
 import { css } from "@emotion/react";
-import Profile from "../components/common/Profile";
+import OthersProfile from "../components/common/OthersProfile";
 import OthersSubTimelinePost from "../components/othersTimeline/OthersSubTimelinePost";
 import OthersSubTimelineItem from "../components/othersTimeline/OthersSubTimelineItem";
-import SubTimelineItem from "../components/subTimeline/SubTimelineItem";
 
 export default function OthersSubTimeline() {
     const [isDone, setIsDone] = useState(false);
@@ -16,7 +15,7 @@ export default function OthersSubTimeline() {
                marginBottom: "150px",
             })}
         >
-            <Profile />
+            <OthersProfile />
             <div // 포스팅 박스 전체
                 css={css({
                     width: "760px",

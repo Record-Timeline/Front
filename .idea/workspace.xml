@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4e78fff8-965f-4a9a-b412-7c54129d79ca" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/components/common/MyProfile.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/Profile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Profile.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/Profile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/OthersProfile.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/OthersMainTimeline.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/OthersMainTimeline.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/OthersSubTimeline.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/OthersSubTimeline.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/SubTimeline.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/SubTimeline.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,7 +20,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="RTL-67-fe-메인-타임라인-페이지-구현" />
+        <entry key="$PROJECT_DIR$" value="RTL-85-fe-다른-사용자-서브-타임라인-페이지-구현" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />

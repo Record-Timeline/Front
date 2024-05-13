@@ -22,7 +22,7 @@ const EmailAndPasswordStep = ({
   showVerificationInput,
   handleConfirmVerificationCode,
   confirmVerificationCode,
-  handleNextStep,
+  handleNextStep, email, handleEmailChange
 }) => {
   //폰트 설정
   const theme = createTheme({
@@ -85,7 +85,7 @@ const EmailAndPasswordStep = ({
                   padding: "16px 0px 0px 13px",
                 }}
               >
-                <StyledTextField
+                <StyledTextField value={email} onChange={handleEmailChange}
                   required
                   autoFocus
                   fullWidth

@@ -8,17 +8,41 @@ import { TextField } from "@mui/material/";
 import EmailStep from "../components/signUp/EmailStep";
 import FieldStep from "../components/signUp/FieldStep";
 import { css } from "@emotion/react";
+import axios from "axios";
 export default function SignUp() {
   const [passwordError, setPasswordError] = useState(false); // 비밀번호 유효성 에러 상태
   const [showVerificationInput, setShowVerificationInput] = useState(false); // 인증번호 창 뜨기/안뜨기 상태
   const [confirmVerificationCode, setConfirmVerificationCode] = useState(false); // 인증번호 확인 완료 상태
   const [currentStep, setCurrentStep] = useState(1); // 현재 회원가입 단계 상태
+  const [email, setEmail] = useState(""); // 입력한 이메일
   const [field, setField] = useState("");
   const navigate = useNavigate();
 
   // 인증번호 발송 버튼
-  const handleSendButtonClick = () => {
+  const handleSendButtonClick  = async () => {
     setShowVerificationInput(true);
+      try {
+          await axios.post(
+              `/api/v1/auth/email-certification`,
+              { email:  email },
+              {
+                  headers: {
+                      Accept: "*/*",
+                      "Content-Type": `application/json`,
+                  },
+              }
+          );
+          console.log(email);
+      } catch (error) {
+          console.error(error);
+          console.log(email);
+
+      }
+  };
+
+    // 이메일 입력 값 업데이트
+  const handleEmailChange = (e) => {
+      setEmail(e.target.value);
   };
 
   // 인증번호 확인 버튼
@@ -30,6 +54,8 @@ export default function SignUp() {
   const getCircleColor = (step) => {
     return currentStep === step ? "#829FD7" : "#ECECEE";
   };
+
+
 
   const numLineStyle = {
     borderBottom: `4px solid ${getCircleColor(1)}`,
@@ -212,6 +238,8 @@ export default function SignUp() {
             handleConfirmVerificationCode={handleConfirmVerificationCode}
             confirmVerificationCode={confirmVerificationCode}
             handleNextStep={handleNextStep}
+            email = {email}
+            handleEmailChange ={handleEmailChange}
           />
         )}
         {currentStep === 2 && (

@@ -6,6 +6,14 @@ import { css } from "@emotion/react";
 import { Link } from "react-router-dom";
 import KaKaoIcon from "../assets/images/kakaoLoginIcon.svg";
 import Button from "../components/common/Button";
+import {
+  Container,
+  CssBaseline,
+  FormControl,
+  Grid,
+  TextField,
+} from "@mui/material/";
+import {styled as withStyles} from "@mui/material/styles";
 
 export default function Login() {
   const [username, setUsername] = useState(""); // 아이디
@@ -19,6 +27,21 @@ export default function Login() {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
+
+  // text field 색 바꾸기
+  const StyledTextField = withStyles(TextField)({
+    "& .MuiInput-underline:after": {
+      borderBottomColor: "#829FD7",
+    },
+    "& .MuiOutlinedInput-root": {
+      "&.Mui-focused fieldset": {
+        color: "#829FD7",
+      },
+    },
+
+    position: "relative",
+  });
+
 
   return (
     <div
@@ -39,7 +62,6 @@ export default function Login() {
           flex-direction: column;
           justify-content: center;
           align-items: center;
-          width: 600px;
         `}
       >
         <img
@@ -50,39 +72,40 @@ export default function Login() {
             margin-bottom: 60px;
           `}
         />
-        <input
-          type="text"
-          placeholder="아이디를 입력하세요"
-          css={css`
-            font-size: 18px;
-            font-weight: 300;
-            border-radius: 20px;
-            border: 1.5px solid #949494;
-            outline: none;
-            width: 350px;
-            height: 30px;
-            padding: 10px 20px;
-            margin-bottom: 12px;
-          `}
-          onChange={handleUsernameChange}
+        <StyledTextField
+            onChange={handleUsernameChange}
+            required
+            autoFocus
+            fullWidth
+            type="id"
+            id="id"
+            name="id"
+            label="아이디"
+            InputProps={{
+              style: {
+                borderRadius: "15px",
+                marginBottom: "20px"
+              },
+            }}
         />
-        <input
-          type="password"
-          placeholder="비밀번호를 입력하세요"
-          css={css`
-            font-size: 18px;
-            font-weight: 300;
-            border-radius: 20px;
-            border: 1.5px solid #949494;
-            outline: none;
-            width: 350px;
-            height: 30px;
-            padding: 10px 20px;
-            margin-bottom: 12px;
-          `}
-          onChange={handlePasswordChange}
+        <StyledTextField
+            onChange={handlePasswordChange}
+            required
+            autoFocus
+            fullWidth
+            type="password"
+            id="password"
+            name="password"
+            label="비밀번호"
+            InputProps={{
+              style: {
+                borderRadius: "15px",
+                marginBottom: "5px"
+              },
+            }}
         />
-        <Button margin="10px 0px 15px 0px">로그인</Button>
+
+        <Button margin="10px 0px 15px 0px" height="45px">로그인</Button>
         <div
           css={css`
             display: flex;

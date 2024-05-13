@@ -8,43 +8,14 @@ import { GoPencil } from "react-icons/go";
 import { FaRegTrashAlt } from "react-icons/fa";
 import AlertDialog from "../common/AlertDialog";
 
-// const CheckCircle = styled.div` // 요거 emotion으로 수정해야되는데 조건부 스타일링 때문에 못바꿈
-//     width: 22px;
-//     height: 22px;
-//     border-radius: 20px;
-//     border: 3px solid #829FD7;
-//     float: left;
-//     display: inline-block;
-//     margin: 35px;
-//     margin-left: 45px;
-//     cursor: pointer;
-//     ${props =>
-//       props.done &&
-//       css`
-//         border: 3px solid #829FD7;
-//         background-color: #829FD7; /* 배경 색상을 테두리와 동일하게 적용 */
-//     `}
-// `;
-
 function MainTimelineItem() {
     const [isChecked, setIsChecked] = useState(false);
-
-    // const handleDelete = () => {
-    //     // eslint-disable-next-line no-restricted-globals
-    //     if (confirm("정말로 삭제하시겠습니까?")) {
-    //         // 삭제 로직을 수행
-    //         console.log("항목이 삭제되었습니다.");
-    //     } else {
-    //         // 삭제 취소
-    //         console.log("삭제가 취소되었습니다.");
-    //     }
-    // }
 
     return (
         <div // 회색 타임라인 박스
             css={css({
-                width: "1005px",
-                height: "94px",
+                width: "810px",
+                height: "85px",
                 background: "#f8f6f6",
                 borderRadius: "30px",
                 boxShadow: "0 0 8px 0 rgba(0, 0, 0, 0.04)",
@@ -65,30 +36,27 @@ function MainTimelineItem() {
                     border: 3px solid #829FD7;
                     float: left;
                     display: inline-block;
-                    margin: 35px;
-                    margin-left: 45px;
+                    //margin: 35px;
+                    margin-top: 31px;
+                    margin-left: 40px;
                     cursor: pointer;
                     background-color: ${isChecked ? "#829FD7" : "none"};
                 `}
             />
-            {/*<CheckCircle // 체크표시*/}
-            {/*    done={isChecked}*/}
-            {/*    onClick={() => setIsChecked(!isChecked)}*/}
-            {/*/>*/}
             <div // 기간
                 css={css({
                     // flex: "1.5",
-                    width: "400px",
+                    width: "230px",
                     color: "#666",
                     fontFamily: "Pretendard",
-                    fontSize: "20px",
+                    fontSize: "16px",
                     fontStyle: "normal",
                     fontWeight: "500",
-                    lineHeight: "94px",
+                    lineHeight: "85px",
                     //float: left;
                     textAlign: "left", // center로 할 지 고민
                     marginRight: "15px",
-                    marginLeft: "20px",
+                    marginLeft: "40px",
                     display: "inline-block",
                     // border: "1px solid black",
                 })}
@@ -110,13 +78,13 @@ function MainTimelineItem() {
             <div // 타임라인 제목
                 css={css({
                     flex: "1",
-                    fontSize: "17px",
+                    fontSize: "16px",
                     //font-weight: 550;
                     color: "#212121",
                     //float: left;
                     textAlign: "left",
-                    lineHeight: "94px",
-                    marginLeft: "23px",
+                    lineHeight: "85px",
+                    marginLeft: "20px",
                     display: "inline-block",
                     // border: "1px solid black",
                 })}
@@ -129,7 +97,7 @@ function MainTimelineItem() {
                     alignItems: "center",
                     justifyContent: "center",
                     // margin: "0 25px", // 좌우 마진을 25px로 설정
-                    marginLeft: "25px",
+                    marginLeft: "10px",
                     marginRight: "5px",
                     cursor: "pointer",
                     // border: "1px solid black",
@@ -145,7 +113,7 @@ function MainTimelineItem() {
                     alignItems: "center",
                     justifyContent: "center",
                     // margin: "0 25px", // 좌우 마진을 25px로 설정
-                    marginRight: "45px",
+                    marginRight: "29px",
                     cursor: "pointer",
                     // border: "1px solid black",
                 })}

@@ -10,6 +10,7 @@ import { css } from "@emotion/react";
 
 import Button from '@mui/material/Button';
 import DialogActions from '@mui/material/DialogActions';
+import {TextField} from "@mui/material/";
 
 function CustomActionBar(props) {
     const { onClear, actions, className } = props;
@@ -54,11 +55,12 @@ export default function DatePickerValue({ label }) { // label prop 추가 : 이�
                         actionBar: {
                             actions: ['today'], // 'ing'로 바꿔도 실행됨, 배열 안의 내용 없애도 실행됨 머지
                         },
-                        // textField: { size: 'small' }
+                        textField: { size: 'small' }
                     }}
                     css={css({
-                        minWidth: "30px",
-                        width: "100px",
+                        minWidth: "10px !important",
+                        width: "150px",
+                        height: "50px",
                     })}
                 />
             </DemoContainer>

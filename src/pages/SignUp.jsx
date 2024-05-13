@@ -35,8 +35,7 @@ export default function SignUp() {
           console.log(email);
       } catch (error) {
           console.error(error);
-          console.log(email);
-
+          console.log(email)
       }
   };
 

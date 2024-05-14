@@ -11,7 +11,6 @@ import { css } from "@emotion/react";
 import axios from "axios";
 
 export default function SignUp() {
-    const [passwordError, setPasswordError] = useState(false); // 비밀번호 유효성 에러 상태
     const [showVerificationInput, setShowVerificationInput] = useState(false); // 인증번호 창 뜨기/안뜨기 상태
     const [confirmVerificationCode, setConfirmVerificationCode] = useState(false); // 인증번호 확인 완료 상태
     const [currentStep, setCurrentStep] = useState(1); // 현재 회원가입 단계 상태
@@ -102,6 +101,12 @@ export default function SignUp() {
 
     // 중복확인 버튼
     const duplicateCheck = async () => {
+        // 이메일이 없는 경우
+        if (email.trim() === "") {
+            alert("이메일을 입력하세요.");
+            return;
+        }
+
         // 중복확인 연동
         try {
             const response = await axios.post(
@@ -172,10 +177,6 @@ export default function SignUp() {
     position: "relative",
   });
 
-  // 비밀번호 입력 시 유효성 검사
-  const handlePasswordChange = useCallback((e) => {
-    const password = e.target.value;
-  }, []);
 
   return (
     <div
@@ -302,8 +303,6 @@ export default function SignUp() {
         {currentStep === 1 && (
           <EmailStep
             handleSendButtonClick={handleSendButtonClick}
-            handlePasswordChange={handlePasswordChange}
-            passwordError={passwordError}
             showVerificationInput={showVerificationInput}
             handleConfirmVerificationCode={handleConfirmVerificationCode}
             confirmVerificationCode={confirmVerificationCode}

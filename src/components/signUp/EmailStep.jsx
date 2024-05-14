@@ -14,17 +14,38 @@ import {
 } from "@mui/material/";
 import Button from "../common/Button";
 import { css } from "@emotion/react";
+import React, {useCallback, useState} from "react";
 
-const EmailAndPasswordStep = ({
+const EmailStep = ({
   handleSendButtonClick,
-  handlePasswordChange,
-  passwordError,
   showVerificationInput,
   handleConfirmVerificationCode,
   confirmVerificationCode,
   handleNextStep, email, handleEmailChange, certificationNumber, handleCertificationNumber, certificationResponse, duplicateCheck, duplicateCheckResponse
 }) => {
+    const [passwordError, setPasswordError] = useState(false); // 비밀번호 유효성 상태
+    // 비밀번호 유효성 검사 함수
+    const validatePassword = (password) => {
+        // 숫자, 영문자 포함 여부 확인
+        const containsNumber = /[0-9]/.test(password);
+        const containsLetter = /[a-zA-Z]/.test(password);
 
+        // 비밀번호 길이 확인
+        const isLengthValid = password.length >= 8;
+
+        // 비밀번호가 유효하지 않을 경우
+        if (!(containsNumber && containsLetter && isLengthValid)) {
+            setPasswordError(true);
+        } else {
+            setPasswordError(false);
+        }
+    };
+
+    // 비밀번호 입력 시 유효성 검사
+    const handlePasswordChange = useCallback((e) => {
+        const password = e.target.value;
+        validatePassword(password);
+    }, []);
     //폰트 설정
   const theme = createTheme({
     typography: {
@@ -276,4 +297,4 @@ const EmailAndPasswordStep = ({
   );
 };
 
-export default EmailAndPasswordStep;
+export default EmailStep;

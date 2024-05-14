@@ -9,22 +9,68 @@ import EmailStep from "../components/signUp/EmailStep";
 import FieldStep from "../components/signUp/FieldStep";
 import { css } from "@emotion/react";
 import axios from "axios";
-export default function SignUp() {
-  const [passwordError, setPasswordError] = useState(false); // 비밀번호 유효성 에러 상태
-  const [showVerificationInput, setShowVerificationInput] = useState(false); // 인증번호 창 뜨기/안뜨기 상태
-  const [confirmVerificationCode, setConfirmVerificationCode] = useState(false); // 인증번호 확인 완료 상태
-  const [currentStep, setCurrentStep] = useState(1); // 현재 회원가입 단계 상태
-  const [email, setEmail] = useState(""); // 입력한 이메일
-  const [field, setField] = useState("");
-  const navigate = useNavigate();
 
-  // 인증번호 발송 버튼
-  const handleSendButtonClick  = async () => {
-    setShowVerificationInput(true);
+export default function SignUp() {
+    const [passwordError, setPasswordError] = useState(false); // 비밀번호 유효성 에러 상태
+    const [showVerificationInput, setShowVerificationInput] = useState(false); // 인증번호 창 뜨기/안뜨기 상태
+    const [confirmVerificationCode, setConfirmVerificationCode] = useState(false); // 인증번호 확인 완료 상태
+    const [currentStep, setCurrentStep] = useState(1); // 현재 회원가입 단계 상태
+    const [email, setEmail] = useState(""); // 입력한 이메일
+    const [certificationNumber, setCertificationNumber] = useState(""); // 입력한 인증번호
+    const [certificationResponse, setCertificationResponse] = useState(""); // 인증번호 확인 누르면 뜨는 인증 확인 메시지
+    const [field, setField] = useState("");
+
+    // useNavigate 사용
+    const navigate = useNavigate();
+
+    // 인증번호 발송 버튼
+    const handleSendButtonClick = async () => {
+        setShowVerificationInput(true);
+        // 이메일 입력 창에 빈 배열만 있을 때
+        if (email.length === 0) {
+            alert("인증번호를 입력하세요.");
+            return;
+        }
+        // 이메일 인증번호 발송 연동 
+        try {
+            const response = await axios.post(
+                `/api/v1/auth/email-certification`,
+                { email: email },
+                {
+                    headers: {
+                        Accept: "*/*",
+                        "Content-Type": `application/json`,
+                    },
+                }
+            );
+            console.log(response);
+            console.log(email, "성공");
+
+            // 코드 발송 성공헀을 때
+            if (response.data.code === "SU") {
+                alert("인증번호가 발송되었습니다. 이메일을 확인해주세요 :)");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+
+  // 이메일 입력 값 업데이트
+  const handleEmailChange = (e) => {
+      setEmail(e.target.value);
+  };
+
+  // 인증번호 확인 버튼
+  const handleConfirmVerificationCode = async () => {
+    setConfirmVerificationCode(true);
+    console.log(email)
+    console.log(certificationNumber)
+      // 이메일 인증번호 확인 연동
       try {
-          await axios.post(
-              `/api/v1/auth/email-certification`,
-              { email:  email },
+          const response = await axios.post(
+              `/api/v1/auth/check-certification`,
+              { email:  email,  certificationNumber: certificationNumber},
               {
                   headers: {
                       Accept: "*/*",
@@ -32,29 +78,23 @@ export default function SignUp() {
                   },
               }
           );
-          console.log(email);
+          console.log(response)
+          console.log(email, "성공");
+          setCertificationResponse(response.data)
       } catch (error) {
           console.error(error);
-          console.log(email)
       }
   };
 
-    // 이메일 입력 값 업데이트
-  const handleEmailChange = (e) => {
-      setEmail(e.target.value);
-  };
-
-  // 인증번호 확인 버튼
-  const handleConfirmVerificationCode = () => {
-    setConfirmVerificationCode(true);
-  };
+    // 인증번호 입력 값 업데이트
+    const handleCertificationNumber = (e) => {
+        setCertificationNumber(e.target.value);
+    };
 
   // 단계가 변경될 때마다 단계 색 바꿈
   const getCircleColor = (step) => {
     return currentStep === step ? "#829FD7" : "#ECECEE";
   };
-
-
 
   const numLineStyle = {
     borderBottom: `4px solid ${getCircleColor(1)}`,
@@ -239,6 +279,9 @@ export default function SignUp() {
             handleNextStep={handleNextStep}
             email = {email}
             handleEmailChange ={handleEmailChange}
+            certificationNumber={certificationNumber}
+            handleCertificationNumber = {handleCertificationNumber}
+            certificationResponse = {certificationResponse}
           />
         )}
         {currentStep === 2 && (

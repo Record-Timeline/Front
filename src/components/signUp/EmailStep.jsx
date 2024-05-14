@@ -22,7 +22,7 @@ const EmailAndPasswordStep = ({
   showVerificationInput,
   handleConfirmVerificationCode,
   confirmVerificationCode,
-  handleNextStep, email, handleEmailChange
+  handleNextStep, email, handleEmailChange, certificationNumber, handleCertificationNumber, certificationResponse
 }) => {
   //폰트 설정
   const theme = createTheme({
@@ -159,6 +159,7 @@ const EmailAndPasswordStep = ({
                   }}
                 >
                   <StyledTextField
+                    value={certificationNumber} onChange={handleCertificationNumber}
                     required
                     autoFocus
                     fullWidth
@@ -196,23 +197,24 @@ const EmailAndPasswordStep = ({
                 </div>
               </div>
             )}
-            {confirmVerificationCode && (
-              <div
-                css={css({
-                  fontSize: "15px",
-                  color: "#0a8425",
-                  margin: "5px 0px 0px 20px",
-                })}
-              >
-                인증번호가 일치합니다
-              </div>
-            )}
-            <Grid item xs={12}>
-              <StyledTextField
-                required
-                fullWidth
-                type="password"
-                id="password"
+              {confirmVerificationCode && (
+                  <div
+                      css={css({
+                          fontSize: "15px",
+                          color: certificationResponse.code === "SU" ? "#0a8425" : "red", // 코드가 SU이면 초록색, 아니면 red (경고)
+                          margin: "5px 0px 0px 20px",
+                      })}
+                  >
+                      {certificationResponse.code === "SU" ? "인증번호가 일치합니다." : certificationResponse.message}
+                  </div>
+              )}
+
+              <Grid item xs={12}>
+                  <StyledTextField
+                      required
+                      fullWidth
+                      type="password"
+                      id="password"
                 name="password"
                 label="비밀번호 (숫자+영문 8자리 이상)"
                 InputProps={{

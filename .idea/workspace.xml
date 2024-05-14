@@ -89,7 +89,7 @@
       <workItem from="1715014181643" duration="5314000" />
       <workItem from="1715349657723" duration="5278000" />
       <workItem from="1715618656830" duration="3505000" />
-      <workItem from="1715666636536" duration="3447000" />
+      <workItem from="1715666636536" duration="6420000" />
     </task>
     <task id="LOCAL-00001" summary="Design: 로그인 화면 깨짐 수정 (mui input 창 추가)">
       <option name="closed" value="true" />
@@ -107,7 +107,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715621705039</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Feat: 이메일 인증번호 확인 연동 코드 추가">
+      <option name="closed" value="true" />
+      <created>1715681623872</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1715681623872</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -169,14 +177,15 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Design: 로그인 화면 깨짐 수정 (mui input 창 추가)" />
     <MESSAGE value="Feat: 이메일 인증번호 발송 연동 코드 추가" />
-    <option name="LAST_COMMIT_MESSAGE" value="Feat: 이메일 인증번호 발송 연동 코드 추가" />
+    <MESSAGE value="Feat: 이메일 인증번호 확인 연동 코드 추가" />
+    <option name="LAST_COMMIT_MESSAGE" value="Feat: 이메일 인증번호 확인 연동 코드 추가" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/SignUp.jsx</url>
-          <line>20</line>
+          <line>25</line>
           <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="1" />
         </line-breakpoint>

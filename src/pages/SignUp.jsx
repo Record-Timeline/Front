@@ -17,7 +17,12 @@ export default function SignUp() {
     const [currentStep, setCurrentStep] = useState(1); // 현재 회원가입 단계 상태
     const [email, setEmail] = useState(""); // 입력한 이메일
     const [certificationNumber, setCertificationNumber] = useState(""); // 입력한 인증번호
-    const [certificationResponse, setCertificationResponse] = useState(""); // 인증번호 확인 누르면 뜨는 인증 확인 메시지
+    const [certificationResponse, setCertificationResponse] = useState(""); // 인증번호 확인의 결과 (메시지)
+    const [duplicateCheckResponse, setDuplicateCheckResponse] = useState(""); // 중복확인의 결과 (메시지)
+
+    const [duplicateCheckResult, setDuplicateCheckResult] = useState(false); // 중복확인  true or false
+    const [certification, setCertification] = useState(false); // 이메일 인증  true or false
+
     const [field, setField] = useState("");
 
     // useNavigate 사용
@@ -78,9 +83,13 @@ export default function SignUp() {
                   },
               }
           );
-          console.log(response)
+          console.log(response.data.code)
           console.log(email, "성공");
           setCertificationResponse(response.data)
+          // response.data가 "SU"일 때 setDuplicateCheckResult를 true로
+          if (response.data.code === "SU") {
+              setCertification(true);
+          }
       } catch (error) {
           console.error(error);
       }
@@ -89,6 +98,31 @@ export default function SignUp() {
     // 인증번호 입력 값 업데이트
     const handleCertificationNumber = (e) => {
         setCertificationNumber(e.target.value);
+    };
+
+    // 중복확인 버튼
+    const duplicateCheck = async () => {
+        // 중복확인 연동
+        try {
+            const response = await axios.post(
+                `/api/v1/auth/email-check`,
+                { email: email },
+                {
+                    headers: {
+                        Accept: "*/*",
+                        "Content-Type": `application/json`,
+                    },
+                }
+            );
+            console.log("중복확인", response);
+            // response.data가 "SU"일 때 setDuplicateCheckResult를 true로
+            if (response.data.code === "SU") {
+                setDuplicateCheckResult(true);
+            }
+            setDuplicateCheckResponse(response.data)
+        } catch (error) {
+            console.error(error);
+        }
     };
 
   // 단계가 변경될 때마다 단계 색 바꿈
@@ -141,9 +175,6 @@ export default function SignUp() {
   // 비밀번호 입력 시 유효성 검사
   const handlePasswordChange = useCallback((e) => {
     const password = e.target.value;
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d).{8,}$/;
-    const isValidPassword = passwordRegex.test(password);
-    setPasswordError(!isValidPassword);
   }, []);
 
   return (
@@ -282,6 +313,8 @@ export default function SignUp() {
             certificationNumber={certificationNumber}
             handleCertificationNumber = {handleCertificationNumber}
             certificationResponse = {certificationResponse}
+            duplicateCheck = {duplicateCheck}
+            duplicateCheckResponse={duplicateCheckResponse}
           />
         )}
         {currentStep === 2 && (

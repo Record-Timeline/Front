@@ -22,9 +22,10 @@ const EmailAndPasswordStep = ({
   showVerificationInput,
   handleConfirmVerificationCode,
   confirmVerificationCode,
-  handleNextStep, email, handleEmailChange, certificationNumber, handleCertificationNumber, certificationResponse
+  handleNextStep, email, handleEmailChange, certificationNumber, handleCertificationNumber, certificationResponse, duplicateCheck, duplicateCheckResponse
 }) => {
-  //폰트 설정
+
+    //폰트 설정
   const theme = createTheme({
     typography: {
       fontFamily: "Pretendard",
@@ -102,6 +103,7 @@ const EmailAndPasswordStep = ({
                 />
               </Grid>
               <div
+                onClick={duplicateCheck}
                 css={css({
                   width: "80px",
                   height: "35px",
@@ -142,6 +144,17 @@ const EmailAndPasswordStep = ({
                 인증번호 발송
               </div>
             </div>
+              {duplicateCheckResponse && (
+                  <div
+                      css={css({
+                          fontSize: "15px",
+                          color: duplicateCheckResponse.code === "SU" ?  "#0a8425" : "#f44336", // 코드가 SU이면 빨간색, 아니면 초록색
+                          margin: "5px 0px 0px 20px",
+                      })}
+                  >
+                      {duplicateCheckResponse.code === "SU" ? "사용 가능한 이메일입니다." : duplicateCheckResponse.message}
+                  </div>
+              )}
             {showVerificationInput && (
               <div
                 css={css({
@@ -201,7 +214,7 @@ const EmailAndPasswordStep = ({
                   <div
                       css={css({
                           fontSize: "15px",
-                          color: certificationResponse.code === "SU" ? "#0a8425" : "red", // 코드가 SU이면 초록색, 아니면 red (경고)
+                          color: certificationResponse.code === "SU" ? "#0a8425" : "#f44336", // 코드가 SU이면 초록색, 아니면 빨간색
                           margin: "5px 0px 0px 20px",
                       })}
                   >

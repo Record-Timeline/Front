@@ -314,6 +314,8 @@ export default function SignUp() {
             certificationResponse = {certificationResponse}
             duplicateCheck = {duplicateCheck}
             duplicateCheckResponse={duplicateCheckResponse}
+            duplicateCheckResult={duplicateCheckResult}
+            certification={certification}
           />
         )}
         {currentStep === 2 && (

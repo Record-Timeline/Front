@@ -14,16 +14,21 @@ import {
 } from "@mui/material/";
 import Button from "../common/Button";
 import { css } from "@emotion/react";
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useState, useEffect} from "react";
 
 const EmailStep = ({
   handleSendButtonClick,
   showVerificationInput,
   handleConfirmVerificationCode,
   confirmVerificationCode,
-  handleNextStep, email, handleEmailChange, certificationNumber, handleCertificationNumber, certificationResponse, duplicateCheck, duplicateCheckResponse
+  handleNextStep, email, handleEmailChange, certificationNumber, handleCertificationNumber, certificationResponse, duplicateCheck, duplicateCheckResponse,
+                       duplicateCheckResult, certification
 }) => {
+    const [password, setPassword] = useState(""); // 입력한 비밀번호 상태
     const [passwordError, setPasswordError] = useState(false); // 비밀번호 유효성 상태
+    const [rePassword, setRePassword] = useState(""); // 비밀번호 재입력 상태
+    const [rePasswordError, setRePasswordError] = useState(false); // 비밀번호 재입력 유효성 상태
+    const [isNextButtonEnabled, setIsNextButtonEnabled] = useState(false); // 다음 버튼 활성화 상태
     // 비밀번호 유효성 검사 함수
     const validatePassword = (password) => {
         // 숫자, 영문자 포함 여부 확인
@@ -44,8 +49,29 @@ const EmailStep = ({
     // 비밀번호 입력 시 유효성 검사
     const handlePasswordChange = useCallback((e) => {
         const password = e.target.value;
+        setPassword(password);
         validatePassword(password);
     }, []);
+
+    // 비밀번호 재입력 시 유효성 검사
+    const handleRePasswordChange = useCallback((e) => {
+        const rePassword = e.target.value;
+        setRePassword(rePassword);
+        setRePasswordError(rePassword !== password); // password와 rePassword가 다르면 에러상태 출력
+    }, [password]);
+
+// 다음 버튼 활성화 상태 업데이트
+    useEffect(() => {
+        // 중복확인, 인증, 비밀번호, 비밀번호 재입력 조건 만족 시 다음 버튼 활성화
+        setIsNextButtonEnabled(
+            duplicateCheckResult &&
+            certification &&
+            !passwordError &&
+            !rePasswordError &&
+            password.length > 0 &&
+            rePassword.length > 0
+        );
+    }, [duplicateCheckResult, certification, passwordError, rePasswordError, password, rePassword]);
     //폰트 설정
   const theme = createTheme({
     typography: {
@@ -53,22 +79,6 @@ const EmailStep = ({
     },
   });
 
-  // text field 색 바꾸기
-  const StyledTextField = withStyles(TextField)({
-    "& .MuiInput-underline:after": {
-      borderBottomColor: "#829FD7",
-    },
-    "& .MuiOutlinedInput-root": {
-      "&.Mui-focused fieldset": {
-        color: "#829FD7",
-      },
-    },
-    "&.Mui-error .MuiOutlinedInput-root": {
-      // 에러 상태일 때
-      borderColor: "#f44336",
-    },
-    position: "relative",
-  });
 
   return (
     <ThemeProvider theme={theme}>
@@ -107,9 +117,8 @@ const EmailStep = ({
                   padding: "16px 0px 0px 13px",
                 }}
               >
-                <StyledTextField value={email} onChange={handleEmailChange}
+                <TextField value={email} onChange={handleEmailChange}
                   required
-                  autoFocus
                   fullWidth
                   type="email"
                   id="email"
@@ -192,10 +201,9 @@ const EmailStep = ({
                     padding: "16px 0px 0px 13px",
                   }}
                 >
-                  <StyledTextField
+                  <TextField
                     value={certificationNumber} onChange={handleCertificationNumber}
                     required
-                    autoFocus
                     fullWidth
                     type="verificationCode"
                     id="verificationCode"
@@ -244,7 +252,7 @@ const EmailStep = ({
               )}
 
               <Grid item xs={12}>
-                  <StyledTextField
+                  <TextField
                       required
                       fullWidth
                       type="password"
@@ -267,20 +275,27 @@ const EmailStep = ({
               />
             </Grid>
             <Grid item xs={12}>
-              <StyledTextField
-                required
-                fullWidth
-                type="password"
-                id="rePassword"
-                name="rePassword"
-                label="비밀번호 재입력"
-                InputProps={{
-                  style: {
-                    borderRadius: "15px",
-                    width: "510px",
-                  },
-                }}
-              />
+                <TextField
+                    required
+                    fullWidth
+                    type="password"
+                    id="rePassword"
+                    name="rePassword"
+                    label="비밀번호 재입력"
+                    InputProps={{
+                        style: {
+                            borderRadius: "15px",
+                            width: "510px",
+                        },
+                    }}
+                    onChange={handleRePasswordChange}
+                    error={rePasswordError}
+                    helperText={
+                        rePasswordError
+                            ? "비밀번호가 일치하지 않습니다."
+                            : ""
+                    }
+                />
             </Grid>
           </Grid>
           <Button
@@ -288,6 +303,12 @@ const EmailStep = ({
             height="50px"
             margin="40px 0px 0px 0px"
             onClick={handleNextStep}
+            // 다음 버튼 활성화 : 비활성화
+            css={css({
+                backgroundColor: isNextButtonEnabled ? "#829fd7" : "#d9d9d9",
+                color: isNextButtonEnabled ? "white" : "#a1a1a1",
+                cursor: isNextButtonEnabled ? "pointer" : "not-allowed",
+            })}
           >
             다음
           </Button>

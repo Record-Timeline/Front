@@ -302,8 +302,8 @@ const EmailStep = ({
             width="170px"
             height="50px"
             margin="40px 0px 0px 0px"
-            onClick={handleNextStep}
             // 다음 버튼 활성화 : 비활성화
+            onClick={isNextButtonEnabled ? handleNextStep : null}
             css={css({
                 backgroundColor: isNextButtonEnabled ? "#829fd7" : "#d9d9d9",
                 color: isNextButtonEnabled ? "white" : "#a1a1a1",

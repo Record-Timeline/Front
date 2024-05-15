@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4e78fff8-965f-4a9a-b412-7c54129d79ca" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/signUp/EmailStep.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/signUp/EmailStep.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/SignUp.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/SignUp.jsx" afterDir="false" />
     </list>
@@ -90,7 +89,7 @@
       <workItem from="1715349657723" duration="5278000" />
       <workItem from="1715618656830" duration="3505000" />
       <workItem from="1715666636536" duration="9508000" />
-      <workItem from="1715742688927" duration="1251000" />
+      <workItem from="1715742688927" duration="1596000" />
     </task>
     <task id="LOCAL-00001" summary="Design: 로그인 화면 깨짐 수정 (mui input 창 추가)">
       <option name="closed" value="true" />
@@ -132,7 +131,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715690625648</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Feat: 비밀번호 유효성 검사 오류 수정 및 다음 버튼 활성화/비활성화 로직 추가">
+      <option name="closed" value="true" />
+      <created>1715744000860</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1715744000860</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -197,6 +204,7 @@
     <MESSAGE value="Feat: 이메일 인증번호 확인 연동 코드 추가" />
     <MESSAGE value="Feat: 이메일 중복확인 연동" />
     <MESSAGE value="Feat: 비밀번호 유효성 검사 함수 수정 및 이메일 없는 경우 alert 창 추가" />
-    <option name="LAST_COMMIT_MESSAGE" value="Feat: 비밀번호 유효성 검사 함수 수정 및 이메일 없는 경우 alert 창 추가" />
+    <MESSAGE value="Feat: 비밀번호 유효성 검사 오류 수정 및 다음 버튼 활성화/비활성화 로직 추가" />
+    <option name="LAST_COMMIT_MESSAGE" value="Feat: 비밀번호 유효성 검사 오류 수정 및 다음 버튼 활성화/비활성화 로직 추가" />
   </component>
 </project>

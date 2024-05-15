@@ -55,6 +55,7 @@ export default function SignUp() {
                 alert("인증번호가 발송되었습니다. 이메일을 확인해주세요 :)");
             }
         } catch (error) {
+            alert("인증번호 발송이 정상적으로 이루어지지 않았습니다. 다시 시도해주세요. ");
             console.error(error);
         }
     };
@@ -90,7 +91,8 @@ export default function SignUp() {
               setCertification(true);
           }
       } catch (error) {
-          console.error(error);
+            alert("인증번호가 확인되지 않았습니다. 다시 시도해주세요.")
+            console.error(error);
       }
   };
 
@@ -126,6 +128,7 @@ export default function SignUp() {
             }
             setDuplicateCheckResponse(response.data)
         } catch (error) {
+            alert("중복확인이 정상적으로 이루어지지 않았습니다. 다시 시도해주세요. ");
             console.error(error);
         }
     };

@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4e78fff8-965f-4a9a-b412-7c54129d79ca" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/signUp/EmailStep.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/signUp/EmailStep.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/signUp/FieldStep.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/signUp/FieldStep.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/SignUp.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/SignUp.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -89,7 +91,9 @@
       <workItem from="1715349657723" duration="5278000" />
       <workItem from="1715618656830" duration="3505000" />
       <workItem from="1715666636536" duration="9508000" />
-      <workItem from="1715742688927" duration="1596000" />
+      <workItem from="1715742688927" duration="3293000" />
+      <workItem from="1715770336901" duration="838000" />
+      <workItem from="1715773751334" duration="3887000" />
     </task>
     <task id="LOCAL-00001" summary="Design: 로그인 화면 깨짐 수정 (mui input 창 추가)">
       <option name="closed" value="true" />
@@ -139,7 +143,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715744000860</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Feat: 에러 났을 때 alert 창 추가 및 다음 버튼 onclick 수정">
+      <option name="closed" value="true" />
+      <created>1715744391993</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1715744391993</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -205,6 +217,7 @@
     <MESSAGE value="Feat: 이메일 중복확인 연동" />
     <MESSAGE value="Feat: 비밀번호 유효성 검사 함수 수정 및 이메일 없는 경우 alert 창 추가" />
     <MESSAGE value="Feat: 비밀번호 유효성 검사 오류 수정 및 다음 버튼 활성화/비활성화 로직 추가" />
-    <option name="LAST_COMMIT_MESSAGE" value="Feat: 비밀번호 유효성 검사 오류 수정 및 다음 버튼 활성화/비활성화 로직 추가" />
+    <MESSAGE value="Feat: 에러 났을 때 alert 창 추가 및 다음 버튼 onclick 수정" />
+    <option name="LAST_COMMIT_MESSAGE" value="Feat: 에러 났을 때 alert 창 추가 및 다음 버튼 onclick 수정" />
   </component>
 </project>

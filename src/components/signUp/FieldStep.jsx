@@ -19,29 +19,14 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { css } from "@emotion/react";
 
-const FieldStep = ({ handleFieldChange, handleSignup, field }) => {
+const FieldStep = ({ handleFieldChange, handleSignup, field, duplicateNicknameCheck, handleNicknameChange, nickname, nicknameDuplicateCheckResponse, nicknameDuplicateCheckResult }) => {
   //폰트 설정
   const theme = createTheme({
     typography: {
       fontFamily: "Pretendard",
     },
   });
-  // text field 색 바꾸기
-  const StyledTextField = withStyles(TextField)({
-    "& .MuiInput-underline:after": {
-      borderBottomColor: "#829FD7",
-    },
-    "& .MuiOutlinedInput-root": {
-      "&.Mui-focused fieldset": {
-        color: "#829FD7",
-      },
-    },
-    "&.Mui-error .MuiOutlinedInput-root": {
-      // 에러 상태일 때
-      borderColor: "#f44336",
-    },
-    position: "relative",
-  });
+
 
   // 관심 분야 목록
   const categories = [
@@ -107,9 +92,10 @@ const FieldStep = ({ handleFieldChange, handleSignup, field }) => {
                     padding: "16px 0px 0px 16px",
                   }}
                 >
-                  <StyledTextField
+                  <TextField
+                    value={nickname}
+                    onChange={handleNicknameChange}
                     required
-                    autoFocus
                     fullWidth
                     type="nickname"
                     id="nickname"
@@ -122,8 +108,21 @@ const FieldStep = ({ handleFieldChange, handleSignup, field }) => {
                       },
                     }}
                   />
+                    {nicknameDuplicateCheckResponse && (
+                        <div
+                            css={css({
+                                fontSize: "15px",
+                                color: nicknameDuplicateCheckResponse.code === "SU" ?  "#0a8425" : "#f44336", // 코드가 SU이면 빨간색, 아니면 초록색
+                                margin: "7px 0px 0px 10px",
+                            })}
+                        >
+                            {nicknameDuplicateCheckResponse.code === "SU" ? "사용 가능한 닉네임입니다." : nicknameDuplicateCheckResponse.message}
+                        </div>
+                    )}
                 </Grid>
+
                 <div
+                    onClick={duplicateNicknameCheck}
                   css={css({
                     right: "64px",
                     width: "80px",

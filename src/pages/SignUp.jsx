@@ -17,10 +17,15 @@ export default function SignUp() {
     const [email, setEmail] = useState(""); // 입력한 이메일
     const [certificationNumber, setCertificationNumber] = useState(""); // 입력한 인증번호
     const [certificationResponse, setCertificationResponse] = useState(""); // 인증번호 확인의 결과 (메시지)
-    const [duplicateCheckResponse, setDuplicateCheckResponse] = useState(""); // 중복확인의 결과 (메시지)
+    const [duplicateEmailCheckResponse, setDuplicateEmailCheckResponse] = useState(""); // 이메일 중복확인의 결과 (메시지)
 
-    const [duplicateCheckResult, setDuplicateCheckResult] = useState(false); // 중복확인  true or false
+    const [duplicateEmailCheckResult, setDuplicateEmailCheckResult] = useState(false); // 이메일 중복확인  true or false
     const [certification, setCertification] = useState(false); // 이메일 인증  true or false
+
+    const [nickname, setNickname] = useState("");
+    const [nicknameDuplicateCheckResponse, setNicknameDuplicateCheckResponse] = useState(""); // 닉네임 중복확인의 결과 (메시지)
+    const [nicknameDuplicateCheckResult, setNicknameDuplicateCheckResult] = useState(false); // 닉네임 중복확인  true or false
+
 
     const [field, setField] = useState("");
 
@@ -66,6 +71,11 @@ export default function SignUp() {
       setEmail(e.target.value);
   };
 
+    // 닉네임 입력 값 업데이트
+    const handleNicknameChange = (e) => {
+        console.log(nickname)
+    };
+
   // 인증번호 확인 버튼
   const handleConfirmVerificationCode = async () => {
     setConfirmVerificationCode(true);
@@ -101,8 +111,8 @@ export default function SignUp() {
         setCertificationNumber(e.target.value);
     };
 
-    // 중복확인 버튼
-    const duplicateCheck = async () => {
+    // 이메일 중복확인 버튼
+    const duplicateEmailCheck = async () => {
         // 이메일이 없는 경우
         if (email.trim() === "") {
             alert("이메일을 입력하세요.");
@@ -121,12 +131,43 @@ export default function SignUp() {
                     },
                 }
             );
-            console.log("중복확인", response);
+            console.log("이메일 중복확인", response);
             // response.data가 "SU"일 때 setDuplicateCheckResult를 true로
             if (response.data.code === "SU") {
-                setDuplicateCheckResult(true);
+                setDuplicateEmailCheckResult(true);
             }
-            setDuplicateCheckResponse(response.data)
+            setDuplicateEmailCheckResponse(response.data)
+        } catch (error) {
+            alert("중복확인이 정상적으로 이루어지지 않았습니다. 다시 시도해주세요. ");
+            console.error(error);
+        }
+    };
+
+    // 닉네임 중복확인 버튼
+    const duplicateNicknameCheck = async () => {
+        // 닉네임을 입력하지 않은 경우
+        if (nickname.trim() === "") {
+            alert("닉네임을 입력하세요.");
+            return;
+        }
+        // 중복확인 연동
+        try {
+            const response = await axios.post(
+                `/api/v1/auth/nickname-check`,
+                { nickname: nickname },
+                {
+                    headers: {
+                        Accept: "*/*",
+                        "Content-Type": `application/json`,
+                    },
+                }
+            );
+            console.log("닉네임 중복확인", response);
+            // response.data가 "SU"일 때 setNicknameDuplicateCheckResult를 true로
+            if (response.data.code === "SU") {
+                setNicknameDuplicateCheckResult(true);
+            }
+            setNicknameDuplicateCheckResponse(response.data)
         } catch (error) {
             alert("중복확인이 정상적으로 이루어지지 않았습니다. 다시 시도해주세요. ");
             console.error(error);
@@ -163,22 +204,6 @@ export default function SignUp() {
     setField(event.target.value);
   };
 
-  // text field 색 바꾸기
-  const StyledTextField = withStyles(TextField)({
-    "& .MuiInput-underline:after": {
-      borderBottomColor: "#829FD7",
-    },
-    "& .MuiOutlinedInput-root": {
-      "&.Mui-focused fieldset": {
-        color: "#829FD7",
-      },
-    },
-    "&.Mui-error .MuiOutlinedInput-root": {
-      // 에러 상태일 때
-      borderColor: "#f44336",
-    },
-    position: "relative",
-  });
 
 
   return (
@@ -315,9 +340,9 @@ export default function SignUp() {
             certificationNumber={certificationNumber}
             handleCertificationNumber = {handleCertificationNumber}
             certificationResponse = {certificationResponse}
-            duplicateCheck = {duplicateCheck}
-            duplicateCheckResponse={duplicateCheckResponse}
-            duplicateCheckResult={duplicateCheckResult}
+            duplicateEmailCheck = {duplicateEmailCheck}
+            duplicateEmailCheckResponse={duplicateEmailCheckResponse}
+            duplicateEmailCheckResult={duplicateEmailCheckResult}
             certification={certification}
           />
         )}
@@ -326,6 +351,11 @@ export default function SignUp() {
             handleSignup={handleSignup}
             handleFieldChange={handleFieldChange}
             field={field}
+            duplicateNicknameCheck={duplicateNicknameCheck}
+            handleNicknameChange={handleNicknameChange}
+            nickname={nickname}
+            nicknameDuplicateCheckResponse={nicknameDuplicateCheckResponse}
+            nicknameDuplicateCheckResult={nicknameDuplicateCheckResult}
           />
         )}
       </div>

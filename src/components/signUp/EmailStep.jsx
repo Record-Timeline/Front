@@ -21,8 +21,8 @@ const EmailStep = ({
   showVerificationInput,
   handleConfirmVerificationCode,
   confirmVerificationCode,
-  handleNextStep, email, handleEmailChange, certificationNumber, handleCertificationNumber, certificationResponse, duplicateCheck, duplicateCheckResponse,
-                       duplicateCheckResult, certification
+  handleNextStep, email, handleEmailChange, certificationNumber, handleCertificationNumber, certificationResponse, duplicateEmailCheck, duplicateEmailCheckResponse,
+                       duplicateEmailCheckResult, certification
 }) => {
     const [password, setPassword] = useState(""); // 입력한 비밀번호 상태
     const [passwordError, setPasswordError] = useState(false); // 비밀번호 유효성 상태
@@ -64,14 +64,14 @@ const EmailStep = ({
     useEffect(() => {
         // 중복확인, 인증, 비밀번호, 비밀번호 재입력 조건 만족 시 다음 버튼 활성화
         setIsNextButtonEnabled(
-            duplicateCheckResult &&
+            duplicateEmailCheckResult &&
             certification &&
             !passwordError &&
             !rePasswordError &&
             password.length > 0 &&
             rePassword.length > 0
         );
-    }, [duplicateCheckResult, certification, passwordError, rePasswordError, password, rePassword]);
+    }, [duplicateEmailCheckResult, certification, passwordError, rePasswordError, password, rePassword]);
     //폰트 설정
   const theme = createTheme({
     typography: {
@@ -133,7 +133,7 @@ const EmailStep = ({
                 />
               </Grid>
               <div
-                onClick={duplicateCheck}
+                onClick={duplicateEmailCheck}
                 css={css({
                   width: "80px",
                   height: "35px",
@@ -174,15 +174,15 @@ const EmailStep = ({
                 인증번호 발송
               </div>
             </div>
-              {duplicateCheckResponse && (
+              {duplicateEmailCheckResponse && (
                   <div
                       css={css({
                           fontSize: "15px",
-                          color: duplicateCheckResponse.code === "SU" ?  "#0a8425" : "#f44336", // 코드가 SU이면 빨간색, 아니면 초록색
+                          color: duplicateEmailCheckResponse.code === "SU" ?  "#0a8425" : "#f44336", // 코드가 SU이면 빨간색, 아니면 초록색
                           margin: "5px 0px 0px 20px",
                       })}
                   >
-                      {duplicateCheckResponse.code === "SU" ? "사용 가능한 이메일입니다." : duplicateCheckResponse.message}
+                      {duplicateEmailCheckResponse.code === "SU" ? "사용 가능한 이메일입니다." : duplicateEmailCheckResponse.message}
                   </div>
               )}
             {showVerificationInput && (

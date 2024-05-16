@@ -60,14 +60,15 @@ export default function SignUpComplete() {
           `}
         >
           <Button
-            width="90px"
+            width="120px"
+            height="40px"
             backgroundColor="#A4A3A3"
-            margin="0px 15px 0px 0px"
+            margin="0px 10px 0px 0px"
             to="/"
           >
             메인으로
           </Button>
-          <Button width="90px" to="/login">
+          <Button width="90px" to="/login" height="40px">
             로그인
           </Button>
         </div>

@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import {
   Container,
   CssBaseline,
@@ -19,7 +19,25 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { css } from "@emotion/react";
 
-const FieldStep = ({ handleFieldChange, handleSignup, field, duplicateNicknameCheck, handleNicknameChange, nickname, nicknameDuplicateCheckResponse, fieldCategory }) => {
+const FieldStep = ({
+  handleFieldChange,
+  handleSignup,
+  field,
+  duplicateNicknameCheck,
+  handleNicknameChange,
+  nickname,
+  nicknameDuplicateCheckResponse,
+  fieldCategory,
+  duplicateEmailCheckResult,
+  certification,
+  passwordError,
+  rePasswordError,
+  password,
+  rePassword,
+  nicknameDuplicateCheckResult,
+}) => {
+  const [isSignupButtonEnabled, setIsSignupButtonEnabled] = useState(false); // 회원가입 버튼 활성화
+
   //폰트 설정
   const theme = createTheme({
     typography: {
@@ -27,21 +45,42 @@ const FieldStep = ({ handleFieldChange, handleSignup, field, duplicateNicknameCh
     },
   });
 
-
   // 관심 분야 목록
   const categories = [
-      "마케팅/홍보/조사",
-      "회계/세무/재무",
-      "총무/법무/사무",
-      "IT개발/데이터",
-      "디자인",
-      "서비스",
-      "건설/건축",
-      "의료",
-      "교육",
-      "미디어/문화/스포츠",
+    "마케팅/홍보/조사",
+    "회계/세무/재무",
+    "총무/법무/사무",
+    "IT개발/데이터",
+    "디자인",
+    "서비스",
+    "건설/건축",
+    "의료",
+    "교육",
+    "미디어/문화/스포츠",
   ];
 
+  // 가입하기 버튼 활성화/비활성화
+  useEffect(() => {
+    setIsSignupButtonEnabled(
+      duplicateEmailCheckResult &&
+        certification &&
+        !passwordError &&
+        !rePasswordError &&
+        password.length > 0 &&
+        rePassword.length > 0 &&
+        nicknameDuplicateCheckResult &&
+        field.length > 0
+    );
+  }, [
+    duplicateEmailCheckResult,
+    certification,
+    passwordError,
+    rePasswordError,
+    password,
+    rePassword,
+    nicknameDuplicateCheckResult,
+    field,
+  ]);
 
   return (
     <>
@@ -98,21 +137,26 @@ const FieldStep = ({ handleFieldChange, handleSignup, field, duplicateNicknameCh
                       },
                     }}
                   />
-                    {nicknameDuplicateCheckResponse && (
-                        <div
-                            css={css({
-                                fontSize: "15px",
-                                color: nicknameDuplicateCheckResponse.code === "SU" ?  "#0a8425" : "#f44336", // 코드가 SU이면 빨간색, 아니면 초록색
-                                margin: "7px 0px 0px 10px",
-                            })}
-                        >
-                            {nicknameDuplicateCheckResponse.code === "SU" ? "사용 가능한 닉네임입니다." : nicknameDuplicateCheckResponse.message}
-                        </div>
-                    )}
+                  {nicknameDuplicateCheckResponse && (
+                    <div
+                      css={css({
+                        fontSize: "15px",
+                        color:
+                          nicknameDuplicateCheckResponse.code === "SU"
+                            ? "#0a8425"
+                            : "#f44336", // 코드가 SU이면 빨간색, 아니면 초록색
+                        margin: "7px 0px 0px 10px",
+                      })}
+                    >
+                      {nicknameDuplicateCheckResponse.code === "SU"
+                        ? "사용 가능한 닉네임입니다."
+                        : nicknameDuplicateCheckResponse.message}
+                    </div>
+                  )}
                 </Grid>
 
                 <div
-                    onClick={duplicateNicknameCheck}
+                  onClick={duplicateNicknameCheck}
                   css={css({
                     right: "64px",
                     width: "80px",
@@ -174,25 +218,24 @@ const FieldStep = ({ handleFieldChange, handleSignup, field, duplicateNicknameCh
               </FormControl>
             </>
             <div
-                css={css({
-                    width:"170px",
-                    height:"50px",
-                    margin: "40px 0px 0px 0px",
-                    backgroundColor: "#829FD7",
-                    color: "white",
-                    fontSize: "18px",
-                    fontWeight:  "500",
-                    borderRadius: "20px",
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    textAlign: 'center',
-                    cursor: 'pointer',
-                    textDecoration: 'none',
-                    padding: '10px 20px',
-                })}
-
-              onClick={handleSignup}
+              css={css({
+                width: "170px",
+                height: "50px",
+                margin: "40px 0px 0px 0px",
+                fontSize: "18px",
+                fontWeight: "500",
+                borderRadius: "20px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                textAlign: "center",
+                textDecoration: "none",
+                padding: "10px 20px",
+                backgroundColor: isSignupButtonEnabled ? "#829fd7" : "#d9d9d9",
+                color: isSignupButtonEnabled ? "white" : "#a1a1a1",
+                cursor: isSignupButtonEnabled ? "pointer" : "not-allowed",
+              })}
+              onClick={isSignupButtonEnabled ? handleSignup : null}
             >
               가입하기
             </div>

@@ -14,71 +14,92 @@ import {
 } from "@mui/material/";
 import Button from "../common/Button";
 import { css } from "@emotion/react";
-import React, {useCallback, useState, useEffect} from "react";
+import React, { useCallback, useState, useEffect } from "react";
 
 const EmailStep = ({
   handleSendButtonClick,
   showVerificationInput,
   handleConfirmVerificationCode,
   confirmVerificationCode,
-  handleNextStep, email, handleEmailChange, certificationNumber, handleCertificationNumber, certificationResponse, duplicateEmailCheck, duplicateEmailCheckResponse,
-                       duplicateEmailCheckResult, certification
+  handleNextStep,
+  email,
+  handleEmailChange,
+  certificationNumber,
+  handleCertificationNumber,
+  certificationResponse,
+  duplicateEmailCheck,
+  duplicateEmailCheckResponse,
+  duplicateEmailCheckResult,
+  certification,
+  password,
+  setPassword,
+  passwordError,
+  setPasswordError,
+  rePassword,
+  setRePassword,
+  rePasswordError,
+  setRePasswordError,
 }) => {
-    const [password, setPassword] = useState(""); // 입력한 비밀번호 상태
-    const [passwordError, setPasswordError] = useState(false); // 비밀번호 유효성 상태
-    const [rePassword, setRePassword] = useState(""); // 비밀번호 재입력 상태
-    const [rePasswordError, setRePasswordError] = useState(false); // 비밀번호 재입력 유효성 상태
-    const [isNextButtonEnabled, setIsNextButtonEnabled] = useState(false); // 다음 버튼 활성화 상태
-    // 비밀번호 유효성 검사 함수
-    const validatePassword = (password) => {
-        // 숫자, 영문자 포함 여부 확인
-        const containsNumber = /[0-9]/.test(password);
-        const containsLetter = /[a-zA-Z]/.test(password);
+  const [isNextButtonEnabled, setIsNextButtonEnabled] = useState(false); // 다음 버튼 활성화 상태
+  // 비밀번호 유효성 검사 함수
+  const validatePassword = (password) => {
+    // 숫자, 영문자 포함 여부 확인
+    const containsNumber = /[0-9]/.test(password);
+    const containsLetter = /[a-zA-Z]/.test(password);
 
-        // 비밀번호 길이 확인
-        const isLengthValid = password.length >= 8;
+    // 비밀번호 길이 확인
+    const isLengthValid = password.length >= 8;
 
-        // 비밀번호가 유효하지 않을 경우
-        if (!(containsNumber && containsLetter && isLengthValid)) {
-            setPasswordError(true);
-        } else {
-            setPasswordError(false);
-        }
-    };
+    // 비밀번호가 유효하지 않을 경우
+    if (!(containsNumber && containsLetter && isLengthValid)) {
+      setPasswordError(true);
+    } else {
+      setPasswordError(false);
+    }
+  };
 
-    // 비밀번호 입력 시 유효성 검사
-    const handlePasswordChange = useCallback((e) => {
-        const password = e.target.value;
-        setPassword(password);
-        validatePassword(password);
-    }, []);
+  // 비밀번호 입력 시 유효성 검사
+  const handlePasswordChange = useCallback((e) => {
+    const password = e.target.value;
+    setPassword(password);
+    validatePassword(password);
+  }, []);
 
-    // 비밀번호 재입력 시 유효성 검사
-    const handleRePasswordChange = useCallback((e) => {
-        const rePassword = e.target.value;
-        setRePassword(rePassword);
-        setRePasswordError(rePassword !== password); // password와 rePassword가 다르면 에러상태 출력
-    }, [password]);
+  // 비밀번호 재입력 시 유효성 검사
+  const handleRePasswordChange = useCallback(
+    (e) => {
+      const rePassword = e.target.value;
+      setRePassword(rePassword);
+      setRePasswordError(rePassword !== password); // password와 rePassword가 다르면 에러상태 출력
+    },
+    [password]
+  );
 
-// 다음 버튼 활성화 상태 업데이트
-    useEffect(() => {
-        // 중복확인, 인증, 비밀번호, 비밀번호 재입력 조건 만족 시 다음 버튼 활성화
-        setIsNextButtonEnabled(
-            duplicateEmailCheckResult &&
-            certification &&
-            !passwordError &&
-            !rePasswordError &&
-            password.length > 0 &&
-            rePassword.length > 0
-        );
-    }, [duplicateEmailCheckResult, certification, passwordError, rePasswordError, password, rePassword]);
-    //폰트 설정
+  // 다음 버튼 활성화 상태 업데이트
+  useEffect(() => {
+    // 중복확인, 인증, 비밀번호, 비밀번호 재입력 조건 만족 시 다음 버튼 활성화
+    setIsNextButtonEnabled(
+      duplicateEmailCheckResult &&
+        certification &&
+        !passwordError &&
+        !rePasswordError &&
+        password.length > 0 &&
+        rePassword.length > 0
+    );
+  }, [
+    duplicateEmailCheckResult,
+    certification,
+    passwordError,
+    rePasswordError,
+    password,
+    rePassword,
+  ]);
+  //폰트 설정
   const theme = createTheme({
     typography: {
       fontFamily: "Pretendard",
     },
   });
-
 
   return (
     <ThemeProvider theme={theme}>
@@ -117,7 +138,9 @@ const EmailStep = ({
                   padding: "16px 0px 0px 13px",
                 }}
               >
-                <TextField value={email} onChange={handleEmailChange}
+                <TextField
+                  value={email}
+                  onChange={handleEmailChange}
                   required
                   fullWidth
                   type="email"
@@ -174,17 +197,22 @@ const EmailStep = ({
                 인증번호 발송
               </div>
             </div>
-              {duplicateEmailCheckResponse && (
-                  <div
-                      css={css({
-                          fontSize: "15px",
-                          color: duplicateEmailCheckResponse.code === "SU" ?  "#0a8425" : "#f44336", // 코드가 SU이면 빨간색, 아니면 초록색
-                          margin: "5px 0px 0px 20px",
-                      })}
-                  >
-                      {duplicateEmailCheckResponse.code === "SU" ? "사용 가능한 이메일입니다." : duplicateEmailCheckResponse.message}
-                  </div>
-              )}
+            {duplicateEmailCheckResponse && (
+              <div
+                css={css({
+                  fontSize: "15px",
+                  color:
+                    duplicateEmailCheckResponse.code === "SU"
+                      ? "#0a8425"
+                      : "#f44336", // 코드가 SU이면 빨간색, 아니면 초록색
+                  margin: "5px 0px 0px 20px",
+                })}
+              >
+                {duplicateEmailCheckResponse.code === "SU"
+                  ? "사용 가능한 이메일입니다."
+                  : duplicateEmailCheckResponse.message}
+              </div>
+            )}
             {showVerificationInput && (
               <div
                 css={css({
@@ -202,7 +230,8 @@ const EmailStep = ({
                   }}
                 >
                   <TextField
-                    value={certificationNumber} onChange={handleCertificationNumber}
+                    value={certificationNumber}
+                    onChange={handleCertificationNumber}
                     required
                     fullWidth
                     type="verificationCode"
@@ -239,24 +268,27 @@ const EmailStep = ({
                 </div>
               </div>
             )}
-              {confirmVerificationCode && (
-                  <div
-                      css={css({
-                          fontSize: "15px",
-                          color: certificationResponse.code === "SU" ? "#0a8425" : "#f44336", // 코드가 SU이면 초록색, 아니면 빨간색
-                          margin: "5px 0px 0px 20px",
-                      })}
-                  >
-                      {certificationResponse.code === "SU" ? "인증번호가 일치합니다." : certificationResponse.message}
-                  </div>
-              )}
+            {confirmVerificationCode && (
+              <div
+                css={css({
+                  fontSize: "15px",
+                  color:
+                    certificationResponse.code === "SU" ? "#0a8425" : "#f44336", // 코드가 SU이면 초록색, 아니면 빨간색
+                  margin: "5px 0px 0px 20px",
+                })}
+              >
+                {certificationResponse.code === "SU"
+                  ? "인증번호가 일치합니다."
+                  : certificationResponse.message}
+              </div>
+            )}
 
-              <Grid item xs={12}>
-                  <TextField
-                      required
-                      fullWidth
-                      type="password"
-                      id="password"
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                type="password"
+                id="password"
                 name="password"
                 label="비밀번호 (숫자+영문 8자리 이상)"
                 InputProps={{
@@ -275,27 +307,25 @@ const EmailStep = ({
               />
             </Grid>
             <Grid item xs={12}>
-                <TextField
-                    required
-                    fullWidth
-                    type="password"
-                    id="rePassword"
-                    name="rePassword"
-                    label="비밀번호 재입력"
-                    InputProps={{
-                        style: {
-                            borderRadius: "15px",
-                            width: "510px",
-                        },
-                    }}
-                    onChange={handleRePasswordChange}
-                    error={rePasswordError}
-                    helperText={
-                        rePasswordError
-                            ? "비밀번호가 일치하지 않습니다."
-                            : ""
-                    }
-                />
+              <TextField
+                required
+                fullWidth
+                type="password"
+                id="rePassword"
+                name="rePassword"
+                label="비밀번호 재입력"
+                InputProps={{
+                  style: {
+                    borderRadius: "15px",
+                    width: "510px",
+                  },
+                }}
+                onChange={handleRePasswordChange}
+                error={rePasswordError}
+                helperText={
+                  rePasswordError ? "비밀번호가 일치하지 않습니다." : ""
+                }
+              />
             </Grid>
           </Grid>
           <Button
@@ -305,9 +335,9 @@ const EmailStep = ({
             // 다음 버튼 활성화 : 비활성화
             onClick={isNextButtonEnabled ? handleNextStep : null}
             css={css({
-                backgroundColor: isNextButtonEnabled ? "#829fd7" : "#d9d9d9",
-                color: isNextButtonEnabled ? "white" : "#a1a1a1",
-                cursor: isNextButtonEnabled ? "pointer" : "not-allowed",
+              backgroundColor: isNextButtonEnabled ? "#829fd7" : "#d9d9d9",
+              color: isNextButtonEnabled ? "white" : "#a1a1a1",
+              cursor: isNextButtonEnabled ? "pointer" : "not-allowed",
             })}
           >
             다음

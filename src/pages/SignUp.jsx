@@ -26,8 +26,8 @@ export default function SignUp() {
     const [nicknameDuplicateCheckResponse, setNicknameDuplicateCheckResponse] = useState(""); // 닉네임 중복확인의 결과 (메시지)
     const [nicknameDuplicateCheckResult, setNicknameDuplicateCheckResult] = useState(false); // 닉네임 중복확인  true or false
 
-
-    const [field, setField] = useState("");
+    const [field, setField] = useState(""); // 선택한 관심분야 (영문 키워드)
+    const [fieldCategory, setFieldCategory] = useState("");  // 관심분야 출력
 
     // useNavigate 사용
     const navigate = useNavigate();
@@ -73,7 +73,7 @@ export default function SignUp() {
 
     // 닉네임 입력 값 업데이트
     const handleNicknameChange = (e) => {
-        console.log(nickname)
+        setNickname(e.target.value)
     };
 
   // 인증번호 확인 버튼
@@ -187,9 +187,10 @@ export default function SignUp() {
   const handleNextStep = () => {
     setCurrentStep(currentStep + 1);
   };
+
   // 가입하기 버튼 클릭
   const handleSignup = () => {
-    navigate("/signupcomplete");
+      navigate('/signup/complete');
   };
 
   //폰트 설정
@@ -199,9 +200,25 @@ export default function SignUp() {
     },
   });
 
+    // 연동을 위해 매칭될 관심 분야 목록
+    const categoryMap = {
+        1: "Marketing_Promotion",
+        2: "Accounting_Tax_Finance",
+        3: "GeneralAffairs_LegalAffairs_Affairs",
+        4: "IT_Data",
+        5: "Design",
+        6: "Service",
+        7: "Construction_Architecture",
+        8: "MedicalCare",
+        9: "Education",
+        10: "Media_Culture_Sports",
+    };
+
   // 분야
   const handleFieldChange = (event) => {
-    setField(event.target.value);
+      const selectedField = event.target.value;
+      setField(categoryMap[selectedField] || "");
+      setFieldCategory(selectedField)
   };
 
 
@@ -356,6 +373,7 @@ export default function SignUp() {
             nickname={nickname}
             nicknameDuplicateCheckResponse={nicknameDuplicateCheckResponse}
             nicknameDuplicateCheckResult={nicknameDuplicateCheckResult}
+            fieldCategory={fieldCategory}
           />
         )}
       </div>

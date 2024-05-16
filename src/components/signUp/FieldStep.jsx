@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React from "react";
+import React, {useState} from "react";
 import {
   Container,
   CssBaseline,
@@ -19,7 +19,7 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { css } from "@emotion/react";
 
-const FieldStep = ({ handleFieldChange, handleSignup, field, duplicateNicknameCheck, handleNicknameChange, nickname, nicknameDuplicateCheckResponse, nicknameDuplicateCheckResult }) => {
+const FieldStep = ({ handleFieldChange, handleSignup, field, duplicateNicknameCheck, handleNicknameChange, nickname, nicknameDuplicateCheckResponse, fieldCategory }) => {
   //폰트 설정
   const theme = createTheme({
     typography: {
@@ -30,28 +30,18 @@ const FieldStep = ({ handleFieldChange, handleSignup, field, duplicateNicknameCh
 
   // 관심 분야 목록
   const categories = [
-    "기획/전략",
-    "마케팅/홍보/조사",
-    "회계/세무/재무",
-    "인사/노무/HRD",
-    "총무/법무/사무",
-    "IT/개발/데이터",
-    "디자인",
-    "영업/판매/무역",
-    "고객/상담/TM",
-    "구매/자재/물류",
-    "상품/기획/MD",
-    "운전/운송/배송",
-    "서비스",
-    "생산",
-    "건설/건축",
-    "의료",
-    "연구/R&D",
-    "교육",
-    "미디어/문화/스포츠",
-    "금융/보험",
-    "공공/복지",
+      "마케팅/홍보/조사",
+      "회계/세무/재무",
+      "총무/법무/사무",
+      "IT개발/데이터",
+      "디자인",
+      "서비스",
+      "건설/건축",
+      "의료",
+      "교육",
+      "미디어/문화/스포츠",
   ];
+
 
   return (
     <>
@@ -166,7 +156,7 @@ const FieldStep = ({ handleFieldChange, handleSignup, field, duplicateNicknameCh
                   labelId="field"
                   id="field"
                   label="field"
-                  value={field}
+                  value={fieldCategory}
                   onChange={handleFieldChange}
                   sx={{
                     borderRadius: "15px",
@@ -175,7 +165,7 @@ const FieldStep = ({ handleFieldChange, handleSignup, field, duplicateNicknameCh
                   <MenuItem value="">
                     <em>관심분야/직종 선택</em>
                   </MenuItem>
-                  {[...Array(21)].map((_, index) => (
+                  {[...Array(categories.length)].map((_, index) => (
                     <MenuItem key={index} value={index + 1}>
                       {categories[index]}
                     </MenuItem>
@@ -183,14 +173,29 @@ const FieldStep = ({ handleFieldChange, handleSignup, field, duplicateNicknameCh
                 </Select>
               </FormControl>
             </>
-            <Button
-              width="170px"
-              height="50px"
-              margin="40px 0px 0px 0px"
+            <div
+                css={css({
+                    width:"170px",
+                    height:"50px",
+                    margin: "40px 0px 0px 0px",
+                    backgroundColor: "#829FD7",
+                    color: "white",
+                    fontSize: "18px",
+                    fontWeight:  "500",
+                    borderRadius: "20px",
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    textAlign: 'center',
+                    cursor: 'pointer',
+                    textDecoration: 'none',
+                    padding: '10px 20px',
+                })}
+
               onClick={handleSignup}
             >
               가입하기
-            </Button>
+            </div>
           </FormControl>
         </Container>
       </ThemeProvider>
@@ -199,7 +204,3 @@ const FieldStep = ({ handleFieldChange, handleSignup, field, duplicateNicknameCh
 };
 
 export default FieldStep;
-
-const ConfirmButton = styled.div`
-  right: ${(props) => props.right || "145px"};
-`;

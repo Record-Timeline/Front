@@ -211,7 +211,6 @@ export default function SignUp() {
           email: email,
           password: password,
           certificationNumber: certificationNumber,
-          name: "아무개",
           nickname: nickname,
           interest: field,
         },
@@ -227,7 +226,6 @@ export default function SignUp() {
         email: email,
         password: password,
         certificationNumber: certificationNumber,
-        name: "아무개",
         nickname: nickname,
         interest: field,
       });

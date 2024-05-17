@@ -14,6 +14,7 @@ import {
   TextField,
 } from "@mui/material/";
 import {styled as withStyles} from "@mui/material/styles";
+import axios from "axios";
 
 export default function Login() {
   const [email, setEmail] = useState(""); // 이메일
@@ -28,6 +29,44 @@ export default function Login() {
     setPassword(e.target.value);
   };
 
+  // 로그인
+  const login = async () => {
+    if (email.trim() === "") {
+      alert("이메일을 입력하세요.");
+      return;
+    }
+    if (password.trim() === "") {
+      alert("비밀번호를 입력하세요.");
+      return;
+    }
+
+    // 로그인 연동
+    try {
+      const response = await axios.post(
+          `/api/v1/auth/app-login`,
+          { email: email, password: password },
+          {
+            headers: {
+              Accept: "*/*",
+              "Content-Type": `application/json`,
+            },
+          }
+      );
+      console.log("로그인", response);
+      // 로그인 성공
+      if (response.data.code === "SU"){
+        alert("로그인 되었습니다 :)");
+      }
+      // 로그인 실패
+      else{
+        alert(response.data.message + " 다시 시도해주세요.")
+      }
+      // 에러 시 
+    } catch (error) {
+      alert("로그인에 실패했습니다. 다시 시도해주세요. ");
+      console.error(error);
+    }
+  };
 
   return (
     <div
@@ -66,6 +105,7 @@ export default function Login() {
             id="email"
             name="email"
             label="이메일"
+            value={email}
             InputProps={{
               style: {
                 borderRadius: "15px",
@@ -81,6 +121,7 @@ export default function Login() {
             type="password"
             id="password"
             name="password"
+            value={password}
             label="비밀번호"
             InputProps={{
               style: {
@@ -90,7 +131,7 @@ export default function Login() {
             }}
         />
 
-        <Button margin="10px 0px 15px 0px" height="45px">로그인</Button>
+        <Button margin="10px 0px 15px 0px" height="45px" onClick={login}>로그인</Button>
         <div
           css={css`
             display: flex;
@@ -107,7 +148,7 @@ export default function Login() {
               padding: 0px 20px;
             `}
           >
-            아이디 찾기
+            이메일 찾기
           </Link>
           <Link
             to="/find"

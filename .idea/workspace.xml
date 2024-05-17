@@ -7,11 +7,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4e78fff8-965f-4a9a-b412-7c54129d79ca" name="Changes" comment="Feat:">
+    <list default="true" id="4e78fff8-965f-4a9a-b412-7c54129d79ca" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/signUp/EmailStep.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/signUp/EmailStep.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/signUp/FieldStep.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/signUp/FieldStep.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/SignUp.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/SignUp.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Login.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,26 +39,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Node.js.MainTimeline.jsx.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "RTL-86-FE-",
-    "last_opened_file_path": "C:/Users/sohee/recordtimeline-fe/node_modules",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.standard": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.standard": "",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "prettierjs.PrettierConfiguration.Package": "C:\\Users\\sohee\\recordtimeline-fe\\node_modules",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "settings.javascript.prettier",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2024.1\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Node.js.MainTimeline.jsx.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;RTL-86-FE-&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/sohee/recordtimeline-fe/node_modules&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;C:\\Users\\sohee\\recordtimeline-fe\\node_modules&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.prettier&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\WebStorm 2024.1\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\saral\Desktop\recordTimeline_FE\Front\src\components\timeline" />
@@ -101,7 +99,8 @@
       <workItem from="1715773751334" duration="4689000" />
       <workItem from="1715841476834" duration="3587000" />
       <workItem from="1715859325176" duration="951000" />
-      <workItem from="1715860317106" duration="672000" />
+      <workItem from="1715860317106" duration="1431000" />
+      <workItem from="1715918411282" duration="2577000" />
     </task>
     <task id="LOCAL-00001" summary="Design: 로그인 화면 깨짐 수정 (mui input 창 추가)">
       <option name="closed" value="true" />
@@ -175,7 +174,39 @@
       <option name="project" value="LOCAL" />
       <updated>1715845044026</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Feat: 회원가입 연동 완료">
+      <option name="closed" value="true" />
+      <created>1715861203747</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1715861203747</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Design: 회원가입 완료 페이지 깨짐 수정">
+      <option name="closed" value="true" />
+      <created>1715861306589</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1715861306589</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Fix: 회원가입 로직 이름 제거">
+      <option name="closed" value="true" />
+      <created>1715921209077</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1715921209077</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Fix: textfield 아이디 -&gt; 이메일 변경">
+      <option name="closed" value="true" />
+      <created>1715921637116</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1715921637116</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -244,6 +275,11 @@
     <MESSAGE value="Feat: 에러 났을 때 alert 창 추가 및 다음 버튼 onclick 수정" />
     <MESSAGE value="Feat: 닉네임 중복확인 기능 추가" />
     <MESSAGE value="Feat: 회원가입 관심분야 로직 수정" />
-    <option name="LAST_COMMIT_MESSAGE" value="Feat: 회원가입 관심분야 로직 수정" />
+    <MESSAGE value="Feat:" />
+    <MESSAGE value="Feat: 회원가입 연동 완료" />
+    <MESSAGE value="Design: 회원가입 완료 페이지 깨짐 수정" />
+    <MESSAGE value="Fix: 회원가입 로직 이름 제거" />
+    <MESSAGE value="Fix: textfield 아이디 -&gt; 이메일 변경" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: textfield 아이디 -&gt; 이메일 변경" />
   </component>
 </project>

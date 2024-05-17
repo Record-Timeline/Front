@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
-import React, { useState } from "react";
+import React, { useState,  } from "react";
+import { useNavigate } from "react-router-dom";
 import recodeTimelineLogo from "../assets/images/recodeTimelineLogo.svg";
 import { css } from "@emotion/react";
 import { Link } from "react-router-dom";
@@ -17,6 +18,8 @@ import {styled as withStyles} from "@mui/material/styles";
 import axios from "axios";
 
 export default function Login() {
+  const navigate = useNavigate();
+  
   const [email, setEmail] = useState(""); // 이메일
   const [password, setPassword] = useState(""); // 비밀번호
 
@@ -56,12 +59,13 @@ export default function Login() {
       // 로그인 성공
       if (response.data.code === "SU"){
         alert("로그인 되었습니다 :)");
+        navigate("/");
       }
       // 로그인 실패
       else{
         alert(response.data.message + " 다시 시도해주세요.")
       }
-      // 에러 시 
+      // 에러 시
     } catch (error) {
       alert("로그인에 실패했습니다. 다시 시도해주세요. ");
       console.error(error);

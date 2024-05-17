@@ -16,31 +16,17 @@ import {
 import {styled as withStyles} from "@mui/material/styles";
 
 export default function Login() {
-  const [username, setUsername] = useState(""); // 아이디
+  const [email, setEmail] = useState(""); // 이메일
   const [password, setPassword] = useState(""); // 비밀번호
 
-  // 아이디 입력
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
+  // 이메일 입력
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
   };
   // 비밀번호 입력
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
-
-  // text field 색 바꾸기
-  const StyledTextField = withStyles(TextField)({
-    "& .MuiInput-underline:after": {
-      borderBottomColor: "#829FD7",
-    },
-    "& .MuiOutlinedInput-root": {
-      "&.Mui-focused fieldset": {
-        color: "#829FD7",
-      },
-    },
-
-    position: "relative",
-  });
 
 
   return (
@@ -72,15 +58,14 @@ export default function Login() {
             margin-bottom: 60px;
           `}
         />
-        <StyledTextField
-            onChange={handleUsernameChange}
+        <TextField
+            onChange={handleEmailChange}
             required
-            autoFocus
             fullWidth
-            type="id"
-            id="id"
-            name="id"
-            label="아이디"
+            type="email"
+            id="email"
+            name="email"
+            label="이메일"
             InputProps={{
               style: {
                 borderRadius: "15px",
@@ -88,7 +73,7 @@ export default function Login() {
               },
             }}
         />
-        <StyledTextField
+        <TextField
             onChange={handlePasswordChange}
             required
             autoFocus

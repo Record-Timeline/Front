@@ -5,6 +5,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { Link } from "react-router-dom";
 
 export default function Header() {
+
   return (
     <div
       css={css`
@@ -12,7 +13,7 @@ export default function Header() {
         height: 50px;
         display: flex;
         align-items: center;
-        margin: 30px 0px;
+        margin: 25px 0px 10px 0px;
       `}
     >
       <div
@@ -29,7 +30,18 @@ export default function Header() {
           font-weight: 200;
         `}
       >
-        시작하기
+        {/* 로그인 되어있으면 "내 타임라인" 버튼, 로그인 안 되어있으면 "시작하기" 버튼 */}
+        {!!localStorage.getItem("token") ? (
+          <Link to={"/mytimeline"} css={css`
+            text-decoration: none;
+              color: white;
+        `}>내 타임라인</Link>
+        ) : (
+          <Link to={"/signup"} css={css`
+            text-decoration: none;
+              color: white;
+        `}>시작하기</Link>
+        )}
       </div>
       <Link to="/search">
         <SearchIcon

@@ -8,13 +8,8 @@ import { Link } from "react-router-dom";
 import KaKaoIcon from "../assets/images/kakaoLoginIcon.svg";
 import Button from "../components/common/Button";
 import {
-  Container,
-  CssBaseline,
-  FormControl,
-  Grid,
   TextField,
 } from "@mui/material/";
-import {styled as withStyles} from "@mui/material/styles";
 import axios from "axios";
 
 export default function Login() {
@@ -59,7 +54,9 @@ export default function Login() {
       // 로그인 성공
       if (response.data.code === "SU"){
         alert("로그인 되었습니다 :)");
+        localStorage.setItem("token", response.data.token); // 로컬스토리지에 token 저장
         navigate("/");
+
       }
       // 로그인 실패
       else{

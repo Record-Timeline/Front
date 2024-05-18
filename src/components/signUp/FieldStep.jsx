@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Container,
   CssBaseline,
@@ -19,54 +19,68 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { css } from "@emotion/react";
 
-const FieldStep = ({ handleFieldChange, handleSignup, field }) => {
+const FieldStep = ({
+  handleFieldChange,
+  handleSignup,
+  field,
+  duplicateNicknameCheck,
+  handleNicknameChange,
+  nickname,
+  nicknameDuplicateCheckResponse,
+  fieldCategory,
+  duplicateEmailCheckResult,
+  certification,
+  passwordError,
+  rePasswordError,
+  password,
+  rePassword,
+  nicknameDuplicateCheckResult,
+}) => {
+  const [isSignupButtonEnabled, setIsSignupButtonEnabled] = useState(false); // 회원가입 버튼 활성화
+
   //폰트 설정
   const theme = createTheme({
     typography: {
       fontFamily: "Pretendard",
     },
   });
-  // text field 색 바꾸기
-  const StyledTextField = withStyles(TextField)({
-    "& .MuiInput-underline:after": {
-      borderBottomColor: "#829FD7",
-    },
-    "& .MuiOutlinedInput-root": {
-      "&.Mui-focused fieldset": {
-        color: "#829FD7",
-      },
-    },
-    "&.Mui-error .MuiOutlinedInput-root": {
-      // 에러 상태일 때
-      borderColor: "#f44336",
-    },
-    position: "relative",
-  });
 
   // 관심 분야 목록
   const categories = [
-    "기획/전략",
     "마케팅/홍보/조사",
     "회계/세무/재무",
-    "인사/노무/HRD",
     "총무/법무/사무",
-    "IT/개발/데이터",
+    "IT개발/데이터",
     "디자인",
-    "영업/판매/무역",
-    "고객/상담/TM",
-    "구매/자재/물류",
-    "상품/기획/MD",
-    "운전/운송/배송",
     "서비스",
-    "생산",
     "건설/건축",
     "의료",
-    "연구/R&D",
     "교육",
     "미디어/문화/스포츠",
-    "금융/보험",
-    "공공/복지",
   ];
+
+  // 가입하기 버튼 활성화/비활성화
+  useEffect(() => {
+    setIsSignupButtonEnabled(
+      duplicateEmailCheckResult &&
+        certification &&
+        !passwordError &&
+        !rePasswordError &&
+        password.length > 0 &&
+        rePassword.length > 0 &&
+        nicknameDuplicateCheckResult &&
+        field.length > 0
+    );
+  }, [
+    duplicateEmailCheckResult,
+    certification,
+    passwordError,
+    rePasswordError,
+    password,
+    rePassword,
+    nicknameDuplicateCheckResult,
+    field,
+  ]);
 
   return (
     <>
@@ -107,9 +121,10 @@ const FieldStep = ({ handleFieldChange, handleSignup, field }) => {
                     padding: "16px 0px 0px 16px",
                   }}
                 >
-                  <StyledTextField
+                  <TextField
+                    value={nickname}
+                    onChange={handleNicknameChange}
                     required
-                    autoFocus
                     fullWidth
                     type="nickname"
                     id="nickname"
@@ -122,8 +137,26 @@ const FieldStep = ({ handleFieldChange, handleSignup, field }) => {
                       },
                     }}
                   />
+                  {nicknameDuplicateCheckResponse && (
+                    <div
+                      css={css({
+                        fontSize: "15px",
+                        color:
+                          nicknameDuplicateCheckResponse.code === "SU"
+                            ? "#0a8425"
+                            : "#f44336", // 코드가 SU이면 빨간색, 아니면 초록색
+                        margin: "7px 0px 0px 10px",
+                      })}
+                    >
+                      {nicknameDuplicateCheckResponse.code === "SU"
+                        ? "사용 가능한 닉네임입니다."
+                        : nicknameDuplicateCheckResponse.message}
+                    </div>
+                  )}
                 </Grid>
+
                 <div
+                  onClick={duplicateNicknameCheck}
                   css={css({
                     right: "64px",
                     width: "80px",
@@ -167,7 +200,7 @@ const FieldStep = ({ handleFieldChange, handleSignup, field }) => {
                   labelId="field"
                   id="field"
                   label="field"
-                  value={field}
+                  value={fieldCategory}
                   onChange={handleFieldChange}
                   sx={{
                     borderRadius: "15px",
@@ -176,7 +209,7 @@ const FieldStep = ({ handleFieldChange, handleSignup, field }) => {
                   <MenuItem value="">
                     <em>관심분야/직종 선택</em>
                   </MenuItem>
-                  {[...Array(21)].map((_, index) => (
+                  {[...Array(categories.length)].map((_, index) => (
                     <MenuItem key={index} value={index + 1}>
                       {categories[index]}
                     </MenuItem>
@@ -184,14 +217,28 @@ const FieldStep = ({ handleFieldChange, handleSignup, field }) => {
                 </Select>
               </FormControl>
             </>
-            <Button
-              width="170px"
-              height="50px"
-              margin="40px 0px 0px 0px"
-              onClick={handleSignup}
+            <div
+              css={css({
+                width: "170px",
+                height: "50px",
+                margin: "40px 0px 0px 0px",
+                fontSize: "18px",
+                fontWeight: "500",
+                borderRadius: "20px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                textAlign: "center",
+                textDecoration: "none",
+                padding: "10px 20px",
+                backgroundColor: isSignupButtonEnabled ? "#829fd7" : "#d9d9d9",
+                color: isSignupButtonEnabled ? "white" : "#a1a1a1",
+                cursor: isSignupButtonEnabled ? "pointer" : "not-allowed",
+              })}
+              onClick={isSignupButtonEnabled ? handleSignup : null}
             >
               가입하기
-            </Button>
+            </div>
           </FormControl>
         </Container>
       </ThemeProvider>
@@ -200,7 +247,3 @@ const FieldStep = ({ handleFieldChange, handleSignup, field }) => {
 };
 
 export default FieldStep;
-
-const ConfirmButton = styled.div`
-  right: ${(props) => props.right || "145px"};
-`;

@@ -3,7 +3,7 @@
 import * as React from "react";
 import {useState} from "react";
 import {css} from "@emotion/react";
-import Profile from "../components/common/Profile";
+import OthersProfile from "../components/common/OthersProfile";
 import OthersTimelineItem from "../components/othersTimeline/OthersTimelineItem";
 
 export default function OthersMainTimeline() {
@@ -24,7 +24,7 @@ export default function OthersMainTimeline() {
                 // },
             })}
         >
-            <Profile />
+            <OthersProfile />
             <OthersTimelineItem isDone={true}/>
             <OthersTimelineItem />
             <OthersTimelineItem isDone={true}/>

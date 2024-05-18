@@ -8,7 +8,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4e78fff8-965f-4a9a-b412-7c54129d79ca" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/common/Profile.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Login.jsx" afterDir="false" />
     </list>
@@ -20,7 +19,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="RTL-79-fe-서브-타임라인-페이지-ui-구현" />
+        <entry key="$PROJECT_DIR$" value="RTL-85-fe-다른-사용자-서브-타임라인-페이지-구현" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -62,6 +61,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\saral\Desktop\recordTimeline_FE\Front\src\components\subTimeline" />
       <recent name="C:\Users\saral\Desktop\recordTimeline_FE\Front\src\components\timeline" />
       <recent name="C:\Users\saral\Desktop\recordTimeline_FE\Front\src\components\common" />
     </key>
@@ -226,6 +226,21 @@
             <list>
               <RecentGroup>
                 <option name="FILTER_VALUES">
+                  <option value="RTL-79-fe-서브-타임라인-페이지-ui-구현" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="RTL-67-fe-메인-타임라인-페이지-구현" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="origin/RTL-67-fe-메인-타임라인-페이지-구현" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
                   <option value="RTL-50-FE-UI-" />
                 </option>
               </RecentGroup>
@@ -254,7 +269,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="RTL-50-FE-UI-" />
+                        <option value="RTL-79-fe-서브-타임라인-페이지-ui-구현" />
                       </list>
                     </value>
                   </entry>

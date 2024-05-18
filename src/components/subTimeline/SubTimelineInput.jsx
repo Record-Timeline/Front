@@ -55,14 +55,14 @@ function SubTimelineInput() {
     return (
         <div // 회색 타임라인 박스
             css={css({
-                width: "1005px",
-                height: "94px", // 좀 더 굵게 만들기 - 다른 것도 다 수정해야 함 ㅡㅡ
+                width: "680px",
+                height: "65px",
                 background: "#f8f6f6",
                 borderRadius: "30px",
                 boxShadow: "0 0 8px 0 rgba(0, 0, 0, 0.04)",
                 textAlign: "center",
                 margin: "0 auto", /* 페이지 중앙에 나타나도록 설정 */
-                marginTop: "45px",
+                marginTop: "20px",
                 marginBottom: "32px",
                 display: "flex",
             })}
@@ -70,6 +70,19 @@ function SubTimelineInput() {
             <CheckCircle // 체크표시
                 done={isChecked}
                 onClick={() => setIsChecked(!isChecked)}
+                css={css`
+                        width: 21px; 
+                        height: 21px; 
+                        border-radius: 50%;
+                        border: 3px solid #829FD7;
+                        float: left;
+                        display: inline-block;
+                        margin-top: 22px;
+                        margin-left: 35px;
+                        margin-right: 15px;
+                        cursor: pointer;
+                        background-color: ${isChecked ? "#829FD7" : "#f8f6f6"}; // 선 때문에 뚫린 원일 때도 배경 색 설정
+                    `}
             />
             <div // 기간
                 css={css({
@@ -77,7 +90,7 @@ function SubTimelineInput() {
                     color: "#666",
                     // width: "450px",
                     padding: "10px",
-                    fontSize: "17px",
+                    fontSize: "15px",
                     //float: left;
                     textAlign: "left",
                     marginRight: "10px",
@@ -85,7 +98,7 @@ function SubTimelineInput() {
                     // border: "1px solid black",
                 })}
             >
-                <DatePickerValue label="시작 날짜"/>
+                <DatePickerValue label="시작 날짜" />
                 <p css={css({margin: "7px", lineHeight: "60px"})}>~</p> {/* 물결 있는 버전 */}
                 {/*<p css={css({margin: "6px", lineHeight: "60px"})} />*/} {/* 물결 없는 버전 */}
                 <DatePickerValue label="종료 날짜" />

@@ -4,14 +4,23 @@ import * as React from "react";
 import {useState} from "react";
 import { css } from "@emotion/react";
 import Button from  "./Button"
-import ProfileNickName from "../main/ProfileNickName";
 import testProfileImg from "../../assets/images/testProfileImg.png";
 
-export default function Profile() {
+export default function OthersProfile() {
     const nickName = "닉네임"; // 테스트 닉네임
     const interestCategory = "개발자"; // 테스트 관심분야
-    const followers = 20;
-    const followings = 30;
+    const [isFollowed, setIsFollowed] = useState(false);
+    const [followers, setFollowers] = useState(20);
+    const [followings, setFollowings] = useState(30);
+
+    const onClickFollow = () => {
+        if (isFollowed) {
+            setFollowers(followers - 1); // 팔루오 해제 시 팔로우 수 감소
+        } else {
+            setFollowers(followers + 1); // 팔로우 누를 시 팔로우 수 증가
+        }
+        setIsFollowed(!isFollowed); // 팔로우 상태 토글
+    }
 
     return (
         <div
@@ -97,23 +106,24 @@ export default function Profile() {
                 </div>
                 <div>
                     <Button
+                        Follow={isFollowed}
+                        onClick={onClickFollow}
                         width="120px"
-                        height="35px"
-                        lineHeight="15px" // 나중에 깨지면 지우기
+                        height="40px"
+                        // lineHeight="15px" // 나중에 깨지면 지우기
                         margin="28px 0 0 0"
-                        backgroundColor="#fff"
+                        backgroundColor={isFollowed ? "#EEEEEE" : "#fff"}
                         border="1px solid #D7D7D7"
                         textColor="#424242"
                         fontSize="15px"
                         borderRadius="30px"
                         css={css({display: "inline-block",})}
                     >
-                        팔로우
+                        {isFollowed ? "팔로잉" : "팔로우"}
                     </Button>
                     <Button
                         width="150px"
-                        height="35px" // 나중에 깨지면 지우기
-                        lineHeight="15px"
+                        height="40px"
                         margin="28px 0 0 230px"
                         backgroundColor="none"
                         border="2px solid #829FD7"

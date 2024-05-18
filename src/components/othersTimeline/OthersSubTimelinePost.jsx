@@ -14,8 +14,7 @@ import BookmarkIcon from '@mui/icons-material/Bookmark';
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
-export default function ReadSubTimelinePost({ onEdit }) {
-    const [isChecked, setIsChecked] = useState(false); // 타임라인 체크 circle 상태
+export default function OthersSubTimelinePost({ isDone }) {
     const [isLiked, setIsLiked] = useState(false);
     const [isBookmarked, setIsBookmarked] = useState(false);
     const [like, setLike] = useState(204); // 좋아요 수 임의로 설정
@@ -57,10 +56,9 @@ export default function ReadSubTimelinePost({ onEdit }) {
                 })}
             >
                 <div // 체크표시
-                    done={isChecked}
-                    onClick={() => setIsChecked(!isChecked)}
+                    done={isDone}
                     css={css`
-                        width: 21px; 
+                        width: 21px;
                         height: 21px;
                         border-radius: 50%;
                         border: 3px solid #829FD7;
@@ -69,8 +67,7 @@ export default function ReadSubTimelinePost({ onEdit }) {
                         margin-top: 22px;
                         margin-left: 35px;
                         margin-right: 15px;
-                        cursor: pointer;
-                        background-color: ${isChecked ? "#829FD7" : "#f8f6f6"}; // 선 때문에 뚫린 원일 때도 배경 색 설정
+                        background-color: ${isDone ? "#829FD7" : "#f8f6f6"}; 
                     `}
                 />
                 <div // 기간
@@ -106,29 +103,6 @@ export default function ReadSubTimelinePost({ onEdit }) {
                 >
                     졸업 프로젝트 - 캡스톤
                 </div>
-                <div // 공개 여부 (자물쇠 아이콘) (이 버전 vs 아래 버전 논의)
-                    css={css({
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        marginLeft: "10px",
-                        marginRight: "40px",
-                        // border: "1px solid black",
-                    })}
-                >
-                    <FiLock/> {/* 비공개면 FiLock, 공개면 FiUnlock : 삼항 연산자*/}
-                </div>
-                {/*<div // 공개 여부 (자물쇠 아이콘)*/}
-                {/*    css={css({*/}
-                {/*        display: "flex",*/}
-                {/*        alignItems: "center",*/}
-                {/*        justifyContent: "center",*/}
-                {/*        marginRight: "40px",*/}
-                {/*        // border: "1px solid black",*/}
-                {/*    })}*/}
-                {/*>*/}
-                {/*    <CustomizedSelects text1={" 공개"} text2={" 비공개"}/> /!* 여기 소희님한테 물어보기 text1, text2 말고 하나로 합치는 방법 *!/*/}
-                {/*</div>*/}
             </div>
             <div // 텍스트 나오는 박스
                 css={css({
@@ -220,44 +194,6 @@ export default function ReadSubTimelinePost({ onEdit }) {
                     })}
                 />
                 <p css={css({display: "inline-block", marginRight: "20px"})}>{bookmark}</p>
-            </div>
-            <div // 수정, 삭제 버튼 감싸는 div
-                css={css({
-                    textAlign: "center",
-                    // marginTop: "20px",
-                    marginBottom: "50px",
-                    // border: "1px solid #f8f6f6",
-                })}
-            >
-                <Button
-                    width="120px"
-                    height="40px"
-                    margin="0px 15px"
-                    backgroundColor="#FFF"
-                    textColor="#F19797"
-                    fontSize="15px"
-                    border="2px solid #FFBDBD"
-                    borderRadius="50px"
-                    display="inline-block"
-                    // lineHeight="18px"
-                >
-                    삭제하기
-                </Button>
-                <Button
-                    onClick={() => onEdit(post)}
-                    width="120px"
-                    height="40px"
-                    margin="0px 15px"
-                    backgroundColor="#FFF"
-                    textColor="#7286AD"
-                    fontSize="15px"
-                    border="2px solid #829FD7"
-                    borderRadius="50px"
-                    display="inline-block"
-                    // lineHeight="18px"
-                >
-                    수정하기
-                </Button>
             </div>
         </div>
     )

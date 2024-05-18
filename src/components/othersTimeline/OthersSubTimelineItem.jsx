@@ -8,13 +8,14 @@ import { GoPencil } from "react-icons/go";
 import { FaRegTrashAlt } from "react-icons/fa";
 import AlertDialog from "../common/AlertDialog";
 
-function SubTimelineItem() {
+function SubTimelineItem({ isDone }) {
     const [isChecked, setIsChecked] = useState(false);
 
     return (
+
         <div // 회색 타임라인 박스
             css={css({
-                width: "310px",
+                width: "300px",
                 height: "100px",
                 background: "#f8f6f6",
                 borderRadius: "50px",
@@ -27,11 +28,10 @@ function SubTimelineItem() {
             })}
         >
             <div // 체크 표시
-                done={isChecked}
-                onClick={() => setIsChecked(!isChecked)}
+                done={isDone}
                 css={css`
-                        width: 21px; // 21px
-                        height: 21px; // 21px
+                        width: 21px;
+                        height: 21px;
                         border-radius: 50%;
                         border: 3px solid #829FD7;
                         float: left;
@@ -39,9 +39,9 @@ function SubTimelineItem() {
                         margin-top: 40px;
                         margin-left: 30px;
                         margin-right: 15px;
-                        cursor: pointer;
-                        background-color: ${isChecked ? "#829FD7" : "#f8f6f6"}; // 선 때문에 뚫린 원일 때도 배경 색 설정
+                        background-color: ${isDone ? "#829FD7" : "#f8f6f6"}; // 선 때문에 뚫린 원일 때도 배경 색 설정
                     `}
+
             />
             <div
                 css={css({
@@ -52,6 +52,7 @@ function SubTimelineItem() {
                 <div // 기간
                     css={css({
                         color: "#666",
+                        fontFamily: "Pretendard",
                         fontSize: "15px",
                         fontStyle: "normal",
                         fontWeight: "500",
@@ -66,6 +67,7 @@ function SubTimelineItem() {
                 <div // 서브 타임라인 제목
                     css={css({
                         color: "#212121",
+                        fontFamily: "Pretendard",
                         fontSize: "15px",
                         fontStyle: "normal",
                         fontWeight: "600",
@@ -78,18 +80,18 @@ function SubTimelineItem() {
                     메인 타임라인 UI 설계 및 구현 {/* 제목 받아올 것 */}
                 </div>
             </div>
-            <div // 공개 여부 (자물쇠 아이콘)
-                css={css({
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginLeft: "10px",
-                    marginRight: "25px",
-                    // border: "1px solid black",
-                })}
-            >
-                <FiLock/> {/* 비공개면 FiLock, 공개면 FiUnlock : 삼항 연산자*/}
-            </div>
+            {/*<div // 공개 여부 (자물쇠 아이콘)*/}
+            {/*    css={css({*/}
+            {/*        display: "flex",*/}
+            {/*        alignItems: "center",*/}
+            {/*        justifyContent: "center",*/}
+            {/*        marginLeft: "10px",*/}
+            {/*        marginRight: "40px",*/}
+            {/*        // border: "1px solid black",*/}
+            {/*    })}*/}
+            {/*>*/}
+            {/*    <FiLock/> /!* 비공개면 FiLock, 공개면 FiUnlock : 삼항 연산자*!/*/}
+            {/*</div>*/}
         </div>
     );
 }

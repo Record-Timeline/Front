@@ -8,6 +8,8 @@ import MainTimeline from "./pages/MainTimeline";
 import Bookmark from "./pages/Bookmark";
 import Search from "./pages/Search";
 import SearchResult from "./pages/SearchResult";
+import SubTimeline from "./pages/SubTimeline";
+import OthersMainTimeline from "./pages/OthersMainTimeline";
 import { CssBaseline } from "@mui/material";
 
 function App() {
@@ -30,6 +32,9 @@ function App() {
         <Route path="/search" element={<Search />} /> {/* 검색 페이지 */}
         <Route path="/search/result/*" element={<SearchResult />} />
         <Route path="/maintimeline" element={<MainTimeline />} />
+        <Route path="/maintimeline" element={<MainTimeline />} /> {/* 메인 타임라인 페이지 */}
+        <Route path="/subtimeline" element={<SubTimeline />} /> {/* 서브 타임라인 페이지 */}
+        <Route path="/othersmain" element={<OthersMainTimeline />} /> {/* 서브 타임라인 페이지 */}
       </Routes>
     </div>
   );

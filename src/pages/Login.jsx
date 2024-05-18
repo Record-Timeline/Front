@@ -1,20 +1,18 @@
 /** @jsxImportSource @emotion/react */
 
-import React, { useState,  } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import recodeTimelineLogo from "../assets/images/recodeTimelineLogo.svg";
 import { css } from "@emotion/react";
 import { Link } from "react-router-dom";
 import KaKaoIcon from "../assets/images/kakaoLoginIcon.svg";
 import Button from "../components/common/Button";
-import {
-  TextField,
-} from "@mui/material/";
+import { TextField } from "@mui/material/";
 import axios from "axios";
 
 export default function Login() {
   const navigate = useNavigate();
-  
+
   const [email, setEmail] = useState(""); // 이메일
   const [password, setPassword] = useState(""); // 비밀번호
 
@@ -41,26 +39,25 @@ export default function Login() {
     // 로그인 연동
     try {
       const response = await axios.post(
-          `/api/v1/auth/app-login`,
-          { email: email, password: password },
-          {
-            headers: {
-              Accept: "*/*",
-              "Content-Type": `application/json`,
-            },
-          }
+        `/api/v1/auth/app-login`,
+        { email: email, password: password },
+        {
+          headers: {
+            Accept: "*/*",
+            "Content-Type": `application/json`,
+          },
+        }
       );
       console.log("로그인", response);
       // 로그인 성공
-      if (response.data.code === "SU"){
+      if (response.data.code === "SU") {
         alert("로그인 되었습니다 :)");
         localStorage.setItem("token", response.data.token); // 로컬스토리지에 token 저장
         navigate("/");
-
       }
       // 로그인 실패
-      else{
-        alert(response.data.message + " 다시 시도해주세요.")
+      else {
+        alert(response.data.message + " 다시 시도해주세요.");
       }
       // 에러 시
     } catch (error) {
@@ -99,40 +96,42 @@ export default function Login() {
           `}
         />
         <TextField
-            onChange={handleEmailChange}
-            required
-            fullWidth
-            type="email"
-            id="email"
-            name="email"
-            label="이메일"
-            value={email}
-            InputProps={{
-              style: {
-                borderRadius: "15px",
-                marginBottom: "20px"
-              },
-            }}
+          onChange={handleEmailChange}
+          required
+          fullWidth
+          type="email"
+          id="email"
+          name="email"
+          label="이메일"
+          value={email}
+          InputProps={{
+            style: {
+              borderRadius: "15px",
+              marginBottom: "20px",
+            },
+          }}
         />
         <TextField
-            onChange={handlePasswordChange}
-            required
-            autoFocus
-            fullWidth
-            type="password"
-            id="password"
-            name="password"
-            value={password}
-            label="비밀번호"
-            InputProps={{
-              style: {
-                borderRadius: "15px",
-                marginBottom: "5px"
-              },
-            }}
+          onChange={handlePasswordChange}
+          required
+          autoFocus
+          fullWidth
+          type="password"
+          id="password"
+          name="password"
+          value={password}
+          label="비밀번호"
+          InputProps={{
+            style: {
+              borderRadius: "15px",
+              marginBottom: "5px",
+            },
+          }}
         />
 
-        <Button margin="10px 0px 15px 0px" height="45px" onClick={login}>로그인</Button>
+        <Button margin="10px 0px 15px 0px" height="45px" onClick={login}>
+          로그인
+        </Button>
         <div
           css={css`
             display: flex;

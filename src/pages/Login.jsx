@@ -1,23 +1,72 @@
 /** @jsxImportSource @emotion/react */
 
-import React, { useState } from "react";
+import React, { useState,  } from "react";
+import { useNavigate } from "react-router-dom";
 import recodeTimelineLogo from "../assets/images/recodeTimelineLogo.svg";
 import { css } from "@emotion/react";
 import { Link } from "react-router-dom";
 import KaKaoIcon from "../assets/images/kakaoLoginIcon.svg";
 import Button from "../components/common/Button";
+import {
+  TextField,
+} from "@mui/material/";
+import axios from "axios";
 
 export default function Login() {
-  const [username, setUsername] = useState(""); // 아이디
+  const navigate = useNavigate();
+  
+  const [email, setEmail] = useState(""); // 이메일
   const [password, setPassword] = useState(""); // 비밀번호
 
-  // 아이디 입력
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
+  // 이메일 입력
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
   };
   // 비밀번호 입력
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
+  };
+
+  // 로그인
+  const login = async () => {
+    if (email.trim() === "") {
+      alert("이메일을 입력하세요.");
+      return;
+    }
+    if (password.trim() === "") {
+      alert("비밀번호를 입력하세요.");
+      return;
+    }
+
+    // 로그인 연동
+    try {
+      const response = await axios.post(
+          `/api/v1/auth/app-login`,
+          { email: email, password: password },
+          {
+            headers: {
+              Accept: "*/*",
+              "Content-Type": `application/json`,
+            },
+          }
+      );
+      console.log("로그인", response);
+      // 로그인 성공
+      if (response.data.code === "SU"){
+        alert("로그인 되었습니다 :)");
+        localStorage.setItem("token", response.data.token); // 로컬스토리지에 token 저장
+        navigate("/");
+
+      }
+      // 로그인 실패
+      else{
+        alert(response.data.message + " 다시 시도해주세요.")
+      }
+      // 에러 시
+    } catch (error) {
+      alert("로그인에 실패했습니다. 다시 시도해주세요. ");
+      console.error(error);
+    }
   };
 
   return (
@@ -39,7 +88,6 @@ export default function Login() {
           flex-direction: column;
           justify-content: center;
           align-items: center;
-          width: 600px;
         `}
       >
         <img
@@ -50,39 +98,41 @@ export default function Login() {
             margin-bottom: 60px;
           `}
         />
-        <input
-          type="text"
-          placeholder="아이디를 입력하세요"
-          css={css`
-            font-size: 18px;
-            font-weight: 300;
-            border-radius: 20px;
-            border: 1.5px solid #949494;
-            outline: none;
-            width: 350px;
-            height: 30px;
-            padding: 10px 20px;
-            margin-bottom: 12px;
-          `}
-          onChange={handleUsernameChange}
+        <TextField
+            onChange={handleEmailChange}
+            required
+            fullWidth
+            type="email"
+            id="email"
+            name="email"
+            label="이메일"
+            value={email}
+            InputProps={{
+              style: {
+                borderRadius: "15px",
+                marginBottom: "20px"
+              },
+            }}
         />
-        <input
-          type="password"
-          placeholder="비밀번호를 입력하세요"
-          css={css`
-            font-size: 18px;
-            font-weight: 300;
-            border-radius: 20px;
-            border: 1.5px solid #949494;
-            outline: none;
-            width: 350px;
-            height: 30px;
-            padding: 10px 20px;
-            margin-bottom: 12px;
-          `}
-          onChange={handlePasswordChange}
+        <TextField
+            onChange={handlePasswordChange}
+            required
+            autoFocus
+            fullWidth
+            type="password"
+            id="password"
+            name="password"
+            value={password}
+            label="비밀번호"
+            InputProps={{
+              style: {
+                borderRadius: "15px",
+                marginBottom: "5px"
+              },
+            }}
         />
-        <Button margin="10px 0px 15px 0px">로그인</Button>
+
+        <Button margin="10px 0px 15px 0px" height="45px" onClick={login}>로그인</Button>
         <div
           css={css`
             display: flex;
@@ -99,7 +149,7 @@ export default function Login() {
               padding: 0px 20px;
             `}
           >
-            아이디 찾기
+            이메일 찾기
           </Link>
           <Link
             to="/find"

@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
 import recodeTimelineLogo from "../assets/images/recodeTimelineLogo.svg";
 import { css } from "@emotion/react";
 import { Link } from "react-router-dom";
@@ -11,9 +12,12 @@ import { TextField } from "@mui/material/";
 import axios from "axios";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import { setOpenLoginSnackbar } from '../actions/actions';
 
 export default function Login() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const openLoginSnackbar = useSelector(state => state.openLoginSnackbar); // 로그인 성공 스낵바 상태
 
   const [email, setEmail] = useState(""); // 이메일
   const [password, setPassword] = useState(""); // 비밀번호
@@ -28,15 +32,11 @@ export default function Login() {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
-
-  // 로그인 성공 스낵바 (알림창)
-  const [openLoginSnackbar, setOpenLoginSnackbar] = useState(false);
-  const handleCloseLoginSnackbar = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setOpenLoginSnackbar(false);
+  // 로그인 스낵바 닫기
+  const handleCloseLoginSnackbar = () => {
+    dispatch(setOpenLoginSnackbar(false)); // 스낵바 상태를 false로 (redux 상태 업데이트)
   };
+
 
   // 로그인
   const login = async () => {
@@ -64,9 +64,7 @@ export default function Login() {
       console.log("로그인", response);
       // 로그인 성공
       if (response.data.code === "SU") {
-        setOpenLoginSnackbar(true);
-        console.log(openLoginSnackbar)
-        localStorage.setItem("token", response.data.token); // 로컬스토리지에 token 저장
+        dispatch(setOpenLoginSnackbar(true));
         navigate("/");
       }
       // 로그인 실패

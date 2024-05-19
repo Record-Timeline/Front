@@ -5,7 +5,10 @@ import { css } from "@emotion/react";
 import Header from "../components/common/Header";
 import RecoderRecommendation from "../components/main/RecoderRecommendation";
 import PostRecommendation from "../components/main/PostRecommendation";
-
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
+import { useSelector, useDispatch } from 'react-redux';
+import {setOpenLoginSnackbar} from "../actions/actions";
 export default function Main() {
   const interestFields = [
     "마케팅/홍보/조사",
@@ -25,6 +28,16 @@ export default function Main() {
   const handleClick = (interest) => {
     setSelectedInterest(interest);
     console.log(interest);
+  };
+  const dispatch = useDispatch();
+  const openLoginSnackbar = useSelector(state => state.openLoginSnackbar);
+
+
+  const handleCloseLoginSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    dispatch(setOpenLoginSnackbar(false)); // 스낵바 false로 (redux 상태 업데이트)
   };
 
   return (
@@ -127,6 +140,17 @@ export default function Main() {
           </div>
         </div>
       </div>
+      {/* 로그인 성공 시 뜨는 스낵바 */}
+      <Snackbar open={openLoginSnackbar} autoHideDuration={3000} onClose={handleCloseLoginSnackbar} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+        <Alert
+          onClose={handleCloseLoginSnackbar}
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          로그인이 완료되었습니다. 환영합니다 :)
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

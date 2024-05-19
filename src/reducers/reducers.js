@@ -1,17 +1,17 @@
 const initialState = {
-  count: 0
+  openLoginSnackbar: false
 };
 
-const counterReducer = (state = initialState, action) => {
+const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'INCREMENT':
+    case 'SET_OPEN_LOGIN_SNACKBAR':
       return {
         ...state,
-        count: state.count + 1
+        openLoginSnackbar: action.payload
       };
     default:
       return state;
   }
 };
 
-export default counterReducer;
+export default rootReducer;

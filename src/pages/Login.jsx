@@ -9,12 +9,16 @@ import KaKaoIcon from "../assets/images/kakaoLoginIcon.svg";
 import Button from "../components/common/Button";
 import { TextField } from "@mui/material/";
 import axios from "axios";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 export default function Login() {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState(""); // 이메일
   const [password, setPassword] = useState(""); // 비밀번호
+
+  const [loginError, setLoginError] = useState(false);
 
   // 이메일 입력
   const handleEmailChange = (e) => {
@@ -25,14 +29,23 @@ export default function Login() {
     setPassword(e.target.value);
   };
 
+  // 로그인 성공 스낵바 (알림창)
+  const [openLoginSnackbar, setOpenLoginSnackbar] = useState(false);
+  const handleCloseLoginSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenLoginSnackbar(false);
+  };
+
   // 로그인
   const login = async () => {
     if (email.trim() === "") {
-      alert("이메일을 입력하세요.");
+      setLoginError("이메일을 입력하세요.");
       return;
     }
     if (password.trim() === "") {
-      alert("비밀번호를 입력하세요.");
+      setLoginError("비밀번호를 입력하세요.");
       return;
     }
 
@@ -51,17 +64,18 @@ export default function Login() {
       console.log("로그인", response);
       // 로그인 성공
       if (response.data.code === "SU") {
-        alert("로그인 되었습니다 :)");
+        setOpenLoginSnackbar(true);
+        console.log(openLoginSnackbar)
         localStorage.setItem("token", response.data.token); // 로컬스토리지에 token 저장
         navigate("/");
       }
       // 로그인 실패
       else {
-        alert(response.data.message + " 다시 시도해주세요.");
+        setLoginError(response.data.message + " 다시 시도해주세요.");
       }
       // 에러 시
     } catch (error) {
-      alert("로그인에 실패했습니다. 다시 시도해주세요. ");
+      setLoginError("로그인에 실패했습니다. 다시 시도해주세요. ");
       console.error(error);
     }
   };
@@ -78,6 +92,7 @@ export default function Login() {
         color: #272727;
       `}
     >
+
       <div
         css={css`
           margin-top: 30px;
@@ -129,9 +144,19 @@ export default function Login() {
           }}
         />
 
-        <Button margin="10px 0px 15px 0px" height="45px" onClick={login}>
+        <Button margin="10px 0px 10px 0px" height="45px" onClick={login}>
           로그인
         </Button>
+        {loginError && (
+          <div
+            css={css({
+              color: "#f44336",
+              fontSize: "15px",
+            })}
+          >
+            {loginError}
+          </div>
+        )}
         <div
           css={css`
             display: flex;
@@ -220,6 +245,17 @@ export default function Login() {
           `}
         />
       </div>
+      {/* 로그인 성공 시 뜨는 스낵바 */}
+      <Snackbar open={openLoginSnackbar} autoHideDuration={4000} onClose={handleCloseLoginSnackbar} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+        <Alert
+          onClose={handleCloseLoginSnackbar}
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          인증번호가 정상 발송되었습니다. 이메일을 확인해주세요
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

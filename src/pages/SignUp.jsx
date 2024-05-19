@@ -42,7 +42,6 @@ export default function SignUp() {
 
   const [signupError, setSignupError] = useState(""); // 가입하기 버튼 밑 가입 시 에러 표시
 
-
   // useNavigate 사용
   const navigate = useNavigate();
 

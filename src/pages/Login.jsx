@@ -1,22 +1,28 @@
 /** @jsxImportSource @emotion/react */
 
-import React, { useState,  } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
 import recodeTimelineLogo from "../assets/images/recodeTimelineLogo.svg";
 import { css } from "@emotion/react";
 import { Link } from "react-router-dom";
 import KaKaoIcon from "../assets/images/kakaoLoginIcon.svg";
 import Button from "../components/common/Button";
-import {
-  TextField,
-} from "@mui/material/";
+import { TextField } from "@mui/material/";
 import axios from "axios";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
+import { setOpenLoginSnackbar } from '../actions/actions';
 
 export default function Login() {
   const navigate = useNavigate();
-  
+  const dispatch = useDispatch();
+  const openLoginSnackbar = useSelector(state => state.openLoginSnackbar); // 로그인 성공 스낵바 상태
+
   const [email, setEmail] = useState(""); // 이메일
   const [password, setPassword] = useState(""); // 비밀번호
+
+  const [loginError, setLoginError] = useState(false);
 
   // 이메일 입력
   const handleEmailChange = (e) => {
@@ -26,45 +32,48 @@ export default function Login() {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
+  // 로그인 스낵바 닫기
+  const handleCloseLoginSnackbar = () => {
+    dispatch(setOpenLoginSnackbar(false)); // 스낵바 상태를 false로 (redux 상태 업데이트)
+  };
+
 
   // 로그인
   const login = async () => {
     if (email.trim() === "") {
-      alert("이메일을 입력하세요.");
+      setLoginError("이메일을 입력하세요.");
       return;
     }
     if (password.trim() === "") {
-      alert("비밀번호를 입력하세요.");
+      setLoginError("비밀번호를 입력하세요.");
       return;
     }
 
     // 로그인 연동
     try {
       const response = await axios.post(
-          `/api/v1/auth/app-login`,
-          { email: email, password: password },
-          {
-            headers: {
-              Accept: "*/*",
-              "Content-Type": `application/json`,
-            },
-          }
+        `/api/v1/auth/app-login`,
+        { email: email, password: password },
+        {
+          headers: {
+            Accept: "*/*",
+            "Content-Type": `application/json`,
+          },
+        }
       );
       console.log("로그인", response);
       // 로그인 성공
-      if (response.data.code === "SU"){
-        alert("로그인 되었습니다 :)");
-        localStorage.setItem("token", response.data.token); // 로컬스토리지에 token 저장
+      if (response.data.code === "SU") {
+        dispatch(setOpenLoginSnackbar(true));
         navigate("/");
-
       }
       // 로그인 실패
-      else{
-        alert(response.data.message + " 다시 시도해주세요.")
+      else {
+        setLoginError(response.data.message + " 다시 시도해주세요.");
       }
       // 에러 시
     } catch (error) {
-      alert("로그인에 실패했습니다. 다시 시도해주세요. ");
+      setLoginError("로그인에 실패했습니다. 다시 시도해주세요. ");
       console.error(error);
     }
   };
@@ -81,6 +90,7 @@ export default function Login() {
         color: #272727;
       `}
     >
+
       <div
         css={css`
           margin-top: 30px;
@@ -99,40 +109,52 @@ export default function Login() {
           `}
         />
         <TextField
-            onChange={handleEmailChange}
-            required
-            fullWidth
-            type="email"
-            id="email"
-            name="email"
-            label="이메일"
-            value={email}
-            InputProps={{
-              style: {
-                borderRadius: "15px",
-                marginBottom: "20px"
-              },
-            }}
+          onChange={handleEmailChange}
+          required
+          fullWidth
+          type="email"
+          id="email"
+          name="email"
+          label="이메일"
+          value={email}
+          InputProps={{
+            style: {
+              borderRadius: "15px",
+              marginBottom: "20px",
+            },
+          }}
         />
         <TextField
-            onChange={handlePasswordChange}
-            required
-            autoFocus
-            fullWidth
-            type="password"
-            id="password"
-            name="password"
-            value={password}
-            label="비밀번호"
-            InputProps={{
-              style: {
-                borderRadius: "15px",
-                marginBottom: "5px"
-              },
-            }}
+          onChange={handlePasswordChange}
+          required
+          autoFocus
+          fullWidth
+          type="password"
+          id="password"
+          name="password"
+          value={password}
+          label="비밀번호"
+          InputProps={{
+            style: {
+              borderRadius: "15px",
+              marginBottom: "5px",
+            },
+          }}
         />
 
-        <Button margin="10px 0px 15px 0px" height="45px" onClick={login}>로그인</Button>
+        <Button margin="10px 0px 10px 0px" height="45px" onClick={login}>
+          로그인
+        </Button>
+        {loginError && (
+          <div
+            css={css({
+              color: "#f44336",
+              fontSize: "15px",
+            })}
+          >
+            {loginError}
+          </div>
+        )}
         <div
           css={css`
             display: flex;
@@ -221,6 +243,17 @@ export default function Login() {
           `}
         />
       </div>
+      {/* 로그인 성공 시 뜨는 스낵바 */}
+      <Snackbar open={openLoginSnackbar} autoHideDuration={4000} onClose={handleCloseLoginSnackbar} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+        <Alert
+          onClose={handleCloseLoginSnackbar}
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          인증번호가 정상 발송되었습니다. 이메일을 확인해주세요
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

@@ -177,16 +177,16 @@ const EmailStep = ({
                 중복확인
               </div>
               <div
-                onClick={handleSendButtonClick}
+                onClick={duplicateEmailCheckResult ? handleSendButtonClick : null}
                 css={css({
-                  backgroundColor: "#829fd7",
-                  color: "white",
+                  backgroundColor: duplicateEmailCheckResult ? "#829fd7" : "#d9d9d9",
+                  color: duplicateEmailCheckResult ? "white" : "#a1a1a1",
                   fontSize: "15px",
                   textAlign: "center",
                   alignItems: "center",
                   display: "flex",
                   justifyContent: "center",
-                  cursor: "pointer",
+                  cursor: duplicateEmailCheckResult ? "pointer" : "not-allowed",
                   width: "120px",
                   height: "50px",
                   borderRadius: "15px",

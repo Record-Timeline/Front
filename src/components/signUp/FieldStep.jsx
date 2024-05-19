@@ -34,7 +34,7 @@ const FieldStep = ({
   rePasswordError,
   password,
   rePassword,
-  nicknameDuplicateCheckResult,
+  nicknameDuplicateCheckResult, signupError
 }) => {
   const [isSignupButtonEnabled, setIsSignupButtonEnabled] = useState(false); // 회원가입 버튼 활성화
 
@@ -239,6 +239,19 @@ const FieldStep = ({
             >
               가입하기
             </div>
+            {/* 가입이 정상적으로 완료되지 않았을 경우 에러 메시지 표시*/}
+            {signupError && (
+              <div
+                css={css({
+                  color: "#f44336",
+                  fontSize: "15px",
+                  margin: "20px 0",
+
+                })}
+              >
+                {signupError}
+              </div>
+            )}
           </FormControl>
         </Container>
       </ThemeProvider>

@@ -4,12 +4,12 @@ import React, { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "../assets/images/recodeTimelineLogo.svg";
 import { createTheme, styled as withStyles } from "@mui/material/styles";
-import { TextField } from "@mui/material/";
 import EmailStep from "../components/signUp/EmailStep";
 import FieldStep from "../components/signUp/FieldStep";
 import { css } from "@emotion/react";
 import axios from "axios";
-
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 export default function SignUp() {
   const [currentStep, setCurrentStep] = useState(1); // 현재 회원가입 단계 상태
 
@@ -40,15 +40,37 @@ export default function SignUp() {
   const [field, setField] = useState(""); // 선택한 관심분야 (영문 키워드)
   const [fieldCategory, setFieldCategory] = useState(""); // 관심분야 출력
 
+  const [signupError, setSignupError] = useState(""); // 가입하기 버튼 밑 가입 시 에러 표시
+
   // useNavigate 사용
   const navigate = useNavigate();
 
+  // 회원가입 성공 스낵바 (알림창)
+  const [openSignupSnackbar, setOpenSignupSnackbar] = useState(false);
+  const handleCloseSignupSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenSignupSnackbar(false);
+  };
+
+  // 인증번호 발송 성공 스낵바 (알림창)
+  const [openCertificationSnackbar, setOpenCertificationSnackbar] = useState(false);
+  const handleCloseCertificationSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenCertificationSnackbar(false);
+    console.log("닫기")
+    console.log()
+  };
   // 인증번호 발송 버튼
   const handleSendButtonClick = async () => {
+
     setShowVerificationInput(true);
     // 이메일 입력 창에 빈 배열만 있을 때
     if (email.length === 0) {
-      alert("인증번호를 입력하세요.");
+      setDuplicateEmailCheckResponse({ code: "ER", message: "이메일을 입력하세요." });
       return;
     }
     // 이메일 인증번호 발송 연동
@@ -68,12 +90,11 @@ export default function SignUp() {
 
       // 코드 발송 성공헀을 때
       if (response.data.code === "SU") {
-        alert("인증번호가 발송되었습니다. 이메일을 확인해주세요 :)");
+        setOpenCertificationSnackbar(true)
       }
     } catch (error) {
-      alert(
-        "인증번호 발송이 정상적으로 이루어지지 않았습니다. 다시 시도해주세요. "
-      );
+
+      setCertificationResponse({code: "ER", message: "인증번호 발송이 정상적으로 이루어지지 않았습니다. 다시 시도해주세요. "});
       console.error(error);
     }
   };
@@ -113,7 +134,7 @@ export default function SignUp() {
         setCertification(true);
       }
     } catch (error) {
-      alert("인증번호가 확인되지 않았습니다. 다시 시도해주세요.");
+      setCertificationResponse({code: "ER", message: "인증번호가 확인되지 않았습니다. 다시 시도해주세요."});
       console.error(error);
     }
   };
@@ -127,7 +148,7 @@ export default function SignUp() {
   const duplicateEmailCheck = async () => {
     // 이메일이 없는 경우
     if (email.trim() === "") {
-      alert("이메일을 입력하세요.");
+      setDuplicateEmailCheckResponse({ code: "ER", message: "이메일을 입력하세요." });
       return;
     }
 
@@ -150,7 +171,7 @@ export default function SignUp() {
       }
       setDuplicateEmailCheckResponse(response.data);
     } catch (error) {
-      alert("중복확인이 정상적으로 이루어지지 않았습니다. 다시 시도해주세요. ");
+      setDuplicateEmailCheckResponse({ code: "ER", message: "중복확인을 실패했습니다. 다시 시도해주세요." });
       console.error(error);
     }
   };
@@ -159,7 +180,7 @@ export default function SignUp() {
   const duplicateNicknameCheck = async () => {
     // 닉네임을 입력하지 않은 경우
     if (nickname.trim() === "") {
-      alert("닉네임을 입력하세요.");
+      setNicknameDuplicateCheckResponse({ code: "ER", message: "닉네임을 입력하세요." });
       return;
     }
     // 중복확인 연동
@@ -181,7 +202,7 @@ export default function SignUp() {
       }
       setNicknameDuplicateCheckResponse(response.data);
     } catch (error) {
-      alert("중복확인이 정상적으로 이루어지지 않았습니다. 다시 시도해주세요. ");
+      setNicknameDuplicateCheckResponse({ code: "ER", message: "중복확인을 실패했습니다. 다시 시도해주세요." });
       console.error(error);
     }
   };
@@ -232,11 +253,11 @@ export default function SignUp() {
 
       // 코드 발송 성공헀을 때
       if (response.data.code === "SU") {
-        alert("회원가입 되었습니다 :)");
+        setOpenSignupSnackbar(true)
       }
       navigate("/signup/complete");
     } catch (error) {
-      alert("회원가입이 정상적으로 진행되지 않았습니다. 다시 시도해주세요. ");
+      setSignupError("회원가입이 정상적으로 진행되지 않았습니다. 다시 시도해주세요. ");
       console.error(error);
     }
   };
@@ -434,9 +455,32 @@ export default function SignUp() {
             rePasswordError={rePasswordError}
             password={password}
             rePassword={rePassword}
+            signupError={signupError}
           />
         )}
       </div>
+      {/* 회원가입 완료 시 뜨는 스낵바 */}
+      <Snackbar open={openSignupSnackbar} autoHideDuration={4000} onClose={handleCloseSignupSnackbar} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+        <Alert
+          onClose={handleCloseSignupSnackbar}
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          회원가입이 정상적으로 완료되었습니다.
+        </Alert>
+      </Snackbar>
+      {/* 인증번호 전송 완료 시 뜨는 스낵바 */}
+      <Snackbar open={openCertificationSnackbar} autoHideDuration={4000} onClose={handleCloseCertificationSnackbar} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+        <Alert
+          onClose={handleCloseCertificationSnackbar}
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          인증번호가 정상 발송되었습니다. 이메일을 확인해주세요
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

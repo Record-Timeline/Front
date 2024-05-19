@@ -56,7 +56,6 @@ export default function Login() {
         alert("로그인 되었습니다 :)");
         localStorage.setItem("token", response.data.token); // 로컬스토리지에 token 저장
         navigate("/");
-
       }
       // 로그인 실패
       else{

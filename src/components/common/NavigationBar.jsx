@@ -2,11 +2,9 @@
 
 import Logo from "../../assets/images/recodeTimelineLogo.svg";
 import { css } from "@emotion/react";
-import { useState } from "react";
+import React, { useState } from "react";
 import testProfileImg from "../../assets/images/testProfileImg.png";
 import { Link } from "react-router-dom";
-import ProfileNickName from "../main/ProfileNickName";
-
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import MenuIcon from "@mui/icons-material/Menu";
 import CreateIcon from "@mui/icons-material/Create";
@@ -15,15 +13,20 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
+import PersonIcon from '@mui/icons-material/Person';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 
 export default function NavigationBar() {
   const [isExpanded, setIsExpanded] = useState(true); // 네비게이션 바 펼친 상태 & 접힌 상태
   const nickName = "닉네임"; // 테스트 닉네임
   const interestCategory = "개발자"; // 테스트 관심분야
   const [isEditingIntroduction, setIsEditingIntroduction] = useState(false); // 소개글 수정중 상태
+  const [isEditingProfile, setIsEditingProfile] = useState(false); // 프로필 수정중 상태
   const [introductionText, setIntroductionText] = useState("");
   const followers = 20;
   const followings = 30;
+  
   // 네비게이션 바 토글
   const toggleNavigationBar = () => {
     setIsExpanded(!isExpanded);
@@ -44,6 +47,11 @@ export default function NavigationBar() {
     }
     alert("소개글이 수정되었습니다");
     setIsEditingIntroduction(false);
+  };
+
+  // 프로필 편집
+  const onClickEditProfile = () => {
+    setIsEditingProfile(true);
   };
 
   return (
@@ -108,10 +116,80 @@ export default function NavigationBar() {
                 fontWeight: "500",
               })}
             >
-              <ProfileNickName
-                profileImgSrc={testProfileImg}
-                nickName={nickName}
-              />
+              <div
+                css={css({
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexDirection: "column",
+                  marginBottom: "10px",
+                  fontSize: "19px",
+                  fontWeight: "500",
+                  position: "relative"
+                })}
+              >
+                {isEditingProfile ?
+                  // 프로필 이미지 편집 중 
+                  <><img
+                    src={testProfileImg}
+                    alt="프로필 이미지"
+                    css={css({
+                      width: "130px",
+                      marginBottom: "10px",
+                    })}
+                  /><CameraAltOutlinedIcon style={{
+                    fontSize: "70px",
+                    color: "#B1B1B1",
+                    cursor: "pointer",
+                    position: "absolute",
+                    top: "32px",
+
+                  }}/>
+                    <div css={css({
+                      fontSize: "14px",
+                      color: "#B1B1B1",
+                      display: "flex",
+                      alignItems: "center",
+                      cursor: "pointer",
+                      marginBottom: "10px"
+                    })}
+                         onClick={onClickEditProfile}>프로필 이미지 편집<ManageAccountsIcon style={{
+                      fontSize: "20px",
+                      marginLeft: "5px"
+                    }}/></div>
+                  </> :
+                  // 프로필 이미지 편집중 아닐 때
+                  <><img
+                    src={testProfileImg}
+                    alt="프로필 이미지"
+                    css={css({
+                      width: "130px",
+                      marginBottom: "10px",
+                    })}
+                  /><PersonIcon style={{
+                    fontSize: "90px",
+                    color: "#B1B1B1",
+                    cursor: "pointer",
+                    position: "absolute",
+                    top: "18px",
+
+                  }}/>
+                    <div css={css({
+                      fontSize: "14px",
+                      color: "#B1B1B1",
+                      display: "flex",
+                      alignItems: "center",
+                      cursor: "pointer",
+                      marginBottom: "10px"
+                    })}
+                         onClick={onClickEditProfile}>프로필 이미지 편집<ManageAccountsIcon style={{
+                      fontSize: "20px",
+                      marginLeft: "5px"
+                  }}/></div>
+                </>}
+
+                <div>{nickName}</div>
+              </div>
             </div>
             <div
               css={css({
@@ -136,7 +214,7 @@ export default function NavigationBar() {
               </div>
               <div>
                 {isEditingIntroduction ? (
-                  <div css={css({ display: "flex", alignItems: "center" })}>
+                  <div css={css({display: "flex", alignItems: "center"})}>
                     <textarea
                       value={introductionText}
                       onChange={handleIntroductionChange}

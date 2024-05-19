@@ -15,9 +15,11 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
 import PersonIcon from '@mui/icons-material/Person';
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 export default function NavigationBar() {
+
   const [isExpanded, setIsExpanded] = useState(true); // 네비게이션 바 펼친 상태 & 접힌 상태
   const nickName = "닉네임"; // 테스트 닉네임
   const interestCategory = "개발자"; // 테스트 관심분야
@@ -26,7 +28,16 @@ export default function NavigationBar() {
   const [introductionText, setIntroductionText] = useState("");
   const followers = 20;
   const followings = 30;
-  
+
+  const [openProfileSnackbar, setOpenProfileSnackbar] = useState(false);
+  const handleCloseProfileSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenProfileSnackbar(false);
+  };
+
+
   // 네비게이션 바 토글
   const toggleNavigationBar = () => {
     setIsExpanded(!isExpanded);
@@ -52,6 +63,14 @@ export default function NavigationBar() {
   // 프로필 편집
   const onClickEditProfile = () => {
     setIsEditingProfile(true);
+
+  };
+
+  // 프로필 저장
+  const onClickSaveProfile = () => {
+    setIsEditingProfile(false);
+
+    setOpenProfileSnackbar(true); // 프로필 저장 성공 시 스낵바 띄우기
   };
 
   return (
@@ -146,17 +165,20 @@ export default function NavigationBar() {
 
                   }}/>
                     <div css={css({
-                      fontSize: "14px",
-                      color: "#B1B1B1",
+                      fontSize: "16px",
+                      border:"1px solid #8d8d8d",
+                      borderRadius: "15px",
+                      padding: "2px 8px",
+                      color: "#999999",
                       display: "flex",
                       alignItems: "center",
                       cursor: "pointer",
                       marginBottom: "10px"
                     })}
-                         onClick={onClickEditProfile}>프로필 이미지 편집<ManageAccountsIcon style={{
-                      fontSize: "20px",
-                      marginLeft: "5px"
-                    }}/></div>
+                         onClick={onClickSaveProfile}><CheckCircleIcon style={{
+                      fontSize: "23px",
+                      marginRight: "5px"
+                    }}/>프로필 저장</div>
                   </> :
                   // 프로필 이미지 편집중 아닐 때
                   <><img
@@ -175,15 +197,15 @@ export default function NavigationBar() {
 
                   }}/>
                     <div css={css({
-                      fontSize: "14px",
+                      fontSize: "15px",
                       color: "#B1B1B1",
                       display: "flex",
                       alignItems: "center",
                       cursor: "pointer",
                       marginBottom: "10px"
                     })}
-                         onClick={onClickEditProfile}>프로필 이미지 편집<ManageAccountsIcon style={{
-                      fontSize: "20px",
+                         onClick={onClickEditProfile}>프로필 이미지 편집<CreateIcon style={{
+                      fontSize: "18px",
                       marginLeft: "5px"
                   }}/></div>
                 </>}
@@ -450,6 +472,16 @@ export default function NavigationBar() {
           </div>
         )}
       </div>
+      <Snackbar open={openProfileSnackbar} autoHideDuration={3000} onClose={handleCloseProfileSnackbar} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+        <Alert
+          onClose={handleCloseProfileSnackbar}
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          프로필 사진이 변경되었습니다.
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

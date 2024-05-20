@@ -30,7 +30,7 @@ export default function CreateSubTimelinePost({ onCancel, onSubmit }) {
                     border="2px solid #959595"
                     borderRadius="50px"
                     display="inline-block"
-                    // lineHeight="25px"
+                    lineHeight="18px"
                 >
                     취소하기
                 </Button>
@@ -45,7 +45,7 @@ export default function CreateSubTimelinePost({ onCancel, onSubmit }) {
                     border="2px solid #829FD7"
                     borderRadius="50px"
                     display="inline-block"
-                    // lineHeight="25px"
+                    lineHeight="18px"
                 >
                     저장하기
                 </Button>

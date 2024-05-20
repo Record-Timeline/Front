@@ -52,8 +52,8 @@ function SubTimelineInput() {
           <div
             css={css({
               display: "flex",
-              marginTop: "10px",
-              border: "1px solid black",
+              marginTop: "14px",
+              // border: "1px solid black",
             })}
           >
             <div // 체크표시
@@ -66,9 +66,9 @@ function SubTimelineInput() {
                   border: 3px solid #829FD7;
                   float: left;
                   display: inline-block;
-                  margin-top: 22px;
-                  margin-left: 35px;
-                  margin-right: 15px;
+                  margin-top: 18px;
+                  margin-left: 33px;
+                  margin-right: 20px;
                   cursor: pointer;
                   background-color: ${isChecked ? "#829FD7" : "#f8f6f6"}; // 선 때문에 뚫린 원일 때도 배경 색 설정
               `}
@@ -78,21 +78,20 @@ function SubTimelineInput() {
                 // flex: "1",
                 color: "#666",
                 textAlign: "left",
-                marginRight: "10px",
                 display: "flex",
                 // border: "1px solid black",
               })}
             >
-              <DatePickerValue label="시작 날짜" css={{fontSize: '16px', fontFamily: "pretendard"}}/>
+              <DatePickerValue label="시작 날짜" css={css({ width: "200px", })}/>
               <p css={css({margin: "7px", lineHeight: "40px"})}>~</p> {/* 물결 있는 버전 */}
               {/*<p css={css({margin: "6px", lineHeight: "60px"})} />*/} {/* 물결 없는 버전 */}
-              <DatePickerValue label="종료 날짜"/>
+              <DatePickerValue label="종료 날짜" css={css({ width: "200px", })}/>
             </div>
           </div>
           <div
             css={css({
-              border: "1px solid black",
               display: "flex",
+              // border: "1px solid black",
             })}
           >
             <div // 타임라인 제목
@@ -110,9 +109,9 @@ function SubTimelineInput() {
                 sx={{
                   '& > :not(style)': {
                     m: 1,
-                    width: "280px",
-                    marginTop: "30px",
-                    marginLeft: "30px",
+                    width: "475px",
+                    // marginTop: "30px",
+                    marginLeft: "75px",
                   },
                 }}
                 noValidate
@@ -131,7 +130,7 @@ function SubTimelineInput() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                border: "1px solid black",
+                // border: "1px solid black",
               })}
             >
               {/*<SelectAutoWidth />*/}

@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { css } from "@emotion/react";
+import MyProfile from "../components/common/MyProfile";
 import MainTimelineItem from "../components/timeline/MainTimelineItem";
 import MainTimelineInput from "../components/timeline/MainTimelineInput";
 import Button from "../components/common/Button";
@@ -19,11 +20,11 @@ export default function MainTimeline() {
         <div
             css={css({
                 margin: "0 auto",
-                marginTop: "70px",
                 marginBottom: "70px"
                 // border: "1px solid black"
             })}
         >
+            <MyProfile />
             <div
                 css={css({
                     color: "#313131",
@@ -60,8 +61,8 @@ export default function MainTimeline() {
                 {inputs.map(input => input)} {/* 상태 배열에 저장된 모든 MainTimelineInput 렌더링 */}
                 <Button
                     onClick={addInput}  // 버튼 클릭 시 addInput 함수 호출
-                    width="1005px"
-                    height="94px"
+                    width="810px"
+                    height="85px"
                     margin="45px auto"
                     backgroundColor="#f8f6f6"
                     textColor="#717171"

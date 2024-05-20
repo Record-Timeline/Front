@@ -4,26 +4,207 @@ import React, { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "../assets/images/recodeTimelineLogo.svg";
 import { createTheme, styled as withStyles } from "@mui/material/styles";
-import { TextField } from "@mui/material/";
 import EmailStep from "../components/signUp/EmailStep";
 import FieldStep from "../components/signUp/FieldStep";
 import { css } from "@emotion/react";
+import axios from "axios";
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 export default function SignUp() {
-  const [passwordError, setPasswordError] = useState(false); // 비밀번호 유효성 에러 상태
+  const [currentStep, setCurrentStep] = useState(1); // 현재 회원가입 단계 상태
+
   const [showVerificationInput, setShowVerificationInput] = useState(false); // 인증번호 창 뜨기/안뜨기 상태
   const [confirmVerificationCode, setConfirmVerificationCode] = useState(false); // 인증번호 확인 완료 상태
-  const [currentStep, setCurrentStep] = useState(1); // 현재 회원가입 단계 상태
-  const [field, setField] = useState("");
+  const [email, setEmail] = useState(""); // 입력한 이메일
+  const [certificationNumber, setCertificationNumber] = useState(""); // 입력한 인증번호
+  const [certificationResponse, setCertificationResponse] = useState(""); // 인증번호 확인의 결과 (메시지)
+  const [duplicateEmailCheckResponse, setDuplicateEmailCheckResponse] =
+    useState(""); // 이메일 중복확인의 결과 (메시지)
+
+  const [duplicateEmailCheckResult, setDuplicateEmailCheckResult] =
+    useState(false); // 이메일 중복확인  true or false
+  const [certification, setCertification] = useState(false); // 이메일 인증  true or false
+
+  const [password, setPassword] = useState(""); // 입력한 비밀번호 상태
+  const [rePassword, setRePassword] = useState(""); // 비밀번호 재입력 상태
+
+  const [passwordError, setPasswordError] = useState(false); // 비밀번호 유효성 상태
+  const [rePasswordError, setRePasswordError] = useState(false); // 비밀번호 재입력 유효성 상태
+
+  const [nickname, setNickname] = useState("");
+  const [nicknameDuplicateCheckResponse, setNicknameDuplicateCheckResponse] =
+    useState(""); // 닉네임 중복확인의 결과 (메시지)
+  const [nicknameDuplicateCheckResult, setNicknameDuplicateCheckResult] =
+    useState(false); // 닉네임 중복확인  true or false
+
+  const [field, setField] = useState(""); // 선택한 관심분야 (영문 키워드)
+  const [fieldCategory, setFieldCategory] = useState(""); // 관심분야 출력
+
+  const [signupError, setSignupError] = useState(""); // 가입하기 버튼 밑 가입 시 에러 표시
+
+  // useNavigate 사용
   const navigate = useNavigate();
 
+  // 회원가입 성공 스낵바 (알림창)
+  const [openSignupSnackbar, setOpenSignupSnackbar] = useState(false);
+  const handleCloseSignupSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenSignupSnackbar(false);
+  };
+
+  // 인증번호 발송 성공 스낵바 (알림창)
+  const [openCertificationSnackbar, setOpenCertificationSnackbar] = useState(false);
+  const handleCloseCertificationSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenCertificationSnackbar(false);
+    console.log("닫기")
+    console.log()
+  };
   // 인증번호 발송 버튼
-  const handleSendButtonClick = () => {
+  const handleSendButtonClick = async () => {
+
     setShowVerificationInput(true);
+    // 이메일 입력 창에 빈 배열만 있을 때
+    if (email.length === 0) {
+      setDuplicateEmailCheckResponse({ code: "ER", message: "이메일을 입력하세요." });
+      return;
+    }
+    // 이메일 인증번호 발송 연동
+    try {
+      const response = await axios.post(
+        `/api/v1/auth/email-certification`,
+        { email: email },
+        {
+          headers: {
+            Accept: "*/*",
+            "Content-Type": `application/json`,
+          },
+        }
+      );
+      console.log(response);
+      console.log(email, "성공");
+
+      // 코드 발송 성공헀을 때
+      if (response.data.code === "SU") {
+        setOpenCertificationSnackbar(true)
+      }
+    } catch (error) {
+
+      setCertificationResponse({code: "ER", message: "인증번호 발송이 정상적으로 이루어지지 않았습니다. 다시 시도해주세요. "});
+      console.error(error);
+    }
+  };
+
+  // 이메일 입력 값 업데이트
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  // 닉네임 입력 값 업데이트
+  const handleNicknameChange = (e) => {
+    setNickname(e.target.value);
   };
 
   // 인증번호 확인 버튼
-  const handleConfirmVerificationCode = () => {
+  const handleConfirmVerificationCode = async () => {
     setConfirmVerificationCode(true);
+    console.log(email);
+    console.log(certificationNumber);
+    // 이메일 인증번호 확인 연동
+    try {
+      const response = await axios.post(
+        `/api/v1/auth/check-certification`,
+        { email: email, certificationNumber: certificationNumber },
+        {
+          headers: {
+            Accept: "*/*",
+            "Content-Type": `application/json`,
+          },
+        }
+      );
+      console.log(response.data.code);
+      console.log(email, "성공");
+      setCertificationResponse(response.data);
+      // response.data가 "SU"일 때 setDuplicateCheckResult를 true로
+      if (response.data.code === "SU") {
+        setCertification(true);
+      }
+    } catch (error) {
+      setCertificationResponse({code: "ER", message: "인증번호가 확인되지 않았습니다. 다시 시도해주세요."});
+      console.error(error);
+    }
+  };
+
+  // 인증번호 입력 값 업데이트
+  const handleCertificationNumber = (e) => {
+    setCertificationNumber(e.target.value);
+  };
+
+  // 이메일 중복확인 버튼
+  const duplicateEmailCheck = async () => {
+    // 이메일이 없는 경우
+    if (email.trim() === "") {
+      setDuplicateEmailCheckResponse({ code: "ER", message: "이메일을 입력하세요." });
+      return;
+    }
+
+    // 중복확인 연동
+    try {
+      const response = await axios.post(
+        `/api/v1/auth/email-check`,
+        { email: email },
+        {
+          headers: {
+            Accept: "*/*",
+            "Content-Type": `application/json`,
+          },
+        }
+      );
+      console.log("이메일 중복확인", response);
+      // response.data가 "SU"일 때 setDuplicateCheckResult를 true로
+      if (response.data.code === "SU") {
+        setDuplicateEmailCheckResult(true);
+      }
+      setDuplicateEmailCheckResponse(response.data);
+    } catch (error) {
+      setDuplicateEmailCheckResponse({ code: "ER", message: "중복확인을 실패했습니다. 다시 시도해주세요." });
+      console.error(error);
+    }
+  };
+
+  // 닉네임 중복확인 버튼
+  const duplicateNicknameCheck = async () => {
+    // 닉네임을 입력하지 않은 경우
+    if (nickname.trim() === "") {
+      setNicknameDuplicateCheckResponse({ code: "ER", message: "닉네임을 입력하세요." });
+      return;
+    }
+    // 중복확인 연동
+    try {
+      const response = await axios.post(
+        `/api/v1/auth/nickname-check`,
+        { nickname: nickname },
+        {
+          headers: {
+            Accept: "*/*",
+            "Content-Type": `application/json`,
+          },
+        }
+      );
+      console.log("닉네임 중복확인", response);
+      // response.data가 "SU"일 때 setNicknameDuplicateCheckResult를 true로
+      if (response.data.code === "SU") {
+        setNicknameDuplicateCheckResult(true);
+      }
+      setNicknameDuplicateCheckResponse(response.data);
+    } catch (error) {
+      setNicknameDuplicateCheckResponse({ code: "ER", message: "중복확인을 실패했습니다. 다시 시도해주세요." });
+      console.error(error);
+    }
   };
 
   // 단계가 변경될 때마다 단계 색 바꿈
@@ -39,9 +220,46 @@ export default function SignUp() {
   const handleNextStep = () => {
     setCurrentStep(currentStep + 1);
   };
+
   // 가입하기 버튼 클릭
-  const handleSignup = () => {
-    navigate("/signupcomplete");
+  const handleSignup = async () => {
+
+    // 회원가입 연동
+    try {
+      const response = await axios.post(
+        `/api/v1/auth/basic-signup`,
+        {
+          email: email,
+          password: password,
+          certificationNumber: certificationNumber,
+          nickname: nickname,
+          interest: field,
+        },
+        {
+          headers: {
+            Accept: "*/*",
+            "Content-Type": `application/json`,
+          },
+        }
+      );
+      console.log(response);
+      console.log({
+        email: email,
+        password: password,
+        certificationNumber: certificationNumber,
+        nickname: nickname,
+        interest: field,
+      });
+
+      // 코드 발송 성공헀을 때
+      if (response.data.code === "SU") {
+        setOpenSignupSnackbar(true)
+      }
+      navigate("/signup/complete");
+    } catch (error) {
+      setSignupError("회원가입이 정상적으로 진행되지 않았습니다. 다시 시도해주세요. ");
+      console.error(error);
+    }
   };
 
   //폰트 설정
@@ -51,35 +269,26 @@ export default function SignUp() {
     },
   });
 
-  // 분야
-  const handleFieldChange = (event) => {
-    setField(event.target.value);
+  // 연동을 위해 매칭될 관심 분야 목록
+  const categoryMap = {
+    1: "Marketing_Promotion",
+    2: "Accounting_Tax_Finance",
+    3: "GeneralAffairs_LegalAffairs_Affairs",
+    4: "IT_Data",
+    5: "Design",
+    6: "Service",
+    7: "Construction_Architecture",
+    8: "MedicalCare",
+    9: "Education",
+    10: "Media_Culture_Sports",
   };
 
-  // text field 색 바꾸기
-  const StyledTextField = withStyles(TextField)({
-    "& .MuiInput-underline:after": {
-      borderBottomColor: "#829FD7",
-    },
-    "& .MuiOutlinedInput-root": {
-      "&.Mui-focused fieldset": {
-        color: "#829FD7",
-      },
-    },
-    "&.Mui-error .MuiOutlinedInput-root": {
-      // 에러 상태일 때
-      borderColor: "#f44336",
-    },
-    position: "relative",
-  });
-
-  // 비밀번호 입력 시 유효성 검사
-  const handlePasswordChange = useCallback((e) => {
-    const password = e.target.value;
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d).{8,}$/;
-    const isValidPassword = passwordRegex.test(password);
-    setPasswordError(!isValidPassword);
-  }, []);
+  // 분야
+  const handleFieldChange = (event) => {
+    const selectedField = event.target.value;
+    setField(categoryMap[selectedField] || "");
+    setFieldCategory(selectedField);
+  };
 
   return (
     <div
@@ -206,12 +415,27 @@ export default function SignUp() {
         {currentStep === 1 && (
           <EmailStep
             handleSendButtonClick={handleSendButtonClick}
-            handlePasswordChange={handlePasswordChange}
-            passwordError={passwordError}
             showVerificationInput={showVerificationInput}
             handleConfirmVerificationCode={handleConfirmVerificationCode}
             confirmVerificationCode={confirmVerificationCode}
             handleNextStep={handleNextStep}
+            email={email}
+            handleEmailChange={handleEmailChange}
+            certificationNumber={certificationNumber}
+            handleCertificationNumber={handleCertificationNumber}
+            certificationResponse={certificationResponse}
+            duplicateEmailCheck={duplicateEmailCheck}
+            duplicateEmailCheckResponse={duplicateEmailCheckResponse}
+            duplicateEmailCheckResult={duplicateEmailCheckResult}
+            certification={certification}
+            password={password}
+            setPassword={setPassword}
+            passwordError={passwordError}
+            setPasswordError={setPasswordError}
+            rePasswordError={rePasswordError}
+            setRePasswordError={setRePasswordError}
+            rePassword={rePassword}
+            setRePassword={setRePassword}
           />
         )}
         {currentStep === 2 && (
@@ -219,9 +443,44 @@ export default function SignUp() {
             handleSignup={handleSignup}
             handleFieldChange={handleFieldChange}
             field={field}
+            duplicateNicknameCheck={duplicateNicknameCheck}
+            handleNicknameChange={handleNicknameChange}
+            nickname={nickname}
+            nicknameDuplicateCheckResponse={nicknameDuplicateCheckResponse}
+            nicknameDuplicateCheckResult={nicknameDuplicateCheckResult}
+            fieldCategory={fieldCategory}
+            duplicateEmailCheckResult={duplicateEmailCheckResult}
+            certification={certification}
+            passwordError={passwordError}
+            rePasswordError={rePasswordError}
+            password={password}
+            rePassword={rePassword}
+            signupError={signupError}
           />
         )}
       </div>
+      {/* 회원가입 완료 시 뜨는 스낵바 */}
+      <Snackbar open={openSignupSnackbar} autoHideDuration={4000} onClose={handleCloseSignupSnackbar} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+        <Alert
+          onClose={handleCloseSignupSnackbar}
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          회원가입이 정상적으로 완료되었습니다.
+        </Alert>
+      </Snackbar>
+      {/* 인증번호 전송 완료 시 뜨는 스낵바 */}
+      <Snackbar open={openCertificationSnackbar} autoHideDuration={4000} onClose={handleCloseCertificationSnackbar} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+        <Alert
+          onClose={handleCloseCertificationSnackbar}
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          인증번호가 정상 발송되었습니다. 이메일을 확인해주세요
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

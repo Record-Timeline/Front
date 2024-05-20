@@ -15,13 +15,11 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
         marginTop: theme.spacing(3),
     },
     '& .MuiInputBase-input': {
-        height: 35,
-        lineHeight: 2.8,
         borderRadius: 4,
         position: 'relative',
         backgroundColor: '#f8f6f6',
         // border: '1px solid #ced4da',
-        fontSize: 16,
+        fontSize: "16px",
         padding: '10px 26px 10px 12px',
         transition: theme.transitions.create(['border-color', 'box-shadow']),
         // Use the system font instead of the default Roboto font.
@@ -31,7 +29,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
             '"Segoe UI"',
             'Roboto',
             '"Helvetica Neue"',
-            'Arial',
+            'Pretendard',
             'sans-serif',
             '"Apple Color Emoji"',
             '"Segoe UI Emoji"',

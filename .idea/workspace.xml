@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d7ddee38-10dd-45c7-9340-11b34355df4c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/actions/actions.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/reducers/reducers.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store/store.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/DatePickerValue.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/DatePickerValue.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Header.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/signUp/EmailStep.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/signUp/EmailStep.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/signUp/FieldStep.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/signUp/FieldStep.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/subTimeline/CreateSubTimelinePost.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/subTimeline/CreateSubTimelinePost.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/subTimeline/ReadSubTimelinePost.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/subTimeline/ReadSubTimelinePost.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/subTimeline/SubTimelineInput.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/subTimeline/SubTimelineInput.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/timeline/CustomizedSelects.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/timeline/CustomizedSelects.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/timeline/MainTimelineInput.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/timeline/MainTimelineInput.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/timeline/MainTimelineItem.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/timeline/MainTimelineItem.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Login.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Main.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/MainTimeline.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MainTimeline.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/SignUp.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/SignUp.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/SignUpComplete.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/SignUpComplete.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/SubTimeline.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/SubTimeline.jsx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "git-widget-placeholder": "Merging RTL-79-fe-서브-타임라인-페이지-ui-구현",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2024.1\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external"
+  }
+}]]></component>
+  <component name="TaskManager">
+    <servers />
+  </component>
+</project>

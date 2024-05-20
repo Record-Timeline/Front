@@ -95,7 +95,7 @@ function PostEditor({ quillRef, api, htmlContent, setHtmlContent }) {
             formats={formats}
             onChange={setValues}
             css={css({
-                height: '490px',
+                height: '496px',
                 margin: "0 28px",
             })}
         />

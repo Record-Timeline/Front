@@ -189,7 +189,7 @@ export default function ReadSubTimelinePost({ onEdit }) {
                     textAlign: "right",
                     margin: "0 auto",
                     marginTop: "20px",
-                    // border: "1px solid #f8f6f6",
+                    // border: "1px solid #000",
                 })}
             >
                 <Checkbox
@@ -213,8 +213,8 @@ export default function ReadSubTimelinePost({ onEdit }) {
                     icon={<BookmarkBorderIcon/>}
                     checkedIcon={<BookmarkIcon/>}
                     css={css({
+                        display: "inline-block",
                         "&.Mui-checked": {
-                            display: "inline-block",
                             color: "#F7DB79",
                         },
                     })}

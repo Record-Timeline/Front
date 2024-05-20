@@ -187,8 +187,8 @@ export default function OthersSubTimelinePost({ isDone }) {
                     icon={<BookmarkBorderIcon/>}
                     checkedIcon={<BookmarkIcon/>}
                     css={css({
+                        display: "inline-block",
                         "&.Mui-checked": {
-                            display: "inline-block",
                             color: "#F7DB79",
                         },
                     })}

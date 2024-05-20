@@ -37,9 +37,9 @@ function CustomActionBar(props) {
     );
 }
 
-export default function DatePickerValue({ label, className }) { // label prop 추가 : 이름 바꿀 수 있음
+export default function DatePickerValue({ label, actionBar, className }) { // label prop 추가 : 이름 바꿀 수 있음
     // const [value, setValue] = React.useState(dayjs('2022-04-17')); // 기본 지정 날짜 설정 가능
-    const [date, setDate] = React.useState(); //
+    const [date, setDate] = React.useState(null); //
 
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -51,12 +51,12 @@ export default function DatePickerValue({ label, className }) { // label prop �
                     value={date}
                     onChange={(newDate) => setDate(newDate)}
                     slots={{
-                        actionBar: CustomActionBar,
+                        actionBar: actionBar ? CustomActionBar : undefined,
                     }}
                     slotProps={{
-                        actionBar: {
-                            actions: ['today'], // 'ing'로 바꿔도 실행됨, 배열 안의 내용 없애도 실행됨 머지
-                        },
+                        // actionBar: {
+                        //     actions: ['today'], // 'ing'로 바꿔도 실행됨, 배열 안의 내용 없애도 실행됨 머지
+                        // },
                         textField: {
                           size: 'small',
                           InputProps: {

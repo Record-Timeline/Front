@@ -54,9 +54,6 @@ export default function DatePickerValue({ label, actionBar, className }) { // la
                         actionBar: actionBar ? CustomActionBar : undefined,
                     }}
                     slotProps={{
-                        // actionBar: {
-                        //     actions: ['today'], // 'ing'로 바꿔도 실행됨, 배열 안의 내용 없애도 실행됨 머지
-                        // },
                         textField: {
                           size: 'small',
                           InputProps: {

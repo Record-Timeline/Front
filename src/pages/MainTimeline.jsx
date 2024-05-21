@@ -23,13 +23,12 @@ export default function MainTimeline() {
     setItems(newItems);
   };
 
-  // // MainTimelineInput 컴포넌트들을 관리할 상태 생성
-  // const [inputs, setInputs] = useState([]);
-
-  // // 새 MainTimelineInput 컴포넌트를 추가하는 함수
-  // const addInput = () => {
-  //   setInputs([...inputs, <MainTimelineInput key={inputs.length}/>]);
-  // };
+  // 타임라인 항목을 수정 모드로 전환하는 함수
+  const editItem = (index) => {
+    const newItems = items.slice();
+    newItems[index] = { ...newItems[index], type: "input" };
+    setItems(newItems);
+  };
 
   return (
     <div
@@ -76,12 +75,14 @@ export default function MainTimeline() {
               startDate={item.data.startDate}
               endDate={item.data.endDate}
               title={item.data.title}
+              onEdit={() => editItem(index)}
             />
           ) : (
             <MainTimelineInput
               key={index}
               index={index}
               saveItem={saveItem}
+              initialData={item.data}
             />
           )
         )}

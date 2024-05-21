@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import {css} from "@emotion/react";
 import {FiLock, FiUnlock} from "react-icons/fi";
 import {GoPencil} from "react-icons/go";
@@ -14,11 +14,17 @@ import Input from '@mui/material/Input';
 import {FaRegCircleCheck} from "react-icons/fa6";
 import dayjs from 'dayjs';
 
-function MainTimelineInput({ index, saveItem }) {
+function MainTimelineInput({ index, saveItem, initialData  }) {
   const [isChecked, setIsChecked] = useState(false);
   const [title, setTitle] = useState("");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+
+  useEffect(() => {
+    setTitle(initialData.title || "");
+    setStartDate(initialData.startDate ? dayjs(initialData.startDate) : null);
+    setEndDate(initialData.endDate ? dayjs(initialData.endDate) : null);
+  }, [initialData]);
 
   const handleSave = () => {
     saveItem(index, { startDate, endDate, title });

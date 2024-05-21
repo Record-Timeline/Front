@@ -9,7 +9,7 @@ import {FaRegTrashAlt} from "react-icons/fa";
 import AlertDialog from "../common/AlertDialog";
 import dayjs from 'dayjs';
 
-function MainTimelineItem({startDate, endDate, title}) {
+function MainTimelineItem({startDate, endDate, title, onEdit}) {
   const [isChecked, setIsChecked] = useState(false);
 
   return (
@@ -93,6 +93,7 @@ function MainTimelineItem({startDate, endDate, title}) {
         {title}
       </div>
       <div // 수정하기 (연필 아이콘)
+        onClick={onEdit}
         css={css({
           display: "flex",
           alignItems: "center",

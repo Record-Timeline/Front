@@ -2,7 +2,7 @@
 
 import Logo from "../../assets/images/recodeTimelineLogo.svg";
 import { css } from "@emotion/react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import testProfileImg from "../../assets/images/testProfileImg.png";
 import { Link } from "react-router-dom";
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
@@ -21,7 +21,7 @@ import axios from "axios";
 
 export default function NavigationBar() {
   const [isExpanded, setIsExpanded] = useState(true); // 네비게이션 바 펼친 상태 & 접힌 상태
-  const nickName = "닉네임"; // 테스트 닉네임
+
   const interestCategory = "개발자"; // 테스트 관심분야
   const [isEditingIntroduction, setIsEditingIntroduction] = useState(false); // 소개글 수정중 상태
   const [isEditingProfile, setIsEditingProfile] = useState(false); // 프로필 수정중 상태
@@ -30,7 +30,19 @@ export default function NavigationBar() {
   const followings = 30;
 
   const [openProfileSnackbar, setOpenProfileSnackbar] = useState(false);
-  const [profileImage, setProfileImage] = useState();
+  const [profileImage, setProfileImage] = useState(); // 프로필 이미지
+  const [profileThumbnail, setProfileThumbnail] = useState() // 프로필 이미지 썸네일
+  
+  // 토큰 정보 받아오기
+  const token = localStorage.getItem("token");
+
+  // 프로필 정보 (닉네임, 관심분야, 프로필 사진, 소개글)
+  const [profileInfo, setProfileInfo] = useState({
+    nickname: "",
+    interest: "",
+    profileImageUrl: "",
+    introduction: "",
+  });
 
   const handleCloseProfileSnackbar = (event, reason) => {
     if (reason === 'clickaway') {
@@ -38,7 +50,6 @@ export default function NavigationBar() {
     }
     setOpenProfileSnackbar(false);
   };
-
 
   // 네비게이션 바 토글
   const toggleNavigationBar = () => {
@@ -71,10 +82,10 @@ export default function NavigationBar() {
   // 프로필 저장
   const onClickSaveProfile = async () => {
     // 프로필 변경 연동
-    const token = localStorage.getItem("token");
-    console.log(token)
+    
     const formData = new FormData();
     formData.append('profileImage',profileImage)
+
     console.log(...formData);
     try {
       const response = await axios.post(
@@ -90,22 +101,46 @@ export default function NavigationBar() {
       );
       console.log(response);
       // 코드 발송 성공헀을 때
-      if (response.data.code === "SU") {
+      if (response.status === 200) {
+        setIsEditingProfile(false) // 프로필 편집 중 상태 false로 바꿈
+        setOpenProfileSnackbar(true); // 프로필 저장 성공 시 스낵바
       }
     } catch (error) {
       console.error(error);
     }
-    setIsEditingProfile(false) // 프로필 편집 중 상태 false로 바꿈
-    setOpenProfileSnackbar(true); // 프로필 저장 성공 시 스낵바 띄우기
   };
+
+  // 프로필 정보 가져오기
+  useEffect(() => {
+    const fetchProfileInfo = async () => {
+      try {
+        const response = await axios.get(
+          "/api/v1/my-profile",
+          {
+            headers: {
+              Accept: "*/*",
+              "Content-Type": `application/json`,
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setProfileInfo(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchProfileInfo();
+  }, [profileInfo]);
 
   // 사진 업로드 되었을 때
   const handleFileChange = (event) => {
     const file = event.target.files[0];
+    setProfileImage(file);
+    console.log(file)
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        setProfileImage(e.target.result);
+        setProfileThumbnail(e.target.result);
       };
       reader.readAsDataURL(file);
     }
@@ -191,8 +226,8 @@ export default function NavigationBar() {
                     width: "130px",
 
                   })}>
-                    {profileImage ? <><img
-                      src={profileImage}
+                    {profileThumbnail ? <><img
+                      src={profileThumbnail}
                       alt="프로필 이미지"
                       css={css({
                         width: "130px",
@@ -251,21 +286,31 @@ export default function NavigationBar() {
                     </div>
                   </> :
                   // 프로필 이미지 편집중 아닐 때
-                  <><img
-                    src={testProfileImg}
-                    alt="프로필 이미지"
-                    css={css({
-                      width: "130px",
-                      marginBottom: "10px",
-                    })}
-                  /><PersonIcon style={{
-                    fontSize: "90px",
-                    color: "#B1B1B1",
-                    cursor: "pointer",
-                    position: "absolute",
-                    top: "18px",
+                  <>
+                    {profileInfo ? <><img
+                      src={profileInfo.profileImageUrl}
+                      alt="프로필 이미지"
+                      css={css({
+                        width: "130px",
+                        marginBottom: "10px",
+                        borderRadius: "50%",
+                      })}
+                    /></> : <><img
+                      src={testProfileImg}
+                      alt="프로필 이미지"
+                      css={css({
+                        width: "130px",
+                        marginBottom: "10px",
+                      })}
+                    /><PersonIcon style={{
+                      fontSize: "90px",
+                      color: "#B1B1B1",
+                      cursor: "pointer",
+                      position: "absolute",
+                      top: "18px",
 
-                  }}/>
+                    }}/></> }
+
                     <div css={css({
                       fontSize: "15px",
                       color: "#B1B1B1",
@@ -277,10 +322,10 @@ export default function NavigationBar() {
                          onClick={onClickEditProfile}>프로필 이미지 편집<CreateIcon style={{
                       fontSize: "18px",
                       marginLeft: "5px"
-                  }}/></div>
-                </>}
+                    }}/></div>
+                  </>}
 
-                <div>{nickName}</div>
+                <div>{profileInfo.nickname}</div>
               </div>
             </div>
             <div
@@ -351,7 +396,7 @@ export default function NavigationBar() {
                         wordBreak: "break-all",
                       })}
                     >
-                      {introductionText.trim() === "" ? (
+                      {profileInfo.introduction.trim() === "" ? (
                         <div
                           css={css({
                             whiteSpace: "pre-line",
@@ -364,7 +409,7 @@ export default function NavigationBar() {
                           적어주세요
                         </div>
                       ) : (
-                        <div>{introductionText}</div>
+                        <div>{profileInfo.introduction}</div>
                       )}
                     </div>
                     <CreateIcon

@@ -37,7 +37,6 @@ export default function Login() {
     dispatch(setOpenLoginSnackbar(false)); // 스낵바 상태를 false로 (redux 상태 업데이트)
   };
 
-
   // 로그인
   const login = async () => {
     if (email.trim() === "") {
@@ -65,6 +64,7 @@ export default function Login() {
       // 로그인 성공
       if (response.data.code === "SU") {
         dispatch(setOpenLoginSnackbar(true));
+        localStorage.setItem("token", response.data.token);
         navigate("/");
       }
       // 로그인 실패

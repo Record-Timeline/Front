@@ -17,9 +17,9 @@ import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
 import PersonIcon from '@mui/icons-material/Person';
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import axios from "axios";
 
 export default function NavigationBar() {
-
   const [isExpanded, setIsExpanded] = useState(true); // 네비게이션 바 펼친 상태 & 접힌 상태
   const nickName = "닉네임"; // 테스트 닉네임
   const interestCategory = "개발자"; // 테스트 관심분야
@@ -30,6 +30,8 @@ export default function NavigationBar() {
   const followings = 30;
 
   const [openProfileSnackbar, setOpenProfileSnackbar] = useState(false);
+  const [profileImage, setProfileImage] = useState();
+
   const handleCloseProfileSnackbar = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -67,10 +69,46 @@ export default function NavigationBar() {
   };
 
   // 프로필 저장
-  const onClickSaveProfile = () => {
-    setIsEditingProfile(false);
-
+  const onClickSaveProfile = async () => {
+    // 프로필 변경 연동
+    const token = localStorage.getItem("token");
+    console.log(token)
+    const formData = new FormData();
+    formData.append('profileImage',profileImage)
+    console.log(...formData);
+    try {
+      const response = await axios.post(
+        `/api/v1/profile/update-image`,
+        formData,
+        {
+          headers: {
+            Accept: "*/*",
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response);
+      // 코드 발송 성공헀을 때
+      if (response.data.code === "SU") {
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    setIsEditingProfile(false) // 프로필 편집 중 상태 false로 바꿈
     setOpenProfileSnackbar(true); // 프로필 저장 성공 시 스낵바 띄우기
+  };
+
+  // 사진 업로드 되었을 때
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setProfileImage(e.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   return (
@@ -149,24 +187,55 @@ export default function NavigationBar() {
               >
                 {isEditingProfile ?
                   // 프로필 이미지 편집 중 
-                  <><img
-                    src={testProfileImg}
-                    alt="프로필 이미지"
-                    css={css({
-                      width: "130px",
-                      marginBottom: "10px",
-                    })}
-                  /><CameraAltOutlinedIcon style={{
-                    fontSize: "70px",
-                    color: "#B1B1B1",
-                    cursor: "pointer",
-                    position: "absolute",
-                    top: "32px",
+                  <><label htmlFor="inputTag" css={css({
+                    width: "130px",
 
-                  }}/>
+                  })}>
+                    {profileImage ? <><img
+                      src={profileImage}
+                      alt="프로필 이미지"
+                      css={css({
+                        width: "130px",
+                        height: "130px",
+                        marginBottom: "10px",
+                        borderRadius: "50%",
+                        overflow: "hidden",
+                        cursor: "pointer"
+                      })}
+                      onClick={onClickEditProfile}
+                    />
+                      <input type="file" id="inputTag" accept="image/*" css={css({
+                        display: "none"
+                      })} onChange={handleFileChange}/>
+
+                     </> : <><img
+                      src={testProfileImg}
+                      alt="프로필 이미지"
+                      css={css({
+                        width: "130px",
+                        height: "130px",
+                        marginBottom: "10px",
+                      })}
+                      onClick={onClickEditProfile}
+                    />
+                      <input type="file" id="inputTag" accept="image/*" css={css({
+                        display: "none"
+                      })} onChange={handleFileChange}/>
+
+                      <CameraAltOutlinedIcon style={{
+                        fontSize: "70px",
+                        color: "#B1B1B1",
+                        cursor: "pointer",
+                        position: "absolute",
+                        top: "32px",
+                        left: "30px"
+                      }}
+                      /></>}
+
+                  </label>
                     <div css={css({
-                      fontSize: "16px",
-                      border:"1px solid #8d8d8d",
+                      fontSize: "15px",
+                      border: "1px solid #8d8d8d",
                       borderRadius: "15px",
                       padding: "2px 8px",
                       color: "#999999",
@@ -178,7 +247,8 @@ export default function NavigationBar() {
                          onClick={onClickSaveProfile}><CheckCircleIcon style={{
                       fontSize: "23px",
                       marginRight: "5px"
-                    }}/>프로필 저장</div>
+                    }}/>프로필 저장
+                    </div>
                   </> :
                   // 프로필 이미지 편집중 아닐 때
                   <><img

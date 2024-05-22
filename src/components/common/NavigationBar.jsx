@@ -30,6 +30,8 @@ export default function NavigationBar() {
   const followings = 30;
 
   const [openProfileSnackbar, setOpenProfileSnackbar] = useState(false);
+  const [openIntroduceSnackbar, setOpenIntroduceSnackbar] = useState(false);
+
   const [profileImage, setProfileImage] = useState(); // 프로필 이미지
   const [profileThumbnail, setProfileThumbnail] = useState() // 프로필 이미지 썸네일
 
@@ -64,6 +66,14 @@ export default function NavigationBar() {
     }
     setOpenProfileSnackbar(false);
   };
+
+  const handleCloseIntroduceSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenIntroduceSnackbar(false);
+  };
+
 
   // 네비게이션 바 토글
   const toggleNavigationBar = () => {
@@ -106,7 +116,7 @@ export default function NavigationBar() {
       // 코드 발송 성공헀을 때
       if (response.status === 200) {
         setIntroductionText(profileInfo.introduction); // 소개글 상태 초기화
-        alert("소개글이 수정되었습니다");
+        setOpenIntroduceSnackbar(true);
         setIsEditingIntroduction(false);
       }
     } catch (error) {
@@ -369,7 +379,7 @@ export default function NavigationBar() {
 
                 <div>{profileInfo.nickname}</div>
               </div>
-            </div>)
+            </div>
             <div
               css={css({
                 display: "flex",
@@ -668,6 +678,17 @@ export default function NavigationBar() {
           sx={{ width: '100%' }}
         >
           프로필 사진이 변경되었습니다.
+        </Alert>
+      </Snackbar>
+
+      <Snackbar open={openIntroduceSnackbar} autoHideDuration={3000} onClose={handleCloseIntroduceSnackbar} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+        <Alert
+          onClose={handleCloseIntroduceSnackbar}
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          소개글이 수정되었습니다
         </Alert>
       </Snackbar>
     </div>

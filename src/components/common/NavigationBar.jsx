@@ -18,11 +18,11 @@ import PersonIcon from '@mui/icons-material/Person';
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import axios from "axios";
+import ProfileInfo from "../main/ProfileInfo";
 
 export default function NavigationBar() {
   const [isExpanded, setIsExpanded] = useState(true); // 네비게이션 바 펼친 상태 & 접힌 상태
 
-  const interestCategory = "개발자"; // 테스트 관심분야
   const [isEditingIntroduction, setIsEditingIntroduction] = useState(false); // 소개글 수정중 상태
   const [isEditingProfile, setIsEditingProfile] = useState(false); // 프로필 수정중 상태
   const [introductionText, setIntroductionText] = useState("");
@@ -32,6 +32,20 @@ export default function NavigationBar() {
   const [openProfileSnackbar, setOpenProfileSnackbar] = useState(false);
   const [profileImage, setProfileImage] = useState(); // 프로필 이미지
   const [profileThumbnail, setProfileThumbnail] = useState() // 프로필 이미지 썸네일
+
+  // 카테고리
+  const interestMapping = {
+    "Marketing_Promotion": "마케팅/홍보/조사",
+    "Accounting_Tax_Finance": "회계/세무/재무",
+    "GeneralAffairs_LegalAffairs_Affairs": "총무/법무/사무",
+    "IT_Data": "IT개발/데이터",
+    "Design": "디자인",
+    "Service": "서비스",
+    "Construction_Architecture": "건설/건축",
+    "MedicalCare": "의료",
+    "Education": "교육",
+    "Media_Culture_Sports": "미디어/문화/스포츠",
+  };
   
   // 토큰 정보 받아오기
   const token = localStorage.getItem("token");
@@ -58,19 +72,46 @@ export default function NavigationBar() {
   // 소개글 수정 토글
   const toggleEditIntroduction = () => {
     setIsEditingIntroduction(!isEditingIntroduction);
+    setIntroductionText(profileInfo.introduction)
   };
   // 소개글 변경될 때
   const handleIntroductionChange = (event) => {
     setIntroductionText(event.target.value);
   };
   // 소개글 저장 누를 때
-  const handleIntroductionSave = () => {
+  const handleIntroductionSave  = async () => {
+    // 소개글을 입력하지 않았을 때
     if (introductionText.trim() === "") {
       alert("소개글을 작성해주세요.");
       return;
     }
-    alert("소개글이 수정되었습니다");
-    setIsEditingIntroduction(false);
+
+    const formData = new FormData();
+    formData.append('introduction',introductionText);
+
+    // 소개글 작성 연동
+    try {
+      const response = await axios.post(
+        `/api/v1/profile/update-introduction`,
+        formData,
+        {
+          headers: {
+            Accept: "*/*",
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response);
+      // 코드 발송 성공헀을 때
+      if (response.status === 200) {
+        setIntroductionText(profileInfo.introduction); // 소개글 상태 초기화
+        alert("소개글이 수정되었습니다");
+        setIsEditingIntroduction(false);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   // 프로필 편집
@@ -79,10 +120,29 @@ export default function NavigationBar() {
 
   };
 
+  // 프로필 정보 가져오기
+  useEffect(() => {
+    fetchProfileInfo();
+  }, []);
+
+  const fetchProfileInfo = async () => {
+    try {
+      const response = await axios.get("/api/v1/my-profile", {
+        headers: {
+          Accept: "*/*",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setProfileInfo(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   // 프로필 저장
   const onClickSaveProfile = async () => {
     // 프로필 변경 연동
-    
     const formData = new FormData();
     formData.append('profileImage',profileImage)
 
@@ -104,33 +164,12 @@ export default function NavigationBar() {
       if (response.status === 200) {
         setIsEditingProfile(false) // 프로필 편집 중 상태 false로 바꿈
         setOpenProfileSnackbar(true); // 프로필 저장 성공 시 스낵바
+        fetchProfileInfo();
       }
     } catch (error) {
       console.error(error);
     }
   };
-
-  // 프로필 정보 가져오기
-  useEffect(() => {
-    const fetchProfileInfo = async () => {
-      try {
-        const response = await axios.get(
-          "/api/v1/my-profile",
-          {
-            headers: {
-              Accept: "*/*",
-              "Content-Type": `application/json`,
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        setProfileInfo(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchProfileInfo();
-  }, [profileInfo]);
 
   // 사진 업로드 되었을 때
   const handleFileChange = (event) => {
@@ -145,7 +184,7 @@ export default function NavigationBar() {
       reader.readAsDataURL(file);
     }
   };
-
+  fetchProfileInfo();
   return (
     <div
       css={css`
@@ -198,6 +237,8 @@ export default function NavigationBar() {
                 }}
               />
             </div>
+            {localStorage.getItem("token")? 
+              <>
             <div
               css={css({
                 display: "flex",
@@ -221,7 +262,7 @@ export default function NavigationBar() {
                 })}
               >
                 {isEditingProfile ?
-                  // 프로필 이미지 편집 중 
+                  // 프로필 이미지 편집 중
                   <><label htmlFor="inputTag" css={css({
                     width: "130px",
 
@@ -242,13 +283,13 @@ export default function NavigationBar() {
                       <input type="file" id="inputTag" accept="image/*" css={css({
                         display: "none"
                       })} onChange={handleFileChange}/>
-
                      </> : <><img
-                      src={testProfileImg}
+                      src={ProfileInfo.profileImageUrl? ProfileInfo.profileImageUrl : testProfileImg}
                       alt="프로필 이미지"
                       css={css({
                         width: "130px",
                         height: "130px",
+                        overflow: "hidden",
                         marginBottom: "10px",
                       })}
                       onClick={onClickEditProfile}
@@ -256,7 +297,6 @@ export default function NavigationBar() {
                       <input type="file" id="inputTag" accept="image/*" css={css({
                         display: "none"
                       })} onChange={handleFileChange}/>
-
                       <CameraAltOutlinedIcon style={{
                         fontSize: "70px",
                         color: "#B1B1B1",
@@ -292,6 +332,8 @@ export default function NavigationBar() {
                       alt="프로필 이미지"
                       css={css({
                         width: "130px",
+                        height: "130px",
+                        overflow: "hidden",
                         marginBottom: "10px",
                         borderRadius: "50%",
                       })}
@@ -327,7 +369,7 @@ export default function NavigationBar() {
 
                 <div>{profileInfo.nickname}</div>
               </div>
-            </div>
+            </div>)
             <div
               css={css({
                 display: "flex",
@@ -337,17 +379,17 @@ export default function NavigationBar() {
             >
               <div
                 css={css({
-                  width: "80px",
+                  width: "fit-content",
                   borderRadius: "20px",
                   backgroundColor: "#829FD7",
                   color: "white",
                   textAlign: "center",
                   fontSize: "15px",
                   fontWeight: "200",
-                  padding: "4px 0px",
+                  padding: "4px 10px",
                 })}
               >
-                {interestCategory}
+                {interestMapping[profileInfo.interest]}
               </div>
               <div>
                 {isEditingIntroduction ? (
@@ -560,11 +602,42 @@ export default function NavigationBar() {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        ) : (
-          <div
-            css={css({
+            </div></> :
+              // 토큰 정보가 없을 때
+              (<div css={css({
+              display:"flex",
+              flexDirection: "column",
+                  alignItems: "center"
+            })}><div css={css({
+                  whiteSpace: "pre-wrap",
+                  textAlign: "center",
+                  color: "#494949",
+                  fontSize: "16px",
+                  fontWeight: "400",
+                  lineHeight: "28px",
+                  margin: "62px 0px 30px 0px"
+                })}><span css={css({
+                  color: "#405988",
+                  fontWeight: "600",
+                })}>레코드 타임라인</span>에서 {"\n"}
+                  당신의 타임라인을 그려보세요!
+                </div>
+                  <Link to="/login" css={css({
+                    width: "fit-content",
+                    borderRadius: "20px",
+                    border: "1.5px solid #607FB9",
+                    color: "#607FB9",
+                    fontSize: "16px",
+                    fontWeight: "400",
+                    textDecoration: "none",
+                    padding: "7px 16px"
+                  })}>레코드 타임라인 시작하기</Link>
+                </div>
+                  )}
+                </div>
+              ) : (
+              <div
+              css={css({
               padding: "30px 20px 0px 38px",
             })}
           >

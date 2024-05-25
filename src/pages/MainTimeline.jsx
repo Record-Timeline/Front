@@ -6,6 +6,7 @@ import MyProfile from "../components/common/MyProfile";
 import MainTimelineItem from "../components/timeline/MainTimelineItem";
 import MainTimelineInput from "../components/timeline/MainTimelineInput";
 import Button from "../components/common/Button";
+import axios from "axios";
 
 export default function MainTimeline() {
   // 타임라인 항목들을 관리할 상태 생성
@@ -33,6 +34,34 @@ export default function MainTimeline() {
   // 타임라인 항목을 삭제하는 함수
   const deleteItem = (index) => {
     setItems(items.filter((_, i) => i !== index));
+  };
+
+  // 토큰 정보 받아오기
+  const token = localStorage.getItem("token");
+
+  // 메인 타임라인 생성 버튼 (체크 버튼)
+  const createMainTimeline = async () => {
+    // 메인 타임라인 생성 연동
+    try {
+      const response = await axios.post(
+        `/api/v1/main-timelines`,
+        {
+          title: items.data.title,
+          startDate: items.data.startDate,
+          endDate: items.data.endDate,
+        },
+        {
+          headers: {
+            Accept: "*/*",
+            "Content-Type": `application/json`,
+            Authorization: `Bearer ${token}`
+          },
+        }
+      );
+      console.log("메인 타임라인 생성", response)
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -85,6 +114,7 @@ export default function MainTimeline() {
             />
           ) : (
             <MainTimelineInput
+              createMainTimeline={createMainTimeline} // 연동
               key={index}
               index={index}
               saveItem={saveItem}

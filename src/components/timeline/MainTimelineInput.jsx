@@ -13,8 +13,9 @@ import Box from '@mui/material/Box';
 import Input from '@mui/material/Input';
 import {FaRegCircleCheck} from "react-icons/fa6";
 import dayjs from 'dayjs';
+import axios from "axios";
 
-function MainTimelineInput({ index, saveItem, initialData, onDelete }) {
+function MainTimelineInput({ index, saveItem, initialData, onDelete, createMainTimeline }) {
   const [isChecked, setIsChecked] = useState(false);
   const [title, setTitle] = useState("");
   const [startDate, setStartDate] = useState(null);
@@ -149,14 +150,15 @@ function MainTimelineInput({ index, saveItem, initialData, onDelete }) {
         </Box>
       </div>
       <div // 수정완료 (체크 아이콘)
-        onClick={handleSave}
+        onClick={() => {
+          handleSave();
+          createMainTimeline();
+        }}
         css={css({
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           // margin: "0 25px", // 좌우 마진을 25px로 설정
-          // marginLeft: "10px",
-          // marginRight: "5px",
           cursor: "pointer",
           // border: "1px solid black",
         })}

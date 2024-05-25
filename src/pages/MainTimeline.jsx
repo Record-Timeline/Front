@@ -30,6 +30,11 @@ export default function MainTimeline() {
     setItems(newItems);
   };
 
+  // 타임라인 항목을 삭제하는 함수
+  const deleteItem = (index) => {
+    setItems(items.filter((_, i) => i !== index));
+  };
+
   return (
     <div
       css={css({
@@ -76,6 +81,7 @@ export default function MainTimeline() {
               endDate={item.data.endDate}
               title={item.data.title}
               onEdit={() => editItem(index)}
+              onDelete={() => deleteItem(index)}
             />
           ) : (
             <MainTimelineInput
@@ -83,6 +89,7 @@ export default function MainTimeline() {
               index={index}
               saveItem={saveItem}
               initialData={item.data}
+              onDelete={() => deleteItem(index)}
             />
           )
         )}

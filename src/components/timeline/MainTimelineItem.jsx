@@ -9,7 +9,7 @@ import {FaRegTrashAlt} from "react-icons/fa";
 import AlertDialog from "../common/AlertDialog";
 import dayjs from 'dayjs';
 
-function MainTimelineItem({startDate, endDate, title, onEdit}) {
+function MainTimelineItem({startDate, endDate, title, onEdit, onDelete}) {
   const [isChecked, setIsChecked] = useState(false);
 
   return (
@@ -62,7 +62,7 @@ function MainTimelineItem({startDate, endDate, title, onEdit}) {
           // border: "1px solid black",
         })}
       >
-        {dayjs(startDate).format('YYYY.MM.DD')} ~ {dayjs(endDate).format('YYYY.MM.DD')}
+        {dayjs(startDate).format('YYYY.MM.DD')} ~ {endDate ? dayjs(endDate).format('YYYY.MM.DD') : '진행중'}
       </div>
       <div // 공개 여부 (자물쇠 아이콘)
         css={css({
@@ -74,7 +74,7 @@ function MainTimelineItem({startDate, endDate, title, onEdit}) {
           // border: "1px solid black",
         })}
       >
-        <FiLock/>
+        <FiUnlock/>
       </div>
       <div // 타임라인 제목
         css={css({
@@ -108,7 +108,6 @@ function MainTimelineItem({startDate, endDate, title, onEdit}) {
         <GoPencil/>
       </div>
       <div // 삭제하기 (쓰레기통 아이콘)
-        // onClick={handleDelete}
         css={css({
           color: "#829FD7",
           display: "flex",
@@ -121,7 +120,14 @@ function MainTimelineItem({startDate, endDate, title, onEdit}) {
         })}
       >
         {/*<FaRegTrashAlt/>*/}
-        <AlertDialog icon={<FaRegTrashAlt/>}/>
+        <AlertDialog
+          icon={<FaRegTrashAlt/>}
+          onConfirm={onDelete}
+          dialogTitle={"정말로 삭제하시겠습니까?"}
+          dialogContent={"메인 타임라인을 삭제하면 해당 타임라인 안에 들어있는 서브 타임라인들도 모두 삭제됩니다."}
+          confirmText={"삭제"}
+          cancelText={"취소"}
+        />
       </div>
     </div>
   );

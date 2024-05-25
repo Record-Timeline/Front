@@ -14,11 +14,12 @@ import Input from '@mui/material/Input';
 import {FaRegCircleCheck} from "react-icons/fa6";
 import dayjs from 'dayjs';
 
-function MainTimelineInput({ index, saveItem, initialData  }) {
+function MainTimelineInput({ index, saveItem, initialData, onDelete }) {
   const [isChecked, setIsChecked] = useState(false);
   const [title, setTitle] = useState("");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [alertOpen, setAlertOpen] = useState(false);
 
   useEffect(() => {
     setTitle(initialData.title || "");
@@ -27,7 +28,15 @@ function MainTimelineInput({ index, saveItem, initialData  }) {
   }, [initialData]);
 
   const handleSave = () => {
-    saveItem(index, { startDate, endDate, title });
+    if (!startDate || !title) {
+      setAlertOpen(true);
+    } else {
+      saveItem(index, { startDate, endDate, title });
+    }
+  };
+
+  const handleAlertClose = () => {
+    setAlertOpen(false);
   };
 
   return (
@@ -85,7 +94,7 @@ function MainTimelineInput({ index, saveItem, initialData  }) {
           onChange={setStartDate}
           css={css({width: "150px",})}
         />
-        <p css={css({margin: "7px", lineHeight: "55px"})}>~</p> {/* 물결 있는 버전 */}
+        <p css={css({margin: "7px", lineHeight: "55px"})}>~</p>
         <DatePickerValue
           label="종료 날짜"
           value={endDate}
@@ -146,16 +155,23 @@ function MainTimelineInput({ index, saveItem, initialData  }) {
           alignItems: "center",
           justifyContent: "center",
           // margin: "0 25px", // 좌우 마진을 25px로 설정
-          marginLeft: "10px",
-          marginRight: "5px",
+          // marginLeft: "10px",
+          // marginRight: "5px",
           cursor: "pointer",
           // border: "1px solid black",
         })}
       >
-        <FaRegCircleCheck/>
+        <AlertDialog
+          icon={<FaRegCircleCheck/>}
+          onConfirm={handleAlertClose}
+          dialogTitle={"입력 오류"}
+          dialogContent={"'시작 날짜'와 '제목'을 모두 입력해주세요."}
+          confirmText={null}
+          cancelText={"확인"}
+          open={alertOpen}
+        />
       </div>
       <div // 삭제하기 (쓰레기통 아이콘)
-        // onClick={handleDelete}
         css={css({
           color: "#829FD7",
           display: "flex",
@@ -168,7 +184,14 @@ function MainTimelineInput({ index, saveItem, initialData  }) {
         })}
       >
         {/*<FaRegTrashAlt/>*/}
-        <AlertDialog icon={<FaRegTrashAlt/>}/>
+        <AlertDialog
+          icon={<FaRegTrashAlt/>}
+          onConfirm={onDelete}
+          dialogTitle={"정말로 삭제하시겠습니까?"}
+          dialogContent={"메인 타임라인을 삭제하면 해당 타임라인 안에 들어있는 서브 타임라인들도 모두 삭제됩니다."}
+          confirmText={"삭제"}
+          cancelText={"취소"}
+        />
       </div>
     </div>
   );

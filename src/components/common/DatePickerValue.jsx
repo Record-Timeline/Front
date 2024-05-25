@@ -19,7 +19,6 @@ function CustomActionBar(props) {
         <DialogActions className={className}>
             <Button
                 onClick={(event) => {
-                    // console.log("진행중")
                     onClear();
                 }}
                 css={css({

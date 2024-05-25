@@ -133,7 +133,7 @@ export default function ReadSubTimelinePost({ onEdit }) {
             <div // 텍스트 나오는 박스
                 css={css({
                     width: "680px",
-                    height: "500px",
+                    height: "570px",
                     background: "#f8f6f6",
                     borderRadius: "30px",
                     boxShadow: "0 0 8px 0 rgba(0, 0, 0, 0.04)",
@@ -189,7 +189,7 @@ export default function ReadSubTimelinePost({ onEdit }) {
                     textAlign: "right",
                     margin: "0 auto",
                     marginTop: "20px",
-                    // border: "1px solid #f8f6f6",
+                    // border: "1px solid #000",
                 })}
             >
                 <Checkbox
@@ -213,8 +213,8 @@ export default function ReadSubTimelinePost({ onEdit }) {
                     icon={<BookmarkBorderIcon/>}
                     checkedIcon={<BookmarkIcon/>}
                     css={css({
+                        display: "inline-block",
                         "&.Mui-checked": {
-                            display: "inline-block",
                             color: "#F7DB79",
                         },
                     })}
@@ -239,7 +239,7 @@ export default function ReadSubTimelinePost({ onEdit }) {
                     border="2px solid #FFBDBD"
                     borderRadius="50px"
                     display="inline-block"
-                    // lineHeight="18px"
+                    lineHeight="18px"
                 >
                     삭제하기
                 </Button>
@@ -254,7 +254,7 @@ export default function ReadSubTimelinePost({ onEdit }) {
                     border="2px solid #829FD7"
                     borderRadius="50px"
                     display="inline-block"
-                    // lineHeight="18px"
+                    lineHeight="18px"
                 >
                     수정하기
                 </Button>

@@ -26,8 +26,9 @@ function CustomActionBar(props) {
                     width: "100px",
                     border: "2px solid #829FD7",
                     borderRadius: "20px",
-                    margin: "10px",
-
+                    margin: "8px",
+                    fontSize: "16px",
+                    fontFamily: "Pretendard",
                 })}
             >
                 진행중
@@ -36,30 +37,42 @@ function CustomActionBar(props) {
     );
 }
 
-export default function DatePickerValue({ label }) { // label prop 추가 : 이름 바꿀 수 있음
+export default function DatePickerValue({ label, actionBar, className }) { // label prop 추가 : 이름 바꿀 수 있음
     // const [value, setValue] = React.useState(dayjs('2022-04-17')); // 기본 지정 날짜 설정 가능
-    const [date, setDate] = React.useState(); //
+    const [date, setDate] = React.useState(null); //
 
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DemoContainer components={['DatePicker', 'DatePicker']}>
                 <DatePicker
+                    className={className}
                     format="YYYY-MM-DD"
                     label={label} // 부모 컴포넌트에서 받은 label(이름) 사용
                     value={date}
                     onChange={(newDate) => setDate(newDate)}
                     slots={{
-                        actionBar: CustomActionBar,
+                        actionBar: actionBar ? CustomActionBar : undefined,
                     }}
                     slotProps={{
-                        actionBar: {
-                            actions: ['today'], // 'ing'로 바꿔도 실행됨, 배열 안의 내용 없애도 실행됨 머지
-                        },
-                        textField: { size: 'small' }
+                        textField: {
+                          size: 'small',
+                          InputProps: {
+                            style: {
+                              fontSize: '15px',
+                              fontFamily: 'Pretendard',
+                            },
+                          },
+                          InputLabelProps: {
+                            style: {
+                              fontSize: '16px',
+                              fontFamily: 'Pretendard', // 원하는 폰트 패밀리로 변경
+                            },
+                          },
+                        }
                     }}
                     css={css({
                         minWidth: "10px !important",
-                        width: "150px",
+                        // width: "150px",
                         height: "50px",
                     })}
                 />

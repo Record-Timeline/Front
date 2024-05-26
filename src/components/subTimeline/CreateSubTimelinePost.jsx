@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { css } from "@emotion/react";
 import SubTimelineInput from "./SubTimelineInput";
 import DatePickerValue from "../common/DatePickerValue";
@@ -12,8 +12,32 @@ import Button from "../common/Button";
 
 const ariaLabel = { 'aria-label': 'description' };
 
-export default function CreateSubTimelinePost({ onCancel, onSubmit }) {
+export default function CreateSubTimelinePost({ post, onCancel, onSubmit }) {
   const [isChecked, setIsChecked] = useState(false);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [title, setTitle] = useState("");
+  const [isPublic, setIsPublic] = useState(false); // 공개 여부 관리
+
+  // 수정 모드, 기존 정보 유지 (useEffect)
+  useEffect(() => {
+    if (post) {
+      setStartDate(post.startDate);
+      setEndDate(post.endDate);
+      setTitle(post.title);
+      setIsPublic(post.isPublic);
+    }
+  }, [post]);
+
+  const handleSave = () => {
+    const newSubItem = {
+      startDate,
+      endDate,
+      title,
+      isPublic
+    };
+    onSubmit(newSubItem);
+  };
 
   return (
         <div>
@@ -67,10 +91,20 @@ export default function CreateSubTimelinePost({ onCancel, onSubmit }) {
                   // border: "1px solid black",
                 })}
               >
-                <DatePickerValue label="시작 날짜" css={css({width: "200px",})}/>
+                <DatePickerValue
+                  label="시작 날짜"
+                  value={startDate} // 초기값 설정
+                  onChange={(date) => setStartDate(date)}
+                  css={css({width: "200px",})}
+                />
                 <p css={css({margin: "7px", lineHeight: "40px"})}>~</p> {/* 물결 있는 버전 */}
-                {/*<p css={css({margin: "6px", lineHeight: "60px"})} />*/} {/* 물결 없는 버전 */}
-                <DatePickerValue label="종료 날짜" css={css({width: "200px",})} actionBar={true}/>
+                <DatePickerValue
+                  label="종료 날짜"
+                  value={endDate} // 초기값 설정
+                  onChange={(date) => setEndDate(date)}
+                  actionBar={true}
+                  css={css({width: "200px",})}
+                />
               </div>
             </div>
             <div
@@ -104,6 +138,8 @@ export default function CreateSubTimelinePost({ onCancel, onSubmit }) {
                 >
                   <Input
                     placeholder="제목을 입력하세요."
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
                     inputProps={{
                       ariaLabel,
                       style: {fontSize: '16px', fontFamily: "Pretendard"}
@@ -119,7 +155,12 @@ export default function CreateSubTimelinePost({ onCancel, onSubmit }) {
                 })}
               >
                 {/*<SelectAutoWidth />*/}
-                <CustomizedSelects text1={" 공개"} text2={" 비공개"}/> {/* 여기 소희님한테 물어보기 text1, text2 말고 하나로 합치는 방법 */}
+                <CustomizedSelects
+                  onChange={(value) => setIsPublic(value === " 공개")}
+                  text1={" 공개"}
+                  text2={" 비공개"}
+                  value={isPublic ? "공개" : "비공개"} // 초기값 설정
+                /> {/* 여기 소희님한테 물어보기 text1, text2 말고 하나로 합치는 방법 */}
               </div>
             </div>
           </div>
@@ -148,7 +189,7 @@ export default function CreateSubTimelinePost({ onCancel, onSubmit }) {
               취소하기
             </Button>
             <Button
-              onClick={() => onSubmit()}
+              onClick={() => handleSave()}
               width="120px"
               height="40px"
               margin="0px 15px"

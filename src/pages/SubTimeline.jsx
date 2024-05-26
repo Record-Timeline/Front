@@ -51,6 +51,19 @@ export default function SubTimeline() {
     setSelectedItem(item);
   };
 
+  const handleDelete = (item) => {
+    const itemIndex = subTimelineItems.findIndex(subItem => subItem === item);
+    const updatedItems = subTimelineItems.filter((subItem) => subItem !== item);
+    setSubTimelineItems(updatedItems);
+    if (updatedItems.length > 0) {
+      const newSelectedItem = itemIndex > 0 ? updatedItems[itemIndex - 1] : updatedItems[0];
+      setSelectedItem(newSelectedItem);
+    } else {
+      setSelectedItem(null);
+      setIsCreating(true);
+    }
+  };
+
   return (
     <div
       css={css({
@@ -80,10 +93,13 @@ export default function SubTimeline() {
             onSubmit={handleSubmit}
           />
         ) : (
-          selectedItem && <ReadSubTimelinePost
+          selectedItem && (
+            <ReadSubTimelinePost
             item={selectedItem}
             onEdit={handleEdit}
+            onDelete={handleDelete}
           />
+          )
         )}
       </div>
       <div // 서브 타임라인 박스

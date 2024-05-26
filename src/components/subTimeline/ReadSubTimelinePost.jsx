@@ -15,7 +15,7 @@ import dayjs from "dayjs";
 
 const label = {inputProps: {'aria-label': 'Checkbox demo'}};
 
-export default function ReadSubTimelinePost({item, onEdit}) {
+export default function ReadSubTimelinePost({item, onDelete, onEdit}) {
   const [isChecked, setIsChecked] = useState(false); // 타임라인 체크 circle 상태
   const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
@@ -221,6 +221,7 @@ export default function ReadSubTimelinePost({item, onEdit}) {
           })}
         >
           <Button
+            onClick={() => onDelete(item)}
             width="120px"
             height="40px"
             margin="0px 15px"

@@ -12,6 +12,7 @@ import Favorite from '@mui/icons-material/Favorite';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import dayjs from "dayjs";
+import AlertDialog from "../common/AlertDialog";
 
 const label = {inputProps: {'aria-label': 'Checkbox demo'}};
 
@@ -220,21 +221,29 @@ export default function ReadSubTimelinePost({item, onDelete, onEdit}) {
             // border: "1px solid #f8f6f6",
           })}
         >
-          <Button
-            onClick={() => onDelete(item)}
-            width="120px"
-            height="40px"
-            margin="0px 15px"
-            backgroundColor="#FFF"
-            textColor="#F19797"
-            fontSize="15px"
-            border="2px solid #FFBDBD"
-            borderRadius="50px"
-            display="inline-block"
-            lineHeight="18px"
-          >
-            삭제하기
-          </Button>
+          <AlertDialog
+            icon={
+              <Button
+                width="120px"
+                height="40px"
+                margin="0px 15px"
+                backgroundColor="#FFF"
+                textColor="#F19797"
+                fontSize="15px"
+                border="2px solid #FFBDBD"
+                borderRadius="50px"
+                display="inline-block"
+                lineHeight="18px"
+              >
+                삭제하기
+              </Button>
+            }
+            onConfirm={() => onDelete(item)}
+            dialogTitle="정말로 삭제하시겠습니까?"
+            dialogContent="해당 서브 타임라인에 작성한 글도 함께 삭제됩니다."
+            confirmText="삭제"
+            cancelText="취소"
+            />
           <Button
             onClick={() => onEdit(item)}
             width="120px"

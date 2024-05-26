@@ -78,7 +78,7 @@ export default function SubTimeline() {
           // height: "100%",
           borderRadius: "30px",
           background: "#FFF",
-          margin: "0px 0px 0px 355px",
+          margin: "0px 0px 50px 355px",
           padding: "10px",
           float: "left",
           display: "inline-block", // 서브 타임라인과 나란히 두기 위함

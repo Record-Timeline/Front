@@ -128,10 +128,6 @@ export default function NavigationBar() {
   };
 
   // 프로필 정보 가져오기
-  useEffect(() => {
-    fetchProfileInfo();
-  }, []);
-
   const fetchProfileInfo = async () => {
     try {
       const response = await axiosInstance.get("/api/v1/my-profile");
@@ -140,9 +136,7 @@ export default function NavigationBar() {
       console.error(error);
     }
   };
-
   // 프로필 저장
-
   const onClickSaveProfile = async () => {
     // 프로필 변경 연동
     const formData = new FormData();
@@ -186,7 +180,9 @@ export default function NavigationBar() {
       reader.readAsDataURL(file);
     }
   };
-  fetchProfileInfo();
+  useEffect(() => {
+    fetchProfileInfo();
+  }, []);
   return (
     <div
       css={css`

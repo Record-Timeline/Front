@@ -19,6 +19,7 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import axios from "axios";
 import ProfileInfo from "../main/ProfileInfo";
+import axiosInstance from '../../utils/axiosInstance';
 
 export default function NavigationBar() {
   const [isExpanded, setIsExpanded] = useState(true); // 네비게이션 바 펼친 상태 & 접힌 상태
@@ -137,13 +138,7 @@ export default function NavigationBar() {
 
   const fetchProfileInfo = async () => {
     try {
-      const response = await axios.get("/api/v1/my-profile", {
-        headers: {
-          Accept: "*/*",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axiosInstance.get("/api/v1/my-profile");
       setProfileInfo(response.data);
     } catch (error) {
       console.error(error);

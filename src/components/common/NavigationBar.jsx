@@ -50,9 +50,6 @@ export default function NavigationBar() {
     "Media_Culture_Sports": "미디어/문화/스포츠",
   };
   
-  // 토큰 정보 받아오기
-  const token = localStorage.getItem("token");
-
   // 프로필 정보 (닉네임, 관심분야, 프로필 사진, 소개글)
   const [profileInfo, setProfileInfo] = useState({
     nickname: "",
@@ -102,14 +99,13 @@ export default function NavigationBar() {
 
     // 소개글 작성 연동
     try {
-      const response = await axios.post(
+      const response = await axiosInstance.post(
         `/api/v1/profile/update-introduction`,
         formData,
         {
           headers: {
             Accept: "*/*",
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -146,28 +142,28 @@ export default function NavigationBar() {
   };
 
   // 프로필 저장
+
   const onClickSaveProfile = async () => {
     // 프로필 변경 연동
     const formData = new FormData();
-    formData.append('profileImage',profileImage)
+    formData.append('profileImage', profileImage);
 
     console.log(...formData);
     try {
-      const response = await axios.post(
+      const response = await axiosInstance.post(
         `/api/v1/profile/update-image`,
         formData,
         {
           headers: {
             Accept: "*/*",
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
           },
         }
       );
       console.log(response);
       // 코드 발송 성공헀을 때
       if (response.status === 200) {
-        setIsEditingProfile(false) // 프로필 편집 중 상태 false로 바꿈
+        setIsEditingProfile(false); // 프로필 편집 중 상태 false로 바꿈
         setOpenProfileSnackbar(true); // 프로필 저장 성공 시 스낵바
         fetchProfileInfo();
       }
@@ -175,6 +171,7 @@ export default function NavigationBar() {
       console.error(error);
     }
   };
+
 
   // 사진 업로드 되었을 때
   const handleFileChange = (event) => {

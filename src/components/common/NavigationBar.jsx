@@ -136,6 +136,7 @@ export default function NavigationBar() {
       console.error(error);
     }
   };
+
   // 프로필 저장
   const onClickSaveProfile = async () => {
     // 프로필 변경 연동

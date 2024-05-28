@@ -75,10 +75,12 @@ export default function Main() {
   const fetchPostData = async () => {
     try {
       const response = await axiosInstance.get(`/api/v1/main/post/${englishInterest}`);
-      setPostData(response.data[0].subTimelines);
-      console.log("추천 게시물", response.data[0].subTimelines);
+      console.log(response)
+      setPostData(response.data.subTimelines);
+
+      console.log("추천 게시물", response.data.subTimelines);
     } catch (error) {
-      console.error(error);
+      console.error("추천 게시물 에러", error);
     }
   };
 

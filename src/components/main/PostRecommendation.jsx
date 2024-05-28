@@ -5,7 +5,7 @@ import { css } from "@emotion/react";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
-export default function PostRecommendation({ postData, selectedInterest }) {
+export default function PostRecommendation({ postData }) {
   const [page, setPage] = useState(0); // 페이지 번호 상태
 
   // content에서 이미지 추출하는 함수
@@ -13,6 +13,20 @@ export default function PostRecommendation({ postData, selectedInterest }) {
     const imgTagMatch = content.match(/<img[^>]+src="([^">]+)"/);
     return imgTagMatch ? imgTagMatch[1] : null;
   };
+
+  const interestMapping = {
+    "Marketing_Promotion": "마케팅/홍보/조사",
+    "Accounting_Tax_Finance": "회계/세무/재무",
+    "GeneralAffairs_LegalAffairs_Affairs": "총무/법무/사무",
+    "IT_Data": "IT개발/데이터",
+    "Design": "디자인",
+    "Service": "서비스",
+    "Construction_Architecture": "건설/건축",
+    "MedicalCare": "의료",
+    "Education": "교육",
+    "Media_Culture_Sports": "미디어/문화/스포츠",
+  };
+
 
   if (!postData || postData.length === 0) {
     return (
@@ -48,7 +62,8 @@ export default function PostRecommendation({ postData, selectedInterest }) {
           display: flex;
           align-items: center;
           flex-direction: column;
-          margin: 50px 60px 50px -70px;
+          margin: 30px 60px 50px -70px;
+          
       `}
     >
       <div
@@ -82,6 +97,7 @@ export default function PostRecommendation({ postData, selectedInterest }) {
                   width: 220px;
                   padding: 20px 25px;
                   border-right: ${index === 3 ? "none" : "1px solid #c4c4c4"};
+                  position: relative;
               `}
             >
               <div
@@ -101,21 +117,31 @@ export default function PostRecommendation({ postData, selectedInterest }) {
                     padding: 5px 10px;
                     font-size: 15px;
                     font-weight: 400;
-                    margin: 12px 0px;
+                    margin: 12px 0px 25px 0px;
                 `}
               >
-                {selectedInterest}
+                {interestMapping[post.authorInterest]}
               </div>
               {extractImage(post.content) && (
                 <img
                   src={extractImage(post.content)}
                   alt={post.title}
                   css={css`
-                    width: 100%;
+                      width: 100%;
+                      margin-bottom: 20px;
                   `}
                 />
               )}
-
+              <div
+                css={css`
+                    font-size: 16px;
+                    font-weight: 400;
+                    position: absolute;
+                    bottom: 15px;
+                    right: 20px;
+                   
+                `}
+              >by {post.authorNickname}</div>
             </div>
           ))}
         </div>

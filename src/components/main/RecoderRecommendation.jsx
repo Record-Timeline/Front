@@ -3,8 +3,6 @@
 import React, { useEffect, useState } from "react";
 import { css } from "@emotion/react";
 import ProfileInfo from "./ProfileInfo";
-import testProfileImg from "../../assets/images/testProfileImg.png";
-import axiosInstance from "../../utils/axiosInstance";
 
 export default function RecoderRecommendation({ recorderData }) {
   return (
@@ -20,6 +18,7 @@ export default function RecoderRecommendation({ recorderData }) {
             key={index}
             css={css`
               margin: 50px 0px 80px 0px;
+                width: 200px;
               padding: 0px 15px;
               display: flex;
               flex-direction: column;
@@ -42,42 +41,55 @@ export default function RecoderRecommendation({ recorderData }) {
                 margin-top: 20px;
               `}
             >
-              {user.mainTimeline.map((timeline, idx) => (
-                <div
-                  key={idx}
-                  css={css`
-                    display: flex;
-                    width: 170px;
-                    margin-top: 12px;
-                    align-items: center;
-                    background: #f5f5f5;
-                    border-radius: 30px;
-                  `}
-                >
+              {user.mainTimeline && user.mainTimeline.length > 0 ? (
+                user.mainTimeline.map((timeline, idx) => (
                   <div
+                    key={idx}
                     css={css`
-                      border-radius: 20px;
-                      border: 3px solid #829fd7;
-                      background: #829fd7;
-                      width: 9px;
-                      height: 9px;
-                      margin-left: 20px;
-                    `}
-                  />
-                  <div
-                    css={css`
-                      width: 100%;
-                      text-align: center;
-                      font-size: 15px;
-                      font-weight: 400;
-                      word-break: keep-all;
-                      margin: 10px 20px 10px 10px;
+                      display: flex;
+                      width: 170px;
+                      margin-top: 12px;
+                      align-items: center;
+                      background: #f5f5f5;
+                      border-radius: 30px;
                     `}
                   >
-                    {timeline.title}
+                    <div
+                      css={css`
+                        border-radius: 20px;
+                        border: 3px solid #829fd7;
+                        background: #829fd7;
+                        width: 9px;
+                        height: 9px;
+                        margin-left: 20px;
+                      `}
+                    />
+                    <div
+                      css={css`
+                        width: 100%;
+                        text-align: center;
+                        font-size: 15px;
+                        font-weight: 400;
+                        word-break: keep-all;
+                        margin: 10px 20px 10px 10px;
+                      `}
+                    >
+                      {timeline.title}
+                    </div>
                   </div>
+                ))
+              ) : (
+                <div
+                  css={css`
+                    font-size: 14px;
+                    color: #999;
+                    text-align: center;
+                    margin-top: 10px;
+                  `}
+                >
+                  타임라인이 없습니다.
                 </div>
-              ))}
+              )}
             </div>
           </div>
         ))

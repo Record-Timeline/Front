@@ -38,10 +38,12 @@ export default function Main() {
   };
 
 
-  const [hoveredInterest, setHoveredInterest] = useState(null);
-  const [selectedInterest, setSelectedInterest] = useState(null);
-  const [englishInterest, setEnglishInterest] = useState(null);
-  const [recorderData, setRecorderData] = useState(null);
+  const [hoveredInterest, setHoveredInterest] = useState(null); // 관심분야 호버 상태
+  const [selectedInterest, setSelectedInterest] = useState(null); // 선택한 관심분야
+  const [englishInterest, setEnglishInterest] = useState(null); // 연동에 사용할 영문 관심분야
+  const [recorderData, setRecorderData] = useState(null); // 추천 레코더 데이터
+  const [postData, setPostData] = useState(null); // 추천 게시물 데이터
+
   // defalut 관심 분야 가져오기
   const fetchDefaultInterest= async () => {
     try {
@@ -58,7 +60,7 @@ export default function Main() {
     }
   }, [selectedInterest]);
 
-  // 레코더 데이터 연동
+  // 추천 레코더 데이터 연동
   const fetchRecorderData = async () => {
     try {
       const response = await axiosInstance.get(`/api/v1/main/member/${englishInterest}`);
@@ -69,10 +71,22 @@ export default function Main() {
     }
   };
 
+  // 추천 게시물 데이터 연동
+  const fetchPostData = async () => {
+    try {
+      const response = await axiosInstance.get(`/api/v1/main/post/${englishInterest}`);
+      setPostData(response.data[0].subTimelines);
+      console.log("추천 게시물", response.data[0].subTimelines);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   // 컴포넌트가 마운트될 때와 englishInterest가 변경될 때 fetchRecorderData를 호출
   useEffect(() => {
     if (englishInterest) {
       fetchRecorderData();
+      fetchPostData();
     }
   }, [englishInterest]);
 
@@ -188,7 +202,7 @@ export default function Main() {
             `}
           >
             추천 게시물
-            <PostRecommendation />
+            <PostRecommendation postData={postData} selectedInterest={selectedInterest}/>
           </div>
         </div>
       </div>

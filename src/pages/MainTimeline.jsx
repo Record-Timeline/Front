@@ -13,8 +13,8 @@ export default function MainTimeline() {
   const [items, setItems] = useState([]);
 
   // 토큰 정보 받아오기
-  // const token = localStorage.getItem("token");
-  const token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzYXJhbG92ZTIwQG5hdmVyLmNvbSIsImlhdCI6MTcxNjk1ODA4NywiZXhwIjoxNzE2OTY1Mjg3fQ.VZfUfPyUQQY1Vw_P9g-ck2l52kcDqjx4Hnm62WEdB-Y";
+  const token = localStorage.getItem("token");
+  // const token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzYXJhbG92ZTIwQG5hdmVyLmNvbSIsImlhdCI6MTcxNjk1ODA4NywiZXhwIjoxNzE2OTY1Mjg3fQ.VZfUfPyUQQY1Vw_P9g-ck2l52kcDqjx4Hnm62WEdB-Y";
   console.log("토큰 확인:", token); // 토큰 확인을 위한 콘솔 로그 추가
 
   // 새 타임라인 입력 항목 추가하는 함수
@@ -37,8 +37,26 @@ export default function MainTimeline() {
   };
 
   // 타임라인 항목을 삭제하는 함수
-  const deleteItem = (index) => {
-    setItems(items.filter((_, i) => i !== index));
+  const deleteItem = async (index) => {
+    const itemId = items[index].data.id;
+    // 메인 타임라인 삭제 연동 (DELETE)
+    try {
+      await axios.delete(
+        `/api/v1/main-timelines/${itemId}`,
+        {
+          headers: {
+            Accept: "*/*",
+            "Content-Type": `application/json`,
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setItems(items.filter((_, i) => i !== index));
+      console.log("메인 타임라인 삭제 완료");
+    } catch (error) {
+      console.log("삭제 에러 발생:", error);
+      console.error("삭제 에러 상세:", error.response ? error.response.data : error.message);
+    }
   };
 
   // 메인 타임라인 생성 버튼 (체크 버튼)
@@ -69,7 +87,7 @@ export default function MainTimeline() {
     }
   };
 
-  // 메인 타임라인 조회 (GET)
+  // 메인 타임라인 조회 연동 (GET)
   useEffect(() => { // useEffect 사용해서 컴포넌트가 마운트 될 때 메인 타임라인을 서버에서 가져옴
     const fetchMainTimelines = async () => {
       try {

@@ -3,11 +3,9 @@
 import React, { useState, useEffect } from "react";
 import {css} from "@emotion/react";
 import {FiLock, FiUnlock} from "react-icons/fi";
-import {GoPencil} from "react-icons/go";
 import {FaRegTrashAlt} from "react-icons/fa";
 import AlertDialog from "../common/AlertDialog";
 import DatePickerValue from "../common/DatePickerValue";
-import SelectAutoWidth from "./SelectAutoWidth";
 import CustomizedSelects from "./CustomizedSelects"
 import Box from '@mui/material/Box';
 import Input from '@mui/material/Input';
@@ -28,11 +26,13 @@ function MainTimelineInput({ index, saveItem, initialData, onDelete, createMainT
     setEndDate(initialData.endDate ? dayjs(initialData.endDate) : null);
   }, [initialData]);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!startDate || !title) {
       setAlertOpen(true);
     } else {
-      saveItem(index, { startDate, endDate, title });
+      const data = { startDate, endDate, title };
+      await createMainTimeline(data);
+      saveItem(index, data);
     }
   };
 
@@ -149,11 +149,8 @@ function MainTimelineInput({ index, saveItem, initialData, onDelete, createMainT
           />
         </Box>
       </div>
-      <div // 수정완료 (체크 아이콘)
-        onClick={() => {
-          handleSave();
-          createMainTimeline();
-        }}
+      <div // 저장 버튼 (체크 아이콘)
+        onClick={handleSave}
         css={css({
           display: "flex",
           alignItems: "center",

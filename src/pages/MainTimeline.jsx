@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {css} from "@emotion/react";
 import MyProfile from "../components/common/MyProfile";
 import MainTimelineItem from "../components/timeline/MainTimelineItem";
@@ -11,6 +11,11 @@ import axios from "axios";
 export default function MainTimeline() {
   // 타임라인 항목들을 관리할 상태 생성
   const [items, setItems] = useState([]);
+
+  // 토큰 정보 받아오기
+  // const token = localStorage.getItem("token");
+  const token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzYXJhbG92ZTIwQG5hdmVyLmNvbSIsImlhdCI6MTcxNjk1ODA4NywiZXhwIjoxNzE2OTY1Mjg3fQ.VZfUfPyUQQY1Vw_P9g-ck2l52kcDqjx4Hnm62WEdB-Y";
+  console.log("토큰 확인:", token); // 토큰 확인을 위한 콘솔 로그 추가
 
   // 새 타임라인 입력 항목 추가하는 함수
   const addInput = () => {
@@ -36,19 +41,17 @@ export default function MainTimeline() {
     setItems(items.filter((_, i) => i !== index));
   };
 
-  // 토큰 정보 받아오기
-  const token = localStorage.getItem("token");
-
   // 메인 타임라인 생성 버튼 (체크 버튼)
-  const createMainTimeline = async () => {
-    // 메인 타임라인 생성 연동
+  const createMainTimeline = async (data) => {
+    // 메인 타임라인 생성 연동 (POST)
+    console.log(items)
     try {
       const response = await axios.post(
         `/api/v1/main-timelines`,
         {
-          title: items.data.title,
-          startDate: items.data.startDate,
-          endDate: items.data.endDate,
+          title: data.title,
+          startDate: data.startDate,
+          endDate: data.endDate,
         },
         {
           headers: {
@@ -58,11 +61,38 @@ export default function MainTimeline() {
           },
         }
       );
+      setItems([...items, { type: "item", data: response.data }]);
       console.log("메인 타임라인 생성", response)
     } catch (error) {
+      console.log("에러!")
       console.error(error);
     }
   };
+
+  // 메인 타임라인 조회 (GET)
+  useEffect(() => { // useEffect 사용해서 컴포넌트가 마운트 될 때 메인 타임라인을 서버에서 가져옴
+    const fetchMainTimelines = async () => {
+      try {
+        const response = await axios.get(
+          `/api/v1/main-timelines/member/21`,
+          {
+            headers: {
+              Accept: "*/*",
+              "Content-Type": `application/json`,
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setItems(response.data.map(item => ({ type: "item", data: item })));
+        console.log("메인 타임라인 조회", response);
+      } catch (error) {
+        console.log("에러 발생:", error);
+        console.error("에러 상세:", error.response ? error.response.data : error.message);
+      }
+    };
+
+    fetchMainTimelines();
+  }, [token]);
 
   return (
     <div

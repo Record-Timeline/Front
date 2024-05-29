@@ -9,7 +9,7 @@ import {FaRegTrashAlt} from "react-icons/fa";
 import AlertDialog from "../common/AlertDialog";
 import dayjs from 'dayjs';
 
-function MainTimelineItem({startDate, endDate, title, onEdit, onDelete}) {
+function MainTimelineItem({startDate, endDate, title, onEdit, onDelete, }) {
   const [isChecked, setIsChecked] = useState(false);
 
   return (

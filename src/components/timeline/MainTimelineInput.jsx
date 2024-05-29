@@ -11,7 +11,9 @@ import Box from '@mui/material/Box';
 import Input from '@mui/material/Input';
 import {FaRegCircleCheck} from "react-icons/fa6";
 import dayjs from 'dayjs';
-import axios from "axios";
+import utc from 'dayjs/plugin/utc'; // UTC 플러그인 추가
+
+dayjs.extend(utc);
 
 function MainTimelineInput({ index, saveItem, initialData, onDelete, createMainTimeline }) {
   const [isChecked, setIsChecked] = useState(false);
@@ -30,7 +32,12 @@ function MainTimelineInput({ index, saveItem, initialData, onDelete, createMainT
     if (!startDate || !title) {
       setAlertOpen(true);
     } else {
-      const data = { startDate, endDate, title };
+      // const data = { startDate, endDate, title };
+      const data = {
+        startDate: dayjs(startDate).utc().format(), // UTC로 변환하여 저장 (날짜 하루 빨라지는 버그 땜에)
+        endDate: endDate ? dayjs(endDate).utc().format() : null, // UTC로 변환하여 저장 (날짜 하루 빨라지는 버그 땜에)
+        title
+      };
       await createMainTimeline(data);
       saveItem(index, data);
     }

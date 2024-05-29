@@ -80,7 +80,8 @@ export default function MainTimeline() {
         }
       );
       setItems([...items, { type: "item", data: response.data }]);
-      console.log("메인 타임라인 생성", response)
+      console.log("메인 타임라인 생성 완료", response)
+      console.log(items)
     } catch (error) {
       console.log("에러!")
       console.error(error);
@@ -102,7 +103,7 @@ export default function MainTimeline() {
           }
         );
         setItems(response.data.map(item => ({ type: "item", data: item })));
-        console.log("메인 타임라인 조회", response);
+        console.log("메인 타임라인 조회 완료", response);
       } catch (error) {
         console.log("에러 발생:", error);
         console.error("에러 상세:", error.response ? error.response.data : error.message);

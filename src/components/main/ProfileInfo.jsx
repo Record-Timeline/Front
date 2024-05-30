@@ -3,14 +3,14 @@
 import React from "react";
 import { css } from "@emotion/react";
 import ProfileNickName from "./ProfileNickName";
-
 export default function ProfileInfo({
-  profileImgSrc,
-  nickName,
-  introduce,
-  followers,
-}) {
+                                      profileImgSrc,
+                                      nickName,
+                                      introduce,
+                                      followers,
+                                    }) {
   return (
+
     <div
       css={css`
         display: flex;
@@ -18,7 +18,8 @@ export default function ProfileInfo({
         align-items: center;
       `}
     >
-      <ProfileNickName profileImgSrc={profileImgSrc} nickName={nickName} />
+      <ProfileNickName src={profileImgSrc} nickName={nickName} />
+      {introduce && (
       <div
         css={css`
           width: 145px;
@@ -30,6 +31,7 @@ export default function ProfileInfo({
       >
         {introduce.length > 25 ? `${introduce.slice(0, 25)}...` : introduce}
       </div>
+        )}
       <div
         css={css`
           text-align: center;

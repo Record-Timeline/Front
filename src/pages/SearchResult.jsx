@@ -117,108 +117,119 @@ export default function SearchResult() {
             border-bottom: 1px solid #A3A3A3;
         `}
       />
-      {/* 로딩중일 때 */}
-      {loading ? (
-        <div
-          css={css`
+      <div
+        css={css`
+          flex: 1;
+          overflow: auto;
+        `}
+      >
+        {/* 로딩중일 때 */}
+        {loading ? (
+          <div
+            css={css`
               color: #829FD7;
               margin-top: 40px;
-          `}
-        >
-          <CircularProgress color="inherit"/>
-        </div>
-      ) : error ? (
-        <div>{error}</div>
-      ) : (
-        <>
-          {selectedTab === "posts" && (
-            <div css={css`
+              display: flex;
+              justify-content: center;
+            `}
+          >
+            <CircularProgress color="inherit" />
+          </div>
+        ) : error ? (
+          <div>{error}</div>
+        ) : (
+          <>
+            {selectedTab === "posts" && (
+              <div
+                css={css`
                   padding-bottom: 50px;
-                `}>
-              <div
-                css={css`
-                  color: #717171;
-                  font-size: 14px;
-                  font-weight: 400;
-                  margin-top: 25px;
                 `}
               >
-                글 검색 결과 {searchResultPostsNum}건
-              </div>
-              {searchResultPostsNum === 0 && (
                 <div
                   css={css`
+                    color: #717171;
+                    font-size: 14px;
+                    font-weight: 400;
+                    margin-top: 25px;
+                  `}
+                >
+                  글 검색 결과 {searchResultPostsNum}건
+                </div>
+                {searchResultPostsNum === 0 && (
+                  <div
+                    css={css`
                       color: #393939;
                       font-size: 17px;
                       font-weight: 400;
                       margin-top: 20px;
-                  `}
-                >
-                  글 검색 결과가 없습니다.
-                </div>
-              )}
-              {searchResult?.subTimelines?.map((post, index) => (
-                <SearchPostBox
-                  key={index}
-                  nickName={post.authorNickname}
-                  title={post.title}
-                  category={interestMapping[post.authorInterest]}
-                  commentNum={20}
-                  heartNum={15}
-                  scrapNum={30}
-                  startDate={post.startDate}
-                  endDate={post.endDate}
-                />
-              ))}
-            </div>
-          )}
-          {selectedTab === "recorder" && (
-            <div>
-              <div
-                css={css`
-                  color: #717171;
-                  font-size: 14px;
-                  font-weight: 400;
-                  margin-top: 25px;
-                `}
-              >
-                계정 검색 결과 {searchResultRecordersNum}건
-              </div>
-              {searchResultRecordersNum === 0 && (
-                <div
-                  css={css`
-                      color: #393939;
-                      font-size: 17px;
-                      font-weight: 400;
-                      margin-top: 20px;
-                  `}
-                >
-                  레코더 검색 결과가 없습니다.
-                </div>
-              )}
-              <div
-                css={css`
-                  display: flex;
-                  flex-wrap: wrap;
-                  width: 85%;
-                  gap: 15px;
-                `}
-              >
-                {searchResult?.members?.map((recoder, index) => (
-                  <SearchRecoderBox
+                    `}
+                  >
+                    글 검색 결과가 없습니다.
+                  </div>
+                )}
+                {searchResult?.subTimelines?.map((post, index) => (
+                  <SearchPostBox
                     key={index}
-                    nickName={recoder.nickname}
-                    category={interestMapping[recoder.interest]}
-                    introduce={recoder.introduction}
-                    followerNum={20}
-                    profileImg={recoder.profileImageUrl || testProfileImg}
+                    nickName={post.authorNickname}
+                    title={post.title}
+                    category={interestMapping[post.authorInterest]}
+                    commentNum={20}
+                    heartNum={15}
+                    scrapNum={30}
+                    startDate={post.startDate}
+                    endDate={post.endDate}
                   />
                 ))}
               </div>
-            </div>
-          )}
-        </>
-      )}
+            )}
+            {selectedTab === "recorder" && (
+              <div>
+                <div
+                  css={css`
+                    color: #717171;
+                    font-size: 14px;
+                    font-weight: 400;
+                    margin-top: 25px;
+                  `}
+                >
+                  계정 검색 결과 {searchResultRecordersNum}건
+                </div>
+                {searchResultRecordersNum === 0 && (
+                  <div
+                    css={css`
+                      color: #393939;
+                      font-size: 17px;
+                      font-weight: 400;
+                      margin-top: 20px;
+                    `}
+                  >
+                    레코더 검색 결과가 없습니다.
+                  </div>
+                )}
+                <div
+                  css={css`
+                    display: flex;
+                    flex-wrap: wrap;
+                    width: 85%;
+                    gap: 15px;
+                  `}
+                >
+                  {searchResult?.members?.map((recoder, index) => (
+                    <SearchRecoderBox
+                      key={index}
+                      nickName={recoder.nickname}
+                      category={interestMapping[recoder.interest]}
+                      introduce={recoder.introduction}
+                      followerNum={20}
+                      profileImg={recoder.profileImageUrl || testProfileImg}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 }

@@ -66,11 +66,10 @@ export default function RecoderRecommendation({ recorderData }) {
                     />
                     <div
                       css={css`
-                        width: 100%;
+                        width: 110px;
                         text-align: center;
                         font-size: 15px;
                         font-weight: 400;
-                        word-break: keep-all;
                         margin: 10px 20px 10px 10px;
                       `}
                     >

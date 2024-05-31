@@ -11,10 +11,11 @@ import axios from "axios";
 export default function MainTimeline() {
   // 타임라인 항목들을 관리할 상태 생성
   const [items, setItems] = useState([]);
+  // 프로필 상태 추가
+  const [profile, setProfile] = useState(null);
 
   // 토큰 정보 받아오기
   const token = localStorage.getItem("token");
-  // const token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzYXJhbG92ZTIwQG5hdmVyLmNvbSIsImlhdCI6MTcxNjk1ODA4NywiZXhwIjoxNzE2OTY1Mjg3fQ.VZfUfPyUQQY1Vw_P9g-ck2l52kcDqjx4Hnm62WEdB-Y";
   console.log("토큰 확인:", token); // 토큰 확인을 위한 콘솔 로그 추가
 
   // 새 타임라인 입력 항목 추가하는 함수
@@ -39,7 +40,7 @@ export default function MainTimeline() {
   // 타임라인 항목을 삭제하는 함수
   const deleteItem = async (index) => {
     const itemId = items[index].data.id;
-    // 메인 타임라인 삭제 연동 (DELETE)
+    // 메인 타임라인 삭제 연동 (DEL, DELETE)
     try {
       await axios.delete(
         `/api/v1/main-timelines/${itemId}`,
@@ -61,7 +62,7 @@ export default function MainTimeline() {
 
   // 메인 타임라인 생성 버튼 (체크 버튼)
   const createMainTimeline = async (data) => {
-    // 메인 타임라인 생성 연동 (POST)
+    // 메인 타임라인 생성 연동 (POST, CREATE)
     console.log(items)
     try {
       const response = await axios.post(
@@ -88,8 +89,8 @@ export default function MainTimeline() {
     }
   };
 
-  // 메인 타임라인 조회 연동 (GET)
   useEffect(() => { // useEffect 사용해서 컴포넌트가 마운트 될 때 메인 타임라인을 서버에서 가져옴
+    // 메인 타임라인 조회 연동 (GET, READ)
     const fetchMainTimelines = async () => {
       try {
         const response = await axios.get(
@@ -110,7 +111,28 @@ export default function MainTimeline() {
       }
     };
 
+    // 내 프로필 조회 연동 (메인 타임라인 페이지 내)
+    const fetchProfile = async () => {
+      try {
+        const response = await axios.get(
+          `/api/v1/my-profile`,
+          {
+          headers: {
+            Accept: "*/*",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setProfile(response.data);
+        console.log("프로필 조회 완료", response);
+      } catch (error) {
+        console.log("프로필 조회 에러 발생:", error);
+        console.error("에러 상세:", error.response ? error.response.data : error.message);
+      }
+    };
+
     fetchMainTimelines();
+    fetchProfile();
   }, [token]);
 
   // 메인 타임라인 수정 버튼 (체크 버튼, 생성 버튼과 동일)
@@ -120,7 +142,6 @@ export default function MainTimeline() {
       console.error("타임라인 항목의 ID가 없습니다.");
       return;
     }
-
     // 메인 타임라인 수정 연동 (PUT, UPDATE)
     console.log(items);
     try {
@@ -157,7 +178,8 @@ export default function MainTimeline() {
         // border: "1px solid black"
       })}
     >
-      <MyProfile/>
+      {/*<MyProfile/>*/}
+      {profile && <MyProfile profile={profile} />} {/* 프로필 컴포넌트에 프로필 정보 전달 */}
       <div
         css={css({
           color: "#313131",

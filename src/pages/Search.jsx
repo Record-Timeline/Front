@@ -7,7 +7,7 @@ import ProfileInfo from "../components/main/ProfileInfo";
 import testProfileImg from "../assets/images/testProfileImg.png";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../utils/axiosInstance";
-
+import {CircularProgress} from "@mui/material";
 export default function Search() {
   const [searchKeyword, setSearchKeyword] = useState(""); // 검색어 상태
   const navigate = useNavigate();
@@ -155,12 +155,14 @@ export default function Search() {
             ))
           ) : (
             <div
-
               css={css`
-                    color: #CECECE;
-                    margin-top: 20px;
-                  `}            >추천 레코더를 불러오는 중 입니다</div>
-          )}
+                  color: #829FD7;
+                  margin-top: 40px;
+              `}
+            >
+            <CircularProgress  color="inherit"/>
+            </div>
+            )}
         </div>
       </div>
     </div>

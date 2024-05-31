@@ -1,19 +1,24 @@
 /** @jsxImportSource @emotion/react */
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {css} from "@emotion/react";
 import MyProfile from "../components/common/MyProfile";
 import CreateSubTimelinePost from "../components/subTimeline/CreateSubTimelinePost";
 import ReadSubTimelinePost from "../components/subTimeline/ReadSubTimelinePost";
 import SubTimelineItem from "../components/subTimeline/SubTimelineItem";
 import Button from "../components/common/Button";
+import axios from "axios";
 
 export default function SubTimeline() {
-  const [profile, setProfile] = useState(null);
+  const [profile, setProfile] = useState(null); // 프로필 상태 추가
   const [isDone, setIsDone] = useState(false); // 체크를 사용자가 직접 체크 안할 경우
   const [isChecked, setIsChecked] = useState(false); // 사용자가 직접 체크 할 경우
   const [isCreating, setIsCreating] = useState(false);
   const [editablePost, setEditablePost] = useState(null);
+
+  // 토큰 정보 받아오기
+  const token = localStorage.getItem("token");
+  console.log("토큰 확인:", token); // 토큰 확인을 위한 콘솔 로그 추가
 
   const handleCreateNew = () => {
     setEditablePost(null); // 새 포스트 작성을 위해 editablePost를 null로 설정
@@ -33,13 +38,37 @@ export default function SubTimeline() {
     setIsCreating(false);
   }
 
+  useEffect(() => {
+    // 내 프로필 조회 연동 (메인 타임라인 페이지 내)
+    const fetchProfile = async () => {
+      try {
+        const response = await axios.get(
+          `/api/v1/my-profile`,
+          {
+            headers: {
+              Accept: "*/*",
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          });
+        setProfile(response.data);
+        console.log("프로필 조회 완료", response);
+      } catch (error) {
+        console.log("프로필 조회 에러 발생:", error);
+        console.error("에러 상세:", error.response ? error.response.data : error.message);
+      }
+    };
+
+    fetchProfile();
+  }, [token]);
+
   return (
     <div
       css={css({
         marginBottom: "150px",
       })}
     >
-      <MyProfile/>
+      {profile && <MyProfile profile={profile} />} {/* 프로필 컴포넌트에 프로필 정보 전달 */}
       <div // 포스팅 박스 전체
         css={css({
           width: "760px",

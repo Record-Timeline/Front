@@ -113,6 +113,42 @@ export default function MainTimeline() {
     fetchMainTimelines();
   }, [token]);
 
+  // 메인 타임라인 수정 버튼 (체크 버튼, 생성 버튼과 동일)
+  const updateItem = async (index, data) => {
+    const itemId = items[index].data.id;
+    if (!itemId) {
+      console.error("타임라인 항목의 ID가 없습니다.");
+      return;
+    }
+
+    // 메인 타임라인 수정 연동 (PUT, UPDATE)
+    console.log(items);
+    try {
+      const response = await axios.put( // 서버에 put 요청 보냄
+        `/api/v1/main-timelines/${itemId}`,
+        {
+          title: data.title,
+          startDate: data.startDate,
+          endDate: data.endDate,
+        },
+        {
+          headers: {
+            Accept: "*/*",
+            "Content-Type": `application/json`,
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const newItems = items.slice();
+      newItems[index] = { type: "item", data: response.data };
+      setItems(newItems);
+      console.log("메인 타임라인 업데이트 완료", response);
+    } catch (error) {
+      console.log("업데이트 에러 발생:", error);
+      console.error("업데이트 에러 상세:", error.response ? error.response.data : error.message);
+    }
+  };
+
   return (
     <div
       css={css({
@@ -163,7 +199,8 @@ export default function MainTimeline() {
             />
           ) : (
             <MainTimelineInput
-              createMainTimeline={createMainTimeline} // 연동
+              createMainTimeline={createMainTimeline} // 생성 연동
+              updateItem={updateItem} // 수정 연동
               key={index}
               index={index}
               saveItem={saveItem}

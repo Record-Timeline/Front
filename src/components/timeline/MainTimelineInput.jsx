@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import {css} from "@emotion/react";
-import {FiLock, FiUnlock} from "react-icons/fi";
 import {FaRegTrashAlt} from "react-icons/fa";
 import AlertDialog from "../common/AlertDialog";
 import DatePickerValue from "../common/DatePickerValue";
@@ -15,7 +14,7 @@ import utc from 'dayjs/plugin/utc'; // UTC 플러그인 추가
 
 dayjs.extend(utc);
 
-function MainTimelineInput({ index, saveItem, initialData, onDelete, createMainTimeline }) {
+function MainTimelineInput({ index, saveItem, initialData, onDelete, createMainTimeline, updateItem }) {
   const [isChecked, setIsChecked] = useState(false);
   const [title, setTitle] = useState("");
   const [startDate, setStartDate] = useState(null);
@@ -38,7 +37,14 @@ function MainTimelineInput({ index, saveItem, initialData, onDelete, createMainT
         endDate: endDate ? dayjs(endDate).utc().format() : null, // UTC로 변환하여 저장 (날짜 하루 빨라지는 버그 땜에)
         title
       };
-      await createMainTimeline(data);
+
+
+      if (initialData.id) {
+        await updateItem(index, data); // 기존 항목 업데이트
+      } else {
+        await createMainTimeline(data); // 새 항목 생성
+      }
+
       saveItem(index, data);
     }
   };

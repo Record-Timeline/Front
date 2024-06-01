@@ -5,15 +5,17 @@ import { css } from "@emotion/react";
 import axiosInstance from "../utils/axiosInstance";
 import Input from "@mui/material/Input";
 import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import LogoutIcon from "@mui/icons-material/Logout";
+import OutlineButton from "../components/common/OutlineButton";
 
 export default function ModifyProfile() {
   const [nickname, setNickname] = useState("");
   const [nicknameDuplicationResponse, setNicknameDuplicationResponse] = useState("");
   const [nicknameDuplicationResult, setNicknameDuplicationResult] = useState(false);
   const [field, setField] = useState("");
+  const [email, setEmail] = useState("")
   const interestFields = [
     "마케팅/홍보/조사",
     "회계/세무/재무",
@@ -82,7 +84,8 @@ export default function ModifyProfile() {
     try {
       const response = await axiosInstance.get("/api/v1/my-profile");
       setNickname(response.data.nickname); // 현재 닉네임 설정
-      setField(categoryMap[response.data.interest])
+      setField(categoryMap[response.data.interest]) // 현재 관심분야 설정
+      setEmail(response.data.email)
     } catch (error) {
       console.error(error);
     }
@@ -190,6 +193,13 @@ export default function ModifyProfile() {
       >
         아이디(이메일)
       </div>
+      <div css={css`
+          color: #1F1F1F;
+          font-size: 22px;
+          margin-top: 10px;
+          font-weight: 400;
+     `}>{email}</div>
+
       <div
         css={css`
             color: #616161;
@@ -214,6 +224,7 @@ export default function ModifyProfile() {
           sx={{
             borderRadius: "15px",
             fontFamily: "Pretendard",
+            width: "300px"
           }}
         >
           <MenuItem value="">
@@ -255,6 +266,19 @@ export default function ModifyProfile() {
         >
           인증하고 비밀번호 변경하기
         </div>
+      </div>
+      <div css={css`
+            display: flex;
+          justify-content: center;
+          margin-top: auto;
+          
+        `}>
+      <OutlineButton margin="0px 0px 0px 5px" padding="12px 40px" fontSize="16px">
+        취소하기
+      </OutlineButton>
+      <OutlineButton color="#607FB9" border="1px #607FB9 solid" padding="12px 40px" fontSize="16px" margin="0px 0px 0px 5px">
+       변경하기
+      </OutlineButton>
       </div>
     </div>
   );

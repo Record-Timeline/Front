@@ -5,10 +5,13 @@ export default function OutlineButton({ onClick, children, ...props }) {
   return (
     <button
       css={css`
-        border: 1px solid #595959;
-        color: #595959;
+          color: ${props.color || "#595959"};
+          border: ${props.border || "1px solid #595959"};
+          margin: ${props.margin};
+          padding: ${props.padding || "6px 13px"} ;
+          font-size: ${props.fontSize || "13px"};
+          font-weight: 500;
         background-color: white;
-        padding: 6px 13px;
         border-radius: 24px;
         display: flex;
         justify-content: center;

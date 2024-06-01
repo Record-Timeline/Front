@@ -574,26 +574,14 @@ export default function NavigationBar() {
                     />
                     회원정보 수정
                   </OutlineButton>
-                  <div
-                    css={css({
-                      border: "1px solid #607FB9",
-                      color: "#607FB9",
-                      padding: "6px 13px",
-                      borderRadius: "24px",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      marginLeft: "7px",
-                      cursor: "pointer",
-                    })}
-                  >
+                  <OutlineButton color="#607FB9" border="1px #607FB9 solid" margin="0px 0px 0px 5px">
                     <LogoutIcon
                       style={{
                         marginRight: "4px",
                       }}
                     />
                     로그아웃
-                  </div>
+                  </OutlineButton>
                 </div>
               </div>
             </div></> :

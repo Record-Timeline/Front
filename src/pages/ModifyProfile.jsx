@@ -248,25 +248,7 @@ export default function ModifyProfile() {
         `}
       >
         비밀번호
-        <div
-          onClick={onClickPasswordChange}
-          css={css({
-            padding: "0px 15px",
-            marginLeft: "25px",
-            height: "35px",
-            backgroundColor: "#d9d9d9",
-            borderRadius: "15px",
-            color: "#3d3d3d",
-            fontSize: "15px",
-            textAlign: "center",
-            alignItems: "center",
-            display: "flex",
-            justifyContent: "center",
-            cursor: "pointer",
-          })}
-        >
-          인증하고 비밀번호 변경하기
-        </div>
+        <PasswordChangeModal  />
       </div>
       <div css={css`
             display: flex;
@@ -277,7 +259,13 @@ export default function ModifyProfile() {
       <OutlineButton margin="0px 0px 0px 5px" padding="12px 40px" fontSize="16px">
         취소하기
       </OutlineButton>
-      <PasswordChangeModal />
+        <OutlineButton color="#607FB9"
+                       border="1px #607FB9 solid"
+                       padding="12px 40px"
+                       fontSize="16px"
+                       margin="0px 0px 0px 15px">
+          변경하기
+        </OutlineButton>
       </div>
     </div>
   );

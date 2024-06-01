@@ -2,15 +2,20 @@
 
 import React, {useState} from "react";
 import {css} from "@emotion/react";
-import styled from 'styled-components';
 import {FiLock, FiUnlock} from "react-icons/fi";
 import {GoPencil} from "react-icons/go";
 import {FaRegTrashAlt} from "react-icons/fa";
 import AlertDialog from "../common/AlertDialog";
 import dayjs from 'dayjs';
+import { useNavigate } from 'react-router-dom';
 
-function MainTimelineItem({startDate, endDate, title, onEdit, onDelete}) {
+function MainTimelineItem({mainTimelineId, startDate, endDate, title, onEdit, onDelete, }) {
   const [isChecked, setIsChecked] = useState(false);
+  const navigate = useNavigate();
+
+  const handleTitleClick = () => {
+    navigate(`/subtimeline/${mainTimelineId}`, { state: { title } });
+  };
 
   return (
     <div // 회색 타임라인 박스
@@ -77,6 +82,7 @@ function MainTimelineItem({startDate, endDate, title, onEdit, onDelete}) {
         <FiUnlock/>
       </div>
       <div // 타임라인 제목
+        onClick={handleTitleClick} // 제목 클릭시 해당 서브 타임라인으로 이동
         css={css({
           flex: "1",
           fontSize: "16px",
@@ -87,6 +93,7 @@ function MainTimelineItem({startDate, endDate, title, onEdit, onDelete}) {
           lineHeight: "85px",
           marginLeft: "20px",
           display: "inline-block",
+          cursor: "pointer",
           // border: "1px solid black",
         })}
       >

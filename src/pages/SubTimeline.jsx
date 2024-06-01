@@ -1,20 +1,31 @@
 /** @jsxImportSource @emotion/react */
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {css} from "@emotion/react";
 import MyProfile from "../components/common/MyProfile";
 import CreateSubTimelinePost from "../components/subTimeline/CreateSubTimelinePost";
 import ReadSubTimelinePost from "../components/subTimeline/ReadSubTimelinePost";
 import SubTimelineItem from "../components/subTimeline/SubTimelineItem";
 import Button from "../components/common/Button";
+import axios from "axios";
+import {useParams, useLocation} from 'react-router-dom';
+import axiosInstance from "../utils/axiosInstance";
 
 export default function SubTimeline() {
+  const {mainTimelineid} = useParams(); // URL 파라미터로부터 id 받아오기
+  const location = useLocation(); // navigate의 state를 통해 메인 타임라인의 제목을 받아오기 위함
+  const { title } = location.state || { title: "메인 타임라인 제목" }; // state에서 title을 받아오거나 기본값 설정
+  const [profile, setProfile] = useState(null); // 프로필 상태 추가
   const [isDone, setIsDone] = useState(false); // 체크를 사용자가 직접 체크 안할 경우
   const [isChecked, setIsChecked] = useState(false); // 사용자가 직접 체크 할 경우
   const [isCreating, setIsCreating] = useState(true);
   const [editablePost, setEditablePost] = useState(null);
   const [subTimelineItems, setSubTimelineItems] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
+
+  // 토큰 정보 받아오기
+  const token = localStorage.getItem("token");
+  console.log("토큰 확인:", token); // 토큰 확인을 위한 콘솔 로그 추가
 
   const handleCreateNew = () => {
     setEditablePost(null); // 새 포스트 작성을 위해 editablePost를 null로 설정
@@ -64,13 +75,55 @@ export default function SubTimeline() {
     }
   };
 
+  useEffect(() => {
+    // 내 프로필 조회 연동 (메인 타임라인 페이지 내)
+    const fetchProfile = async () => {
+      try {
+        const response = await axios.get(
+          `/api/v1/my-profile`,
+          {
+            headers: {
+              Accept: "*/*",
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          });
+        setProfile(response.data);
+        console.log("프로필 조회 완료", response);
+      } catch (error) {
+        console.log("프로필 조회 에러 발생:", error);
+        console.error("에러 상세:", error.response ? error.response.data : error.message);
+      }
+    };
+
+    // 서브 타임라인 조회 연동
+    const fetchSubTimelines = async () => {
+      try {
+        const response = await axiosInstance.get(
+          `/api/v1/sub-timelines/main/${mainTimelineid}/ordered`, // 메인 타임라인 ID로 서브 타임라인 데이터 가져오기
+        );
+        setSubTimelineItems(response.data);
+        if (response.data.length > 0) {
+          setSelectedItem(response.data[0]);
+        }
+      } catch (error) {
+        console.error("서브 타임라인 조회 에러 발생:", error.response ? error.response.data : error.message);
+      }
+    };
+
+    fetchProfile();
+    fetchSubTimelines();
+  }, [token, mainTimelineid]); // id를 의존성 배열에 추가
+
+
+
   return (
     <div
       css={css({
         marginBottom: "150px",
       })}
     >
-      <MyProfile/>
+      {profile && <MyProfile profile={profile}/>} {/* 프로필 컴포넌트에 프로필 정보 전달 */}
       <div // 포스팅 박스 전체
         css={css({
           width: "760px",
@@ -120,7 +173,7 @@ export default function SubTimeline() {
             // border: "4px solid #f8f6f6",
           })}
         >
-          <h1>졸업 프로젝트 캡스톤 - 레코드 타임라인</h1>
+          <h1>{title}</h1> {/* 메인 타임라인 제목 */}
         </div>
         {subTimelineItems.map((item, index) => (
           <SubTimelineItem

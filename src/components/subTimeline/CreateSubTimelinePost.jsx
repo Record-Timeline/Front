@@ -170,7 +170,7 @@ export default function CreateSubTimelinePost({ post, onCancel, onSubmit }) {
           </div>
           {/*<PostEditor />*/}
           <PostEditor
-            placeholder={"서브 타임라인의 내용을 입력해주세요."}
+            placeholder={"서브 타임라인에 기록될 내용을 입력해주세요."}
             setHtmlContent={setContent} // 글 내용을 관리하는 상태 추가
             htmlContent={content} />
           <div

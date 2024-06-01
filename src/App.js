@@ -32,8 +32,8 @@ function App() {
         <Route path="/bookmark" element={<Bookmark />} /> {/* 북마크한 게시물 페이지 */}
         <Route path="/search" element={<Search />} /> {/* 검색 페이지 */}
         <Route path="/search/result/*" element={<SearchResult />} />
-        <Route path="/maintimeline" element={<MainTimeline />} /> {/* 메인 타임라인 페이지 */}
-        <Route path="/subtimeline" element={<SubTimeline />} /> {/* 서브 타임라인 페이지 */}
+        <Route path="/mytimeline" element={<MainTimeline />} /> {/* 메인 타임라인 페이지 */}
+        <Route path="/subtimeline/:mainTimelineId" element={<SubTimeline />} /> {/* 서브 타임라인 페이지 */}
         <Route path="/othersmain" element={<OthersMainTimeline />} /> {/* 다른 사람 메인 타임라인 페이지 */}
         <Route path="/otherssub" element={<OthersSubTimeline />} /> {/* 다른 사람 서브 타임라인 페이지 */}
       </Routes>

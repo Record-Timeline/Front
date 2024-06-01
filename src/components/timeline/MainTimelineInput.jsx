@@ -2,20 +2,19 @@
 
 import React, { useState, useEffect } from "react";
 import {css} from "@emotion/react";
-import {FiLock, FiUnlock} from "react-icons/fi";
-import {GoPencil} from "react-icons/go";
 import {FaRegTrashAlt} from "react-icons/fa";
 import AlertDialog from "../common/AlertDialog";
 import DatePickerValue from "../common/DatePickerValue";
-import SelectAutoWidth from "./SelectAutoWidth";
 import CustomizedSelects from "./CustomizedSelects"
 import Box from '@mui/material/Box';
 import Input from '@mui/material/Input';
 import {FaRegCircleCheck} from "react-icons/fa6";
 import dayjs from 'dayjs';
-import axios from "axios";
+import utc from 'dayjs/plugin/utc'; // UTC 플러그인 추가
 
-function MainTimelineInput({ index, saveItem, initialData, onDelete }) {
+dayjs.extend(utc);
+
+function MainTimelineInput({ index, saveItem, initialData, onDelete, createMainTimeline, updateItem }) {
   const [isChecked, setIsChecked] = useState(false);
   const [title, setTitle] = useState("");
   const [startDate, setStartDate] = useState(null);
@@ -28,11 +27,25 @@ function MainTimelineInput({ index, saveItem, initialData, onDelete }) {
     setEndDate(initialData.endDate ? dayjs(initialData.endDate) : null);
   }, [initialData]);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!startDate || !title) {
       setAlertOpen(true);
     } else {
-      saveItem(index, { startDate, endDate, title });
+      // const data = { startDate, endDate, title };
+      const data = {
+        startDate: dayjs(startDate).utc().format(), // UTC로 변환하여 저장 (날짜 하루 빨라지는 버그 땜에)
+        endDate: endDate ? dayjs(endDate).utc().format() : null, // UTC로 변환하여 저장 (날짜 하루 빨라지는 버그 땜에)
+        title
+      };
+
+
+      if (initialData.id) {
+        await updateItem(index, data); // 기존 항목 업데이트
+      } else {
+        await createMainTimeline(data); // 새 항목 생성
+      }
+
+      saveItem(index, data);
     }
   };
 
@@ -149,10 +162,8 @@ function MainTimelineInput({ index, saveItem, initialData, onDelete }) {
           />
         </Box>
       </div>
-      <div // 수정완료 (체크 아이콘)
-        onClick={() => {
-          handleSave();
-        }}
+      <div // 저장 버튼 (체크 아이콘)
+        onClick={handleSave}
         css={css({
           display: "flex",
           alignItems: "center",

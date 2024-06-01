@@ -90,11 +90,34 @@ export default function MainTimeline() {
   };
 
   useEffect(() => { // useEffect 사용해서 컴포넌트가 마운트 될 때 메인 타임라인을 서버에서 가져옴
-    // 메인 타임라인 조회 연동 (GET, READ)
-    const fetchMainTimelines = async () => {
+    // 내 프로필 조회 연동 (메인 타임라인 페이지 내)
+    const fetchProfile = async () => {
       try {
         const response = await axios.get(
-          `/api/v1/main-timelines/member/21`,
+          `/api/v1/my-profile`,
+          {
+            headers: {
+              Accept: "*/*",
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          });
+        setProfile(response.data);
+        console.log("프로필 조회 완료", response);
+
+        // 프로필 조회가 완료된 후 메인 타임라인 조회 호출
+        fetchMainTimelines(response.data.memberId);
+      } catch (error) {
+        console.log("프로필 조회 에러 발생:", error);
+        console.error("에러 상세:", error.response ? error.response.data : error.message);
+      }
+    };
+
+    // 메인 타임라인 조회 연동 (GET, READ)
+    const fetchMainTimelines = async (memberId) => {
+      try {
+        const response = await axios.get(
+          `/api/v1/main-timelines/member/${memberId}`,
           {
             headers: {
               Accept: "*/*",
@@ -111,27 +134,6 @@ export default function MainTimeline() {
       }
     };
 
-    // 내 프로필 조회 연동 (메인 타임라인 페이지 내)
-    const fetchProfile = async () => {
-      try {
-        const response = await axios.get(
-          `/api/v1/my-profile`,
-          {
-          headers: {
-            Accept: "*/*",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setProfile(response.data);
-        console.log("프로필 조회 완료", response);
-      } catch (error) {
-        console.log("프로필 조회 에러 발생:", error);
-        console.error("에러 상세:", error.response ? error.response.data : error.message);
-      }
-    };
-
-    fetchMainTimelines();
     fetchProfile();
   }, [token]);
 

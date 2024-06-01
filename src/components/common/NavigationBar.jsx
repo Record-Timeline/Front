@@ -20,8 +20,10 @@ import Alert from "@mui/material/Alert";
 import axios from "axios";
 import ProfileInfo from "../main/ProfileInfo";
 import axiosInstance from '../../utils/axiosInstance';
-
+import OutlineButton from "./OutlineButton";
+import { useNavigate } from "react-router-dom";
 export default function NavigationBar() {
+  const navigate = useNavigate();
   const [isExpanded, setIsExpanded] = useState(true); // 네비게이션 바 펼친 상태 & 접힌 상태
 
   const [isEditingIntroduction, setIsEditingIntroduction] = useState(false); // 소개글 수정중 상태
@@ -72,6 +74,10 @@ export default function NavigationBar() {
     setOpenIntroduceSnackbar(false);
   };
 
+  // 회원정보 수정 버튼
+  const handleClcikModifyProfile = () => {
+    navigate("/profile");
+  };
 
   // 네비게이션 바 토글
   const toggleNavigationBar = () => {
@@ -560,27 +566,14 @@ export default function NavigationBar() {
                     fontSize: "13px",
                   })}
                 >
-                  <Link
-                    to="/profile"
-                    css={css({
-                      border: "1px solid #595959",
-                      color: "#595959",
-                      padding: "6px 13px",
-                      borderRadius: "24px",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      cursor: "pointer",
-                      textDecoration: "none"
-                    })}
-                  >
+                  <OutlineButton onClick={handleClcikModifyProfile}>
                     <SettingsIcon
                       style={{
                         marginRight: "4px",
                       }}
                     />
                     회원정보 수정
-                  </Link>
+                  </OutlineButton>
                   <div
                     css={css({
                       border: "1px solid #607FB9",

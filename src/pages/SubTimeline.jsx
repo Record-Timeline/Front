@@ -12,9 +12,9 @@ import {useParams, useLocation} from 'react-router-dom';
 import axiosInstance from "../utils/axiosInstance";
 
 export default function SubTimeline() {
-  const {mainTimelineid} = useParams(); // URL 파라미터로부터 id 받아오기
+  const {mainTimelineId} = useParams(); // URL 파라미터로부터 id 받아오기
   const location = useLocation(); // navigate의 state를 통해 메인 타임라인의 제목을 받아오기 위함
-  const { title } = location.state || { title: "메인 타임라인 제목" }; // state에서 title을 받아오거나 기본값 설정
+  const {title} = location.state || {title: "메인 타임라인 제목"}; // state에서 title을 받아오거나 기본값 설정
   const [profile, setProfile] = useState(null); // 프로필 상태 추가
   const [isDone, setIsDone] = useState(false); // 체크를 사용자가 직접 체크 안할 경우
   const [isChecked, setIsChecked] = useState(false); // 사용자가 직접 체크 할 경우
@@ -41,7 +41,7 @@ export default function SubTimeline() {
     setIsCreating(false);
   }
 
-  const handleSubmit = (newItem) => {
+  const handleSubmit = async (newItem) => {
     if (editablePost) {
       // 수정 모드에서의 저장
       const updatedItems = subTimelineItems.map((item) =>
@@ -51,12 +51,32 @@ export default function SubTimeline() {
       setSelectedItem(newItem);
     } else {
       // 새 항목 추가
-      const updatedItems = [...subTimelineItems, newItem];
-      setSubTimelineItems(updatedItems);
-      setSelectedItem(newItem);
+      try{
+        const response = await axiosInstance.post(
+          `/api/v1/sub-timelines`,
+          {
+            mainTimelineId,
+            title: newItem.title,
+            startDate: newItem.startDate,
+            endDate: newItem.endDate,
+            content: newItem.content,
+          }
+        );
+
+        const createdItem = response.data;
+
+        setSubTimelineItems((prevItems) => [...prevItems, createdItem]);
+        setSelectedItem(createdItem);
+
+        console.log("서브 타임라인 생성 완료", response)
+        console.log("서브 타임라인 생성 완료", response.data)
+      } catch (error) {
+        console.log("서브 타임라인 생성 에러: ", error);
+        console.error("에러 상세:", error.response ? error.response.data : error.message);
+      }
     }
     setIsCreating(false);
-  }
+  };
 
   const handleSelectItem = (item) => {
     setSelectedItem(item);
@@ -76,7 +96,7 @@ export default function SubTimeline() {
   };
 
   useEffect(() => {
-    // 내 프로필 조회 연동 (메인 타임라인 페이지 내)
+    // 내 프로필 조회 연동
     const fetchProfile = async () => {
       try {
         const response = await axios.get(
@@ -100,12 +120,15 @@ export default function SubTimeline() {
     const fetchSubTimelines = async () => {
       try {
         const response = await axiosInstance.get(
-          `/api/v1/sub-timelines/main/${mainTimelineid}/ordered`, // 메인 타임라인 ID로 서브 타임라인 데이터 가져오기
+          `/api/v1/sub-timelines/main/${mainTimelineId}/ordered`, // 메인 타임라인 ID로 서브 타임라인 데이터 가져오기
         );
-        setSubTimelineItems(response.data);
-        if (response.data.length > 0) {
-          setSelectedItem(response.data[0]);
+        const data = response.data.subTimelines;
+        setSubTimelineItems(data);
+
+        if (data.length > 0) {
+          setSelectedItem(data[0]);
         }
+        console.log("서브 타임라인 조회 완료", response)
       } catch (error) {
         console.error("서브 타임라인 조회 에러 발생:", error.response ? error.response.data : error.message);
       }
@@ -113,9 +136,7 @@ export default function SubTimeline() {
 
     fetchProfile();
     fetchSubTimelines();
-  }, [token, mainTimelineid]); // id를 의존성 배열에 추가
-
-
+  }, [token, mainTimelineId]); // id를 의존성 배열에 추가
 
   return (
     <div

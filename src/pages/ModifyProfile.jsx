@@ -9,6 +9,7 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import LogoutIcon from "@mui/icons-material/Logout";
 import OutlineButton from "../components/common/OutlineButton";
+import PasswordChangeModal from "../components/profile/PasswordChangeModal";
 
 export default function ModifyProfile() {
   const [nickname, setNickname] = useState("");
@@ -276,9 +277,7 @@ export default function ModifyProfile() {
       <OutlineButton margin="0px 0px 0px 5px" padding="12px 40px" fontSize="16px">
         취소하기
       </OutlineButton>
-      <OutlineButton color="#607FB9" border="1px #607FB9 solid" padding="12px 40px" fontSize="16px" margin="0px 0px 0px 5px">
-       변경하기
-      </OutlineButton>
+      <PasswordChangeModal />
       </div>
     </div>
   );

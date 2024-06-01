@@ -95,10 +95,10 @@ export default function SubTimeline() {
         ) : (
           selectedItem && (
             <ReadSubTimelinePost
-            item={selectedItem}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
-          />
+              item={selectedItem}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+            />
           )
         )}
       </div>

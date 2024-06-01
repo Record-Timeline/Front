@@ -18,6 +18,7 @@ export default function CreateSubTimelinePost({ post, onCancel, onSubmit }) {
   const [endDate, setEndDate] = useState(null);
   const [title, setTitle] = useState("");
   const [isPublic, setIsPublic] = useState(false); // 공개 여부 관리
+  const [content, setContent] = useState(""); // 글 내용을 저장하는 상태
 
   // 수정 모드, 기존 정보 유지 (useEffect)
   useEffect(() => {
@@ -26,15 +27,18 @@ export default function CreateSubTimelinePost({ post, onCancel, onSubmit }) {
       setEndDate(post.endDate);
       setTitle(post.title);
       setIsPublic(post.isPublic);
+      setContent(post.content || ""); // 기존 글 내용도 설정
     }
   }, [post]);
 
+  // 작성한 서브 타임라인 저장
   const handleSave = () => {
     const newSubItem = {
       startDate,
       endDate,
       title,
-      isPublic
+      isPublic,
+      content, // 글 내용을 함께 저장
     };
     onSubmit(newSubItem);
   };
@@ -164,7 +168,11 @@ export default function CreateSubTimelinePost({ post, onCancel, onSubmit }) {
               </div>
             </div>
           </div>
-          <PostEditor/>
+          {/*<PostEditor />*/}
+          <PostEditor
+            placeholder={"서브 타임라인의 내용을 입력해주세요."}
+            setHtmlContent={setContent} // 글 내용을 관리하는 상태 추가
+            htmlContent={content} />
           <div
             css={css({
               textAlign: "center",

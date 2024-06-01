@@ -560,7 +560,8 @@ export default function NavigationBar() {
                     fontSize: "13px",
                   })}
                 >
-                  <div
+                  <Link
+                    to="/profile"
                     css={css({
                       border: "1px solid #595959",
                       color: "#595959",
@@ -570,6 +571,7 @@ export default function NavigationBar() {
                       justifyContent: "center",
                       alignItems: "center",
                       cursor: "pointer",
+                      textDecoration: "none"
                     })}
                   >
                     <SettingsIcon
@@ -578,7 +580,7 @@ export default function NavigationBar() {
                       }}
                     />
                     회원정보 수정
-                  </div>
+                  </Link>
                   <div
                     css={css({
                       border: "1px solid #607FB9",

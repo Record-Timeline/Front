@@ -11,6 +11,7 @@ import SearchResult from "./pages/SearchResult";
 import SubTimeline from "./pages/SubTimeline";
 import OthersMainTimeline from "./pages/OthersMainTimeline";
 import OthersSubTimeline from "./pages/OthersSubTimeline";
+import ModifyProfile from "./pages/ModifyProfile";
 import { CssBaseline } from "@mui/material";
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         <Route path="/login" element={<Login />} /> {/* 로그인 페이지 */}
         <Route path="/signup" element={<SignUp />} /> {/* 회원가입 페이지 */}
         <Route path="/signup/complete" element={<SignUpComplete />} /> {/* 회원가입 완료 페이지 */}
+        <Route path="/profile" element={<ModifyProfile />} /> {/* 회원가입 페이지 */}
         <Route path="/bookmark" element={<Bookmark />} /> {/* 북마크한 게시물 페이지 */}
         <Route path="/search" element={<Search />} /> {/* 검색 페이지 */}
         <Route path="/search/result/*" element={<SearchResult />} />

@@ -51,7 +51,8 @@ export default function SubTimeline() {
       setSelectedItem(newItem);
     } else {
       // 새 항목 추가
-      try{
+      // 서브 타임라인 생성 연동
+      try {
         const response = await axiosInstance.post(
           `/api/v1/sub-timelines`,
           {
@@ -82,17 +83,36 @@ export default function SubTimeline() {
     setSelectedItem(item);
   };
 
-  const handleDelete = (item) => {
-    const itemIndex = subTimelineItems.findIndex(subItem => subItem === item);
-    const updatedItems = subTimelineItems.filter((subItem) => subItem !== item);
-    setSubTimelineItems(updatedItems);
-    if (updatedItems.length > 0) {
-      const newSelectedItem = itemIndex > 0 ? updatedItems[itemIndex - 1] : updatedItems[0];
-      setSelectedItem(newSelectedItem);
-    } else {
-      setSelectedItem(null);
-      setIsCreating(true);
+  const handleDelete = async (item) => {
+    // 서브 타임라인 삭제 연동
+    try {
+      await axiosInstance.delete(`/api/v1/sub-timelines/${item.id}`);
+      const itemIndex = subTimelineItems.findIndex(subItem => subItem === item)
+      const updatedItems = subTimelineItems.filter((subItem) => subItem !== item);
+      setSubTimelineItems(updatedItems);
+      if (updatedItems.length > 0) {
+        const newSelectedItem = itemIndex > 0 ? updatedItems[itemIndex - 1] : updatedItems[0];
+        setSelectedItem(newSelectedItem);
+      } else {
+        setSelectedItem(null);
+        setIsCreating(true);
+      }
+      console.log("서브 타임라인 삭제 완료");
+      console.log(subTimelineItems);
+    } catch (error) {
+      console.error("서브 타임라인 삭제 에러 발생:", error.response ? error.response.data : error.message);
     }
+
+    // const itemIndex = subTimelineItems.findIndex(subItem => subItem === item);
+    // const updatedItems = subTimelineItems.filter((subItem) => subItem !== item);
+    // setSubTimelineItems(updatedItems);
+    // if (updatedItems.length > 0) {
+    //   const newSelectedItem = itemIndex > 0 ? updatedItems[itemIndex - 1] : updatedItems[0];
+    //   setSelectedItem(newSelectedItem);
+    // } else {
+    //   setSelectedItem(null);
+    //   setIsCreating(true);
+    // }
   };
 
   useEffect(() => {

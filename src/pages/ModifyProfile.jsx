@@ -1,16 +1,19 @@
 /** @jsxImportSource @emotion/react */
 
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { css } from "@emotion/react";
 import axiosInstance from "../utils/axiosInstance";
-import Input from '@mui/material/Input';
-import FormControl from '@mui/material/FormControl';
+import Input from "@mui/material/Input";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 
 export default function ModifyProfile() {
   const [nickname, setNickname] = useState("");
-const [nicknameDuplicationResponse, setNicknameDuplicationResponse] = useState("");
+  const [nicknameDuplicationResponse, setNicknameDuplicationResponse] = useState("");
   const [nicknameDuplicationResult, setNicknameDuplicationResult] = useState(false);
-
+  const [field, setField] = useState("");
   const interestFields = [
     "마케팅/홍보/조사",
     "회계/세무/재무",
@@ -23,20 +26,21 @@ const [nicknameDuplicationResponse, setNicknameDuplicationResponse] = useState("
     "교육",
     "미디어/문화/스포츠",
   ];
-  const interestMapping = {
-    "마케팅/홍보/조사": "Marketing_Promotion",
-    "회계/세무/재무": "Accounting_Tax_Finance",
-    "총무/법무/사무": "GeneralAffairs_LegalAffairs_Affairs",
-    "IT개발/데이터": "IT_Data",
-    "디자인": "Design",
-    "서비스": "Service",
-    "건설/건축": "Construction_Architecture",
-    "의료": "MedicalCare",
-    "교육": "Education",
-    "미디어/문화/스포츠": "Media_Culture_Sports",
+  const categoryMap = {
+    "Marketing_Promotion": "마케팅/홍보/조사",
+    "Accounting_Tax_Finance": "회계/세무/재무",
+    "GeneralAffairs_LegalAffairs_Affairs": "총무/법무/사무",
+    "IT_Data": "IT개발/데이터",
+    "Design": "디자인",
+    "Service": "서비스",
+    "Construction_Architecture": "건설/건축",
+    "MedicalCare": "의료",
+    "Education": "교육",
+    "Media_Culture_Sports": "미디어/문화/스포츠",
   };
 
-// 닉네임 중복확인 버튼
+
+  // 닉네임 중복확인 버튼
   const duplicateNicknameCheck = async () => {
     // 닉네임을 입력하지 않은 경우
     if (nickname.trim() === "") {
@@ -68,21 +72,34 @@ const [nicknameDuplicationResponse, setNicknameDuplicationResponse] = useState("
     }
   };
 
+  // 비밀번호 변경하기 버튼
+  const onClickPasswordChange = async () => {
+    console.log("비밀번호 변경");
+  };
 
-  // 추천 레코더 데이터 연동
-  const fetchRecorderData = async () => {
+  // 현재 닉네임, 관심분야 불러오기
+  const fetchProfileData = async () => {
     try {
-      //const response = await axiosInstance.get(`/api/v1/main/member/${englishInterest}`);
-      // setRecorderData(response.data);
-      //console.log(response.data);
+      const response = await axiosInstance.get("/api/v1/my-profile");
+      setNickname(response.data.nickname); // 현재 닉네임 설정
+      setField(categoryMap[response.data.interest])
     } catch (error) {
       console.error(error);
     }
   };
 
+  useEffect(() => {
+    fetchProfileData();
+  }, []);
+
   // 닉네임 입력 값 업데이트
   const handleNicknameChange = (e) => {
     setNickname(e.target.value);
+  };
+
+  // 분야 업데이트
+  const handleFieldChange = (event) => {
+    setField(event.target.value || "");
   };
 
   return (
@@ -120,10 +137,9 @@ const [nicknameDuplicationResponse, setNicknameDuplicationResponse] = useState("
         label="nickname"
         variant="outlined"
         sx={{
-            height: '50px',
+          height: "50px",
           fontSize: "18px",
-          fontFamily: "Pretendard"
-
+          fontFamily: "Pretendard",
         }}
         startAdornment={
           <div
@@ -155,7 +171,7 @@ const [nicknameDuplicationResponse, setNicknameDuplicationResponse] = useState("
             color:
               nicknameDuplicationResponse.code === "SU"
                 ? "#0a8425"
-                : "#f44336", // 코드가 SU이면 빨간색, 아니면 초록색
+                : "#f44336", // 코드가 SU이면 초록색, 아니면 빨간색
             margin: "8px 0px 0px 0px",
           })}
         >
@@ -182,7 +198,63 @@ const [nicknameDuplicationResponse, setNicknameDuplicationResponse] = useState("
             margin-top: 40px;
         `}
       >
-        전화번호
+        관심 분야
+      </div>
+      <FormControl
+        sx={{
+          minWidth: 380,
+          marginTop: "15px",
+        }}
+      >
+        <Select
+          value={field}
+          onChange={handleFieldChange}
+          displayEmpty
+          inputProps={{ "aria-label": "Without label" }}
+          sx={{
+            borderRadius: "15px",
+            fontFamily: "Pretendard",
+          }}
+        >
+          <MenuItem value="">
+            <em>관심분야/직종 선택</em>
+          </MenuItem>
+          {interestFields.map((field, index) => (
+            <MenuItem key={index} value={field}>
+              {field}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      <div
+        css={css`
+            display: flex;
+            margin-top: 40px;
+            color: #616161;
+            font-size: 20px;
+            font-weight: 500;
+        `}
+      >
+        비밀번호
+        <div
+          onClick={onClickPasswordChange}
+          css={css({
+            padding: "0px 15px",
+            marginLeft: "25px",
+            height: "35px",
+            backgroundColor: "#d9d9d9",
+            borderRadius: "15px",
+            color: "#3d3d3d",
+            fontSize: "15px",
+            textAlign: "center",
+            alignItems: "center",
+            display: "flex",
+            justifyContent: "center",
+            cursor: "pointer",
+          })}
+        >
+          인증하고 비밀번호 변경하기
+        </div>
       </div>
     </div>
   );

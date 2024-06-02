@@ -60,7 +60,9 @@ export default function SearchPostBox({
     <img src={profileImg} alt="프로필 이미지"            
         css={css`
             width: 100px;
-            height: fit-content;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
         `}/>
     </div>
   );

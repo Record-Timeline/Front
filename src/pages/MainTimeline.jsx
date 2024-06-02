@@ -10,6 +10,7 @@ import Button from "../components/common/Button";
 export default function MainTimeline() {
     // MainTimelineInput 컴포넌트들을 관리할 상태 생성
     const [inputs, setInputs] = useState([]);
+    console.log(localStorage.getItem("token"))
 
     // 새 MainTimelineInput 컴포넌트를 추가하는 함수
     const addInput = () => {

@@ -116,6 +116,7 @@ export default function NavigationBar() {
         setOpenIntroduceSnackbar(true);
         setIsEditingIntroduction(false);
       }
+      fetchProfileInfo()
     } catch (error) {
       console.error(error);
     }

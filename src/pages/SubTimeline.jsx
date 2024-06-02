@@ -46,11 +46,29 @@ export default function SubTimeline() {
   const handleSubmit = async (newItem) => {
     if (editablePost) {
       // 수정 모드에서의 저장
-      const updatedItems = subTimelineItems.map((item) =>
-        item === editablePost ? newItem : item
-      );
-      setSubTimelineItems(updatedItems);
-      setSelectedItem(newItem);
+      // 서브 타임라인 수정 연동
+      try {
+        const response = await axiosInstance.put(
+          `/api/v1/sub-timelines/${editablePost.id}`,
+          {
+            title: newItem.title,
+            startDate: newItem.startDate,
+            endDate: newItem.endDate,
+            content: newItem.content,
+          }
+        );
+        const updatedItems = subTimelineItems.map((item) =>
+          item === editablePost ? newItem : item
+        );
+        setSubTimelineItems(updatedItems);
+        setSelectedItem(newItem);
+
+        console.log("서브 타임라인 수정 완료", response.data)
+        console.log(subTimelineItems);
+      } catch (error) {
+        console.log("서브 타임라인 수정 에러: ", error);
+        console.error("에러 상세:", error.response ? error.response.data : error.message);
+      }
     } else {
       // 새 항목 추가
       // 서브 타임라인 생성 연동

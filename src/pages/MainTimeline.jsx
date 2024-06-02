@@ -224,7 +224,8 @@ export default function MainTimeline() {
             />
           ) : (
             <MainTimelineInput
-              createMainTimeline={createMainTimeline} // 연동
+              createMainTimeline={createMainTimeline} // 생성 연동
+              updateItem={updateItem} // 수정 연동
               key={index}
               index={index}
               saveItem={saveItem}

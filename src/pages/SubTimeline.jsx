@@ -14,7 +14,9 @@ import axiosInstance from "../utils/axiosInstance";
 export default function SubTimeline() {
   const {mainTimelineId} = useParams(); // URL 파라미터로부터 id 받아오기
   const location = useLocation(); // navigate의 state를 통해 메인 타임라인의 제목을 받아오기 위함
-  const {title} = location.state || {title: "메인 타임라인 제목"}; // state에서 title을 받아오거나 기본값 설정
+
+  const sessionTitle = sessionStorage.getItem('mainTimelineTitle'); // sessionStorage에서 title 가져오기
+  const [title, setTitle] = useState(sessionTitle || "메인 타임라인 제목");
   const [profile, setProfile] = useState(null); // 프로필 상태 추가
   const [isDone, setIsDone] = useState(false); // 체크를 사용자가 직접 체크 안할 경우
   const [isChecked, setIsChecked] = useState(false); // 사용자가 직접 체크 할 경우
@@ -102,17 +104,6 @@ export default function SubTimeline() {
     } catch (error) {
       console.error("서브 타임라인 삭제 에러 발생:", error.response ? error.response.data : error.message);
     }
-
-    // const itemIndex = subTimelineItems.findIndex(subItem => subItem === item);
-    // const updatedItems = subTimelineItems.filter((subItem) => subItem !== item);
-    // setSubTimelineItems(updatedItems);
-    // if (updatedItems.length > 0) {
-    //   const newSelectedItem = itemIndex > 0 ? updatedItems[itemIndex - 1] : updatedItems[0];
-    //   setSelectedItem(newSelectedItem);
-    // } else {
-    //   setSelectedItem(null);
-    //   setIsCreating(true);
-    // }
   };
 
   useEffect(() => {
@@ -147,6 +138,7 @@ export default function SubTimeline() {
 
         if (data.length > 0) {
           setSelectedItem(data[0]);
+          setIsCreating(false);
         }
         console.log("서브 타임라인 조회 완료", response)
       } catch (error) {
@@ -156,7 +148,13 @@ export default function SubTimeline() {
 
     fetchProfile();
     fetchSubTimelines();
-  }, [token, mainTimelineId]); // id를 의존성 배열에 추가
+
+    // 메인 타임라인에서 가져온 title 상태 설정 및 sessionStorage에 저장 (유지되도록)
+    if (location.state && location.state.title) {
+      setTitle(location.state.title);
+      sessionStorage.setItem('mainTimelineTitle', location.state.title);
+    }
+  }, [token, mainTimelineId, location.state]); // id와 location.state를 의존성 배열에 추가
 
   return (
     <div

@@ -66,13 +66,12 @@ export default function SubTimeline() {
           }
         );
 
-        const createdItem = response.data;
+        const updatedItems = [...subTimelineItems, newItem];
+        setSubTimelineItems(updatedItems);
+        setSelectedItem(newItem);
 
-        setSubTimelineItems((prevItems) => [...prevItems, createdItem]);
-        setSelectedItem(createdItem);
-
-        console.log("서브 타임라인 생성 완료", response)
         console.log("서브 타임라인 생성 완료", response.data)
+        console.log(subTimelineItems);
       } catch (error) {
         console.log("서브 타임라인 생성 에러: ", error);
         console.error("에러 상세:", error.response ? error.response.data : error.message);

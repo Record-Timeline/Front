@@ -50,6 +50,10 @@ export default function Search() {
   const handleSearch = () => {
     navigate(`/search/result?keyword=${searchKeyword}`);
   };
+// 레코더 클릭 시
+  const onClickRecorder = (userId) => {
+    window.location.href = `/othersmain/${userId}`;
+  };
 
   return (
     <div
@@ -136,7 +140,9 @@ export default function Search() {
                   display: flex;
                   flex-direction: column;
                   align-items: center;
+                    cursor: pointer;
                 `}
+                onClick={() => onClickRecorder(user.id)}
               >
                 <ProfileInfo
                   profileImgSrc={user.profileImageUrl || testProfileImg}

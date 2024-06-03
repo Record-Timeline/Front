@@ -82,6 +82,7 @@ export default function OthersMainTimeline() {
         {items.map((item, index) => (
           <OthersTimelineItem
             key={index}
+            memberId={profile && profile.memberId}
             mainTimelineId={item.data.id}
             startDate={item.data.startDate}
             endDate={item.data.endDate}

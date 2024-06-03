@@ -35,7 +35,7 @@ function App() {
         <Route path="/mytimeline" element={<MainTimeline />} /> {/* 메인 타임라인 페이지 */}
         <Route path="/subtimeline/:mainTimelineId" element={<SubTimeline />} /> {/* 서브 타임라인 페이지 */}
         <Route path="/othersmain/:memberId" element={<OthersMainTimeline />} /> {/* 다른 사람 메인 타임라인 페이지 */}
-        <Route path="/otherssub/:mainTimelineId" element={<OthersSubTimeline />} /> {/* 다른 사람 서브 타임라인 페이지 */}
+        <Route path="/otherssub/:memberId/:mainTimelineId" element={<OthersSubTimeline />} /> {/* 다른 사람 서브 타임라인 페이지 */}
       </Routes>
     </div>
   );

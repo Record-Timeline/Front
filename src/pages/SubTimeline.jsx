@@ -18,6 +18,7 @@ export default function SubTimeline() {
   const sessionTitle = sessionStorage.getItem('mainTimelineTitle'); // sessionStorage에서 title 가져오기
   const [title, setTitle] = useState(sessionTitle || "메인 타임라인 제목");
   const [profile, setProfile] = useState(null); // 프로필 상태 추가
+
   const [isDone, setIsDone] = useState(false); // 체크를 사용자가 직접 체크 안할 경우
   const [isChecked, setIsChecked] = useState(false); // 사용자가 직접 체크 할 경우
   const [isCreating, setIsCreating] = useState(false);

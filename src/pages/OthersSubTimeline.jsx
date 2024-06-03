@@ -1,13 +1,38 @@
 /** @jsxImportSource @emotion/react */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { css } from "@emotion/react";
 import OthersProfile from "../components/common/OthersProfile";
 import OthersSubTimelinePost from "../components/othersTimeline/OthersSubTimelinePost";
 import OthersSubTimelineItem from "../components/othersTimeline/OthersSubTimelineItem";
+import {useLocation, useParams} from "react-router-dom";
+import axiosInstance from "../utils/axiosInstance";
 
 export default function OthersSubTimeline() {
-    const [isDone, setIsDone] = useState(false);
+  const {memberId, mainTimelineId} = useParams(); // URL 파라미터로부터 id 받아오기
+  const location = useLocation(); // navigate의 state를 통해 메인 타임라인의 제목을 받아오기 위함
+
+  const sessionTitle = sessionStorage.getItem('mainTimelineTitle'); // sessionStorage에서 title 가져오기
+  const [title, setTitle] = useState(sessionTitle || "메인 타임라인 제목");
+  const [profile, setProfile] = useState(null); // 프로필 상태 추가
+
+  const [isDone, setIsDone] = useState(false);
+
+  // 다른 사용자 프로필 조회 연동
+  useEffect(() => {
+    const fetchOthersProfiles = async () => {
+      try {
+        const response = await axiosInstance.get(`/api/v1/profile/${memberId}`);
+        setProfile(response.data);
+        console.log("다른 사용자 프로필 조회 완료", response);
+      } catch (error) {
+        console.log("다른 사용자 프로필 조회 실패: ", error);
+        console.error("에러 상세:", error.response ? error.response.data : error.message);
+      }
+    };
+
+    fetchOthersProfiles();
+  }, []);
 
     return (
         <div
@@ -15,7 +40,7 @@ export default function OthersSubTimeline() {
                marginBottom: "150px",
             })}
         >
-            <OthersProfile />
+          {profile && <OthersProfile profile={profile}/>} {/* 프로필 컴포넌트에 프로필 정보 전달 */}
             <div // 포스팅 박스 전체
                 css={css({
                     width: "760px",

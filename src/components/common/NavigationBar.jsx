@@ -33,6 +33,7 @@ export default function NavigationBar() {
 
   const [openProfileSnackbar, setOpenProfileSnackbar] = useState(false);
   const [openIntroduceSnackbar, setOpenIntroduceSnackbar] = useState(false);
+  const [openLogoutSnackbar, setOpenLogoutSnackbar] = useState(false);
 
   const [profileImage, setProfileImage] = useState(); // 프로필 이미지
   const [profileThumbnail, setProfileThumbnail] = useState() // 프로필 이미지 썸네일
@@ -73,6 +74,14 @@ export default function NavigationBar() {
     setOpenIntroduceSnackbar(false);
   };
 
+  const handleCloseLogoutSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenLogoutSnackbar(false);
+  };
+
+
   // 로고 클릭 시 메인페이지로 이동
   const toggleNavigationBar = () => {
     setIsExpanded(!isExpanded);
@@ -82,6 +91,7 @@ export default function NavigationBar() {
   const onClickLogoImg = () => {
     navigate("/")
   };
+
   // 소개글 수정 토글
   const toggleEditIntroduction = () => {
     setIsEditingIntroduction(!isEditingIntroduction);
@@ -190,6 +200,14 @@ export default function NavigationBar() {
   useEffect(() => {
     fetchProfileInfo();
   }, []);
+
+  // 로그아웃
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setOpenLogoutSnackbar(true);
+  };
+
+
   return (
     <div
       css={css`
@@ -588,6 +606,7 @@ export default function NavigationBar() {
                     회원정보 수정
                   </div>
                   <div
+                    onClick={handleLogout}
                     css={css({
                       border: "1px solid #607FB9",
                       color: "#607FB9",
@@ -688,6 +707,17 @@ export default function NavigationBar() {
           sx={{ width: '100%' }}
         >
           소개글이 수정되었습니다
+        </Alert>
+      </Snackbar>
+
+      <Snackbar open={openLogoutSnackbar} autoHideDuration={3000} onClose={handleCloseLogoutSnackbar} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+        <Alert
+          onClose={handleCloseLogoutSnackbar}
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          로그아웃 되었습니다.
         </Alert>
       </Snackbar>
     </div>

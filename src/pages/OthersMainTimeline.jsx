@@ -66,7 +66,7 @@ export default function OthersMainTimeline() {
         {profile && profile.nickname} 님의 Timeline
       </div>
       <div
-        css={css({ // 주석 --> 타임라인 간의 선
+        css={css({ // 타임라인 간의 선
           position: "relative", // 상대적 위치 설정
           '&::after': { // 타임라인 아이템들 사이에 선 추가
             content: '""',

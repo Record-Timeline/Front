@@ -13,12 +13,15 @@ export default function Search() {
   const navigate = useNavigate();
   const [interest, setInterest] = useState(null); // 연동에 사용할 영문 관심분야
   const [recorderData, setRecorderData] = useState(null);
-
+  const [ noneRecommendation, setNoneRecommendation] = useState(false);
   // default 관심 분야 가져오기
   const fetchInterest = async () => {
     try {
       const response = await axiosInstance.get("/api/v1/my-profile");
       setInterest(response.data.interest);
+      if (response.data.errorCode === "USER_4041"){
+        setNoneRecommendation(true);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -109,21 +112,42 @@ export default function Search() {
             onClick={handleSearch}
           />
         </div>
-        <div
-          css={css`
-            color: #6b6b6b;
-            font-size: 24px;
-            font-weight: 400;
-            margin-top: 70px;
+        {noneRecommendation ? <div css={css`
+                    height: 400px;
+          `}>
+            <div
+              css={css`
+                  color: #6b6b6b;
+                  font-size: 24px;
+                  font-weight: 400;
+                  margin-top: 70px;
 
-            > span {
-              color: #6089b9;
-              font-weight: 600;
-            }
-          `}
-        >
-          관심 분야 / 직종이 비슷한 레코더들의 <span>타임라인</span>을
-          둘러보세요.
+                  > span {
+                      color: #6089b9;
+                      font-weight: 600;
+                  }
+              `}
+            >
+              로그인 후 내 <span>관심 분야</span>에 맞는 사용자를 추천받아보세요!
+            </div>
+
+          </div> :
+          <>
+            <div
+              css={css`
+                  color: #6b6b6b;
+                  font-size: 24px;
+                  font-weight: 400;
+                  margin-top: 70px;
+
+                  > span {
+                      color: #6089b9;
+                      font-weight: 600;
+                  }
+              `}
+            >
+              관심 분야 / 직종이 비슷한 레코더들의 <span>타임라인</span>을
+              둘러보세요.
         </div>
         <div
           css={css`
@@ -170,6 +194,7 @@ export default function Search() {
             </div>
             )}
         </div>
+        </>}
       </div>
     </div>
   );

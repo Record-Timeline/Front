@@ -11,10 +11,11 @@ import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
+import dayjs from "dayjs";
 
 const label = {inputProps: {'aria-label': 'Checkbox demo'}};
 
-export default function OthersSubTimelinePost({isDone}) {
+export default function OthersSubTimelinePost({item, isDone}) {
   const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [like, setLike] = useState(204); // 좋아요 수 임의로 설정
@@ -85,7 +86,7 @@ export default function OthersSubTimelinePost({isDone}) {
             // border: "1px solid black",
           })}
         >
-          2024.01.16 ~ 2024.04.02
+          {dayjs(item.startDate).format('YYYY.MM.DD')} ~ {item.endDate ? dayjs(item.endDate).format('YYYY.MM.DD') : '진행중'}
         </div>
         <div // 타임라인 제목
           css={css({
@@ -100,13 +101,13 @@ export default function OthersSubTimelinePost({isDone}) {
             // border: "1px solid black",
           })}
         >
-          졸업 프로젝트 - 캡스톤
+          {item.title}
         </div>
       </div>
       <div // 텍스트 나오는 박스
         css={css({
           width: "680px",
-          height: "500px",
+          height: "600px",
           background: "#f8f6f6",
           borderRadius: "30px",
           boxShadow: "0 0 8px 0 rgba(0, 0, 0, 0.04)",
@@ -116,45 +117,14 @@ export default function OthersSubTimelinePost({isDone}) {
       >
         <div
           css={css({
-            height: "550px",
+            height: "580px",
             fontSize: "15px",
             color: "#525252",
             padding: "50px",
-            // overflowY: "scroll",
+            overflowY: "scroll",
           })}
-        >
-          프로젝트 기획이란 프로젝트의 범위, 목표, 결과물, 일정, 필요한 자원, 위험을 설명하는 상세한 로드맵을 수립하는 것을 의미합니다. 프로젝트 기획은 프로젝트의 전반적인 목표, 주요
-          이정표, 개별적인 작업에 대한 명확한 그림을 제공한다는 점에서 중요합니다.<br/>
-          <br/>
-          1단계: 프로젝트의 범위 설정<br/>
-          이 단계에서는 프로젝트의 경계, 즉, 프로젝트에 포함되는 것과 포함되지 않는 것을 파악하기만 하면 됩니다. 그리고 어떤 목표를 달성해야 프로젝트가 성공적이었다고 말할 수 있는지를 생각해봐야 하죠.
-          수익 또는 고객 만족도 상승, 매출 또는 고객 기반 성장, 비용 절감 등이 그 예가 될 수 있습니다. 목표는 프로젝트의 결과물과 작업을 정하는 데도 도움이 됩니다.
-          이 단계는 기획의 토대를 마련한다는 점에서 중요합니다. 또한, 프로젝트에 관한 큰 그림을 제공함으로써 팀 전체의 의욕을 높여주기도 하죠.<br/>
-          <br/>
-          2단계: 성공 측정 방식 설정<br/>
-          3단계: 프로젝트를 작은 단위의 작업으로 분류<br/>
-          4단계: 프로젝트 일정 수립<br/>
-          5단계: 자원과 예산 배정<br/>
-          6단계: 위험 식별<br/>
-          ...
-
-          {/*<br/><br/>*/} {/* 글 나오는 화면 바꾸기 예시 */}
-
-          {/*프로젝트 기획이란 프로젝트의 범위, 목표, 결과물, 일정, 필요한 자원, 위험을 설명하는 상세한 로드맵을 수립하는 것을 의미합니다. 프로젝트 기획은 프로젝트의 전반적인 목표, 주요*/}
-          {/*이정표, 개별적인 작업에 대한 명확한 그림을 제공한다는 점에서 중요합니다.<br/>*/}
-          {/*<br/>*/}
-          {/*1단계: 프로젝트의 범위 설정<br/>*/}
-          {/*이 단계에서는 프로젝트의 경계, 즉, 프로젝트에 포함되는 것과 포함되지 않는 것을 파악하기만 하면 됩니다. 그리고 어떤 목표를 달성해야 프로젝트가 성공적이었다고 말할 수 있는지를 생각해봐야 하죠.*/}
-          {/*수익 또는 고객 만족도 상승, 매출 또는 고객 기반 성장, 비용 절감 등이 그 예가 될 수 있습니다. 목표는 프로젝트의 결과물과 작업을 정하는 데도 도움이 됩니다.*/}
-          {/*이 단계는 기획의 토대를 마련한다는 점에서 중요합니다. 또한, 프로젝트에 관한 큰 그림을 제공함으로써 팀 전체의 의욕을 높여주기도 하죠.<br/>*/}
-          {/*<br/>*/}
-          {/*2단계: 성공 측정 방식 설정<br/>*/}
-          {/*3단계: 프로젝트를 작은 단위의 작업으로 분류<br/>*/}
-          {/*4단계: 프로젝트 일정 수립<br/>*/}
-          {/*5단계: 자원과 예산 배정<br/>*/}
-          {/*6단계: 위험 식별<br/>*/}
-          {/*...*/}
-        </div>
+          dangerouslySetInnerHTML={{ __html: item.content }} // 저장된 글 내용을 표시
+        />
       </div>
       <div // 좋아요, 북마크 감싸는 div
         css={css({

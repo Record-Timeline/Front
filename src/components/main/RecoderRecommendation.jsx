@@ -5,6 +5,11 @@ import { css } from "@emotion/react";
 import ProfileInfo from "./ProfileInfo";
 
 export default function RecoderRecommendation({ recorderData }) {
+  // 레코더 클릭 시
+  const onClickRecorder = (userId) => {
+    window.location.href = `/othersmain/${userId}`;
+  };
+
   return (
     <div
       css={css`
@@ -17,8 +22,9 @@ export default function RecoderRecommendation({ recorderData }) {
           <div
             key={index}
             css={css`
+                cursor: pointer;
               margin: 50px 0px 80px 0px;
-                width: 200px;
+              width: 200px;
               padding: 0px 15px;
               display: flex;
               flex-direction: column;
@@ -27,6 +33,7 @@ export default function RecoderRecommendation({ recorderData }) {
               ? "1px solid #ededed"
               : "none"};
             `}
+            onClick={() => onClickRecorder(user.id)}
           >
             <ProfileInfo
               profileImgSrc={user.profileImageUrl}

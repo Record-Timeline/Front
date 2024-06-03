@@ -2,14 +2,21 @@
 
 import React from "react";
 import { css } from "@emotion/react";
-
-export default function SearchPostBox({
+import {useNavigate} from "react-router-dom";
+export default function SearchRecoderBox({
   nickName,
   category,
   introduce,
   followerNum,
-  profileImg
+  profileImg,
+  memberId
 }) {
+  const navigate = useNavigate();
+  // 레코더 클릭 시
+  const onClickRecorder = (userId) => {
+    navigate(`/othersmain/${userId}`);
+  };
+
   return (
     <div
       css={css`
@@ -22,7 +29,10 @@ export default function SearchPostBox({
         font-size: 14px;
         padding: 20px;
         color: black;
+          cursor: pointer;
       `}
+      onClick={() => onClickRecorder(memberId)}
+
     >
         <div >
         <div           
@@ -47,7 +57,7 @@ export default function SearchPostBox({
             width: 180px;
             margin-right: 20px;
             font-size: 15px;
-        `}>{introduce.length > 25 ? `${introduce.slice(0, 25)}...` : introduce}</div>
+        `}>{introduce?.length > 25 ? `${introduce.slice(0, 25)}...` : introduce}</div>
         <div 
         css={css`
         width: 180px;
@@ -60,7 +70,9 @@ export default function SearchPostBox({
     <img src={profileImg} alt="프로필 이미지"            
         css={css`
             width: 100px;
-            height: fit-content;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
         `}/>
     </div>
   );

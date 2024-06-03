@@ -8,13 +8,22 @@ import ReadSubTimelinePost from "../components/subTimeline/ReadSubTimelinePost";
 import SubTimelineItem from "../components/subTimeline/SubTimelineItem";
 import Button from "../components/common/Button";
 import axios from "axios";
+import {useParams, useLocation} from 'react-router-dom';
+import axiosInstance from "../utils/axiosInstance";
 
 export default function SubTimeline() {
+  const {mainTimelineId} = useParams(); // URL 파라미터로부터 id 받아오기
+  const location = useLocation(); // navigate의 state를 통해 메인 타임라인의 제목을 받아오기 위함
+
+  const sessionTitle = sessionStorage.getItem('mainTimelineTitle'); // sessionStorage에서 title 가져오기
+  const [title, setTitle] = useState(sessionTitle || "메인 타임라인 제목");
   const [profile, setProfile] = useState(null); // 프로필 상태 추가
   const [isDone, setIsDone] = useState(false); // 체크를 사용자가 직접 체크 안할 경우
   const [isChecked, setIsChecked] = useState(false); // 사용자가 직접 체크 할 경우
   const [isCreating, setIsCreating] = useState(false);
   const [editablePost, setEditablePost] = useState(null);
+  const [subTimelineItems, setSubTimelineItems] = useState([]);
+  const [selectedItem, setSelectedItem] = useState(null);
 
   // 토큰 정보 받아오기
   const token = localStorage.getItem("token");
@@ -31,15 +40,96 @@ export default function SubTimeline() {
   };
 
   const handleCancel = () => {
-    setIsCreating(false);
+    console.log(subTimelineItems);
+    if (subTimelineItems.length === 0) {
+      setIsCreating(true);
+    } else {
+      setIsCreating(false);
+    }
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async (newItem) => {
+    if (editablePost) {
+      // 수정 모드에서의 저장
+      // 서브 타임라인 수정 연동
+      try {
+        const response = await axiosInstance.put(
+          `/api/v1/sub-timelines/${editablePost.id}`,
+          {
+            title: newItem.title,
+            startDate: newItem.startDate,
+            endDate: newItem.endDate,
+            content: newItem.content,
+          }
+        );
+        const updatedItems = subTimelineItems.map((item) =>
+          item === editablePost ? newItem : item
+        );
+        setSubTimelineItems(updatedItems);
+        setSelectedItem(newItem);
+
+        console.log("서브 타임라인 수정 완료", response.data)
+        console.log(subTimelineItems);
+      } catch (error) {
+        console.log("서브 타임라인 수정 에러: ", error);
+        console.error("에러 상세:", error.response ? error.response.data : error.message);
+      }
+    } else {
+      // 새 항목 추가
+      // 서브 타임라인 생성 연동
+      try {
+        const response = await axiosInstance.post(
+          `/api/v1/sub-timelines`,
+          {
+            mainTimelineId,
+            title: newItem.title,
+            startDate: newItem.startDate,
+            endDate: newItem.endDate,
+            content: newItem.content,
+          }
+        );
+
+        const updatedItems = [...subTimelineItems, newItem];
+        setSubTimelineItems(updatedItems);
+        setSelectedItem(newItem);
+
+        console.log("서브 타임라인 생성 완료", response.data)
+        console.log(subTimelineItems);
+      } catch (error) {
+        console.log("서브 타임라인 생성 에러: ", error);
+        console.error("에러 상세:", error.response ? error.response.data : error.message);
+      }
+    }
     setIsCreating(false);
-  }
+  };
+
+  const handleSelectItem = (item) => {
+    setSelectedItem(item);
+  };
+
+  const handleDelete = async (item) => {
+    // 서브 타임라인 삭제 연동
+    try {
+      await axiosInstance.delete(`/api/v1/sub-timelines/${item.id}`);
+      const itemIndex = subTimelineItems.findIndex(subItem => subItem === item)
+      const updatedItems = subTimelineItems.filter((subItem) => subItem !== item);
+      setSubTimelineItems(updatedItems);
+      if (updatedItems.length > 0) {
+        const newSelectedItem = itemIndex > 0 ? updatedItems[itemIndex - 1] : updatedItems[0];
+        setSelectedItem(newSelectedItem);
+      } else {
+        setSelectedItem(null);
+        setIsCreating(true);
+      }
+      console.log("서브 타임라인 삭제 완료");
+      console.log(subTimelineItems);
+    } catch (error) {
+      console.error("서브 타임라인 삭제 에러 발생:", error.response ? error.response.data : error.message);
+    }
+  };
 
   useEffect(() => {
-    // 내 프로필 조회 연동 (메인 타임라인 페이지 내)
+    // 내 프로필 조회 연동
     const fetchProfile = async () => {
       try {
         const response = await axios.get(
@@ -59,8 +149,36 @@ export default function SubTimeline() {
       }
     };
 
+    // 서브 타임라인 조회 연동
+    const fetchSubTimelines = async () => {
+      try {
+        const response = await axiosInstance.get(
+          `/api/v1/sub-timelines/main/${mainTimelineId}/ordered`, // 메인 타임라인 ID로 서브 타임라인 데이터 가져오기
+        );
+        const data = response.data.subTimelines;
+        setSubTimelineItems(data);
+
+        if (data.length > 0) { // 서브 타임라인 아이템이 있으면
+          setSelectedItem(data[0]); // 첫번째 서브 타임라인을 보여주고
+          setIsCreating(false); // 글쓰기 모드 활성화 x
+        } else {
+          setIsCreating(true) // 서브 타임라인 아이템이 하나도 없으면 글쓰기 모드 활성화
+        }
+        console.log("서브 타임라인 조회 완료", response)
+      } catch (error) {
+        console.error("서브 타임라인 조회 에러 발생:", error.response ? error.response.data : error.message);
+      }
+    };
+
     fetchProfile();
-  }, [token]);
+    fetchSubTimelines();
+
+    // 메인 타임라인에서 가져온 title 상태 설정 및 sessionStorage에 저장 (유지되도록)
+    if (location.state && location.state.title) {
+      setTitle(location.state.title);
+      sessionStorage.setItem('mainTimelineTitle', location.state.title);
+    }
+  }, [token, mainTimelineId, location.state]); // id와 location.state를 의존성 배열에 추가
 
   return (
     <div
@@ -68,7 +186,7 @@ export default function SubTimeline() {
         marginBottom: "150px",
       })}
     >
-      {profile && <MyProfile profile={profile} />} {/* 프로필 컴포넌트에 프로필 정보 전달 */}
+      {profile && <MyProfile profile={profile}/>} {/* 프로필 컴포넌트에 프로필 정보 전달 */}
       <div // 포스팅 박스 전체
         css={css({
           width: "760px",
@@ -76,7 +194,7 @@ export default function SubTimeline() {
           // height: "100%",
           borderRadius: "30px",
           background: "#FFF",
-          margin: "0px 0px 0px 355px",
+          margin: "0px 0px 50px 355px",
           padding: "10px",
           float: "left",
           display: "inline-block", // 서브 타임라인과 나란히 두기 위함
@@ -91,7 +209,13 @@ export default function SubTimeline() {
             onSubmit={handleSubmit}
           />
         ) : (
-          <ReadSubTimelinePost onEdit={handleEdit}/>
+          selectedItem && (
+            <ReadSubTimelinePost
+              item={selectedItem}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+            />
+          )
         )}
       </div>
       <div // 서브 타임라인 박스
@@ -112,11 +236,18 @@ export default function SubTimeline() {
             // border: "4px solid #f8f6f6",
           })}
         >
-          <h1>졸업 프로젝트 캡스톤 - 레코드 타임라인</h1>
+          <h1>{title}</h1> {/* 메인 타임라인 제목 */}
         </div>
-        <SubTimelineItem isChecked={false}/>
-        <SubTimelineItem isChecked={true}/>
-        <SubTimelineItem isChecked={false}/>
+        {subTimelineItems.map((item, index) => (
+          <SubTimelineItem
+            key={index}
+            startDate={item.startDate}
+            endDate={item.endDate}
+            title={item.title}
+            isPublic={item.isPublic}
+            onClick={() => handleSelectItem(item)}
+          />
+        ))}
         <Button
           onClick={handleCreateNew}
           width="300px"

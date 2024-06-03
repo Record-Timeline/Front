@@ -215,6 +215,7 @@ export default function MainTimeline() {
           item.type === "item" ? (
             <MainTimelineItem
               key={index}
+              mainTimelineId={item.data.id}
               startDate={item.data.startDate}
               endDate={item.data.endDate}
               title={item.data.title}

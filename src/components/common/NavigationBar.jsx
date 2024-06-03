@@ -20,6 +20,8 @@ import Alert from "@mui/material/Alert";
 import axios from "axios";
 import ProfileInfo from "../main/ProfileInfo";
 import axiosInstance from '../../utils/axiosInstance';
+import OutlineButton from "./OutlineButton";
+import { useNavigate } from "react-router-dom";
 import {useNavigation} from "react-router-dom";
 
 export default function NavigationBar() {
@@ -75,6 +77,10 @@ export default function NavigationBar() {
     setOpenIntroduceSnackbar(false);
   };
 
+
+  const handleClcikModifyProfile = () => {
+    navigate("/profile");
+  }
   const handleCloseLogoutSnackbar = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -648,24 +654,14 @@ console.log("profileInfo", profileInfo)
                     fontSize: "13px",
                   })}
                 >
-                  <div
-                    css={css({
-                      border: "1px solid #595959",
-                      color: "#595959",
-                      padding: "6px 13px",
-                      borderRadius: "24px",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      cursor: "pointer",
-                    })}
-                  >
+                  <OutlineButton onClick={handleClcikModifyProfile}>
                     <SettingsIcon
                       style={{
                         marginRight: "4px",
                       }}
                     />
                     회원정보 수정
+
                   </div>
                   <div
                     onClick={handleLogout}
@@ -687,7 +683,7 @@ console.log("profileInfo", profileInfo)
                       }}
                     />
                     로그아웃
-                  </div>
+                  </OutlineButton>
                 </div>
               </div>
             </div></> :

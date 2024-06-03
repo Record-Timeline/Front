@@ -3,6 +3,7 @@
 import React from "react";
 import { css } from "@emotion/react";
 import ProfileNickName from "./ProfileNickName";
+
 export default function ProfileInfo({
                                       profileImgSrc,
                                       nickName,

@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import * as React from "react";
+import {css} from "@emotion/react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -8,7 +9,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
-export default function AlertDialog(props) {
+export default function AlertDialog({ icon, onConfirm, dialogTitle, dialogContent, confirmText, cancelText }) {
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -19,10 +20,15 @@ export default function AlertDialog(props) {
         setOpen(false);
     };
 
+    const handleConfirm = () => {
+        onConfirm();
+        handleClose();
+    }
+
     return (
         <React.Fragment>
             <Button onClick={handleClickOpen} sx={{ minWidth: "30px" }}>
-                {props.icon}
+                {icon}
             </Button>
             <Dialog
                 open={open}
@@ -30,20 +36,21 @@ export default function AlertDialog(props) {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">
-                    {"정말로 삭제하시겠습니까?"}
+                <DialogTitle
+                  id="alert-dialog-title"
+                  css={css({ whiteSpace: "pre-line" })} // \n을 이용하여 줄바꿈 할 수 있도록
+                >
+                    {dialogTitle}
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        메인 타임라인을 삭제하면 {"\n"}
-                        해당 타임라인 안에 들어있는 서브 타임라인들도 모두 삭제됩니다.
+                        {dialogContent}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>삭제</Button>
-                    <Button onClick={handleClose} autoFocus>
-                        취소
-                    </Button>
+                    {/* confirmText 또는 cancelText 없으면 아예 버튼이 렌더링 되지 않도록 && 사용*/}
+                    {confirmText && <Button onClick={handleConfirm}>{confirmText}</Button>}
+                    {cancelText && <Button onClick={handleClose} autoFocus>{cancelText}</Button>}
                 </DialogActions>
             </Dialog>
         </React.Fragment>

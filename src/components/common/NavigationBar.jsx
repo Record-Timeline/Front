@@ -20,8 +20,6 @@ import Alert from "@mui/material/Alert";
 import axios from "axios";
 import ProfileInfo from "../main/ProfileInfo";
 import axiosInstance from '../../utils/axiosInstance';
-import OutlineButton from "./OutlineButton";
-import { useNavigate } from "react-router-dom";
 import {useNavigation} from "react-router-dom";
 
 export default function NavigationBar() {
@@ -77,10 +75,6 @@ export default function NavigationBar() {
     setOpenIntroduceSnackbar(false);
   };
 
-
-  const handleClcikModifyProfile = () => {
-    navigate("/profile");
-  }
   const handleCloseLogoutSnackbar = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -153,7 +147,7 @@ export default function NavigationBar() {
   const onClickCancleEditProfile = () => {
     setIsEditingProfile(false);
   };
-console.log("profileInfo", profileInfo)
+  console.log("profileInfo", profileInfo)
   // 프로필 정보 가져오기
   const fetchProfileInfo = async () => {
     try {
@@ -300,193 +294,193 @@ console.log("profileInfo", profileInfo)
             </div>
             {localStorage.getItem("token")?
               <>
-            <div
-              css={css({
-                display: "flex",
-                alignItems: "center",
-                flexDirection: "column",
-                margin: "35px 0px 10px 0px",
-                fontSize: "20px",
-                fontWeight: "500",
-              })}
-            >
-              <div
-                css={css({
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexDirection: "column",
-                  marginBottom: "10px",
-                  fontSize: "19px",
-                  fontWeight: "500",
-                  position: "relative"
-                })}
-              >
-                {isEditingProfile ?
-                  // 프로필 이미지 편집 중
-                  <><label htmlFor="inputTag" >
-                    {profileThumbnail ? <><img
-                      src={profileThumbnail}
-                      alt="프로필 이미지"
-                      css={css({
-                        width: "130px",
-                        height: "130px",
-                        marginBottom: "10px",
-                        borderRadius: "50%",
-                        overflow: "hidden",
-                        cursor: "pointer"
-                      })}
-                      onClick={onClickEditProfile}
-                    />
-                      <input type="file" id="inputTag" accept="image/*" css={css({
-                        display: "none"
-                      })} onChange={handleFileChange}/>
-                    </> : <div css={css({
+                <div
+                  css={css({
+                    display: "flex",
+                    alignItems: "center",
+                    flexDirection: "column",
+                    margin: "35px 0px 10px 0px",
+                    fontSize: "20px",
+                    fontWeight: "500",
+                  })}
+                >
+                  <div
+                    css={css({
                       display: "flex",
+                      alignItems: "center",
                       justifyContent: "center",
-                      alignItems: "center"
-                    })}><img
-                      src={profileInfo.profileImageUrl ? profileInfo.profileImageUrl : testProfileImg}
-                      alt="프로필 이미지"
-                      css={css({
-                        width: "130px",
-                        height: "130px",
-                        overflow: "hidden",
-                        marginBottom: "10px",
-                        borderRadius: "50%",
-                      })}
-                      onClick={onClickEditProfile}
-                    />
-                      <input type="file" id="inputTag" accept="image/*" css={css({
-                        display: "none"
-                      })} onChange={handleFileChange}/>
-                      <CameraAltOutlinedIcon style={{
-                        fontSize: "70px",
-                        color: "#e1e1e1",
-                        cursor: "pointer",
-                        position: "absolute",
-                        zIndex: "3",
-                      }}
-                      /></div>}
-
-                  </label>
-                    <div css={css({
-                      display: "flex",
+                      flexDirection: "column",
                       marginBottom: "10px",
-                      justifyContent: "center",
-                      flexWrap: "wrap"
-                    })}>
-                    <div css={css({
-                      fontSize: "15px",
-                      border: "1px solid #829FD7",
-                      borderRadius: "15px",
-                      padding: "2px 8px",
-                      color: "#829FD7",
-                      display: "flex",
-                      alignItems: "center",
-                      cursor: "pointer",
+                      fontSize: "19px",
+                      fontWeight: "500",
+                      position: "relative"
+                    })}
+                  >
+                    {isEditingProfile ?
+                      // 프로필 이미지 편집 중
+                      <><label htmlFor="inputTag" >
+                        {profileThumbnail ? <><img
+                          src={profileThumbnail}
+                          alt="프로필 이미지"
+                          css={css({
+                            width: "130px",
+                            height: "130px",
+                            marginBottom: "10px",
+                            borderRadius: "50%",
+                            overflow: "hidden",
+                            cursor: "pointer"
+                          })}
+                          onClick={onClickEditProfile}
+                        />
+                          <input type="file" id="inputTag" accept="image/*" css={css({
+                            display: "none"
+                          })} onChange={handleFileChange}/>
+                        </> : <div css={css({
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center"
+                        })}><img
+                          src={profileInfo.profileImageUrl ? profileInfo.profileImageUrl : testProfileImg}
+                          alt="프로필 이미지"
+                          css={css({
+                            width: "130px",
+                            height: "130px",
+                            overflow: "hidden",
+                            marginBottom: "10px",
+                            borderRadius: "50%",
+                          })}
+                          onClick={onClickEditProfile}
+                        />
+                          <input type="file" id="inputTag" accept="image/*" css={css({
+                            display: "none"
+                          })} onChange={handleFileChange}/>
+                          <CameraAltOutlinedIcon style={{
+                            fontSize: "70px",
+                            color: "#e1e1e1",
+                            cursor: "pointer",
+                            position: "absolute",
+                            zIndex: "3",
+                          }}
+                          /></div>}
 
-                    })}
-                         onClick={onClickSaveProfile}><CheckCircleIcon style={{
-                      fontSize: "23px",
-                      marginRight: "5px"
-                    }}/>프로필 저장
-                    </div>
-                    <div css={css({
-                      fontSize: "15px",
-                      border: "1px solid #8d8d8d",
-                      borderRadius: "15px",
-                      padding: "2px 8px",
-                      color: "#999999",
-                      display: "flex",
-                      alignItems: "center",
-                      cursor: "pointer",
-                      marginLeft: "5px"
-                    })}
-                         onClick={onClickCancleEditProfile}
-                  > 취소
-                    </div>
-                      <div
-                        css={css({
-                          fontSize: "12px",
-                          textDecoration: "underline",
-                          marginTop: "5px",
-                          color: "#ababab",
+                      </label>
+                        <div css={css({
+                          display: "flex",
+                          marginBottom: "10px",
+                          justifyContent: "center",
+                          flexWrap: "wrap"
+                        })}>
+                          <div css={css({
+                            fontSize: "15px",
+                            border: "1px solid #829FD7",
+                            borderRadius: "15px",
+                            padding: "2px 8px",
+                            color: "#829FD7",
+                            display: "flex",
+                            alignItems: "center",
+                            cursor: "pointer",
+
+                          })}
+                               onClick={onClickSaveProfile}><CheckCircleIcon style={{
+                            fontSize: "23px",
+                            marginRight: "5px"
+                          }}/>프로필 저장
+                          </div>
+                          <div css={css({
+                            fontSize: "15px",
+                            border: "1px solid #8d8d8d",
+                            borderRadius: "15px",
+                            padding: "2px 8px",
+                            color: "#999999",
+                            display: "flex",
+                            alignItems: "center",
+                            cursor: "pointer",
+                            marginLeft: "5px"
+                          })}
+                               onClick={onClickCancleEditProfile}
+                          > 취소
+                          </div>
+                          <div
+                            css={css({
+                              fontSize: "12px",
+                              textDecoration: "underline",
+                              marginTop: "5px",
+                              color: "#ababab",
+                              cursor: "pointer",
+                            })}
+                            onClick={removeProfileImg}
+                          >프로필 삭제하기</div>
+                        </div>
+                      </> :
+                      // 프로필 이미지 편집중 아닐 때
+                      <>
+                        {profileInfo ? <><img
+                          src={profileInfo.profileImageUrl ? profileInfo.profileImageUrl : testProfileImg}
+                          alt="프로필 이미지"
+                          css={css({
+                            width: "130px",
+                            height: "130px",
+                            overflow: "hidden",
+                            marginBottom: "10px",
+                            borderRadius: "50%",
+                          })}
+                        /></> : <><img
+                          src={testProfileImg}
+                          alt="프로필 이미지"
+                          css={css({
+                            width: "130px",
+                            marginBottom: "10px",
+                          })}
+                        /><PersonIcon style={{
+                          fontSize: "90px",
+                          color: "#B1B1B1",
                           cursor: "pointer",
+                          position: "absolute",
+                          top: "18px",
+
+                        }}/></> }
+
+                        <div css={css({
+                          fontSize: "15px",
+                          color: "#B1B1B1",
+                          display: "flex",
+                          alignItems: "center",
+                          cursor: "pointer",
+                          marginBottom: "10px"
                         })}
-                        onClick={removeProfileImg}
-                      >프로필 삭제하기</div>
-                    </div>
-                  </> :
-                  // 프로필 이미지 편집중 아닐 때
-                  <>
-                    {profileInfo ? <><img
-                      src={profileInfo.profileImageUrl ? profileInfo.profileImageUrl : testProfileImg}
-                      alt="프로필 이미지"
-                      css={css({
-                        width: "130px",
-                        height: "130px",
-                        overflow: "hidden",
-                        marginBottom: "10px",
-                        borderRadius: "50%",
-                      })}
-                    /></> : <><img
-                      src={testProfileImg}
-                      alt="프로필 이미지"
-                      css={css({
-                        width: "130px",
-                        marginBottom: "10px",
-                      })}
-                    /><PersonIcon style={{
-                      fontSize: "90px",
-                      color: "#B1B1B1",
-                      cursor: "pointer",
-                      position: "absolute",
-                      top: "18px",
+                             onClick={onClickEditProfile}>프로필 이미지 편집<CreateIcon style={{
+                          fontSize: "18px",
+                          marginLeft: "5px"
+                        }}/></div>
+                      </>}
 
-                    }}/></> }
-
-                    <div css={css({
+                    <div>{profileInfo.nickname}</div>
+                  </div>
+                </div>
+                <div
+                  css={css({
+                    display: "flex",
+                    flexDirection: "column",
+                    height: "100%",
+                  })}
+                >
+                  <div
+                    css={css({
+                      width: "fit-content",
+                      borderRadius: "20px",
+                      backgroundColor: "#829FD7",
+                      color: "white",
+                      textAlign: "center",
                       fontSize: "15px",
-                      color: "#B1B1B1",
-                      display: "flex",
-                      alignItems: "center",
-                      cursor: "pointer",
-                      marginBottom: "10px"
+                      fontWeight: "200",
+                      padding: "4px 10px",
                     })}
-                         onClick={onClickEditProfile}>프로필 이미지 편집<CreateIcon style={{
-                      fontSize: "18px",
-                      marginLeft: "5px"
-                    }}/></div>
-                  </>}
-
-                <div>{profileInfo.nickname}</div>
-              </div>
-            </div>
-            <div
-              css={css({
-                display: "flex",
-                flexDirection: "column",
-                height: "100%",
-              })}
-            >
-              <div
-                css={css({
-                  width: "fit-content",
-                  borderRadius: "20px",
-                  backgroundColor: "#829FD7",
-                  color: "white",
-                  textAlign: "center",
-                  fontSize: "15px",
-                  fontWeight: "200",
-                  padding: "4px 10px",
-                })}
-              >
-                {interestMapping[profileInfo.interest]}
-              </div>
-              <div>
-                {isEditingIntroduction ? (
-                  <div css={css({display: "flex", alignItems: "center"})}>
+                  >
+                    {interestMapping[profileInfo.interest]}
+                  </div>
+                  <div>
+                    {isEditingIntroduction ? (
+                      <div css={css({display: "flex", alignItems: "center"})}>
                     <textarea
                       value={introductionText}
                       onChange={handleIntroductionChange}
@@ -504,101 +498,101 @@ console.log("profileInfo", profileInfo)
                         color: #747474;
                       `}
                     ></textarea>
-                    <CheckCircleIcon
-                      onClick={handleIntroductionSave}
-                      style={{
-                        fontSize: "23px",
-                        color: "#333333",
-                        cursor: "pointer",
-                        marginTop: "20px",
-                        marginLeft: "5px",
-                      }}
-                    />
-                  </div>
-                ) : (
-                  <div css={css({ display: "flex", alignItems: "center" })}>
-                    <div
-                      css={css({
-                        display: "flex",
-                        alignItems: "center",
-                        width: "200px",
-                        borderLeft: "3px solid black",
-                        height: "50px",
-                        fontSize: "14px",
-                        padding: "5px 0px 5px 18px",
-                        marginTop: "20px",
-                        lineHeight: "140%",
-                        wordBreak: "break-all",
-                      })}
-                    >
-                      {profileInfo.introduction.trim() === "" ? (
+                        <CheckCircleIcon
+                          onClick={handleIntroductionSave}
+                          style={{
+                            fontSize: "23px",
+                            color: "#333333",
+                            cursor: "pointer",
+                            marginTop: "20px",
+                            marginLeft: "5px",
+                          }}
+                        />
+                      </div>
+                    ) : (
+                      <div css={css({ display: "flex", alignItems: "center" })}>
                         <div
                           css={css({
-                            whiteSpace: "pre-line",
-                            fontSize: "12px",
+                            display: "flex",
+                            alignItems: "center",
                             width: "200px",
-                            color: "#6d6d6d",
+                            borderLeft: "3px solid black",
+                            height: "50px",
+                            fontSize: "14px",
+                            padding: "5px 0px 5px 18px",
+                            marginTop: "20px",
+                            lineHeight: "140%",
+                            wordBreak: "break-all",
                           })}
                         >
-                          소개글이 없습니다. {"\n"}나를 소개하는 한 마디를
-                          적어주세요
+                          {profileInfo.introduction.trim() === "" ? (
+                            <div
+                              css={css({
+                                whiteSpace: "pre-line",
+                                fontSize: "12px",
+                                width: "200px",
+                                color: "#6d6d6d",
+                              })}
+                            >
+                              소개글이 없습니다. {"\n"}나를 소개하는 한 마디를
+                              적어주세요
+                            </div>
+                          ) : (
+                            <div>{profileInfo.introduction}</div>
+                          )}
                         </div>
-                      ) : (
-                        <div>{profileInfo.introduction}</div>
-                      )}
-                    </div>
-                    <CreateIcon
-                      onClick={toggleEditIntroduction}
-                      style={{
-                        fontSize: "19px",
-                        color: "#333333",
-                        cursor: "pointer",
+                        <CreateIcon
+                          onClick={toggleEditIntroduction}
+                          style={{
+                            fontSize: "19px",
+                            color: "#333333",
+                            cursor: "pointer",
+                            marginTop: "20px",
+                            marginLeft: "2px",
+                          }}
+                        />
+                      </div>
+                    )}
+                  </div>
+                  <div
+                    css={css({
+                      width: "100%",
+                      display: "flex",
+                      alignItems: "center",
+                      flexDirection: "column",
+                    })}
+                  >
+                    <div
+                      css={css({
+                        width: "93%",
+                        height: "78px",
+                        borderRadius: "30px",
+                        backgroundColor: "#F5F5F5",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-around",
                         marginTop: "20px",
-                        marginLeft: "2px",
-                      }}
-                    />
-                  </div>
-                )}
-              </div>
-              <div
-                css={css({
-                  width: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                  flexDirection: "column",
-                })}
-              >
-                <div
-                  css={css({
-                    width: "93%",
-                    height: "78px",
-                    borderRadius: "30px",
-                    backgroundColor: "#F5F5F5",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-around",
-                    marginTop: "20px",
-                  })}
-                >
-                  <div css={css({ marginLeft: "20px" })}>
-                    <div css={css({ textAlign: "center", fontSize: "20px" })}>
-                      {followers}
+                      })}
+                    >
+                      <div css={css({ marginLeft: "20px" })}>
+                        <div css={css({ textAlign: "center", fontSize: "20px" })}>
+                          {followers}
+                        </div>
+                        <div css={css({ textAlign: "center", fontSize: "13px" })}>
+                          팔로워
+                        </div>
+                      </div>
+                      <div css={css({ marginRight: "20px" })}>
+                        <div css={css({ textAlign: "center", fontSize: "20px" })}>
+                          {followings}
+                        </div>
+                        <div css={css({ textAlign: "center", fontSize: "13px" })}>
+                          팔로잉
+                        </div>
+                      </div>
                     </div>
-                    <div css={css({ textAlign: "center", fontSize: "13px" })}>
-                      팔로워
-                    </div>
-                  </div>
-                  <div css={css({ marginRight: "20px" })}>
-                    <div css={css({ textAlign: "center", fontSize: "20px" })}>
-                      {followings}
-                    </div>
-                    <div css={css({ textAlign: "center", fontSize: "13px" })}>
-                      팔로잉
-                    </div>
-                  </div>
-                </div>
-                <Link
-                  css={css`
+                    <Link
+                      css={css`
                     width: 125.5%;
                     height: 60px;
                     display: flex;
@@ -611,18 +605,18 @@ console.log("profileInfo", profileInfo)
                     text-decoration: none;
                     color: #161616;
                   `}
-                >
-                  <HomeOutlinedIcon
-                    style={{
-                      fontSize: "26px",
-                      marginRight: "8px",
-                      color: "#353535",
-                    }}
-                  />
-                  <div>내 타임라인</div>
-                </Link>
-                <Link
-                  css={css`
+                    >
+                      <HomeOutlinedIcon
+                        style={{
+                          fontSize: "26px",
+                          marginRight: "8px",
+                          color: "#353535",
+                        }}
+                      />
+                      <div>내 타임라인</div>
+                    </Link>
+                    <Link
+                      css={css`
                     width: 125.5%;
                     height: 60px;
                     display: flex;
@@ -635,64 +629,74 @@ console.log("profileInfo", profileInfo)
                     text-decoration: none;
                     color: #161616;
                   `}
-                  to="/bookmark"
-                >
-                  <BookmarkBorderIcon
-                    style={{
-                      fontSize: "24px",
-                      marginRight: "8px",
-                      color: "#353535",
-                    }}
-                  />
-                  <div>북마크한 게시물</div>
-                </Link>
-                <div
-                  css={css({
-                    display: "flex",
-                    position: "absolute",
-                    bottom: "20px",
-                    fontSize: "13px",
-                  })}
-                >
-                  <OutlineButton onClick={handleClcikModifyProfile}>
-                    <SettingsIcon
-                      style={{
-                        marginRight: "4px",
-                      }}
-                    />
-                    회원정보 수정
-
+                      to="/bookmark"
+                    >
+                      <BookmarkBorderIcon
+                        style={{
+                          fontSize: "24px",
+                          marginRight: "8px",
+                          color: "#353535",
+                        }}
+                      />
+                      <div>북마크한 게시물</div>
+                    </Link>
+                    <div
+                      css={css({
+                        display: "flex",
+                        position: "absolute",
+                        bottom: "20px",
+                        fontSize: "13px",
+                      })}
+                    >
+                      <div
+                        css={css({
+                          border: "1px solid #595959",
+                          color: "#595959",
+                          padding: "6px 13px",
+                          borderRadius: "24px",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          cursor: "pointer",
+                        })}
+                      >
+                        <SettingsIcon
+                          style={{
+                            marginRight: "4px",
+                          }}
+                        />
+                        회원정보 수정
+                      </div>
+                      <div
+                        onClick={handleLogout}
+                        css={css({
+                          border: "1px solid #607FB9",
+                          color: "#607FB9",
+                          padding: "6px 13px",
+                          borderRadius: "24px",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          marginLeft: "7px",
+                          cursor: "pointer",
+                        })}
+                      >
+                        <LogoutIcon
+                          style={{
+                            marginRight: "4px",
+                          }}
+                        />
+                        로그아웃
+                      </div>
+                    </div>
                   </div>
-                  <div
-                    onClick={handleLogout}
-                    css={css({
-                      border: "1px solid #607FB9",
-                      color: "#607FB9",
-                      padding: "6px 13px",
-                      borderRadius: "24px",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      marginLeft: "7px",
-                      cursor: "pointer",
-                    })}
-                  >
-                    <LogoutIcon
-                      style={{
-                        marginRight: "4px",
-                      }}
-                    />
-                    로그아웃
-                  </OutlineButton>
-                </div>
-              </div>
-            </div></> :
+                </div></> :
               // 토큰 정보가 없을 때
               (<div css={css({
-              display:"flex",
-              flexDirection: "column",
+                  display:"flex",
+                  flexDirection: "column",
                   alignItems: "center"
-            })}><div css={css({
+                })}><div css={css({
                   whiteSpace: "pre-wrap",
                   textAlign: "center",
                   color: "#494949",
@@ -717,11 +721,11 @@ console.log("profileInfo", profileInfo)
                     padding: "7px 16px"
                   })}>레코드 타임라인 시작하기</Link>
                 </div>
-                  )}
-                </div>
-              ) : (
-              <div
-              css={css({
+              )}
+          </div>
+        ) : (
+          <div
+            css={css({
               padding: "30px 20px 0px 38px",
             })}
           >

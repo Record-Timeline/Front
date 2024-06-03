@@ -7,9 +7,10 @@ import Input from "@mui/material/Input";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import LogoutIcon from "@mui/icons-material/Logout";
 import OutlineButton from "../components/common/OutlineButton";
 import PasswordChangeModal from "../components/profile/PasswordChangeModal";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 export default function ModifyProfile() {
   const [nickname, setNickname] = useState("");
@@ -17,6 +18,8 @@ export default function ModifyProfile() {
   const [nicknameDuplicationResult, setNicknameDuplicationResult] = useState(false);
   const [field, setField] = useState("");
   const [email, setEmail] = useState("")
+  const [myProfile, setMyProfile] = useState("")
+  const [openSnackbar, setOpenSnackbar] = useState(false);
   const interestFields = [
     "마케팅/홍보/조사",
     "회계/세무/재무",
@@ -42,12 +45,24 @@ export default function ModifyProfile() {
     "Media_Culture_Sports": "미디어/문화/스포츠",
   };
 
+// 스낵바 닫기
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenSnackbar(false);
+  };
 
   // 닉네임 중복확인 버튼
   const duplicateNicknameCheck = async () => {
     // 닉네임을 입력하지 않은 경우
     if (nickname.trim() === "") {
       setNicknameDuplicationResponse({ code: "ER", message: "닉네임을 입력하세요." });
+      return;
+    }
+    // 현재 닉네임을 중복확인 할 경우
+    if (myProfile.nickname == nickname) {
+      setNicknameDuplicationResponse({ code: "ER", message: "현재 닉네임과 같습니다." });
       return;
     }
 
@@ -75,9 +90,29 @@ export default function ModifyProfile() {
     }
   };
 
-  // 비밀번호 변경하기 버튼
-  const onClickPasswordChange = async () => {
-    console.log("비밀번호 변경");
+// 변경하기 버튼
+  const onClickInfoChange = async () => {
+    // 닉네임 중복확인 결과가 true인 경우
+    if (nicknameDuplicationResult) {
+      try {
+        const response = await axiosInstance.put(
+          `/api/v1/update-memberInfo`,
+          { newNickname: nickname },
+          {
+            headers: {
+              Accept: "*/*",
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        console.log("회원정보 변경하기", response);
+        setOpenSnackbar(true);
+      } catch (error) {
+        console.error("닉네임 변경", error);
+      }
+    } else {
+      alert("닉네임 중복확인이 완료되지 않았습니단.")
+    }
   };
 
   // 현재 닉네임, 관심분야 불러오기
@@ -85,8 +120,9 @@ export default function ModifyProfile() {
     try {
       const response = await axiosInstance.get("/api/v1/my-profile");
       setNickname(response.data.nickname); // 현재 닉네임 설정
-      setField(categoryMap[response.data.interest]) // 현재 관심분야 설정
-      setEmail(response.data.email)
+      setField(categoryMap[response.data.interest]); // 현재 관심분야 설정
+      setEmail(response.data.email);
+      setMyProfile(response.data);
     } catch (error) {
       console.error(error);
     }
@@ -263,10 +299,22 @@ export default function ModifyProfile() {
                        border="1px #607FB9 solid"
                        padding="12px 40px"
                        fontSize="16px"
-                       margin="0px 0px 0px 15px">
+                       margin="0px 0px 0px 15px"
+        onClick={onClickInfoChange}
+        >
           변경하기
         </OutlineButton>
       </div>
+      <Snackbar open={openSnackbar} autoHideDuration={3000} onClose={handleCloseSnackbar} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          회원정보가 성공적으로 수정되었습니다
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

@@ -6,11 +6,11 @@ import {css} from "@emotion/react";
 import dayjs from "dayjs";
 import {useNavigate} from "react-router-dom";
 
-export default function OthersTimelineItem({mainTimelineId, startDate, endDate, title, isDone}) {
+export default function OthersTimelineItem({memberId, mainTimelineId, startDate, endDate, title, isDone}) {
   const navigate = useNavigate();
 
   const handleTitleClick = () => {
-    navigate(`/otherssub/${mainTimelineId}`, { state: { title } });
+    navigate(`/otherssub/${memberId}/${mainTimelineId}`, { state: { title } });
   };
 
   return (
@@ -65,6 +65,7 @@ export default function OthersTimelineItem({mainTimelineId, startDate, endDate, 
           {dayjs(startDate).format('YYYY.MM.DD')} ~ {endDate ? dayjs(endDate).format('YYYY.MM.DD') : '진행중'}
         </div>
         <div // 타임라인 제목
+          onClick={handleTitleClick} // 제목 클릭시 해당 서브 타임라인으로 이동
           css={css({
             flex: "1",
             fontSize: "15px",
@@ -75,6 +76,7 @@ export default function OthersTimelineItem({mainTimelineId, startDate, endDate, 
             lineHeight: "75px",
             marginLeft: "10px",
             display: "inline-block",
+            cursor: "pointer",
             // border: "1px solid black",
           })}
         >

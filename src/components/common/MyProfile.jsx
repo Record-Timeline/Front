@@ -57,7 +57,7 @@ export default function MyProfile({profile}) {
             // border: "1px solid lightgray",
           })}
         />
-        <div css={css({display: "inline-block"})}>
+        <div css={css({display: "inline-block", width: "330px"})}>
           <div
             css={css({
               fontSize: "25px",
@@ -101,7 +101,7 @@ export default function MyProfile({profile}) {
             height: "65px",
             fontSize: "15px",
             color: "black",
-            marginLeft: "60px",
+            // marginLeft: "60px",
             borderLeft: "3px solid #6E6E6E",
             verticalAlign: "bottom",
             display: "inline-block",
@@ -150,7 +150,7 @@ export default function MyProfile({profile}) {
             <Button
               width="160px"
               height="40px"
-              margin="0px 0 0 130px"
+              margin="0px 0 0 180px"
               backgroundColor="none"
               border="2px solid #829FD7"
               textColor="#7286AD"

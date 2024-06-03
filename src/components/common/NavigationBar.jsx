@@ -4,7 +4,7 @@ import Logo from "../../assets/images/recodeTimelineLogo.svg";
 import { css } from "@emotion/react";
 import React, { useState, useEffect } from "react";
 import testProfileImg from "../../assets/images/testProfileImg.png";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import MenuIcon from "@mui/icons-material/Menu";
 import CreateIcon from "@mui/icons-material/Create";
@@ -22,6 +22,8 @@ import ProfileInfo from "../main/ProfileInfo";
 import axiosInstance from '../../utils/axiosInstance';
 import OutlineButton from "./OutlineButton";
 import { useNavigate } from "react-router-dom";
+import {useNavigation} from "react-router-dom";
+
 export default function NavigationBar() {
   const navigate = useNavigate();
   const [isExpanded, setIsExpanded] = useState(true); // 네비게이션 바 펼친 상태 & 접힌 상태
@@ -34,6 +36,7 @@ export default function NavigationBar() {
 
   const [openProfileSnackbar, setOpenProfileSnackbar] = useState(false);
   const [openIntroduceSnackbar, setOpenIntroduceSnackbar] = useState(false);
+  const [openLogoutSnackbar, setOpenLogoutSnackbar] = useState(false);
 
   const [profileImage, setProfileImage] = useState(); // 프로필 이미지
   const [profileThumbnail, setProfileThumbnail] = useState() // 프로필 이미지 썸네일
@@ -51,7 +54,7 @@ export default function NavigationBar() {
     "Education": "교육",
     "Media_Culture_Sports": "미디어/문화/스포츠",
   };
-  
+
   // 프로필 정보 (닉네임, 관심분야, 프로필 사진, 소개글)
   const [profileInfo, setProfileInfo] = useState({
     nickname: "",
@@ -74,15 +77,28 @@ export default function NavigationBar() {
     setOpenIntroduceSnackbar(false);
   };
 
-  // 회원정보 수정 버튼
+
   const handleClcikModifyProfile = () => {
     navigate("/profile");
+  }
+  const handleCloseLogoutSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenLogoutSnackbar(false);
   };
 
-  // 네비게이션 바 토글
+
+  // 네비게이션 바 열고 닫기
   const toggleNavigationBar = () => {
     setIsExpanded(!isExpanded);
   };
+
+  // 로고 클릭 시 메인페이지로 이동
+  const onClickLogoImg = () => {
+    navigate("/")
+  };
+
   // 소개글 수정 토글
   const toggleEditIntroduction = () => {
     setIsEditingIntroduction(!isEditingIntroduction);
@@ -122,6 +138,7 @@ export default function NavigationBar() {
         setOpenIntroduceSnackbar(true);
         setIsEditingIntroduction(false);
       }
+      fetchProfileInfo()
     } catch (error) {
       console.error(error);
     }
@@ -130,14 +147,19 @@ export default function NavigationBar() {
   // 프로필 편집
   const onClickEditProfile = () => {
     setIsEditingProfile(true);
-
   };
 
+  // 프로필 편집
+  const onClickCancleEditProfile = () => {
+    setIsEditingProfile(false);
+  };
+console.log("profileInfo", profileInfo)
   // 프로필 정보 가져오기
   const fetchProfileInfo = async () => {
     try {
       const response = await axiosInstance.get("/api/v1/my-profile");
       setProfileInfo(response.data);
+      console.log("사용자 정보", response.data)
     } catch (error) {
       console.error(error);
     }
@@ -170,9 +192,33 @@ export default function NavigationBar() {
       }
     } catch (error) {
       console.error(error);
+      alert("프로필 저장에 실패했습니다. 다시 시도해주세요.")
     }
   };
 
+  // 프로필 삭제
+  const removeProfileImg = async () => {
+    try {
+      const response = await axiosInstance.delete(
+        `/api/v1/profile/delete-image`,
+        {
+          headers: {
+            Accept: "*/*",
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log(response);
+      // 코드 발송 성공헀을 때
+      if (response.status === 200) {
+        setIsEditingProfile(false); // 프로필 편집 중 상태 false로 바꿈
+        setOpenProfileSnackbar(true); // 프로필 저장 성공 시 스낵바
+        fetchProfileInfo();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   // 사진 업로드 되었을 때
   const handleFileChange = (event) => {
@@ -190,6 +236,14 @@ export default function NavigationBar() {
   useEffect(() => {
     fetchProfileInfo();
   }, []);
+
+  // 로그아웃
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setOpenLogoutSnackbar(true);
+  };
+
+
   return (
     <div
       css={css`
@@ -230,7 +284,9 @@ export default function NavigationBar() {
                 alt="record timeline"
                 css={css`
                   width: ${isExpanded ? "140px" : "0px"};
+                    cursor: pointer;
                 `}
+                onClick={onClickLogoImg}
               />
               <KeyboardDoubleArrowLeftIcon
                 onClick={toggleNavigationBar}
@@ -242,7 +298,7 @@ export default function NavigationBar() {
                 }}
               />
             </div>
-            {localStorage.getItem("token")? 
+            {localStorage.getItem("token")?
               <>
             <div
               css={css({
@@ -268,10 +324,7 @@ export default function NavigationBar() {
               >
                 {isEditingProfile ?
                   // 프로필 이미지 편집 중
-                  <><label htmlFor="inputTag" css={css({
-                    width: "130px",
-
-                  })}>
+                  <><label htmlFor="inputTag" >
                     {profileThumbnail ? <><img
                       src={profileThumbnail}
                       alt="프로필 이미지"
@@ -288,14 +341,19 @@ export default function NavigationBar() {
                       <input type="file" id="inputTag" accept="image/*" css={css({
                         display: "none"
                       })} onChange={handleFileChange}/>
-                     </> : <><img
-                      src={ProfileInfo.profileImageUrl? ProfileInfo.profileImageUrl : testProfileImg}
+                    </> : <div css={css({
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center"
+                    })}><img
+                      src={profileInfo.profileImageUrl ? profileInfo.profileImageUrl : testProfileImg}
                       alt="프로필 이미지"
                       css={css({
                         width: "130px",
                         height: "130px",
                         overflow: "hidden",
                         marginBottom: "10px",
+                        borderRadius: "50%",
                       })}
                       onClick={onClickEditProfile}
                     />
@@ -304,15 +362,36 @@ export default function NavigationBar() {
                       })} onChange={handleFileChange}/>
                       <CameraAltOutlinedIcon style={{
                         fontSize: "70px",
-                        color: "#B1B1B1",
+                        color: "#e1e1e1",
                         cursor: "pointer",
                         position: "absolute",
-                        top: "32px",
-                        left: "30px"
+                        zIndex: "3",
                       }}
-                      /></>}
+                      /></div>}
 
                   </label>
+                    <div css={css({
+                      display: "flex",
+                      marginBottom: "10px",
+                      justifyContent: "center",
+                      flexWrap: "wrap"
+                    })}>
+                    <div css={css({
+                      fontSize: "15px",
+                      border: "1px solid #829FD7",
+                      borderRadius: "15px",
+                      padding: "2px 8px",
+                      color: "#829FD7",
+                      display: "flex",
+                      alignItems: "center",
+                      cursor: "pointer",
+
+                    })}
+                         onClick={onClickSaveProfile}><CheckCircleIcon style={{
+                      fontSize: "23px",
+                      marginRight: "5px"
+                    }}/>프로필 저장
+                    </div>
                     <div css={css({
                       fontSize: "15px",
                       border: "1px solid #8d8d8d",
@@ -322,18 +401,27 @@ export default function NavigationBar() {
                       display: "flex",
                       alignItems: "center",
                       cursor: "pointer",
-                      marginBottom: "10px"
+                      marginLeft: "5px"
                     })}
-                         onClick={onClickSaveProfile}><CheckCircleIcon style={{
-                      fontSize: "23px",
-                      marginRight: "5px"
-                    }}/>프로필 저장
+                         onClick={onClickCancleEditProfile}
+                  > 취소
+                    </div>
+                      <div
+                        css={css({
+                          fontSize: "12px",
+                          textDecoration: "underline",
+                          marginTop: "5px",
+                          color: "#ababab",
+                          cursor: "pointer",
+                        })}
+                        onClick={removeProfileImg}
+                      >프로필 삭제하기</div>
                     </div>
                   </> :
                   // 프로필 이미지 편집중 아닐 때
                   <>
                     {profileInfo ? <><img
-                      src={profileInfo.profileImageUrl}
+                      src={profileInfo.profileImageUrl ? profileInfo.profileImageUrl : testProfileImg}
                       alt="프로필 이미지"
                       css={css({
                         width: "130px",
@@ -573,8 +661,22 @@ export default function NavigationBar() {
                       }}
                     />
                     회원정보 수정
-                  </OutlineButton>
-                  <OutlineButton color="#607FB9" border="1px #607FB9 solid" margin="0px 0px 0px 5px">
+
+                  </div>
+                  <div
+                    onClick={handleLogout}
+                    css={css({
+                      border: "1px solid #607FB9",
+                      color: "#607FB9",
+                      padding: "6px 13px",
+                      borderRadius: "24px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginLeft: "7px",
+                      cursor: "pointer",
+                    })}
+                  >
                     <LogoutIcon
                       style={{
                         marginRight: "4px",
@@ -634,9 +736,11 @@ export default function NavigationBar() {
             <img
               src={Logo}
               alt="record timeline"
+              onClick={onClickLogoImg}
               css={css({
                 width: "165px",
                 marginLeft: "10px",
+                cursor: "pointer"
               })}
             />
           </div>
@@ -661,6 +765,17 @@ export default function NavigationBar() {
           sx={{ width: '100%' }}
         >
           소개글이 수정되었습니다
+        </Alert>
+      </Snackbar>
+
+      <Snackbar open={openLogoutSnackbar} autoHideDuration={3000} onClose={handleCloseLogoutSnackbar} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+        <Alert
+          onClose={handleCloseLogoutSnackbar}
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          로그아웃 되었습니다.
         </Alert>
       </Snackbar>
     </div>

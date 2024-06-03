@@ -1,54 +1,56 @@
 /** @jsxImportSource @emotion/react */
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { css } from "@emotion/react";
 import SearchIcon from "@mui/icons-material/Search";
 import ProfileInfo from "../components/main/ProfileInfo";
 import testProfileImg from "../assets/images/testProfileImg.png";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../utils/axiosInstance";
+import {CircularProgress} from "@mui/material";
 export default function Search() {
   const [searchKeyword, setSearchKeyword] = useState(""); // 검색어 상태
   const navigate = useNavigate();
-  // 추천 레코더 더미데이터
-  const testRecorderData = [
-    {
-      name: "Sara Kim",
-      introduce: "리액트, spring 공부 개발 프로젝트 진행중",
-      followers: 3562,
-      timelineList: [
-        "리액트 스터디",
-        "스프링 스터디",
-        "외부 연합 프로그래밍 동아리 3기 활동",
-        "은행 체험형 인턴 6개월",
-      ],
-    },
-    {
-      name: "해피레코더",
-      introduce:
-        "긍정적인 마음과 행복은 만병통치약. 항상 밝은 에너지를 가지고 있는 것이 중요합니다! 행복합시다~",
-      followers: 156,
-    },
-    {
-      name: "나는야개발자",
-      introduce: "우아한 형제들 백엔드 개발을 하고 있습니다~",
-      followers: 23504,
-    },
-    {
-      name: "Sara Kim",
-      introduce: "리액트, spring 공부 개발 프로젝트 진행중",
-      followers: 3562,
-    },
-    {
-      name: "해피레코더",
-      introduce:
-        "긍정적인 마음과 행복은 만병통치약. 항상 밝은 에너지를 가지고 있는 것이 중요합니다! 행복합시다~",
-      followers: 156,
-    },
-  ];
+  const [interest, setInterest] = useState(null); // 연동에 사용할 영문 관심분야
+  const [recorderData, setRecorderData] = useState(null);
+
+  // default 관심 분야 가져오기
+  const fetchInterest = async () => {
+    try {
+      const response = await axiosInstance.get("/api/v1/my-profile");
+      setInterest(response.data.interest);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // 추천 레코더 데이터 연동
+  const fetchRecorderData = async () => {
+    try {
+      const response = await axiosInstance.get(`/api/v1/main/member/${interest}`);
+      setRecorderData(response.data);
+      console.log("추천 레코더", response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchInterest();
+  }, []);
+
+  // 관심분야를 불러온 후, 사용자의 관심 분야에 따른 RecordData를 가져옴
+  useEffect(() => {
+    if (interest) {
+      fetchRecorderData();
+    }
+  }, [interest]);
+
   // 검색 아이콘
   const handleSearch = () => {
     navigate(`/search/result?keyword=${searchKeyword}`);
   };
+
   return (
     <div
       css={css`
@@ -124,32 +126,43 @@ export default function Search() {
             display: flex;
           `}
         >
-          {testRecorderData.map((user, index) => (
-            <div
-              key={index}
-              css={css`
-                margin: 50px 0px 80px 0px;
-                padding: 0px 15px;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-              `}
-            >
-              <ProfileInfo
-                profileImgSrc={testProfileImg}
-                nickName={user.name}
-                introduce={user.introduce}
-                followers={user.followers}
-              />
+          {recorderData ? (
+            recorderData.map((user, index) => (
               <div
+                key={index}
                 css={css`
+                  margin: 50px 0px 80px 0px;
+                  padding: 0px 15px;
                   display: flex;
                   flex-direction: column;
-                  margin-top: 20px;
+                  align-items: center;
                 `}
-              ></div>
+              >
+                <ProfileInfo
+                  profileImgSrc={user.profileImageUrl || testProfileImg}
+                  nickName={user.nickname}
+                  introduce={user.introduction}
+                  followers={user.followers || 300}
+                />
+                <div
+                  css={css`
+                    display: flex;
+                    flex-direction: column;
+                    margin-top: 20px;
+                  `}
+                ></div>
+              </div>
+            ))
+          ) : (
+            <div
+              css={css`
+                  color: #829FD7;
+                  margin-top: 40px;
+              `}
+            >
+            <CircularProgress  color="inherit"/>
             </div>
-          ))}
+            )}
         </div>
       </div>
     </div>

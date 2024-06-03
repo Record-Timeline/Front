@@ -47,7 +47,7 @@ export default function SearchPostBox({
             width: 180px;
             margin-right: 20px;
             font-size: 15px;
-        `}>{introduce.length > 25 ? `${introduce.slice(0, 25)}...` : introduce}</div>
+        `}>{introduce?.length > 25 ? `${introduce.slice(0, 25)}...` : introduce}</div>
         <div 
         css={css`
         width: 180px;
@@ -60,7 +60,9 @@ export default function SearchPostBox({
     <img src={profileImg} alt="프로필 이미지"            
         css={css`
             width: 100px;
-            height: fit-content;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
         `}/>
     </div>
   );

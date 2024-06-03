@@ -4,7 +4,7 @@ import Logo from "../../assets/images/recodeTimelineLogo.svg";
 import { css } from "@emotion/react";
 import React, { useState, useEffect } from "react";
 import testProfileImg from "../../assets/images/testProfileImg.png";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import MenuIcon from "@mui/icons-material/Menu";
 import CreateIcon from "@mui/icons-material/Create";
@@ -20,8 +20,9 @@ import Alert from "@mui/material/Alert";
 import axios from "axios";
 import ProfileInfo from "../main/ProfileInfo";
 import axiosInstance from '../../utils/axiosInstance';
-
+import {useNavigation} from "react-router-dom";
 export default function NavigationBar() {
+  const navigate = useNavigate();
   const [isExpanded, setIsExpanded] = useState(true); // 네비게이션 바 펼친 상태 & 접힌 상태
 
   const [isEditingIntroduction, setIsEditingIntroduction] = useState(false); // 소개글 수정중 상태
@@ -72,10 +73,14 @@ export default function NavigationBar() {
     setOpenIntroduceSnackbar(false);
   };
 
-
-  // 네비게이션 바 토글
+  // 로고 클릭 시 메인페이지로 이동
   const toggleNavigationBar = () => {
     setIsExpanded(!isExpanded);
+  };
+
+  // 로고 클릭 시 메인페이지로 이동
+  const onClickLogoImg = () => {
+    navigate("/")
   };
   // 소개글 수정 토글
   const toggleEditIntroduction = () => {
@@ -225,7 +230,9 @@ export default function NavigationBar() {
                 alt="record timeline"
                 css={css`
                   width: ${isExpanded ? "140px" : "0px"};
+                    cursor: pointer;
                 `}
+                onClick={onClickLogoImg}
               />
               <KeyboardDoubleArrowLeftIcon
                 onClick={toggleNavigationBar}
@@ -652,9 +659,11 @@ export default function NavigationBar() {
             <img
               src={Logo}
               alt="record timeline"
+              onClick={onClickLogoImg}
               css={css({
                 width: "165px",
                 marginLeft: "10px",
+                cursor: "pointer"
               })}
             />
           </div>

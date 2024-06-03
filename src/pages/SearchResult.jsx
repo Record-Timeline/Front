@@ -35,7 +35,7 @@ export default function SearchResult() {
     "Media_Culture_Sports": "미디어/문화/스포츠",
   };
 
-  // 추천 레코더 데이터 연동
+  // 검색 결과
   const fetchSearchResults = async () => {
     setLoading(true);
     setError(null);
@@ -46,8 +46,8 @@ export default function SearchResult() {
       setSearchResult(response.data);
       console.log("검색 결과", response.data);
     } catch (error) {
-      setError("Failed to fetch search results");
-      console.error("Failed to fetch search results:", error);
+      setError("검색 결과를 불러오지 못헀습니다.");
+      console.error("검색 결과 연동", error);
     } finally {
       setLoading(false);
     }

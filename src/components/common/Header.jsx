@@ -37,7 +37,7 @@ export default function Header() {
               color: white;
         `}>내 타임라인</Link>
         ) : (
-          <Link to={"/signup"} css={css`
+          <Link to={"/login"} css={css`
             text-decoration: none;
               color: white;
         `}>시작하기</Link>

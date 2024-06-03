@@ -138,7 +138,7 @@ export default function ReadSubTimelinePost({item, onDelete, onEdit}) {
               fontSize: "15px",
               color: "#525252",
               padding: "50px",
-              // overflowY: "scroll",
+              overflowY: "scroll",
             })}
             dangerouslySetInnerHTML={{ __html: item.content }} // 저장된 글 내용을 표시
           />

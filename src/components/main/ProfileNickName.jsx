@@ -2,6 +2,7 @@
 
 import React from "react";
 import { css } from "@emotion/react";
+import testProfileImg from "../../assets/images/testProfileImg.png"
 
 export default function ProfileNickName({ profileImgSrc, nickName }) {
   return (
@@ -16,7 +17,7 @@ export default function ProfileNickName({ profileImgSrc, nickName }) {
       })}
     >
       <img
-        src={profileImgSrc}
+        src={profileImgSrc? profileImgSrc : testProfileImg}
         alt="프로필 이미지"
         css={css({
           width: "130px",

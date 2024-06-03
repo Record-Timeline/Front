@@ -11,7 +11,8 @@ export default function SearchPostBox({
   commentNum,
   heartNum,
   scrapNum,
-  date,
+  startDate,
+                                        endDate,
 }) {
   return (
     <div
@@ -98,7 +99,9 @@ export default function SearchPostBox({
             margin-left: 12px;
           `}
         >
-          {date}
+          {  startDate
+          } ~ {  endDate
+        }
         </div>
       </div>
     </div>

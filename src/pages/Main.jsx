@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { css } from "@emotion/react";
 import Header from "../components/common/Header";
 import RecoderRecommendation from "../components/main/RecoderRecommendation";
@@ -9,6 +9,8 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { useSelector, useDispatch } from 'react-redux';
 import {setOpenLoginSnackbar} from "../actions/actions";
+import axiosInstance from "../utils/axiosInstance";
+
 export default function Main() {
   const interestFields = [
     "마케팅/홍보/조사",
@@ -22,12 +24,78 @@ export default function Main() {
     "교육",
     "미디어/문화/스포츠",
   ];
-  const [hoveredInterest, setHoveredInterest] = useState(null);
-  const [selectedInterest, setSelectedInterest] = useState(null);
+  const interestMapping = {
+    "마케팅/홍보/조사": "Marketing_Promotion",
+    "회계/세무/재무": "Accounting_Tax_Finance",
+    "총무/법무/사무": "GeneralAffairs_LegalAffairs_Affairs",
+    "IT개발/데이터": "IT_Data",
+    "디자인": "Design",
+    "서비스": "Service",
+    "건설/건축": "Construction_Architecture",
+    "의료": "MedicalCare",
+    "교육": "Education",
+    "미디어/문화/스포츠": "Media_Culture_Sports",
+  };
+
+
+  const [hoveredInterest, setHoveredInterest] = useState(null); // 관심분야 호버 상태
+  const [selectedInterest, setSelectedInterest] = useState(null); // 선택한 관심분야
+  const [englishInterest, setEnglishInterest] = useState(null); // 연동에 사용할 영문 관심분야
+  const [recorderData, setRecorderData] = useState(null); // 추천 레코더 데이터
+  const [postData, setPostData] = useState(null); // 추천 게시물 데이터
+
+  // defalut 관심 분야 가져오기
+  const fetchDefaultInterest= async () => {
+    try {
+      const response = await axiosInstance.get("/api/v1/my-profile");
+      setEnglishInterest(response.data.interest);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  // selectedInterest가 null일 때 사용자의 관심분야로 설정
+  useEffect(() => {
+    if (!selectedInterest) {
+      fetchDefaultInterest();
+    }
+  }, [selectedInterest]);
+
+  // 추천 레코더 데이터 연동
+  const fetchRecorderData = async () => {
+    try {
+      const response = await axiosInstance.get(`/api/v1/main/member/${englishInterest}`);
+      setRecorderData(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // 추천 게시물 데이터 연동
+  const fetchPostData = async () => {
+    try {
+      const response = await axiosInstance.get(`/api/v1/main/post/${englishInterest}`);
+      console.log(response)
+      setPostData(response.data.subTimelines);
+
+      console.log("추천 게시물", response.data.subTimelines);
+    } catch (error) {
+      console.error("추천 게시물 에러", error);
+    }
+  };
+
+  // 컴포넌트가 마운트될 때와 englishInterest가 변경될 때 fetchRecorderData를 호출
+  useEffect(() => {
+    if (englishInterest) {
+      fetchRecorderData();
+      fetchPostData();
+    }
+  }, [englishInterest]);
+
 
   const handleClick = (interest) => {
     setSelectedInterest(interest);
-    console.log(interest);
+    setEnglishInterest(interestMapping[interest])
   };
   const dispatch = useDispatch();
   const openLoginSnackbar = useSelector(state => state.openLoginSnackbar);
@@ -125,7 +193,7 @@ export default function Main() {
             `}
           >
             추천 레코더
-            <RecoderRecommendation />
+            <RecoderRecommendation recorderData={recorderData}/>
           </div>
           <div
             css={css`
@@ -136,7 +204,7 @@ export default function Main() {
             `}
           >
             추천 게시물
-            <PostRecommendation />
+            <PostRecommendation postData={postData} selectedInterest={selectedInterest}/>
           </div>
         </div>
       </div>

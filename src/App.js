@@ -11,6 +11,7 @@ import SearchResult from "./pages/SearchResult";
 import SubTimeline from "./pages/SubTimeline";
 import OthersMainTimeline from "./pages/OthersMainTimeline";
 import OthersSubTimeline from "./pages/OthersSubTimeline";
+import ModifyProfile from "./pages/ModifyProfile";
 import { CssBaseline } from "@mui/material";
 
 function App() {
@@ -29,11 +30,12 @@ function App() {
         <Route path="/login" element={<Login />} /> {/* 로그인 페이지 */}
         <Route path="/signup" element={<SignUp />} /> {/* 회원가입 페이지 */}
         <Route path="/signup/complete" element={<SignUpComplete />} /> {/* 회원가입 완료 페이지 */}
+        <Route path="/profile" element={<ModifyProfile />} /> {/* 회원정보 수정 페이지 */}
         <Route path="/bookmark" element={<Bookmark />} /> {/* 북마크한 게시물 페이지 */}
         <Route path="/search" element={<Search />} /> {/* 검색 페이지 */}
-        <Route path="/search/result/*" element={<SearchResult />} />
-        <Route path="/mytimeline" element={<MainTimeline />} /> {/* 메인 타임라인 페이지 */}
-        <Route path="/subtimeline/:mainTimelineId" element={<SubTimeline />} /> {/* 서브 타임라인 페이지 */}
+        <Route path="/search/result/*" element={<SearchResult />} />  {/* 검색 결과 페이지 */}
+        <Route path="/maintimeline" element={<MainTimeline />} /> {/* 메인 타임라인 페이지 */}
+        <Route path="/subtimeline" element={<SubTimeline />} /> {/* 서브 타임라인 페이지 */}
         <Route path="/othersmain" element={<OthersMainTimeline />} /> {/* 다른 사람 메인 타임라인 페이지 */}
         <Route path="/otherssub" element={<OthersSubTimeline />} /> {/* 다른 사람 서브 타임라인 페이지 */}
       </Routes>

@@ -31,7 +31,7 @@ function App() {
         <Route path="/signup/complete" element={<SignUpComplete />} /> {/* 회원가입 완료 페이지 */}
         <Route path="/bookmark" element={<Bookmark />} /> {/* 북마크한 게시물 페이지 */}
         <Route path="/search" element={<Search />} /> {/* 검색 페이지 */}
-        <Route path="/search/result/*" element={<SearchResult />} />
+        <Route path="/search/result/*" element={<SearchResult />} />  {/* 검색 결과 페이지 */}
         <Route path="/maintimeline" element={<MainTimeline />} /> {/* 메인 타임라인 페이지 */}
         <Route path="/subtimeline" element={<SubTimeline />} /> {/* 서브 타임라인 페이지 */}
         <Route path="/othersmain" element={<OthersMainTimeline />} /> {/* 다른 사람 메인 타임라인 페이지 */}

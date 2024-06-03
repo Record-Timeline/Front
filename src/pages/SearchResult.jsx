@@ -222,6 +222,8 @@ export default function SearchResult() {
                       introduce={recoder.introduction}
                       followerNum={20}
                       profileImg={recoder.profileImageUrl || testProfileImg}
+                      memberId={recoder.memberId}
+
                     />
                   ))}
                 </div>

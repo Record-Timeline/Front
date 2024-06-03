@@ -47,7 +47,7 @@ export default function SearchPostBox({
             width: 180px;
             margin-right: 20px;
             font-size: 15px;
-        `}>{introduce.length > 25 ? `${introduce.slice(0, 25)}...` : introduce}</div>
+        `}>{introduce?.length > 25 ? `${introduce.slice(0, 25)}...` : introduce}</div>
         <div 
         css={css`
         width: 180px;

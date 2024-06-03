@@ -648,7 +648,7 @@ export default function NavigationBar() {
                         fontSize: "13px",
                       })}
                     >
-                      <div
+                      <Link
                         css={css({
                           border: "1px solid #595959",
                           color: "#595959",
@@ -658,15 +658,18 @@ export default function NavigationBar() {
                           justifyContent: "center",
                           alignItems: "center",
                           cursor: "pointer",
+                        textDecoration: "none",
                         })}
+                        to="/profile"
                       >
+
                         <SettingsIcon
                           style={{
                             marginRight: "4px",
                           }}
                         />
                         회원정보 수정
-                      </div>
+                      </Link>
                       <div
                         onClick={handleLogout}
                         css={css({

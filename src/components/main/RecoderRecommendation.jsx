@@ -3,11 +3,14 @@
 import React, { useEffect, useState } from "react";
 import { css } from "@emotion/react";
 import ProfileInfo from "./ProfileInfo";
+import {useNavigate} from "react-router-dom";
+
 
 export default function RecoderRecommendation({ recorderData }) {
+  const navigate = useNavigate();
   // 레코더 클릭 시
   const onClickRecorder = (userId) => {
-    window.location.href = `/othersmain/${userId}`;
+    navigate(`/othersmain/${userId}`);
   };
 
   return (

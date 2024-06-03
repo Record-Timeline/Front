@@ -186,7 +186,7 @@ export default function ReadSubTimelinePost({item, onDelete, onEdit}) {
             textAlign: "center",
             // marginTop: "20px",
             marginBottom: "50px",
-            // border: "1px solid #f8f6f6",
+            // border: "1px solid black",
           })}
         >
           <AlertDialog

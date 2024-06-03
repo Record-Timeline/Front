@@ -20,7 +20,7 @@ export default function SubTimeline() {
   const [profile, setProfile] = useState(null); // 프로필 상태 추가
   const [isDone, setIsDone] = useState(false); // 체크를 사용자가 직접 체크 안할 경우
   const [isChecked, setIsChecked] = useState(false); // 사용자가 직접 체크 할 경우
-  const [isCreating, setIsCreating] = useState(true);
+  const [isCreating, setIsCreating] = useState(false);
   const [editablePost, setEditablePost] = useState(null);
   const [subTimelineItems, setSubTimelineItems] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -40,7 +40,12 @@ export default function SubTimeline() {
   };
 
   const handleCancel = () => {
-    setIsCreating(false);
+    console.log(subTimelineItems);
+    if (subTimelineItems.length === 0) {
+      setIsCreating(true);
+    } else {
+      setIsCreating(false);
+    }
   }
 
   const handleSubmit = async (newItem) => {
@@ -153,9 +158,11 @@ export default function SubTimeline() {
         const data = response.data.subTimelines;
         setSubTimelineItems(data);
 
-        if (data.length > 0) {
-          setSelectedItem(data[0]);
-          setIsCreating(false);
+        if (data.length > 0) { // 서브 타임라인 아이템이 있으면
+          setSelectedItem(data[0]); // 첫번째 서브 타임라인을 보여주고
+          setIsCreating(false); // 글쓰기 모드 활성화 x
+        } else {
+          setIsCreating(true) // 서브 타임라인 아이템이 하나도 없으면 글쓰기 모드 활성화
         }
         console.log("서브 타임라인 조회 완료", response)
       } catch (error) {

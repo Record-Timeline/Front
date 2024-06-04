@@ -4,8 +4,10 @@ import React, { useState } from "react";
 import { css } from "@emotion/react";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import {useNavigate} from "react-router-dom";
 
 export default function PostRecommendation({ postData }) {
+  const navigate = useNavigate();
   const [page, setPage] = useState(0); // 페이지 번호 상태
 
   // content에서 이미지 추출하는 함수
@@ -56,6 +58,12 @@ export default function PostRecommendation({ postData }) {
     setPage(Math.max(page - 1, 0));
   };
 
+  // 게시물 클릭 시 페이지 이동
+  const onClickPost = (memeberId, postId) => {
+    navigate(`/otherssub/${memeberId}/${postId}`);
+  };
+
+
   return (
     <div
       css={css`
@@ -98,7 +106,9 @@ export default function PostRecommendation({ postData }) {
                   padding: 20px 25px;
                   border-right: ${index === 3 ? "none" : "1px solid #c4c4c4"};
                   position: relative;
+                  cursor: pointer;
               `}
+              onClick={() => onClickPost(post.authorId, post.id)}
             >
               <div
                 css={css`

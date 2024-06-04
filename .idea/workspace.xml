@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d7ddee38-10dd-45c7-9340-11b34355df4c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/DatePickerValue.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/DatePickerValue.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/subTimeline/SubTimelineInput.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/subTimeline/SubTimelineInput.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/timeline/MainTimelineInput.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/timeline/MainTimelineInput.jsx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "git-widget-placeholder": "RTL-79-fe-서브-타임라인-페이지-ui-구현",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2024.1\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external"
+  }
+}]]></component>
+  <component name="TaskManager">
+    <servers />
+  </component>
+</project>

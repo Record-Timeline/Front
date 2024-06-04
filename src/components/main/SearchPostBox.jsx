@@ -4,6 +4,7 @@ import React from "react";
 import { css } from "@emotion/react";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import {useNavigate} from "react-router-dom";
 export default function SearchPostBox({
   nickName,
   title,
@@ -13,7 +14,14 @@ export default function SearchPostBox({
   scrapNum,
   startDate,
   endDate,
+  memeberId,
+  maintimelineId,
 }) {
+  const navigate = useNavigate();
+  // 게시물 클릭 시 페이지 이동
+  const onClickPost = (memeberId, maintimelineId) => {
+    navigate(`/otherssub/${memeberId}/${maintimelineId}`);
+  };
   return (
     <div
       css={css`
@@ -26,8 +34,9 @@ export default function SearchPostBox({
         font-size: 14px;
         padding: 15px 20px;
         color: #474747;
-        cursor: pointer;          
+        cursor: pointer;
       `}
+      onClick={() => onClickPost(memeberId, maintimelineId)}
     >
       <div
         css={css`

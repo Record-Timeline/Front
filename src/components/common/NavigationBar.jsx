@@ -526,7 +526,9 @@ export default function NavigationBar() {
                             wordBreak: "break-all",
                           })}
                         >
-                          {profileInfo.introduction.trim() === "" ? (
+                          {(profileInfo.introduction && profileInfo.introduction.trim() !== "") ? (
+                            <div>{profileInfo.introduction}</div>
+                          ) : (
                             <div
                               css={css({
                                 whiteSpace: "pre-line",
@@ -535,11 +537,8 @@ export default function NavigationBar() {
                                 color: "#6d6d6d",
                               })}
                             >
-                              소개글이 없습니다. {"\n"}나를 소개하는 한 마디를
-                              적어주세요
+                              소개글이 없습니다. {"\n"}나를 소개하는 한 마디를 적어주세요
                             </div>
-                          ) : (
-                            <div>{profileInfo.introduction}</div>
                           )}
                         </div>
                         <CreateIcon
@@ -606,6 +605,7 @@ export default function NavigationBar() {
                     text-decoration: none;
                     color: #161616;
                   `}
+                      to="/mytimeline"
                     >
                       <HomeOutlinedIcon
                         style={{

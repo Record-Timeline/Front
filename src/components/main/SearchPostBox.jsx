@@ -12,7 +12,7 @@ export default function SearchPostBox({
   heartNum,
   scrapNum,
   startDate,
-                                        endDate,
+  endDate,
 }) {
   return (
     <div
@@ -26,6 +26,7 @@ export default function SearchPostBox({
         font-size: 14px;
         padding: 15px 20px;
         color: #474747;
+        cursor: pointer;          
       `}
     >
       <div

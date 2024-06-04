@@ -235,6 +235,7 @@ export default function NavigationBar() {
   const handleLogout = () => {
     localStorage.removeItem('token');
     setOpenLogoutSnackbar(true);
+    navigate("/")
   };
 
 

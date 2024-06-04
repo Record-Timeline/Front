@@ -59,8 +59,8 @@ export default function PostRecommendation({ postData }) {
   };
 
   // 게시물 클릭 시 페이지 이동
-  const onClickPost = (memeberId, postId) => {
-    navigate(`/otherssub/${memeberId}/${postId}`);
+  const onClickPost = (memeberId, maintimelineId) => {
+    navigate(`/otherssub/${memeberId}/${maintimelineId}`);
   };
 
 
@@ -108,7 +108,7 @@ export default function PostRecommendation({ postData }) {
                   position: relative;
                   cursor: pointer;
               `}
-              onClick={() => onClickPost(post.authorId, post.id)}
+              onClick={() => onClickPost(post.authorId, post.mainTimelineId)}
             >
               <div
                 css={css`

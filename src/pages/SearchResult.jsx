@@ -178,6 +178,8 @@ export default function SearchResult() {
                     scrapNum={30}
                     startDate={post.startDate}
                     endDate={post.endDate}
+                    maintimelineId={post.mainTimelineId}
+                    memeberId={post.authorId}
                   />
                 ))}
               </div>

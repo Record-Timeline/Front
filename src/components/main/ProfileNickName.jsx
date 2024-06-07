@@ -21,7 +21,9 @@ export default function ProfileNickName({ profileImgSrc, nickName }) {
         alt="프로필 이미지"
         css={css({
           width: "130px",
+          height: "130px",
           marginBottom: "20px",
+          borderRadius: "50%"
         })}
       />
       <div>{nickName}</div>

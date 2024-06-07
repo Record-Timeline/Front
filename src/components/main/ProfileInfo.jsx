@@ -10,8 +10,8 @@ export default function ProfileInfo({
                                       introduce,
                                       followers,
                                     }) {
-  return (
 
+  return (
     <div
       css={css`
         display: flex;
@@ -19,7 +19,7 @@ export default function ProfileInfo({
         align-items: center;
       `}
     >
-      <ProfileNickName src={profileImgSrc} nickName={nickName} />
+      <ProfileNickName profileImgSrc={profileImgSrc} nickName={nickName} />
       {introduce && (
       <div
         css={css`

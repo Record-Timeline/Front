@@ -111,7 +111,7 @@ export default function ModifyProfile() {
         console.error("닉네임 변경", error);
       }
     } else {
-      alert("닉네임 중복확인이 완료되지 않았습니단.")
+      alert("닉네임 중복확인이 완료되지 않았습니다.")
     }
   };
 

@@ -10,7 +10,8 @@ export default function OthersTimelineItem({memberId, mainTimelineId, startDate,
   const navigate = useNavigate();
 
   const handleTitleClick = () => {
-    navigate(`/otherssub/${memberId}/${mainTimelineId}`, { state: { title } });
+    // navigate(`/otherssub/${memberId}/${mainTimelineId}`, { state: { title } });
+    navigate(`/otherssub/${memberId}/${mainTimelineId}`);
   };
 
   return (

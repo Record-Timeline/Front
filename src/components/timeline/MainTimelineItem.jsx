@@ -14,7 +14,8 @@ function MainTimelineItem({mainTimelineId, startDate, endDate, title, onEdit, on
   const navigate = useNavigate();
 
   const handleTitleClick = () => {
-    navigate(`/subtimeline/${mainTimelineId}`, { state: { title } });
+    // navigate(`/subtimeline/${mainTimelineId}`, { state: { title } });
+    navigate(`/subtimeline/${mainTimelineId}`);
   };
 
   return (

@@ -21,6 +21,7 @@ import axios from "axios";
 import ProfileInfo from "../main/ProfileInfo";
 import axiosInstance from '../../utils/axiosInstance';
 import {useNavigation} from "react-router-dom";
+import Drawer from '@mui/material/Drawer';
 
 export default function NavigationBar() {
   const navigate = useNavigate();
@@ -240,7 +241,9 @@ export default function NavigationBar() {
 
 
   return (
-    <div
+    <Drawer
+      open = {isExpanded}
+      onClose={() => setIsExpanded(false)}
       css={css`
         position: fixed;
         top: 0;
@@ -261,11 +264,8 @@ export default function NavigationBar() {
         {isExpanded ? (
           <div
             css={css({
-              height: "100vh",
-              width: "100%",
               backgroundColor: "white",
               padding: "25px",
-              boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
             })}
           >
             <div
@@ -593,7 +593,6 @@ export default function NavigationBar() {
                     </div>
                     <Link
                       css={css`
-                    width: 125.5%;
                     height: 60px;
                     display: flex;
                     justify-content: center;
@@ -618,7 +617,6 @@ export default function NavigationBar() {
                     </Link>
                     <Link
                       css={css`
-                    width: 125.5%;
                     height: 60px;
                     display: flex;
                     justify-content: center;
@@ -786,6 +784,6 @@ export default function NavigationBar() {
           로그아웃 되었습니다.
         </Alert>
       </Snackbar>
-    </div>
+    </Drawer>
   );
 }

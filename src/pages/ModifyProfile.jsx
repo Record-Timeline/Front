@@ -21,6 +21,8 @@ export default function ModifyProfile() {
   const [myProfile, setMyProfile] = useState("")
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [isSameNickname, setIsSameNickname] = useState(false);
+  const [openPasswordSnackbar, setOpenPasswordSnackbar] = useState(false);
+
   const interestFields = [
     "마케팅/홍보/조사",
     "회계/세무/재무",
@@ -65,6 +67,13 @@ export default function ModifyProfile() {
       return;
     }
     setOpenSnackbar(false);
+  };
+
+  const handleClosePasswordSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenPasswordSnackbar(false);
   };
 
   // 닉네임 중복확인 버튼
@@ -319,7 +328,7 @@ export default function ModifyProfile() {
         `}
       >
         비밀번호
-        <PasswordChangeModal  />
+        <PasswordChangeModal  setOpenPasswordSnackbar={setOpenPasswordSnackbar} />
       </div>
       <div css={css`
             display: flex;
@@ -348,6 +357,16 @@ export default function ModifyProfile() {
           sx={{ width: '100%' }}
         >
           회원정보가 성공적으로 수정되었습니다
+        </Alert>
+      </Snackbar>
+      <Snackbar open={openPasswordSnackbar} autoHideDuration={3000} onClose={handleClosePasswordSnackbar} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+        <Alert
+          onClose={handleClosePasswordSnackbar}
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          비밀번호가 변경되었습니다.
         </Alert>
       </Snackbar>
     </div>

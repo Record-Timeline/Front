@@ -7,9 +7,9 @@ import DialogActions from "@mui/material/DialogActions";
 import { css } from "@emotion/react";
 import Input from "@mui/material/Input";
 import axiosInstance from "../../utils/axiosInstance";
-import {  useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 
-export default function PasswordChangeModal(props) {
+export default function PasswordChangeModal({ setOpenPasswordSnackbar }) {
   const [open, setOpen] = useState(false);
   const [nowPassword, setNowPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -18,6 +18,7 @@ export default function PasswordChangeModal(props) {
   const [newPasswordError, setNewPasswordError] = useState("");
   const [passwordMatchError, setPasswordMatchError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -108,6 +109,7 @@ export default function PasswordChangeModal(props) {
       console.log("비밀번호 변경", updateResponse);
       if (updateResponse.data.code === "SU") {
         console.log("비밀번호 변경 성공");
+        setOpenPasswordSnackbar(true)
         handleClose();
         // 값들 초기화
         setNowPassword("")
@@ -121,7 +123,6 @@ export default function PasswordChangeModal(props) {
       } else {
         console.error("비밀번호 변경 실패", updateResponse.data);
         if (updateResponse.data.code === "PM") {
-          alert(updateResponse.data.message)
           setNowPasswordError(updateResponse.data.message)
         }
       }
@@ -303,6 +304,7 @@ export default function PasswordChangeModal(props) {
           </DialogActions>
         </div>
       </Dialog>
+
     </React.Fragment>
   );
 }

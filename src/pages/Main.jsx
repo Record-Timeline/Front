@@ -129,9 +129,6 @@ export default function Main() {
         `}
       >
         <div
-          css={css`
-            margin: 0px 0px 0px 280px;
-          `}
         >
           <div
             css={css`

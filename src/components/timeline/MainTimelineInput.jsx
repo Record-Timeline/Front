@@ -32,12 +32,12 @@ function MainTimelineInput({ index, saveItem, initialData, onDelete, createMainT
       setAlertOpen(true);
     } else {
       // const data = { startDate, endDate, title };
+      setAlertOpen(false); // 조건을 만족하므로 Alert Dialog를 닫음
       const data = {
         startDate: dayjs(startDate).utc().format(), // UTC로 변환하여 저장 (날짜 하루 빨라지는 버그 땜에)
         endDate: endDate ? dayjs(endDate).utc().format() : null, // UTC로 변환하여 저장 (날짜 하루 빨라지는 버그 땜에)
         title
       };
-
 
       if (initialData.id) {
         await updateItem(index, data); // 기존 항목 업데이트

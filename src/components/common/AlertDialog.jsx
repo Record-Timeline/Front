@@ -13,7 +13,12 @@ export default function AlertDialog({ icon, onConfirm, dialogTitle, dialogConten
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
-        setOpen(true);
+        if (open) {
+            setOpen(false);
+        } else {
+            setOpen(true);
+        }
+
     };
 
     const handleClose = () => {

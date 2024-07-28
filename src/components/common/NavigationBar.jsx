@@ -562,7 +562,8 @@ export default function NavigationBar() {
                       flexDirection: "column",
                     })}
                   >
-                    <div
+                    <Link
+                      to="/follow"
                       css={css({
                         width: "93%",
                         height: "78px",
@@ -572,9 +573,11 @@ export default function NavigationBar() {
                         alignItems: "center",
                         justifyContent: "space-around",
                         marginTop: "20px",
+                        textDecoration: "none",
+                        color: "#000",
                       })}
                     >
-                      <div css={css({ marginLeft: "20px" })}>
+                      <div css={css({ marginLeft: "20px"})}>
                         <div css={css({ textAlign: "center", fontSize: "20px" })}>
                           {followers}
                         </div>
@@ -590,7 +593,7 @@ export default function NavigationBar() {
                           팔로잉
                         </div>
                       </div>
-                    </div>
+                    </Link>
                     <Link
                       css={css`
                     width: 125.5%;

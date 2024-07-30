@@ -148,6 +148,7 @@ export default function NavigationBar() {
     setIsEditingProfile(false);
   };
   console.log("profileInfo", profileInfo)
+
   // 프로필 정보 가져오기
   const fetchProfileInfo = async () => {
     try {

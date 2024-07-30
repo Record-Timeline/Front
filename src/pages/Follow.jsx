@@ -1,11 +1,12 @@
 /** @jsxImportSource @emotion/react */
 
-import React from "react";
+import React, {useEffect} from "react";
 import { css } from "@emotion/react";
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
+import axiosInstance from "../utils/axiosInstance";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -42,6 +43,22 @@ export default function Bookmark() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  // 현재 팔로잉 정보 불러오기
+  const fetchProfileData = async () => {
+    try {
+      const response = await axiosInstance.get("/api/v1/follow/following");
+      console.log(response.data);
+      //setFollowing(response.data); // 현재 닉네임 설정
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchProfileData();
+  }, []);
 
   return (
     <div

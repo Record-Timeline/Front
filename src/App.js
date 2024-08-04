@@ -14,6 +14,7 @@ import OthersSubTimeline from "./pages/OthersSubTimeline";
 import ModifyProfile from "./pages/ModifyProfile";
 import { CssBaseline } from "@mui/material";
 import FindPassword from "./pages/FindPassword";
+import FindPasswordCertification from "./pages/FindPasswordCertification";
 
 function App() {
   const location = useLocation();
@@ -31,7 +32,9 @@ function App() {
         <Route path="/login" element={<Login />} /> {/* 로그인 페이지 */}
         <Route path="/signup" element={<SignUp />} /> {/* 회원가입 페이지 */}
         <Route path="/signup/complete" element={<SignUpComplete />} /> {/* 회원가입 완료 페이지 */}
-        <Route path="/find" element={<FindPassword />} /> {/* 비밀번호 찾기 페이지 */}
+        <Route path="/find" element={<FindPassword />} /> {/* 비밀번호 찾기 페이지 */}\
+        <Route path="/find/certification" element={<FindPasswordCertification />} /> {/* 비밀번호 찾기 페이지 */}
+
         <Route path="/signup/complete" element={<SignUpComplete />} /> {/* 회원가입 완료 페이지 */}
         <Route path="/profile" element={<ModifyProfile />} /> {/* 회원정보 수정 페이지 */}
         <Route path="/bookmark" element={<Bookmark />} /> {/* 북마크한 게시물 페이지 */}

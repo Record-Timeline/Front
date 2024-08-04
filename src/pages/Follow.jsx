@@ -46,12 +46,23 @@ export default function Follow() {
   const [follower, setFollower] = useState([]); // 팔로워 목록 state
   
   const [openFollowSnackbar, setOpenFollowSnackbar] = useState(false);
+  const [openFollowerSnackbar, setOpenFollowerSnackbar] = useState(false);
 
   const handleCloseFollowSnackbar = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
     setOpenFollowSnackbar(false);
+    console.log("닫기")
+    console.log()
+  };
+
+
+  const handleCloseFollowerSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenFollowerSnackbar(false);
     console.log("닫기")
     console.log()
   };
@@ -89,16 +100,28 @@ export default function Follow() {
   useEffect(() => {
     fetchFollowerData();
   }, []);
-
-  const cancleFollow = async (followerId) => {
+// 팔로우 취소
+  const cancleFollowing = async (followerId) => {
     try {
       const response = await axiosInstance.delete(`/api/v1/follow/${followerId}`);
-      console.log("팔로우 취소 성공:", response);
+      console.log("팔로잉 취소 성공:", response);
       // 요청이 성공하면, 현재 팔로잉 목록 갱신
       fetchFollowingData();
       setOpenFollowSnackbar(true)
     } catch (error) {
       console.error("팔로우 취소 실패:", error);
+    }
+  };
+//팔로워 삭제
+  const cancleFollower = async (followerId) => {
+    try {
+      const response = await axiosInstance.delete(`/api/v1/follow/remove-follower/${followerId}`);
+      console.log("팔로워 삭제 성공:", response);
+      // 요청이 성공하면, 현재 팔로워 목록 갱신
+      fetchFollowerData();
+      setOpenFollowerSnackbar(true)
+    } catch (error) {
+      console.error("팔로워 삭제 실패:", error);
     }
   };
 
@@ -179,7 +202,8 @@ export default function Follow() {
               nickName={follower.nickname}
               interest={interestMapping[follower.interest]}
               followerId={follower.memberId}
-              cancleFollow={cancleFollow}
+              cancleFollow={cancleFollower}
+              isFollowing={false}
             />
           ))}
         </CustomTabPanel>
@@ -192,7 +216,8 @@ export default function Follow() {
               nickName={following.nickname}
               interest={interestMapping[following.interest]}
               followerId={following.memberId}
-              cancleFollow={cancleFollow}
+              cancleFollow={cancleFollowing}
+              isFollowing={true}
             />
           ))}
         </CustomTabPanel>
@@ -207,6 +232,18 @@ export default function Follow() {
           sx={{ width: '100%' }}
         >
           팔로우가 취소되었습니다.
+        </Alert>
+      </Snackbar>
+
+      {/* 팔로워 삭제 시 뜨는 스낵바 */}
+      <Snackbar open={openFollowerSnackbar} autoHideDuration={4000} onClose={handleCloseFollowerSnackbar} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+        <Alert
+          onClose={handleCloseFollowerSnackbar}
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          팔로워가 삭제되었습니다.
         </Alert>
       </Snackbar>
     </div>

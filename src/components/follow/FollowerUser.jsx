@@ -9,6 +9,7 @@ export default function FollowerUser({
                                        interest,
                                        followerId,
                                        cancleFollow,
+                                       isFollowing
                                      }) {
   return (
     <div
@@ -17,6 +18,7 @@ export default function FollowerUser({
         align-items: center;
         padding: 30px;
         border-bottom: 1px solid #D8D8D8;
+          width: 500px;
       `}
     >
       <img
@@ -60,19 +62,18 @@ export default function FollowerUser({
       </div>
       <div
         css={css`
-          margin-left: 70px;
+          margin-left: auto;
           cursor: pointer;
           padding: 5px 20px;
           border-radius: 10px;
-          border: 1px solid #D9D9D9;
-          background: #909090;
+            background: ${isFollowing ? "#909090" : "#b4b4b4"};
           color: #FFF;
           font-size: 17px;
           font-weight: 500;
         `}
         onClick={() => cancleFollow(followerId)}
       >
-        팔로우 취소
+        {isFollowing ? "팔로우 취소" : "삭제"}
       </div>
     </div>
   );

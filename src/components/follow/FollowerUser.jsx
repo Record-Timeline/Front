@@ -2,6 +2,7 @@
 
 import React from "react";
 import { css } from "@emotion/react";
+import Button from "@mui/material/Button";
 
 export default function FollowerUser({
                                        profileImgSrc,
@@ -60,21 +61,20 @@ export default function FollowerUser({
           {interest}
         </div>
       </div>
-      <div
-        css={css`
-          margin-left: auto;
-          cursor: pointer;
-          padding: 5px 20px;
-          border-radius: 10px;
-            background: ${isFollowing ? "#909090" : "#b4b4b4"};
-          color: #FFF;
-          font-size: 17px;
-          font-weight: 500;
-        `}
+      <Button
+        variant="text"
+        color={isFollowing ? "primary" : "error"}
         onClick={() => cancleFollow(followerId)}
+        css={css`
+            margin-left: auto;
+            padding: 5px 20px;
+            font-size: 17px;
+            font-weight: 500;
+            font-family: Pretendard;
+        `}
       >
         {isFollowing ? "팔로우 취소" : "삭제"}
-      </div>
+      </Button>
     </div>
   );
 }

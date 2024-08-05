@@ -5,6 +5,7 @@ import {useState} from "react";
 import {css} from "@emotion/react";
 import Button from "./Button"
 import testProfileImg from "../../assets/images/testProfileImg.png";
+import axiosInstance from "../../utils/axiosInstance";
 
 export default function OthersProfile({profile}) {
   const nickName = "닉네임"; // 테스트 닉네임
@@ -13,11 +14,26 @@ export default function OthersProfile({profile}) {
   const [followers, setFollowers] = useState(20);
   const [followings, setFollowings] = useState(30);
 
-  const onClickFollow = () => {
+  const onClickFollow = async () => {
     if (isFollowed) {
-      setFollowers(followers - 1); // 팔루오 해제 시 팔로우 수 감소
+      try {
+        const response = await axiosInstance.delete(`/api/v1/follow/${profile.memberId}`)
+        setFollowers(followers - 1); // 팔루오 해제 시 팔로우 수 감소
+        console.log("팔로우 취소 완료", response);
+      } catch (error) {
+        console.log("팔로우 취소 오류", error);
+        console.error("에러 상세:", error.response ? error.response.data : error.message);
+      }
     } else {
-      setFollowers(followers + 1); // 팔로우 누를 시 팔로우 수 증가
+      // 팔로우 연동
+        try {
+          const reponse = await axiosInstance.post (`/api/v1/follow/${profile.memberId}`, {});
+          setFollowers(followers + 1); // 팔로우 누를 시 팔로우 수 증가
+          console.log("팔로우 완료", reponse)
+        } catch (error) {
+          console.log("팔로우 연동 오류", error);
+          console.error("에러 상세:", error.response ? error.response.data : error.message);
+        }
     }
     setIsFollowed(!isFollowed); // 팔로우 상태 토글
   }

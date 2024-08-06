@@ -1,10 +1,11 @@
 /** @jsxImportSource @emotion/react */
 
 import React, {useState, useEffect} from "react";
-import { css } from "@emotion/react";
+import {css} from "@emotion/react";
 import SearchPostBox from "../components/main/SearchPostBox";
 import Header from "../components/common/Header";
 import axiosInstance from "../utils/axiosInstance";
+import { TbNotesOff } from "react-icons/tb";
 
 export default function Bookmark() {
   const [bookmarkList, setBookmarkList] = useState([]);
@@ -62,21 +63,42 @@ export default function Bookmark() {
           alignItems: "center",
         })}
       >
-        {bookmarkList.map((post, index) => (
-          <SearchPostBox
-            key={index}
-            nickName={post.authorName}
-            title={post.title}
-            category={interestMapping[post.authorInterest]}
-            commentNum={20}
-            heartNum={15}
-            scrapNum={post.bookmarkCount}
-            startDate={post.startDate}
-            endDate={post.endDate}
-            maintimelineId={post.mainTimelineId}
-            memeberId={post.authorId}
-          />
-        ))}
+        {bookmarkPostNum === 0 ? (
+          <div
+            css={css({
+              marginTop: "150px",
+              fontSize: "25px"
+            })}
+          >
+            <div
+              css={css({
+                display: 'flex',  // Flexbox 사용 설정
+                alignItems: 'center',  // 내부 아이콘 가로 방향 중앙 정렬
+                justifyContent: 'center',  // 내부 아이콘 세로 방향 중앙 정렬
+                fontSize: "50px",
+                marginBottom: "30px"
+              })}
+            >
+              <TbNotesOff />
+            </div>
+            <p>북마크한 게시글이 없습니다.</p>
+          </div>
+        ) : (
+          bookmarkList.map((post, index) => ( // 북마크한 게시글 목록 뿌리기
+            <SearchPostBox
+              key={index}
+              nickName={post.authorName}
+              title={post.title}
+              category={interestMapping[post.authorInterest]}
+              commentNum={20}
+              heartNum={15}
+              scrapNum={post.bookmarkCount}
+              startDate={post.startDate}
+              endDate={post.endDate}
+              maintimelineId={post.mainTimelineId} // 이거 유경이 언니한테 조회 결과에 추가해달라고 하기
+              memeberId={post.authorId} // 이하동문
+            />
+          )))}
       </div>
     </div>
   );

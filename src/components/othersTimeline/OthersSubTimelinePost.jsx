@@ -22,11 +22,37 @@ export default function OthersSubTimelinePost({item, isDone}) {
   const [like, setLike] = useState(204); // 좋아요 수 임의로 설정
   const [bookmark, setBookmark] = useState(53) // 북마크 수 임의로 설정
 
-  const onClickLike = () => {
+  const onClickLike = async () => {
     if (isLiked) {
-      setLike(like - 1); // 좋아요 해제 시 좋아요 수 감소
+      // 좋아요 취소 연동
+      try {
+        const response = await axiosInstance.post(
+          `/api/v1/likes/toggle`,
+          {
+            subTimelineId: item.id
+          }
+        );
+        setLike(like - 1); // 좋아요 해제 시 좋아요 수 감소
+        console.log("좋아요 취소 완료", response);
+      } catch (error) {
+        console.log("좋아요 취소 오류", error);
+        console.error("에러 상세:", error.response ? error.response.data : error.message);
+      }
     } else {
-      setLike(like + 1); // 좋아요 누를 시 좋아요 수 증가
+      // 좋아요 연동
+      try {
+        const response = await axiosInstance.post(
+          `/api/v1/likes/toggle`,
+          {
+            subTimelineId: item.id
+          }
+        );
+        setLike(like + 1); // 좋아요 누를 시 좋아요 수 증가
+        console.log("좋아요 완료", response)
+      } catch (error) {
+        console.log("좋아요 연동 오류", error);
+        console.error("에러 상세:", error.response ? error.response.data : error.message);
+      }
     }
     setIsLiked(!isLiked); // 좋아요 상태 토글
   }
@@ -57,7 +83,7 @@ export default function OthersSubTimelinePost({item, isDone}) {
           }
         );
         setBookmark(bookmark + 1) // 북마크 누를 시 북마크 수 증가
-        console.log("북마크 완료", response)
+        console.log("북마크 완료", response);
       } catch (error) {
         console.log("북마크 연동 오류", error);
         console.error("에러 상세:", error.response ? error.response.data : error.message);

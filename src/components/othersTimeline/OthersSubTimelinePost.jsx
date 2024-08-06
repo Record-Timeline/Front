@@ -12,6 +12,7 @@ import Favorite from '@mui/icons-material/Favorite';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import dayjs from "dayjs";
+import axiosInstance from "../../utils/axiosInstance";
 
 const label = {inputProps: {'aria-label': 'Checkbox demo'}};
 
@@ -30,11 +31,37 @@ export default function OthersSubTimelinePost({item, isDone}) {
     setIsLiked(!isLiked); // 좋아요 상태 토글
   }
 
-  const onClickBookmark = () => {
+  const onClickBookmark = async () => {
     if (isBookmarked) {
-      setBookmark(bookmark - 1); // 북마크 해제 시 북마크 수 감소
+      // 북마크 취소 연동
+      try {
+        const response = await axiosInstance.post(
+          `/api/v1/bookmarks/toggle`,
+          {
+            subTimelineId: item.id
+          }
+        );
+        setBookmark(bookmark - 1); // 북마크 해제 시 북마크 수 감소
+        console.log("북마크 취소 완료", response);
+      } catch (error) {
+        console.log("북마크 취소 오류", error);
+        console.error("에러 상세:", error.response ? error.response.data : error.message);
+      }
     } else {
-      setBookmark(bookmark + 1) // 북마크 누를 시 북마크 수 증가
+      // 북마크 연동
+      try {
+        const response = await axiosInstance.post(
+          `/api/v1/bookmarks/toggle`,
+          {
+            subTimelineId: item.id
+          }
+        );
+        setBookmark(bookmark + 1) // 북마크 누를 시 북마크 수 증가
+        console.log("북마크 완료", response)
+      } catch (error) {
+        console.log("북마크 연동 오류", error);
+        console.error("에러 상세:", error.response ? error.response.data : error.message);
+      }
     }
     setIsBookmarked(!isBookmarked); // 북마크 상태 토글
   }

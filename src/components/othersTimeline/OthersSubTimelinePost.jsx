@@ -32,7 +32,8 @@ export default function OthersSubTimelinePost({item, isDone}) {
             subTimelineId: item.id
           }
         );
-        setLike(like - 1); // 좋아요 해제 시 좋아요 수 감소
+        // setLike(like - 1); // 좋아요 해제 시 좋아요 수 감소
+        setLike(response.data.likeCount); // 좋아요 수 갱신
         console.log("좋아요 취소 완료", response);
       } catch (error) {
         console.log("좋아요 취소 오류", error);
@@ -47,7 +48,8 @@ export default function OthersSubTimelinePost({item, isDone}) {
             subTimelineId: item.id
           }
         );
-        setLike(like + 1); // 좋아요 누를 시 좋아요 수 증가
+        // setLike(like + 1); // 좋아요 누를 시 좋아요 수 증가
+        setLike(response.data.likeCount); // 좋아요 누를 시 좋아요 수 증가 (좋아요 수 갱신)
         console.log("좋아요 완료", response)
       } catch (error) {
         console.log("좋아요 연동 오류", error);
@@ -67,7 +69,8 @@ export default function OthersSubTimelinePost({item, isDone}) {
             subTimelineId: item.id
           }
         );
-        setBookmark(bookmark - 1); // 북마크 해제 시 북마크 수 감소
+        // setBookmark(bookmark - 1); // 북마크 해제 시 북마크 수 감소
+        setBookmark(response.data.bookmarkCount) // 북마크 수 갱신
         console.log("북마크 취소 완료", response);
       } catch (error) {
         console.log("북마크 취소 오류", error);
@@ -82,7 +85,8 @@ export default function OthersSubTimelinePost({item, isDone}) {
             subTimelineId: item.id
           }
         );
-        setBookmark(bookmark + 1) // 북마크 누를 시 북마크 수 증가
+        // setBookmark(bookmark + 1) // 북마크 누를 시 북마크 수 증가
+        setBookmark(response.data.bookmarkCount) // 북마크 누를 시 북마크 수 증가 (북마크 수 갱신)
         console.log("북마크 완료", response);
       } catch (error) {
         console.log("북마크 연동 오류", error);

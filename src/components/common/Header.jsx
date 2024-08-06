@@ -4,7 +4,7 @@ import { css } from "@emotion/react";
 import SearchIcon from "@mui/icons-material/Search";
 import { Link } from "react-router-dom";
 
-export default function Header() {
+export default function Header(props) {
 
   return (
     <div
@@ -14,6 +14,7 @@ export default function Header() {
         display: flex;
         align-items: center;
         margin: 25px 0px 10px 0px;
+        background-color: ${props.backgroundColor};
       `}
     >
       <div

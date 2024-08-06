@@ -1,12 +1,14 @@
 /** @jsxImportSource @emotion/react */
 
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { css } from "@emotion/react";
 import SearchPostBox from "../components/main/SearchPostBox";
 import Header from "../components/common/Header";
+import axiosInstance from "../utils/axiosInstance";
 
 export default function Bookmark() {
-  const bookmarkPostNum = 3; // 북마크 한 게시글 수
+  const [bookmarkList, setBookmarkList] = useState([]);
+  const [bookmarkPostNum, setBookmarkPostNum] = useState(); // 북마크 한 게시글 수
 
   const interestMapping = {
     "Marketing_Promotion": "마케팅/홍보/조사",
@@ -21,6 +23,24 @@ export default function Bookmark() {
     "Media_Culture_Sports": "미디어/문화/스포츠",
   };
 
+  // 북마크 목록 조회 연동
+  const fetchBookmarkList = async () => {
+    try {
+      const response = await axiosInstance.get(`/api/v1/bookmarks/my`)
+      setBookmarkPostNum(response.data.length);
+      setBookmarkList(response.data);
+      console.log("북마크 조회 성공", response.data);
+      console.log(response);
+    } catch (error) {
+      console.log("북마크 조회 실패", error);
+      console.error("에러 상세:", error.response ? error.response.data : error.message);
+    }
+  }
+
+  useEffect(() => {
+    fetchBookmarkList();
+  }, [])
+
   return (
     <div>
       <Header/>
@@ -30,7 +50,7 @@ export default function Bookmark() {
           textAlign: "center",
           fontSize: "30px",
           fontWeight: "700",
-          margin: "20px 0 30px 0",
+          margin: "20px 0 50px 0",
         })}
       >
         북마크한 게시물 <p css={css({color: "#939393", display: "inline-block", marginLeft: "8px"})}>{bookmarkPostNum}</p>
@@ -42,45 +62,21 @@ export default function Bookmark() {
           alignItems: "center",
         })}
       >
-        <SearchPostBox
-          key={1}
-          nickName={"밍밍몽뮤뮤"}
-          title={"헐~"}
-          category={interestMapping["IT_Data"]}
-          commentNum={20}
-          heartNum={15}
-          scrapNum={30}
-          startDate={"2024-07-15"}
-          endDate={"2024-07-31"}
-          maintimelineId={4}
-          memeberId={103}
-        />
-        <SearchPostBox
-          key={2}
-          nickName={"binni"}
-          title={"안녕하세요"}
-          category={interestMapping["IT_Data"]}
-          commentNum={20}
-          heartNum={15}
-          scrapNum={30}
-          startDate={"2024-07-15"}
-          endDate={"2024-07-31"}
-          maintimelineId={4}
-          memeberId={103}
-        />
-        <SearchPostBox
-          key={3}
-          nickName={"별그리는바다"}
-          title={"해가뜨기전에"}
-          category={interestMapping["IT_Data"]}
-          commentNum={20}
-          heartNum={15}
-          scrapNum={30}
-          startDate={"2024-07-15"}
-          endDate={"2024-07-31"}
-          maintimelineId={4}
-          memeberId={103}
-        />
+        {bookmarkList.map((post, index) => (
+          <SearchPostBox
+            key={index}
+            nickName={post.authorName}
+            title={post.title}
+            category={interestMapping[post.authorInterest]}
+            commentNum={20}
+            heartNum={15}
+            scrapNum={post.bookmarkCount}
+            startDate={post.startDate}
+            endDate={post.endDate}
+            maintimelineId={post.mainTimelineId}
+            memeberId={post.authorId}
+          />
+        ))}
       </div>
     </div>
   );

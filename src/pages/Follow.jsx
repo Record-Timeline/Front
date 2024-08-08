@@ -44,7 +44,7 @@ export default function Follow() {
   const [value, setValue] = React.useState(0);
   const [following, setFollowing] = useState([]); // 팔로잉 목록 state
   const [follower, setFollower] = useState([]); // 팔로워 목록 state
-  
+
   const [openFollowSnackbar, setOpenFollowSnackbar] = useState(false);
   const [openFollowerSnackbar, setOpenFollowerSnackbar] = useState(false);
 
@@ -100,7 +100,8 @@ export default function Follow() {
   useEffect(() => {
     fetchFollowerData();
   }, []);
-// 팔로우 취소
+
+  // 팔로우 취소
   const cancleFollowing = async (followerId) => {
     try {
       const response = await axiosInstance.delete(`/api/v1/follow/${followerId}`);
@@ -112,7 +113,8 @@ export default function Follow() {
       console.error("팔로우 취소 실패:", error);
     }
   };
-//팔로워 삭제
+
+  // 팔로워 삭제
   const cancleFollower = async (followerId) => {
     try {
       const response = await axiosInstance.delete(`/api/v1/follow/remove-follower/${followerId}`);
@@ -143,10 +145,10 @@ export default function Follow() {
   return (
     <div
       css={css`
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        align-items: center;
+          display: flex;
+          justify-content: center;
+          flex-direction: column;
+          align-items: center;
       `}
     >
       <Box
@@ -195,31 +197,43 @@ export default function Follow() {
       >
         <CustomTabPanel value={value} index={0}>
           {/*팔로워 목록*/}
-          {follower.map((follower) => (
-            <FollowerUser
-              key={follower.memberId}
-              profileImgSrc={follower.profileImageUrl || testProfileImg}
-              nickName={follower.nickname}
-              interest={interestMapping[follower.interest]}
-              followerId={follower.memberId}
-              cancleFollow={cancleFollower}
-              isFollowing={false}
-            />
-          ))}
+          {follower.length === 0 ? (
+            <Box sx={{ textAlign: 'center', fontSize: '18px', color: '#999999', paddingTop: '20px' }}>
+              팔로워가 없습니다.
+            </Box>
+          ) : (
+            follower.map((follower) => (
+              <FollowerUser
+                key={follower.memberId}
+                profileImgSrc={follower.profileImageUrl || testProfileImg}
+                nickName={follower.nickname}
+                interest={interestMapping[follower.interest]}
+                followerId={follower.memberId}
+                cancleFollow={cancleFollower}
+                isFollowing={false}
+              />
+            ))
+          )}
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
           {/*팔로잉 목록*/}
-          {following.map((following) => (
-            <FollowerUser
-              key={following.memberId}
-              profileImgSrc={following.profileImageUrl || testProfileImg}
-              nickName={following.nickname}
-              interest={interestMapping[following.interest]}
-              followerId={following.memberId}
-              cancleFollow={cancleFollowing}
-              isFollowing={true}
-            />
-          ))}
+          {following.length === 0 ? (
+            <Box sx={{ textAlign: 'center', fontSize: '18px', color: '#999999', paddingTop: '20px' }}>
+              팔로잉이 없습니다.
+            </Box>
+          ) : (
+            following.map((following) => (
+              <FollowerUser
+                key={following.memberId}
+                profileImgSrc={following.profileImageUrl || testProfileImg}
+                nickName={following.nickname}
+                interest={interestMapping[following.interest]}
+                followerId={following.memberId}
+                cancleFollow={cancleFollowing}
+                isFollowing={true}
+              />
+            ))
+          )}
         </CustomTabPanel>
       </Box>
 

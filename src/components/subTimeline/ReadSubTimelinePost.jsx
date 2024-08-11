@@ -21,8 +21,8 @@ export default function ReadSubTimelinePost({item, onDelete, onEdit}) {
   const [isChecked, setIsChecked] = useState(false); // 타임라인 체크 circle 상태
   const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
-  const [like, setLike] = useState(204); // 좋아요 수 임의로 설정
-  const [bookmark, setBookmark] = useState(53) // 북마크 수 임의로 설정
+  const [like, setLike] = useState(item.likeCount); // 좋아요 수
+  const [bookmark, setBookmark] = useState(item.bookmarkCount) // 북마크 수
 
   const onClickLike = async () => {
     if (isLiked) {

@@ -10,8 +10,8 @@ export default function MyProfile({profile}) {
   // if (!profile) return null;
 
   const [isFollowed, setIsFollowed] = useState(false);
-  const [followers, setFollowers] = useState(profile.followers || 20);
-  const [followings, setFollowings] = useState(profile.followings || 30);
+  const [followers, setFollowers] = useState(profile.followerCount);
+  const [followings, setFollowings] = useState(profile.followingCount);
 
   // 카테고리
   const interestMapping = {

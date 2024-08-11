@@ -11,8 +11,8 @@ export default function OthersProfile({profile}) {
   const nickName = "닉네임"; // 테스트 닉네임
   const interestCategory = "개발자"; // 테스트 관심분야
   const [isFollowed, setIsFollowed] = useState(false);
-  const [followers, setFollowers] = useState(20);
-  const [followings, setFollowings] = useState(30);
+  const [followers, setFollowers] = useState(profile.followerCount);
+  const [followings, setFollowings] = useState(profile.followingCount);
 
   const onClickFollow = async () => {
     if (isFollowed) {

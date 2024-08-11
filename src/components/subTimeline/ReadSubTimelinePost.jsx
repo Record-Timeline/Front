@@ -29,10 +29,10 @@ export default function ReadSubTimelinePost({item, onDelete, onEdit}) {
     try {
       const response = await axiosInstance.get(`/api/v1/sub-timelines/${item.id}/like-bookmark`);
       console.log("좋아요/북마크 상태 체크", response.data);
-      if (response.data.liked) {
+      if (response.data.liked) { // 좋아요 여부 상태 체크
         setIsLiked(true);
       }
-      if (response.data.bookmarked) {
+      if (response.data.bookmarked) { // 북마크 여부 상태 체크
         setIsBookmarked(true);
       }
     } catch (error) {

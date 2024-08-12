@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import * as React from "react";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {css} from "@emotion/react";
 import Button from "./Button"
 import testProfileImg from "../../assets/images/testProfileImg.png";
@@ -13,6 +13,26 @@ export default function OthersProfile({profile}) {
   const [isFollowed, setIsFollowed] = useState(false);
   const [followers, setFollowers] = useState(profile.followerCount);
   const [followings, setFollowings] = useState(profile.followingCount);
+
+  // 팔로우 상태 연동
+  const followStatus = async () => {
+    try {
+      const response = await axiosInstance.get(`/api/v1/follow/is-following/${profile.memberId}`)
+      const followedStatus = response.data.result; // '내'가 해당 'memberId'를 팔로우 했는지 여부 (true/false)
+      console.log("팔로우 상태 체크 완료", response.data);
+
+      if (response.data.result) { // 팔로우 여부 상태 체크
+        setIsFollowed(true)
+      }
+    } catch (error) {
+      console.log("팔로우 상태 체크 오류", error);
+      console.error("에러 상세:", error.response ? error.response.data : error.message);
+    }
+  }
+
+  useEffect(() => {
+    followStatus();
+  }, [])
 
   const onClickFollow = async () => {
     if (isFollowed) {

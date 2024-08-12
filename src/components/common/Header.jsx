@@ -13,7 +13,7 @@ export default function Header() {
         height: 50px;
         display: flex;
         align-items: center;
-        margin: 25px 0px 10px 0px;
+        padding: 50px 0px 10px 0px;
       `}
     >
       <div

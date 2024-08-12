@@ -66,7 +66,6 @@ export default function Search() {
         align-items: center;
         height: 100vh;
         flex-direction: column;
-        padding-left: 5%;
       `}
     >
       <div

@@ -21,7 +21,8 @@ import axios from "axios";
 import ProfileInfo from "../main/ProfileInfo";
 import axiosInstance from '../../utils/axiosInstance';
 import {useNavigation} from "react-router-dom";
-
+import Drawer from '@mui/material/Drawer';
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 export default function NavigationBar() {
   const navigate = useNavigate();
   const [isExpanded, setIsExpanded] = useState(true); // 네비게이션 바 펼친 상태 & 접힌 상태
@@ -238,19 +239,38 @@ export default function NavigationBar() {
     navigate("/")
   };
 
-
   return (
-    <div
-      css={css`
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: ${isExpanded ? "285px" : "300px"};
-        box-shadow: ${isExpanded ? "1px 0px 5px -3px #8b8b8b" : "none"};
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-      `}
+    <div css={css`display: flex; flex-direction: column;`}>
+      <div css={css`position: fixed;
+          top: 0;
+          left: 0; display: flex; justify-content:center; align-items: center; padding: 30px; width: fit-content`}>
+        {!isExpanded && (
+          <>
+            <MenuIcon
+              onClick={toggleNavigationBar}
+              style={{
+                fontSize: "27px",
+                color: "#666666",
+                cursor: "pointer",
+                marginRight: "20px",
+              }}
+            />
+            <img
+              src={Logo}
+              alt="record timeline"
+              css={css`
+                width: 180px;
+                cursor: pointer;
+              `}
+              onClick={onClickLogoImg}
+            />
+
+          </>
+        )}
+      </div>
+    <Drawer
+      open = {isExpanded}
+      onClose={() => setIsExpanded(false)}
     >
       <div
         css={css({
@@ -258,14 +278,10 @@ export default function NavigationBar() {
           alignItems: "center",
         })}
       >
-        {isExpanded ? (
           <div
             css={css({
-              height: "100vh",
-              width: "100%",
               backgroundColor: "white",
               padding: "25px",
-              boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
             })}
           >
             <div
@@ -369,7 +385,8 @@ export default function NavigationBar() {
                           display: "flex",
                           marginBottom: "10px",
                           justifyContent: "center",
-                          flexWrap: "wrap"
+                          flexWrap: "wrap",
+                          width: "80%"
                         })}>
                           <div css={css({
                             fontSize: "15px",
@@ -593,7 +610,7 @@ export default function NavigationBar() {
                     </div>
                     <Link
                       css={css`
-                    width: 125.5%;
+                           width: 100%;
                     height: 60px;
                     display: flex;
                     justify-content: center;
@@ -618,7 +635,7 @@ export default function NavigationBar() {
                     </Link>
                     <Link
                       css={css`
-                    width: 125.5%;
+                          width: 100%;
                     height: 60px;
                     display: flex;
                     justify-content: center;
@@ -727,33 +744,9 @@ export default function NavigationBar() {
                 </div>
               )}
           </div>
-        ) : (
-          <div
-            css={css({
-              padding: "30px 20px 0px 38px",
-            })}
-          >
-            <MenuIcon
-              onClick={toggleNavigationBar}
-              style={{
-                fontSize: "28px",
-                color: "#333333",
-                cursor: "pointer",
-              }}
-            />
-            <img
-              src={Logo}
-              alt="record timeline"
-              onClick={onClickLogoImg}
-              css={css({
-                width: "165px",
-                marginLeft: "10px",
-                cursor: "pointer"
-              })}
-            />
-          </div>
-        )}
       </div>
+    </Drawer>
+
       <Snackbar open={openProfileSnackbar} autoHideDuration={3000} onClose={handleCloseProfileSnackbar} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
         <Alert
           onClose={handleCloseProfileSnackbar}
@@ -787,5 +780,6 @@ export default function NavigationBar() {
         </Alert>
       </Snackbar>
     </div>
+
   );
 }

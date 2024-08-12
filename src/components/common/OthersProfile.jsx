@@ -21,7 +21,7 @@ export default function OthersProfile({profile}) {
       const followedStatus = response.data.result; // '내'가 해당 'memberId'를 팔로우 했는지 여부 (true/false)
       console.log("팔로우 상태 체크 완료", response.data);
 
-      if (response.data.result) { // 팔로우 여부 상태 체크
+      if (followedStatus) { // 팔로우 여부 상태 체크
         setIsFollowed(true)
       }
     } catch (error) {

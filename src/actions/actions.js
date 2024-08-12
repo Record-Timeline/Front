@@ -7,3 +7,8 @@ export const setOpenFindSnackbar = (isOpen) => ({
   type: 'SET_OPEN_FIND_SNACKBAR',
   payload: isOpen,
 });
+
+export const setEmail = (email) => ({
+  type: 'SET_EMAIL',
+  payload: email,
+});

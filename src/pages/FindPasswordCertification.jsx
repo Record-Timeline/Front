@@ -20,7 +20,7 @@ export default function FindPasswordCertification() {
   const dispatch = useDispatch(); // Redux dispatch 사용
   const openFindSnackbar = useSelector(state => state.openFindSnackbar);
   const [certification, setCertification] = useState(""); // 입력한 인증번호
-  const email = "sohee5143@naver.com"
+  const email = useSelector(state => state.email);  // Redux에서 이메일 가져오기
   // 인증번호 입력 값 업데이트
   const handleCertificationChange = (e) => {
     setCertification(e.target.value);
@@ -36,10 +36,16 @@ export default function FindPasswordCertification() {
     }
   };
 
+  // 인증번호 확인 버튼
+  const emailPasswordConfrim = () => {
+    console.log("인증번호 확인")
+  };
+
   // 인증번호 발송 스낵바
   const handleCloseFindSnackbar = () => {
     dispatch(setOpenFindSnackbar(false)); // 스낵바 닫기
   };
+
 
   return (
     <div
@@ -66,14 +72,14 @@ export default function FindPasswordCertification() {
       `}>
       </div>
       <div css={css`
+          width: 450px;
           color: #707070;
           font-size: 20px;
           font-weight: 400;
           display: flex;
           align-items: center;
-          justify-content: center;
           margin-top: 5%;
-          margin-right: 220px;
+
       `}><PersonOutlineOutlinedIcon/> {email}
       </div>
       <Grid
@@ -106,7 +112,7 @@ export default function FindPasswordCertification() {
           }}
         />
         <div
-          //onClick={emailPasswordConfrim}
+          onClick={emailPasswordConfrim}
           css={css({
             marginLeft: "10px",
             width: '110px',
@@ -123,7 +129,7 @@ export default function FindPasswordCertification() {
             fontWeight: "300"
           })}
         >
-          인증번호 발송
+          인증번호 확인
         </div>
         </div>
       </Grid>

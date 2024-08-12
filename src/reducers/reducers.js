@@ -1,10 +1,16 @@
 const initialState = {
+  email: '',
   openLoginSnackbar: false,
   openFindSnackbar: false,
 };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
+    case 'SET_EMAIL':
+      return {
+        ...state,
+        email: action.payload,
+      };
     case 'SET_OPEN_LOGIN_SNACKBAR':
       return {
         ...state,
@@ -19,5 +25,4 @@ const rootReducer = (state = initialState, action) => {
       return state;
   }
 };
-
 export default rootReducer;

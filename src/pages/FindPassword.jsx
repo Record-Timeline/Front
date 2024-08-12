@@ -10,11 +10,10 @@ import {
 } from "@mui/material/";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../utils/axiosInstance";
-
-import { setOpenFindSnackbar } from '../actions/actions';
+import { setEmail, setOpenFindSnackbar } from '../actions/actions';
 
 export default function FindPassword() {
-  const [email, setEmail] = useState(""); // 입력한 이메일
+  const [email, setEmailInput] = useState(""); // 로컬 상태에서 이메일 관리
   const navigate = useNavigate(); // useNavigate 훅 사용
   const dispatch = useDispatch(); // Redux dispatch 사용
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -22,7 +21,7 @@ export default function FindPassword() {
 
   // 이메일 입력 값 업데이트
   const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+    setEmailInput(e.target.value);
   };
 
   // 비밀번호 찾기 버튼 클릭 시
@@ -38,6 +37,7 @@ export default function FindPassword() {
 
         if (response.data.code === "200") {
           console.log("비밀번호 찾기 ", email, ": " , response.data);
+          dispatch(setEmail(email));
           dispatch(setOpenFindSnackbar(true)); // 스낵바를 열도록 상태 변경
           navigate("/find/certification");
         }

@@ -20,6 +20,9 @@ export default function ModifyProfile() {
   const [email, setEmail] = useState("")
   const [myProfile, setMyProfile] = useState("")
   const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [isSameNickname, setIsSameNickname] = useState(false);
+  const [openPasswordSnackbar, setOpenPasswordSnackbar] = useState(false);
+
   const interestFields = [
     "마케팅/홍보/조사",
     "회계/세무/재무",
@@ -45,12 +48,32 @@ export default function ModifyProfile() {
     "Media_Culture_Sports": "미디어/문화/스포츠",
   };
 
+  const reverseCategoryMap = {
+    "마케팅/홍보/조사": "Marketing_Promotion",
+    "회계/세무/재무": "Accounting_Tax_Finance",
+    "총무/법무/사무": "GeneralAffairs_LegalAffairs_Affairs",
+    "IT개발/데이터": "IT_Data",
+    "디자인": "Design",
+    "서비스": "Service",
+    "건설/건축": "Construction_Architecture",
+    "의료": "MedicalCare",
+    "교육": "Education",
+    "미디어/문화/스포츠": "Media_Culture_Sports",
+  };
+
 // 스낵바 닫기
   const handleCloseSnackbar = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
     setOpenSnackbar(false);
+  };
+
+  const handleClosePasswordSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenPasswordSnackbar(false);
   };
 
   // 닉네임 중복확인 버튼
@@ -63,6 +86,8 @@ export default function ModifyProfile() {
     // 현재 닉네임을 중복확인 할 경우
     if (myProfile.nickname == nickname) {
       setNicknameDuplicationResponse({ code: "ER", message: "현재 닉네임과 같습니다." });
+      setNicknameDuplicationResult(true); // 중복확인 결과를 true로 수정
+      setIsSameNickname(true)
       return;
     }
 
@@ -92,12 +117,12 @@ export default function ModifyProfile() {
 
 // 변경하기 버튼
   const onClickInfoChange = async () => {
-    // 닉네임 중복확인 결과가 true인 경우
-    if (nicknameDuplicationResult) {
+    // 닉네임이 기존 닉네임과 같은 경우, interest만 변경 
+    if (isSameNickname && nicknameDuplicationResult) {
       try {
         const response = await axiosInstance.put(
           `/api/v1/update-memberInfo`,
-          { newNickname: nickname },
+          { newInterest: reverseCategoryMap[field]},
           {
             headers: {
               Accept: "*/*",
@@ -105,13 +130,32 @@ export default function ModifyProfile() {
             },
           }
         );
-        console.log("회원정보 변경하기", response);
+        console.log("분야 변경하기",reverseCategoryMap[field], response);
+        setOpenSnackbar(true);
+      } catch (error) {
+        console.error("닉네임 변경", error);
+      }
+    }
+    // 닉네임 중복확인 결과가 true인 경우
+    else if (nicknameDuplicationResult) {
+      try {
+        const response = await axiosInstance.put(
+          `/api/v1/update-memberInfo`,
+          { newNickname: nickname, newInterest: reverseCategoryMap[field]},
+          {
+            headers: {
+              Accept: "*/*",
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        console.log("회원정보 변경하기",reverseCategoryMap[field], response);
         setOpenSnackbar(true);
       } catch (error) {
         console.error("닉네임 변경", error);
       }
     } else {
-      alert("닉네임 중복확인이 완료되지 않았습니단.")
+      alert("닉네임 중복확인이 완료되지 않았습니다.")
     }
   };
 
@@ -284,7 +328,7 @@ export default function ModifyProfile() {
         `}
       >
         비밀번호
-        <PasswordChangeModal  />
+        <PasswordChangeModal  setOpenPasswordSnackbar={setOpenPasswordSnackbar} />
       </div>
       <div css={css`
             display: flex;
@@ -313,6 +357,16 @@ export default function ModifyProfile() {
           sx={{ width: '100%' }}
         >
           회원정보가 성공적으로 수정되었습니다
+        </Alert>
+      </Snackbar>
+      <Snackbar open={openPasswordSnackbar} autoHideDuration={3000} onClose={handleClosePasswordSnackbar} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+        <Alert
+          onClose={handleClosePasswordSnackbar}
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          비밀번호가 변경되었습니다.
         </Alert>
       </Snackbar>
     </div>

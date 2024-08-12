@@ -2,6 +2,7 @@ const initialState = {
   email: '',
   openLoginSnackbar: false,
   openFindSnackbar: false,
+  memberId: null,
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -20,6 +21,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         openFindSnackbar: action.payload,
+      };
+    case 'SET_MEMBER_ID':
+      return {
+        ...state,
+        memberId: action.payload,
       };
     default:
       return state;

@@ -17,10 +17,9 @@ import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
 import PersonIcon from '@mui/icons-material/Person';
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import axios from "axios";
-import ProfileInfo from "../main/ProfileInfo";
 import axiosInstance from '../../utils/axiosInstance';
-import {useNavigation} from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import {setMemberId} from "../../actions/actions";
 
 export default function NavigationBar() {
   const navigate = useNavigate();
@@ -38,6 +37,8 @@ export default function NavigationBar() {
 
   const [profileImage, setProfileImage] = useState(); // 프로필 이미지
   const [profileThumbnail, setProfileThumbnail] = useState() // 프로필 이미지 썸네일
+
+  const dispatch = useDispatch(); // Redux dispatch 사용
 
   // 카테고리
   const interestMapping = {
@@ -153,6 +154,7 @@ export default function NavigationBar() {
     try {
       const response = await axiosInstance.get("/api/v1/my-profile");
       setProfileInfo(response.data);
+      dispatch(setMemberId(response.data.memberId)); // 멤버 아이디 redux 저장
       console.log("사용자 정보", response.data)
     } catch (error) {
       console.error(error);

@@ -43,7 +43,11 @@ export default function Bookmark() {
   }, [])
 
   return (
-    <div>
+    <div
+      css={css({
+        marginBottom: "140px",
+      })}
+    >
       <Header/>
       <div
         css={css({

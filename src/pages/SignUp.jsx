@@ -77,7 +77,7 @@ export default function SignUp() {
     try {
       const response = await axios.post(
         `/api/v1/auth/email-certification`,
-        { email: email },
+        { email: email, context: "SIGNUP" },
         {
           headers: {
             Accept: "*/*",
@@ -118,7 +118,7 @@ export default function SignUp() {
     try {
       const response = await axios.post(
         `/api/v1/auth/check-certification`,
-        { email: email, certificationNumber: certificationNumber },
+        { email: email, certificationNumber: certificationNumber, context: "SIGNUP" },
         {
           headers: {
             Accept: "*/*",

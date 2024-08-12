@@ -99,7 +99,6 @@ export default function Main() {
   const dispatch = useDispatch();
   const openLoginSnackbar = useSelector(state => state.openLoginSnackbar);
 
-
   const handleCloseLoginSnackbar = (event, reason) => {
     if (reason === 'clickaway') {
       return;

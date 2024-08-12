@@ -3,20 +3,44 @@
 import React, { useState } from "react";
 
 import { css } from "@emotion/react";
-import Button from "../components/common/Button"
+import { useDispatch, useSelector } from 'react-redux';
+
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import {
-
   Grid,
   TextField,
 } from "@mui/material/";
-export default function FindPassword() {
-  const [certification, setCertification] = useState(""); // 입력한 이메일
+import {useNavigate} from "react-router-dom";
+import { setOpenFindSnackbar } from '../actions/actions';
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
+
+export default function FindPasswordCertification() {
+  const navigate = useNavigate(); // useNavigate 훅 사용
+  const dispatch = useDispatch(); // Redux dispatch 사용
+  const openFindSnackbar = useSelector(state => state.openFindSnackbar);
+  const [certification, setCertification] = useState(""); // 입력한 인증번호
   const email = "sohee5143@naver.com"
   // 인증번호 입력 값 업데이트
   const handleCertificationChange = (e) => {
     setCertification(e.target.value);
   };
+
+  // 다음 버튼 클릭 시
+  const handleNextButton = () => {
+    if (certification) {
+      navigate("/find/change");
+      // 인증번호가 입력되지 않았을 때
+    } else {
+      alert("인증번호를 입력해 주세요.");
+    }
+  };
+
+  // 인증번호 발송 스낵바
+  const handleCloseFindSnackbar = () => {
+    dispatch(setOpenFindSnackbar(false)); // 스낵바 닫기
+  };
+
   return (
     <div
       css={css`
@@ -32,7 +56,7 @@ export default function FindPassword() {
     >
       <div css={css`
           width: 100%;
-          padding: 0px 25% 20px 25%;
+          padding: 0px 15% 20px 25%;
       `}>비밀번호 찾기
       </div>
       <div css={css`
@@ -72,7 +96,7 @@ export default function FindPassword() {
           type="certification"
           id="certification"
           name="certification"
-          label="인증번호 입력"
+          label="인증번호"
           InputProps={{
             style: {
               borderRadius: "15px",
@@ -104,7 +128,24 @@ export default function FindPassword() {
         </div>
       </Grid>
 
-      <Button width="460px" height="50px" margin="0px 0px 10% 0px">다음</Button>
+      <div         css={css`
+          width: 470px;
+          text-align: center;
+          border-radius: 20px;
+          background: #829FD7;
+          color: #FFF;
+          padding: 12px 0px;
+          font-size: 18px;
+          font-weight: 500;
+          cursor: pointer;
+          margin-bottom: 10%;
+      `} onClick={handleNextButton}>다음</div>
+      {/* 인증번호 발생 스낵바 */}
+      <Snackbar open={openFindSnackbar} autoHideDuration={4000} onClose={handleCloseFindSnackbar} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+        <Alert onClose={handleCloseFindSnackbar} severity="success" variant="filled">
+          인증번호가 발송되었습니다. 이메일을 확인하세요.
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

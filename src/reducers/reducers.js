@@ -1,5 +1,6 @@
 const initialState = {
-  openLoginSnackbar: false
+  openLoginSnackbar: false,
+  openFindSnackbar: false,
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -7,7 +8,12 @@ const rootReducer = (state = initialState, action) => {
     case 'SET_OPEN_LOGIN_SNACKBAR':
       return {
         ...state,
-        openLoginSnackbar: action.payload
+        openLoginSnackbar: action.payload,
+      };
+    case 'SET_OPEN_FIND_SNACKBAR':
+      return {
+        ...state,
+        openFindSnackbar: action.payload,
       };
     default:
       return state;

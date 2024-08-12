@@ -10,11 +10,12 @@ import {
   Grid,
   TextField,
 } from "@mui/material/";
+import {useSelector} from "react-redux";
 export default function FindPassword() {
   const [password, setPassword] = useState(""); // 입력한 비밀번호
   const [passwordCheck, setPasswordCheck] = useState(""); // 입력한 비밀번호 확인
 
-  const email = "sohee5143@naver.com"
+  const email = useSelector(state => state.email);  // Redux에서 이메일 가져오기
 
   // 비밀번호 입력 값 업데이트
   const handlePasswordChange = (e) => {
@@ -84,22 +85,14 @@ export default function FindPassword() {
             justify-content: center;
             flex-direction: column;
         `}>
-          <div css={css`
-              color: #242424;
-              font-size: 19px;
-              font-style: normal;
-              font-weight: 700;
-              line-height: normal;
-              margin: 0px 0px 10px 5px;
-          `}>비밀번호
-          </div>
+
           <TextField
             value={password}
             onChange={handlePasswordChange}
             type="password"
             id="password"
             name="password"
-            label="비밀번호 입력"
+            label="비밀번호"
             InputProps={{
               style: {
                 borderRadius: "15px",
@@ -109,17 +102,9 @@ export default function FindPassword() {
               },
             }}
           />
-          <div css={css`
-              color: #242424;
-              font-size: 19px;
-              font-style: normal;
-              font-weight: 700;
-              line-height: normal;
-              margin: 5px 0px 10px 5px;
-          `}>비밀번호 확인
-          </div>
+
           <TextField
-            value={password}
+            value={passwordCheck}
             onChange={handlePasswordCheck}
             type="passwordCheck"
             id="passwordCheck"

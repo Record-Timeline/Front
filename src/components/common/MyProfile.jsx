@@ -14,7 +14,7 @@ export default function MyProfile({profile}) {
   const navigate = useNavigate();
 
   // 팔로우/팔로잉 목록 페이지로 이동
-  const onClickFollow = () => {
+  const goToFollowList = () => {
     navigate(`/follow`);
   };
 
@@ -135,8 +135,8 @@ export default function MyProfile({profile}) {
             })}
           >
             <div
-              onClick={onClickFollow}
-              css={css({marginLeft: "20px"})}
+              onClick={goToFollowList}
+              css={css({marginLeft: "20px", cursor: "pointer"})}
             >
               <div css={css({textAlign: "center", fontSize: "20px"})}>
                 {followers}
@@ -146,8 +146,8 @@ export default function MyProfile({profile}) {
               </div>
             </div>
             <div
-              onClick={onClickFollow}
-              css={css({marginRight: "20px"})}
+              onClick={goToFollowList}
+              css={css({marginRight: "20px", cursor: "pointer"})}
             >
               <div css={css({textAlign: "center", fontSize: "20px"})}>
                 {followings}

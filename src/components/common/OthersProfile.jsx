@@ -6,11 +6,18 @@ import {css} from "@emotion/react";
 import Button from "./Button"
 import testProfileImg from "../../assets/images/testProfileImg.png";
 import axiosInstance from "../../utils/axiosInstance";
+import {useNavigate} from "react-router-dom";
 
 export default function OthersProfile({profile}) {
   const [isFollowed, setIsFollowed] = useState(false);
   const [followers, setFollowers] = useState(profile.followerCount);
   const [followings, setFollowings] = useState(profile.followingCount);
+  const navigate = useNavigate();
+
+  // 팔로우/팔로잉 목록 페이지로 이동
+  const goToFollowList = () => {
+    navigate(`/follow/${profile.memberId}`);
+  };
 
   // 팔로우 상태 연동
   const followStatus = async () => {
@@ -197,7 +204,10 @@ export default function OthersProfile({profile}) {
             marginTop: "15px",
           })}
         >
-          <div css={css({marginLeft: "20px"})}>
+          <div
+            onClick={goToFollowList}
+            css={css({marginLeft: "20px", cursor: "pointer"})}
+          >
             <div css={css({textAlign: "center", fontSize: "20px"})}>
               {followers}
             </div>
@@ -205,7 +215,10 @@ export default function OthersProfile({profile}) {
               팔로워
             </div>
           </div>
-          <div css={css({marginRight: "20px"})}>
+          <div
+            onClick={goToFollowList}
+            css={css({marginRight: "20px", cursor: "pointer"})}
+          >
             <div css={css({textAlign: "center", fontSize: "20px"})}>
               {followings}
             </div>

@@ -65,20 +65,7 @@ export default function OthersMainTimeline() {
       >
         {profile && profile.nickname} 님의 Timeline
       </div>
-      <div
-        // css={css({ // 타임라인 간의 선
-        //   position: "relative", // 상대적 위치 설정
-        //   '&::after': { // 타임라인 아이템들 사이에 선 추가
-        //     content: '""',
-        //     position: 'absolute',
-        //     left: '617px', // 체크 표시 위치에 맞게 조정 --> 선 위치 절대적인거 수정해야됨
-        //     top: '48px', // 첫 번째 아이템의 중간부터 시작
-        //     width: '2px',
-        //     height: 'calc(100% - 75px)', // 전체 높이에서 첫 번째 아이템 높이만큼 제외
-        //     backgroundColor: '#E2E2E2', // 선의 색상
-        //   },
-        // })}
-      >
+      <div>
         {items.map((item, index) => (
           <OthersTimelineItem
             key={index}
@@ -87,6 +74,8 @@ export default function OthersMainTimeline() {
             startDate={item.data.startDate}
             endDate={item.data.endDate}
             title={item.data.title}
+            isDone={item.isDone}
+            showLine={index !== items.length - 1} // 마지막 아이템에는 선을 표시하지 않음
           />
         ))}
       </div>

@@ -26,6 +26,7 @@ export default function FindPassword() {
 
   // 비밀번호 찾기 버튼 클릭 시
   const handleFindPassword = async () => {
+    setError("")
     if (email) {
       try {
         const response = await axiosInstance.post(

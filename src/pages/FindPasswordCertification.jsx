@@ -39,7 +39,7 @@ export default function FindPasswordCertification() {
 
       if (response.data.code === "200") {
         // 인증 성공 시
-        setSuccessMessage("인증이 성공적으로 완료되었습니다.");
+        setSuccessMessage("인증이 완료되었습니다.");
         setIsVerified(true); // "다음" 버튼 활성화
         setErrorMessage(""); // 에러 메시지 초기화
       } else {

@@ -18,6 +18,11 @@ export default function MyProfile({profile}) {
     navigate(`/follow`);
   };
 
+  // my 메인 타임라인 페이지로 이동
+  const onClickNickname = () => {
+    navigate(`/mytimeline`)
+  }
+
   // 카테고리
   const interestMapping = {
     "Marketing_Promotion": "마케팅/홍보/조사",
@@ -64,11 +69,16 @@ export default function MyProfile({profile}) {
         />
         <div css={css({display: "inline-block", width: "330px"})}>
           <div
+            onClick={onClickNickname}
             css={css({
               fontSize: "25px",
               fontWeight: "700",
               marginLeft: "25px",
               display: "inline-block",
+              cursor: "pointer",
+              ":hover": {
+                textDecoration: "underline",
+              }
             })}
           >
             {profile.nickname}

@@ -19,6 +19,11 @@ export default function OthersProfile({profile}) {
     navigate(`/follow/${profile.memberId}`);
   };
 
+  // 해당 멤버의 메인 타임라인 페이지로 이동
+  const onClickNickname = () => {
+    navigate(`/othersmain/${profile.memberId}`)
+  }
+
   // 팔로우 상태 연동
   const followStatus = async () => {
     try {
@@ -110,11 +115,16 @@ export default function OthersProfile({profile}) {
         />
         <div css={css({display: "inline-block", width: "330px"})}>
           <div
+            onClick={onClickNickname}
             css={css({
               fontSize: "25px",
               fontWeight: "700",
               marginLeft: "25px",
               display: "inline-block",
+              cursor: "pointer",
+              ":hover": {
+                textDecoration: "underline",
+              }
             })}
           >
             {profile.nickname}

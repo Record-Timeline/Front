@@ -16,6 +16,7 @@ export default function OthersProfile({profile}) {
 
   const onClickFollow = async () => {
     if (isFollowed) {
+      // 팔로우 취소 연동
       try {
         const response = await axiosInstance.delete(`/api/v1/follow/${profile.memberId}`)
         setFollowers(followers - 1); // 팔루오 해제 시 팔로우 수 감소
@@ -27,9 +28,9 @@ export default function OthersProfile({profile}) {
     } else {
       // 팔로우 연동
         try {
-          const reponse = await axiosInstance.post (`/api/v1/follow/${profile.memberId}`, {});
+          const response = await axiosInstance.post(`/api/v1/follow/${profile.memberId}`, {});
           setFollowers(followers + 1); // 팔로우 누를 시 팔로우 수 증가
-          console.log("팔로우 완료", reponse)
+          console.log("팔로우 완료", response)
         } catch (error) {
           console.log("팔로우 연동 오류", error);
           console.error("에러 상세:", error.response ? error.response.data : error.message);

@@ -580,7 +580,7 @@ export default function NavigationBar() {
                     >
                       <div css={css({ marginLeft: "20px"})}>
                         <div css={css({ textAlign: "center", fontSize: "20px" })}>
-                          {followers}
+                          {profileInfo.followerCount}
                         </div>
                         <div css={css({ textAlign: "center", fontSize: "13px" })}>
                           팔로워
@@ -588,7 +588,7 @@ export default function NavigationBar() {
                       </div>
                       <div css={css({ marginRight: "20px" })}>
                         <div css={css({ textAlign: "center", fontSize: "20px" })}>
-                          {followings}
+                          {profileInfo.followingCount}
                         </div>
                         <div css={css({ textAlign: "center", fontSize: "13px" })}>
                           팔로잉

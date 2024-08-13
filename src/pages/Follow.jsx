@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { css } from "@emotion/react";
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
@@ -41,6 +42,8 @@ function a11yProps(index) {
 }
 
 export default function Follow() {
+  const { memberId } = useParams(); // URL에서 memberId를 가져옴
+
   const [value, setValue] = React.useState(0);
   const [following, setFollowing] = useState([]); // 팔로잉 목록 state
   const [follower, setFollower] = useState([]); // 팔로워 목록 state
@@ -74,9 +77,12 @@ export default function Follow() {
   // 현재 팔로잉 정보 불러오기
   const fetchFollowingData = async () => {
     try {
-      const response = await axiosInstance.get("/api/v1/follow/following");
+      const url = memberId
+        ? `/api/v1/follow/${memberId}/following`  // 다른 사람의 팔로잉 목록
+        : "/api/v1/follow/my-following";             // 내 팔로잉 목록
+      const response = await axiosInstance.get(url);
       console.log("팔로잉", response.data.result);
-      setFollowing(response.data.result); // 현재 팔로잉 목록 설정
+      setFollowing(response.data.result);
     } catch (error) {
       console.error(error);
     }
@@ -84,22 +90,25 @@ export default function Follow() {
 
   useEffect(() => {
     fetchFollowingData();
-  }, []);
+  }, [memberId]);
 
   // 현재 팔로워 정보 불러오기
   const fetchFollowerData = async () => {
     try {
-      const response = await axiosInstance.get("/api/v1/follow/followers");
+      const url = memberId
+        ? `/api/v1/follow/${memberId}/followers`  // 다른 사람의 팔로워 목록
+        : "/api/v1/follow/my-" +
+        "followers";             // 내 팔로워 목록
+      const response = await axiosInstance.get(url);
       console.log("팔로워", response.data.result);
-      setFollower(response.data.result); // 현재 팔로워 목록 설정
+      setFollower(response.data.result);
     } catch (error) {
       console.error(error);
     }
   };
-
   useEffect(() => {
     fetchFollowerData();
-  }, []);
+  }, [memberId]);
 
   // 팔로우 취소
   const cancleFollowing = async (followerId) => {

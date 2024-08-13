@@ -97,7 +97,8 @@ export default function Follow() {
     try {
       const url = memberId
         ? `/api/v1/follow/${memberId}/followers`  // 다른 사람의 팔로워 목록
-        : "/api/v1/follow/my-followers";             // 내 팔로워 목록
+        : "/api/v1/follow/my-" +
+        "followers";             // 내 팔로워 목록
       const response = await axiosInstance.get(url);
       console.log("팔로워", response.data.result);
       setFollower(response.data.result);

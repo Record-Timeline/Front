@@ -12,8 +12,12 @@ import SubTimeline from "./pages/SubTimeline";
 import OthersMainTimeline from "./pages/OthersMainTimeline";
 import OthersSubTimeline from "./pages/OthersSubTimeline";
 import ModifyProfile from "./pages/ModifyProfile";
+import Follow from "./pages/Follow";
 import { CssBaseline } from "@mui/material";
-
+import FindPassword from "./pages/FindPassword";
+import FindPasswordCertification from "./pages/FindPasswordCertification";
+import FindPasswordChange from "./pages/FindPasswordChange"
+import PasswordChangeComplete from "./pages/PasswordChangeComplete";
 function App() {
   const location = useLocation();
   const hideNavBarRoutes = ["/login", "/signup", "/signup/complete"];
@@ -30,8 +34,15 @@ function App() {
         <Route path="/login" element={<Login />} /> {/* 로그인 페이지 */}
         <Route path="/signup" element={<SignUp />} /> {/* 회원가입 페이지 */}
         <Route path="/signup/complete" element={<SignUpComplete />} /> {/* 회원가입 완료 페이지 */}
+        <Route path="/find" element={<FindPassword />} /> {/* 비밀번호 찾기 페이지 */}\
+        <Route path="/find/certification" element={<FindPasswordCertification />} /> {/* 비밀번호 찾기 페이지 _ 인증번호 입력 */}
+        <Route path="/find/change" element={<FindPasswordChange />} /> {/* 비밀번호 찾기 페이지 _ 비밀번호 입력 */}
+        <Route path="/find/complete" element={<PasswordChangeComplete />} /> {/* 비밀번호 찾기 페이지 _ 비밀번호 변경 완료 */}
+        <Route path="/signup/complete" element={<SignUpComplete />} /> {/* 회원가입 완료 페이지 */}
         <Route path="/profile" element={<ModifyProfile />} /> {/* 회원정보 수정 페이지 */}
         <Route path="/bookmark" element={<Bookmark />} /> {/* 북마크한 게시물 페이지 */}
+        <Route path="/follow" element={<Follow />} /> {/* 팔로우/팔로잉 목록 페이지 */}
+        <Route path="/follow/:memberId" element={<Follow />} /> {/* 다른 사람의 팔로우/팔로잉 목록 */}
         <Route path="/search" element={<Search />} /> {/* 검색 페이지 */}
         <Route path="/search/result/*" element={<SearchResult />} /> {/* 검색 결과 페이지 */}
         <Route path="/mytimeline" element={<MainTimeline />} /> {/* 메인 타임라인 페이지 */}

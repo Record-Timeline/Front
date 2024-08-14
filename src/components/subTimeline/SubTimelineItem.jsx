@@ -9,12 +9,13 @@ import {FaRegTrashAlt} from "react-icons/fa";
 import AlertDialog from "../common/AlertDialog";
 import dayjs from "dayjs";
 
-function SubTimelineItem({startDate, endDate, title, isPublic, onClick}) {
+function SubTimelineItem({startDate, endDate, title, isPublic, onClick, showLine}) {
   const [isChecked, setIsChecked] = useState(false);
 
   return (
     <div // 회색 타임라인 박스
       css={css({
+        position: "relative",
         width: "310px",
         height: "100px",
         background: "#f8f6f6",
@@ -93,6 +94,19 @@ function SubTimelineItem({startDate, endDate, title, isPublic, onClick}) {
       >
         {isPublic ? <FiUnlock/> : <FiLock/>}
       </div>
+      {showLine && (
+        <div
+          css={css({
+            position: "absolute",
+            top: "61px", // 아이템 바로 아래에서 시작
+            left: "12.7%", // 체크 표시 중앙에 위치
+            width: "2px",
+            height: "124px", // 다음 아이템과의 간격 맞춤
+            backgroundColor: "#E2E2E2",
+            zIndex: 1,
+          })}
+        />
+      )}
     </div>
   );
 }

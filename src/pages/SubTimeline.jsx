@@ -10,6 +10,7 @@ import Button from "../components/common/Button";
 import axios from "axios";
 import {useParams, useLocation} from 'react-router-dom';
 import axiosInstance from "../utils/axiosInstance";
+import Header from "../components/common/Header";
 
 export default function SubTimeline() {
   const {mainTimelineId} = useParams(); // URL 파라미터로부터 id 받아오기
@@ -190,6 +191,7 @@ export default function SubTimeline() {
         marginBottom: "150px",
       })}
     >
+      <Header backgroundColor="#F2F5FA"/>
       {profile && <MyProfile profile={profile}/>} {/* 프로필 컴포넌트에 프로필 정보 전달 */}
       <div
         css={css({

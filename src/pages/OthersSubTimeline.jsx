@@ -8,6 +8,7 @@ import OthersSubTimelineItem from "../components/othersTimeline/OthersSubTimelin
 import {useLocation, useParams} from "react-router-dom";
 import axiosInstance from "../utils/axiosInstance";
 import SubTimelineItem from "../components/subTimeline/SubTimelineItem";
+import Header from "../components/common/Header";
 
 export default function OthersSubTimeline() {
   const {memberId, mainTimelineId} = useParams(); // URL 파라미터로부터 id 받아오기
@@ -72,11 +73,8 @@ export default function OthersSubTimeline() {
   }, []);
 
   return (
-    <div
-      css={css({
-        marginBottom: "150px",
-      })}
-    >
+    <div css={css({marginBottom: "150px",})}>
+      <Header backgroundColor="#F2F5FA"/>
       {profile && <OthersProfile profile={profile}/>} {/* 프로필 컴포넌트에 프로필 정보 전달 */}
       <div
         css={css({

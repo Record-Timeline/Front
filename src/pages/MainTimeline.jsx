@@ -2,6 +2,7 @@
 
 import React, {useState, useEffect} from "react";
 import {css} from "@emotion/react";
+import Header from "../components/common/Header";
 import MyProfile from "../components/common/MyProfile";
 import MainTimelineItem from "../components/timeline/MainTimelineItem";
 import MainTimelineInput from "../components/timeline/MainTimelineInput";
@@ -180,7 +181,7 @@ export default function MainTimeline() {
         // border: "1px solid black"
       })}
     >
-      {/*<MyProfile/>*/}
+      <Header backgroundColor="#F2F5FA"/>
       {profile && <MyProfile profile={profile} />} {/* 프로필 컴포넌트에 프로필 정보 전달 */}
       <div
         css={css({

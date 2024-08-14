@@ -97,7 +97,7 @@ export default function OthersProfile({profile}) {
           display: "inline-block",
           alignItems: "left",
           flexDirection: "column",
-          margin: "40px 0px 0px 400px",
+          margin: "25px 0px 0px 400px",
           // border: "1px solid lightgray",
         })}
       >

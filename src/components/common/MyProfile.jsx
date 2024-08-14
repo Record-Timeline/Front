@@ -51,7 +51,7 @@ export default function MyProfile({profile}) {
           display: "inline-block",
           alignItems: "left",
           flexDirection: "column",
-          margin: "45px 0px 0px 400px",
+          margin: "30px 0px 0px 400px",
           // border: "1px solid lightgray",
         })}
       >

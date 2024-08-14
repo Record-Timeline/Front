@@ -8,16 +8,17 @@ import ReadSubTimelinePost from "../components/subTimeline/ReadSubTimelinePost";
 import SubTimelineItem from "../components/subTimeline/SubTimelineItem";
 import Button from "../components/common/Button";
 import axios from "axios";
-import {useParams, useLocation} from 'react-router-dom';
+import {useParams, useLocation, useSearchParams} from 'react-router-dom';
 import axiosInstance from "../utils/axiosInstance";
 import Header from "../components/common/Header";
 
 export default function SubTimeline() {
   const {mainTimelineId} = useParams(); // URL 파라미터로부터 id 받아오기
-  const location = useLocation(); // navigate의 state를 통해 메인 타임라인의 제목을 받아오기 위함
+  const location = useLocation(); // 토큰 때문에 필요한 거인듯 (연동할때) -> 연동 코드 바꾸기 by axiosInstance
+  const [searchParams, setSearchParams] = useSearchParams(); // 쿼리 스트링의 value를 가져오기 위함
+  const targetId = searchParams.get("subtimelineId") // 타겟 서브타임라인 id
 
-  const sessionTitle = sessionStorage.getItem('mainTimelineTitle'); // sessionStorage에서 title 가져오기
-  const [title, setTitle] = useState(sessionTitle || "메인 타임라인 제목");
+  const [title, setTitle] = useState("메인 타임라인 제목");
   const [profile, setProfile] = useState(null); // 프로필 상태 추가
 
   const [isDone, setIsDone] = useState(false); // 체크를 사용자가 직접 체크 안할 경우
@@ -159,6 +160,16 @@ export default function SubTimeline() {
         );
         const data = response.data.subTimelines;
         setSubTimelineItems(data);
+
+        const targetIndex = data.findIndex(item => item.id.toString() === targetId);
+
+        if (targetIndex !== -1) {
+          setSelectedItem(data[targetIndex]); // 해당 id를 가진 아이템이 있으면 그 아이템을 선택
+        } else if (data.length > 0) { // url에 쿼리스트링이 없고, 서브 타임라인 아이템들은 있을 경우
+          setSelectedItem(data[0]); // 해당 id가 없으면 첫번째 서브 타임라인 아이템을 선택
+        } else {
+          // 서브 타임라인이 하나도 없는 경우 -> ui 디자인 해야 함
+        }
 
         if (data.length > 0) { // 서브 타임라인 아이템이 있으면
           setSelectedItem(data[0]); // 첫번째 서브 타임라인을 보여주고

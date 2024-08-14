@@ -50,11 +50,7 @@ export default function OthersSubTimeline() {
         const data = response.data.subTimelines;
         setSubTimelineItems(data);
 
-        console.log("targetId: ", targetId)
-        console.log(typeof targetId);
         const targetIndex = data.findIndex(item => item.id.toString() === targetId);
-        console.log(targetIndex)
-        console.log(typeof targetIndex);
 
         if (targetIndex !== -1) {
           setSelectedItem(data[targetIndex]); // 해당 id를 가진 아이템이 있으면 그 아이템을 선택

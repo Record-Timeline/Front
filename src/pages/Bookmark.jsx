@@ -2,7 +2,7 @@
 
 import React, {useState, useEffect} from "react";
 import {css} from "@emotion/react";
-import PostBox from "../components/main/PostBox";
+import PostBox from "../components/common/PostBox";
 import Header from "../components/common/Header";
 import axiosInstance from "../utils/axiosInstance";
 import { TbNotesOff } from "react-icons/tb";

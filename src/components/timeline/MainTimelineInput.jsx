@@ -10,9 +10,6 @@ import Box from '@mui/material/Box';
 import Input from '@mui/material/Input';
 import {FaRegCircleCheck} from "react-icons/fa6";
 import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc'; // UTC 플러그인 추가
-
-dayjs.extend(utc);
 
 function MainTimelineInput({ index, saveItem, initialData, onDelete, createMainTimeline, updateItem }) {
   const [isChecked, setIsChecked] = useState(false);
@@ -22,7 +19,7 @@ function MainTimelineInput({ index, saveItem, initialData, onDelete, createMainT
   const [alertOpen, setAlertOpen] = useState(false);
 
   useEffect(() => {
-    setTitle(initialData.title || "");
+    setTitle(initialData.title);
     setStartDate(initialData.startDate ? dayjs(initialData.startDate) : null);
     setEndDate(initialData.endDate ? dayjs(initialData.endDate) : null);
   }, [initialData]);
@@ -34,15 +31,15 @@ function MainTimelineInput({ index, saveItem, initialData, onDelete, createMainT
       // const data = { startDate, endDate, title };
       setAlertOpen(false); // 조건을 만족하므로 Alert Dialog를 닫음
       const data = {
-        startDate: dayjs(startDate).utc().format(), // UTC로 변환하여 저장 (날짜 하루 빨라지는 버그 땜에)
-        endDate: endDate ? dayjs(endDate).utc().format() : null, // UTC로 변환하여 저장 (날짜 하루 빨라지는 버그 땜에)
+        startDate: dayjs(startDate).format("YYYY-MM-DD"),
+        endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
         title
       };
 
       if (initialData.id) {
-        await updateItem(index, data); // 기존 항목 업데이트
+        await updateItem(index, data); // 기존 항목 업데이트 (생성)
       } else {
-        await createMainTimeline(data); // 새 항목 생성
+        await createMainTimeline(data); // 새 항목 생성 (조회)
       }
 
       saveItem(index, data);

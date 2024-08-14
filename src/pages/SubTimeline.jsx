@@ -23,7 +23,7 @@ export default function SubTimeline() {
   const [isChecked, setIsChecked] = useState(false); // 사용자가 직접 체크 할 경우
   const [isCreating, setIsCreating] = useState(false);
   const [editablePost, setEditablePost] = useState(null);
-  const [subTimelineItems, setSubTimelineItems] = useState([]);
+  const [subTimelineItems, setSubTimelineItems] = useState([]); // 타임라인 항목들을 관리할 상태 생성
   const [selectedItem, setSelectedItem] = useState(null);
 
   // 토큰 정보 받아오기
@@ -250,6 +250,7 @@ export default function SubTimeline() {
             title={item.title}
             isPublic={item.isPublic}
             onClick={() => handleSelectItem(item)}
+            showLine={index !== subTimelineItems.length - 1} // 마지막 아이템에는 선을 표시하지 않음
           />
         ))}
         <Button

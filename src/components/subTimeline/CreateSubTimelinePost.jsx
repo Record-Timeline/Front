@@ -11,9 +11,6 @@ import PostEditor from "../post/PostEditor"
 import Button from "../common/Button";
 import AlertDialog from "../common/AlertDialog";
 import dayjs from "dayjs";
-import utc from 'dayjs/plugin/utc'; // UTC 플러그인 추가
-
-dayjs.extend(utc);
 
 const ariaLabel = {'aria-label': 'description'};
 
@@ -43,13 +40,18 @@ export default function CreateSubTimelinePost({post, onCancel, onSubmit}) {
       setAlertOpen(true);
     } else {
       const newSubItem = {
-        startDate: dayjs(startDate).utc().format(), // UTC로 변환하여 저장 (날짜 하루 빨라지는 버그 땜에),
-        endDate: endDate ? dayjs(endDate).utc().format() : null, // UTC로 변환하여 저장 (날짜 하루 빨라지는 버그 땜에),
+        startDate: dayjs(startDate).format("YYYY-MM-DD"),
+        endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
         title,
         isPublic,
         content, // 글 내용을 함께 저장
       };
       onSubmit(newSubItem);
+
+      // 서브 타임라인 포스트 오류 해결되면 실제로도 시간 잘 저장되는지 테스트 해보고 잘 되면 아래 3줄 지우기
+      console.log(newSubItem);
+      console.log(newSubItem.startDate);
+      console.log(newSubItem.endDate);
     }
   };
 

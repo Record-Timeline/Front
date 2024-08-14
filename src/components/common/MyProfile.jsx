@@ -5,13 +5,23 @@ import {useState} from "react";
 import {css} from "@emotion/react";
 import Button from "./Button"
 import testProfileImg from "../../assets/images/testProfileImg.png";
+import {useNavigate} from "react-router-dom";
 
 export default function MyProfile({profile}) {
-  // if (!profile) return null;
-
   const [isFollowed, setIsFollowed] = useState(false);
-  const [followers, setFollowers] = useState(profile.followers || 20);
-  const [followings, setFollowings] = useState(profile.followings || 30);
+  const [followers, setFollowers] = useState(profile.followerCount);
+  const [followings, setFollowings] = useState(profile.followingCount);
+  const navigate = useNavigate();
+
+  // 팔로우/팔로잉 목록 페이지로 이동
+  const goToFollowList = () => {
+    navigate(`/follow`);
+  };
+
+  // my 메인 타임라인 페이지로 이동
+  const onClickNickname = () => {
+    navigate(`/mytimeline`)
+  }
 
   // 카테고리
   const interestMapping = {
@@ -59,11 +69,16 @@ export default function MyProfile({profile}) {
         />
         <div css={css({display: "inline-block", width: "330px"})}>
           <div
+            onClick={onClickNickname}
             css={css({
               fontSize: "25px",
               fontWeight: "700",
               marginLeft: "25px",
               display: "inline-block",
+              cursor: "pointer",
+              ":hover": {
+                textDecoration: "underline",
+              }
             })}
           >
             {profile.nickname}
@@ -129,7 +144,10 @@ export default function MyProfile({profile}) {
               justifyContent: "space-around",
             })}
           >
-            <div css={css({marginLeft: "20px"})}>
+            <div
+              onClick={goToFollowList}
+              css={css({marginLeft: "20px", cursor: "pointer"})}
+            >
               <div css={css({textAlign: "center", fontSize: "20px"})}>
                 {followers}
               </div>
@@ -137,7 +155,10 @@ export default function MyProfile({profile}) {
                 팔로워
               </div>
             </div>
-            <div css={css({marginRight: "20px"})}>
+            <div
+              onClick={goToFollowList}
+              css={css({marginRight: "20px", cursor: "pointer"})}
+            >
               <div css={css({textAlign: "center", fontSize: "20px"})}>
                 {followings}
               </div>

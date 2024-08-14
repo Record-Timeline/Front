@@ -1,18 +1,48 @@
 /** @jsxImportSource @emotion/react */
 
 import * as React from "react";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {css} from "@emotion/react";
 import Button from "./Button"
 import testProfileImg from "../../assets/images/testProfileImg.png";
 import axiosInstance from "../../utils/axiosInstance";
+import {useNavigate} from "react-router-dom";
 
 export default function OthersProfile({profile}) {
-  const nickName = "닉네임"; // 테스트 닉네임
-  const interestCategory = "개발자"; // 테스트 관심분야
   const [isFollowed, setIsFollowed] = useState(false);
-  const [followers, setFollowers] = useState(20);
-  const [followings, setFollowings] = useState(30);
+  const [followers, setFollowers] = useState(profile.followerCount);
+  const [followings, setFollowings] = useState(profile.followingCount);
+  const navigate = useNavigate();
+
+  // 팔로우/팔로잉 목록 페이지로 이동
+  const goToFollowList = () => {
+    navigate(`/follow/${profile.memberId}`);
+  };
+
+  // 해당 멤버의 메인 타임라인 페이지로 이동
+  const onClickNickname = () => {
+    navigate(`/othersmain/${profile.memberId}`)
+  }
+
+  // 팔로우 상태 연동
+  const followStatus = async () => {
+    try {
+      const response = await axiosInstance.get(`/api/v1/follow/is-following/${profile.memberId}`)
+      const followedStatus = response.data.result; // '내'가 해당 'memberId'를 팔로우 했는지 여부 (true/false)
+      console.log("팔로우 상태 체크 완료", response.data);
+
+      if (followedStatus) { // 팔로우 여부 상태 체크
+        setIsFollowed(true)
+      }
+    } catch (error) {
+      console.log("팔로우 상태 체크 오류", error);
+      console.error("에러 상세:", error.response ? error.response.data : error.message);
+    }
+  }
+
+  useEffect(() => {
+    followStatus();
+  }, [])
 
   const onClickFollow = async () => {
     if (isFollowed) {
@@ -85,11 +115,16 @@ export default function OthersProfile({profile}) {
         />
         <div css={css({display: "inline-block", width: "330px"})}>
           <div
+            onClick={onClickNickname}
             css={css({
               fontSize: "25px",
               fontWeight: "700",
               marginLeft: "25px",
               display: "inline-block",
+              cursor: "pointer",
+              ":hover": {
+                textDecoration: "underline",
+              }
             })}
           >
             {profile.nickname}
@@ -179,7 +214,10 @@ export default function OthersProfile({profile}) {
             marginTop: "15px",
           })}
         >
-          <div css={css({marginLeft: "20px"})}>
+          <div
+            onClick={goToFollowList}
+            css={css({marginLeft: "20px", cursor: "pointer"})}
+          >
             <div css={css({textAlign: "center", fontSize: "20px"})}>
               {followers}
             </div>
@@ -187,7 +225,10 @@ export default function OthersProfile({profile}) {
               팔로워
             </div>
           </div>
-          <div css={css({marginRight: "20px"})}>
+          <div
+            onClick={goToFollowList}
+            css={css({marginRight: "20px", cursor: "pointer"})}
+          >
             <div css={css({textAlign: "center", fontSize: "20px"})}>
               {followings}
             </div>

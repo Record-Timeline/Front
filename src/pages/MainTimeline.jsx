@@ -221,6 +221,7 @@ export default function MainTimeline() {
               title={item.data.title}
               onEdit={() => editItem(index)}
               onDelete={() => deleteItem(index)}
+              showLine={index !== items.length - 1} // 마지막 아이템에는 선을 표시하지 않음
             />
           ) : (
             <MainTimelineInput

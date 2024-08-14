@@ -5,17 +5,17 @@ import {css} from "@emotion/react";
 import OthersProfile from "../components/common/OthersProfile";
 import OthersSubTimelinePost from "../components/othersTimeline/OthersSubTimelinePost";
 import OthersSubTimelineItem from "../components/othersTimeline/OthersSubTimelineItem";
-import {useLocation, useParams} from "react-router-dom";
+import {useLocation, useParams, useSearchParams } from "react-router-dom";
 import axiosInstance from "../utils/axiosInstance";
 import SubTimelineItem from "../components/subTimeline/SubTimelineItem";
 import Header from "../components/common/Header";
 
 export default function OthersSubTimeline() {
   const {memberId, mainTimelineId} = useParams(); // URL 파라미터로부터 id 받아오기
-  const location = useLocation(); // navigate의 state를 통해 메인 타임라인의 제목을 받아오기 위함
+  const [searchParams, setSearchParams] = useSearchParams(); // 쿼리 스트링의 value를 가져오기 위함
+  const targetId = searchParams.get("subtimelineId") // 타겟 서브타임라인 id
 
-  const sessionTitle = sessionStorage.getItem('mainTimelineTitle'); // sessionStorage에서 title 가져오기
-  const [title, setTitle] = useState(sessionTitle || "메인 타임라인 제목");
+  const [title, setTitle] = useState( "메인 타임라인 제목");
   const [profile, setProfile] = useState(null); // 프로필 상태 추가
 
   const [isDone, setIsDone] = useState(false);
@@ -50,9 +50,18 @@ export default function OthersSubTimeline() {
         const data = response.data.subTimelines;
         setSubTimelineItems(data);
 
-        if (data.length > 0) { // 서브 타임라인 아이템이 있으면
-          setSelectedItem(data[0]); // 첫번째 서브 타임라인을 보여주고
+        console.log("targetId: ", targetId)
+        console.log(typeof targetId);
+        const targetIndex = data.findIndex(item => item.id.toString() === targetId);
+        console.log(targetIndex)
+        console.log(typeof targetIndex);
+
+        if (targetIndex !== -1) {
+          setSelectedItem(data[targetIndex]); // 해당 id를 가진 아이템이 있으면 그 아이템을 선택
+        } else if (data.length > 0) { // url에 쿼리스트링이 없고, 서브 타임라인 아이템들은 있을 경우
+          setSelectedItem(data[0]); // 해당 id가 없으면 첫번째 서브 타임라인 아이템을 선택
         } else {
+          // 서브 타임라인이 하나도 없는 경우 -> ui 디자인 해야 함
         }
 
         setTitle(response.data.mainTimelineTitle)
@@ -64,12 +73,6 @@ export default function OthersSubTimeline() {
     }
 
     fetchOthersSubTimelines();
-
-    // // 메인 타임라인에서 가져온 title 상태 설정 및 sessionStorage에 저장 (유지되도록)
-    // if (location.state && location.state.title) {
-    //   setTitle(location.state.title);
-    //   sessionStorage.setItem('mainTimelineTitle', location.state.title);
-    // }
   }, []);
 
   return (

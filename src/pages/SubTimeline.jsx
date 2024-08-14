@@ -191,14 +191,19 @@ export default function SubTimeline() {
       })}
     >
       {profile && <MyProfile profile={profile}/>} {/* 프로필 컴포넌트에 프로필 정보 전달 */}
+      <div
+        css={css({
+          width: "1115px", // 포스팅 박스와 서브 타임라인을 감싸는 div의 너비 (margin: "0 auto"를 하기위해 지정해줘야 함)
+          margin: "auto",
+          // border: "1px solid black"
+        })}
+      >
       <div // 포스팅 박스 전체
         css={css({
           width: "760px",
           height: "840px",
-          // height: "100%",
           borderRadius: "30px",
           background: "#FFF",
-          margin: "0px 0px 50px 355px",
           padding: "10px",
           float: "left",
           display: "inline-block", // 서브 타임라인과 나란히 두기 위함
@@ -225,7 +230,6 @@ export default function SubTimeline() {
       <div // 서브 타임라인 박스
         css={css({
           marginTop: "50px",
-          marginBottom: "70px",
           marginLeft: "45px",
           display: "inline-block", // 포스팅과 나란히 두기 위함 (div 두 개 나란히 두기)
           // border: "1px solid black",
@@ -266,6 +270,7 @@ export default function SubTimeline() {
         >
           +
         </Button>
+      </div>
       </div>
     </div>
   )

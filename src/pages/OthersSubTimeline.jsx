@@ -78,58 +78,64 @@ export default function OthersSubTimeline() {
       })}
     >
       {profile && <OthersProfile profile={profile}/>} {/* 프로필 컴포넌트에 프로필 정보 전달 */}
-      <div // 포스팅 박스 전체
+      <div
         css={css({
-          width: "760px",
-          height: "820px",
-          // height: "100%",
-          borderRadius: "30px",
-          background: "#FFF",
-          margin: "0px 0px 50px 355px",
-          padding: "10px",
-          float: "left",
-          display: "inline-block", // 서브 타임라인과 나란히 두기 위함
-          border: "3px solid #f8f6f6",
+          width: "1115px", // 포스팅 박스와 서브 타임라인을 감싸는 div의 너비 (margin: "0 auto"를 하기위해 지정해줘야 함)
+          margin: "auto",
+          // border: "1px solid black"
         })}
       >
-        {selectedItem && (
-        <OthersSubTimelinePost
-          isDone={true}
-          item={selectedItem}
-        />
-        )}
-      </div>
-      <div // 서브 타임라인 박스
-        css={css({
-          marginTop: "50px",
-          marginBottom: "70px",
-          marginLeft: "45px",
-          display: "inline-block", // 포스팅과 나란히 두기 위함 (div 두 개 나란히 두기)
-          // border: "1px solid black",
-        })}
-      >
-        <div // 서브 타임라인 제목
+        <div // 포스팅 박스 전체
           css={css({
-            width: "280px",
-            textAlign: "center",
-            margin: "0 auto", // 가운데 정렬을 하기 위함
-            // overflow: "hidden",
-            // border: "4px solid #f8f6f6",
+            width: "760px",
+            height: "820px",
+            marginBottom: "150px",
+            borderRadius: "30px",
+            background: "#FFF",
+            padding: "10px",
+            float: "left",
+            display: "inline-block", // 서브 타임라인과 나란히 두기 위함
+            border: "3px solid #f8f6f6",
           })}
         >
-          <h1>{title}</h1>
+          {selectedItem && (
+            <OthersSubTimelinePost
+              isDone={true}
+              item={selectedItem}
+            />
+          )}
         </div>
-        {subTimelineItems.map((item, index) => (
-          <OthersSubTimelineItem
-            key={index}
-            startDate={item.startDate}
-            endDate={item.endDate}
-            title={item.title}
-            isPublic={item.isPublic}
-            onClick={() => handleSelectItem(item)}
-            showLine={index !== subTimelineItems.length - 1} // 마지막 아이템에는 선을 표시하지 않음
-          />
-        ))}
+        <div // 서브 타임라인 박스
+          css={css({
+            marginTop: "50px",
+            marginLeft: "45px",
+            display: "inline-block", // 포스팅과 나란히 두기 위함 (div 두 개 나란히 두기)
+            // border: "1px solid black",
+          })}
+        >
+          <div // 서브 타임라인 제목
+            css={css({
+              width: "280px",
+              textAlign: "center",
+              margin: "0 auto", // 가운데 정렬을 하기 위함
+              // overflow: "hidden",
+              // border: "4px solid #f8f6f6",
+            })}
+          >
+            <h1>{title}</h1>
+          </div>
+          {subTimelineItems.map((item, index) => (
+            <OthersSubTimelineItem
+              key={index}
+              startDate={item.startDate}
+              endDate={item.endDate}
+              title={item.title}
+              isPublic={item.isPublic}
+              onClick={() => handleSelectItem(item)}
+              showLine={index !== subTimelineItems.length - 1} // 마지막 아이템에는 선을 표시하지 않음
+            />
+          ))}
+        </div>
       </div>
     </div>
   )

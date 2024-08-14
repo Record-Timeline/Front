@@ -127,6 +127,7 @@ export default function OthersSubTimeline() {
             title={item.title}
             isPublic={item.isPublic}
             onClick={() => handleSelectItem(item)}
+            showLine={index !== subTimelineItems.length - 1} // 마지막 아이템에는 선을 표시하지 않음
           />
         ))}
       </div>

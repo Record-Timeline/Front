@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import * as React from 'react'
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {css} from "@emotion/react";
 import Button from "../common/Button";
 import {FiLock, FiUnlock} from "react-icons/fi";
@@ -21,8 +21,37 @@ export default function ReadSubTimelinePost({item, onDelete, onEdit}) {
   const [isChecked, setIsChecked] = useState(false); // 타임라인 체크 circle 상태
   const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
-  const [like, setLike] = useState(204); // 좋아요 수 임의로 설정
-  const [bookmark, setBookmark] = useState(53) // 북마크 수 임의로 설정
+  const [like, setLike] = useState(item.likeCount); // 좋아요 수
+  const [bookmark, setBookmark] = useState(item.bookmarkCount) // 북마크 수
+
+  // 좋아요 및 북마크 상태 연동
+  const bookmarkAndLikeStatus = async () => {
+    try {
+      const response = await axiosInstance.get(`/api/v1/sub-timelines/${item.id}/like-bookmark`);
+      console.log("좋아요/북마크 상태 체크", response.data);
+      if (response.data.liked) { // 좋아요 여부 상태 체크
+        setIsLiked(true);
+        setLike(response.data.likeCount)
+      } else {
+        setIsLiked(false);
+        setLike(response.data.likeCount)
+      }
+      if (response.data.bookmarked) { // 북마크 여부 상태 체크
+        setIsBookmarked(true);
+        setBookmark(response.data.bookmarkCount)
+      } else {
+        setIsBookmarked(false)
+        setBookmark(response.data.bookmarkCount)
+      }
+    } catch (error) {
+      console.log("좋아요/북마크 상태 체크 오류", error);
+      console.error("에러 상세:", error.response ? error.response.data : error.message);
+    }
+  }
+
+  useEffect(() => {
+    bookmarkAndLikeStatus();
+  }, [item])
 
   const onClickLike = async () => {
     if (isLiked) {
@@ -210,7 +239,7 @@ export default function ReadSubTimelinePost({item, onDelete, onEdit}) {
           })}
         >
           <Checkbox
-            like={isLiked} // 좋아요 버튼 눌렀는지 여부
+            checked={isLiked} // 좋아요 버튼 눌렀(었)는지 여부 (상태 체크, 눌렀다면 누른 상태를 유지하기 위함)
             onClick={onClickLike}
             {...label}
             icon={<FavoriteBorder/>}
@@ -224,7 +253,7 @@ export default function ReadSubTimelinePost({item, onDelete, onEdit}) {
           />
           <p css={css({display: "inline-block",})}>{like}</p>
           <Checkbox
-            bookmark={isBookmarked} // 북마크 버튼 눌렀는지 여부
+            checked={isBookmarked} // 북마크 버튼 눌렀(었)는지 여부 (상태 체크, 눌렀다면 누른 상태를 유지하기 위함)
             onClick={onClickBookmark}
             {...label}
             icon={<BookmarkBorderIcon/>}

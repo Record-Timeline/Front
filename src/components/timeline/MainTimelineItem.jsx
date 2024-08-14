@@ -9,7 +9,7 @@ import AlertDialog from "../common/AlertDialog";
 import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 
-function MainTimelineItem({mainTimelineId, startDate, endDate, title, onEdit, onDelete, }) {
+function MainTimelineItem({mainTimelineId, startDate, endDate, title, onEdit, onDelete, showLine}) {
   const [isChecked, setIsChecked] = useState(false);
   const navigate = useNavigate();
 
@@ -21,6 +21,7 @@ function MainTimelineItem({mainTimelineId, startDate, endDate, title, onEdit, on
   return (
     <div // 회색 타임라인 박스
       css={css({
+        position: "relative",
         width: "810px",
         height: "85px",
         background: "#f8f6f6",
@@ -137,6 +138,19 @@ function MainTimelineItem({mainTimelineId, startDate, endDate, title, onEdit, on
           cancelText={"취소"}
         />
       </div>
+      {showLine && (
+        <div
+          css={css({
+            position: "absolute",
+            top: "53px", // 아이템 바로 아래에서 시작
+            left: "6.2%", // 체크 표시 중앙에 위치
+            width: "2px",
+            height: "108px", // 다음 아이템과의 간격 맞춤
+            backgroundColor: "#E2E2E2",
+            zIndex: 1,
+          })}
+        />
+      )}
     </div>
   );
 }

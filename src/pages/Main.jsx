@@ -65,7 +65,7 @@ export default function Main() {
     try {
       const response = await axiosInstance.get(`/api/v1/main/member/${englishInterest}`);
       setRecorderData(response.data);
-      console.log(response.data);
+      console.log("추천 레코더", response.data);
     } catch (error) {
       console.error(error);
     }
@@ -75,7 +75,6 @@ export default function Main() {
   const fetchPostData = async () => {
     try {
       const response = await axiosInstance.get(`/api/v1/main/post/${englishInterest}`);
-      console.log(response)
       setPostData(response.data.subTimelines);
 
       console.log("추천 게시물", response.data.subTimelines);
@@ -99,7 +98,6 @@ export default function Main() {
   };
   const dispatch = useDispatch();
   const openLoginSnackbar = useSelector(state => state.openLoginSnackbar);
-
 
   const handleCloseLoginSnackbar = (event, reason) => {
     if (reason === 'clickaway') {
@@ -130,9 +128,6 @@ export default function Main() {
         `}
       >
         <div
-          css={css`
-            margin: 0px 0px 0px 280px;
-          `}
         >
           <div
             css={css`

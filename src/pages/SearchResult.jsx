@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { css } from "@emotion/react";
 import { useLocation } from "react-router-dom";
-import SearchPostBox from "../components/main/SearchPostBox";
+import PostBox from "../components/common/PostBox";
 import SearchRecoderBox from "../components/main/SearchRecoderBox";
 import testProfileImg from "../assets/images/testProfileImg.png";
 import Header from "../components/common/Header";
@@ -168,7 +168,7 @@ export default function SearchResult() {
                   </div>
                 )}
                 {searchResult?.subTimelines?.map((post, index) => (
-                  <SearchPostBox
+                  <PostBox
                     key={index}
                     nickName={post.authorNickname}
                     title={post.title}

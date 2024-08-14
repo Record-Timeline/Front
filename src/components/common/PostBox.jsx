@@ -5,7 +5,7 @@ import { css } from "@emotion/react";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import {useNavigate} from "react-router-dom";
-export default function SearchPostBox({
+export default function PostBox({
   nickName,
   title,
   category,
@@ -109,9 +109,8 @@ export default function SearchPostBox({
             margin-left: 12px;
           `}
         >
-          {  startDate
-          } ~ {  endDate
-        }
+          {startDate} ~ {endDate ? endDate : "진행중"}
+
         </div>
       </div>
     </div>

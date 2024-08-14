@@ -59,10 +59,10 @@ export default function PostRecommendation({ postData }) {
   };
 
   // 게시물 클릭 시 페이지 이동
-  const onClickPost = (memeberId, maintimelineId) => {
-    navigate(`/otherssub/${memeberId}/${maintimelineId}`);
-  };
+  const onClickPost = (memeberId, maintimelineId, subtimelineId) => {
+    navigate(`/otherssub/${memeberId}/${maintimelineId}?subtimelineId=${subtimelineId}`);
 
+  };
 
   return (
     <div
@@ -108,7 +108,7 @@ export default function PostRecommendation({ postData }) {
                   position: relative;
                   cursor: pointer;
               `}
-              onClick={() => onClickPost(post.authorId, post.mainTimelineId)}
+              onClick={() => onClickPost(post.authorId, post.mainTimelineId, post.id)}
             >
               <div
                 css={css`

@@ -31,9 +31,17 @@ export default function ReadSubTimelinePost({item, onDelete, onEdit}) {
       console.log("좋아요/북마크 상태 체크", response.data);
       if (response.data.liked) { // 좋아요 여부 상태 체크
         setIsLiked(true);
+        setLike(response.data.likeCount)
+      } else {
+        setIsLiked(false);
+        setLike(response.data.likeCount)
       }
       if (response.data.bookmarked) { // 북마크 여부 상태 체크
         setIsBookmarked(true);
+        setBookmark(response.data.bookmarkCount)
+      } else {
+        setIsBookmarked(false)
+        setBookmark(response.data.bookmarkCount)
       }
     } catch (error) {
       console.log("좋아요/북마크 상태 체크 오류", error);
@@ -43,7 +51,7 @@ export default function ReadSubTimelinePost({item, onDelete, onEdit}) {
 
   useEffect(() => {
     bookmarkAndLikeStatus();
-  }, [])
+  }, [item])
 
   const onClickLike = async () => {
     if (isLiked) {

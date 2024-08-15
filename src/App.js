@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useParams, useLocation, Navigate } from "react-router-dom";
 import Main from "./pages/Main";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
@@ -18,12 +18,35 @@ import FindPassword from "./pages/FindPassword";
 import FindPasswordCertification from "./pages/FindPasswordCertification";
 import FindPasswordChange from "./pages/FindPasswordChange"
 import PasswordChangeComplete from "./pages/PasswordChangeComplete";
+import { useSelector } from 'react-redux';
+
 function App() {
   const location = useLocation();
+  const myMemberId = useSelector(state => state.memberId);
   const hideNavBarRoutes = ["/login", "/signup", "/signup/complete"];
   const shouldHideNavBar = () => {
     return hideNavBarRoutes.includes(location.pathname);
   };
+
+  function ProtectedRoute({ element }) {
+    const { memberId, mainTimelineId } = useParams();
+
+    // 현재 URL에서의 memberId 파라미터와 Redux 상태의 memberId 비교
+    if (String(myMemberId) === String(memberId)) {  // 멤버 ID가 같은 경우
+      if(mainTimelineId) {
+        // mainTimelineId가 있을 때는 서브 타임라인으로 이동
+        return <Navigate to={`/subtimeline/${mainTimelineId}`} replace />;
+      } else {
+        // mainTimelineId가 없을 때는 메인 타임라인으로 이동
+        return <Navigate to="/mytimeline" replace />;
+      }
+    } else if (myMemberId !== memberId && mainTimelineId) {
+      // 멤버 ID가 다르고 mainTimelineId가 있는 경우 -> others 서브 타임라인
+      return element;
+    }
+    // 조건에 해당하지 않으면 원래의 element 렌더링 -> others 메인 타임라인
+    return element;
+  }
 
   return (
     <div className="App">
@@ -34,7 +57,7 @@ function App() {
         <Route path="/login" element={<Login />} /> {/* 로그인 페이지 */}
         <Route path="/signup" element={<SignUp />} /> {/* 회원가입 페이지 */}
         <Route path="/signup/complete" element={<SignUpComplete />} /> {/* 회원가입 완료 페이지 */}
-        <Route path="/find" element={<FindPassword />} /> {/* 비밀번호 찾기 페이지 */}\
+        <Route path="/find" element={<FindPassword />} /> {/* 비밀번호 찾기 페이지 */}
         <Route path="/find/certification" element={<FindPasswordCertification />} /> {/* 비밀번호 찾기 페이지 _ 인증번호 입력 */}
         <Route path="/find/change" element={<FindPasswordChange />} /> {/* 비밀번호 찾기 페이지 _ 비밀번호 입력 */}
         <Route path="/find/complete" element={<PasswordChangeComplete />} /> {/* 비밀번호 찾기 페이지 _ 비밀번호 변경 완료 */}
@@ -47,8 +70,19 @@ function App() {
         <Route path="/search/result/*" element={<SearchResult />} /> {/* 검색 결과 페이지 */}
         <Route path="/mytimeline" element={<MainTimeline />} /> {/* 메인 타임라인 페이지 */}
         <Route path="/subtimeline/:mainTimelineId" element={<SubTimeline />} /> {/* 서브 타임라인 페이지 */}
-        <Route path="/othersmain/:memberId" element={<OthersMainTimeline />} /> {/* 다른 사람 메인 타임라인 페이지 */}
-        <Route path="/otherssub/:memberId/:mainTimelineId" element={<OthersSubTimeline />} /> {/* 다른 사람 서브 타임라인 페이지 */}
+        {/* ProtectedRoute 적용, 다른 사람 메인 타임라인 페이지 */}
+        <Route path="/othersmain/:memberId" element={
+          <ProtectedRoute
+            element={<OthersMainTimeline />}
+          />
+        } />
+
+        {/* ProtectedRoute 적용, 다른 사람 서브 타임라인 페이지 */}
+        <Route path="/otherssub/:memberId/:mainTimelineId" element={
+          <ProtectedRoute
+            element={<OthersSubTimeline />}
+          />
+        } />
       </Routes>
     </div>
   );

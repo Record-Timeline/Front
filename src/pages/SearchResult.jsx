@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { css } from "@emotion/react";
 import { useLocation } from "react-router-dom";
-import PostBox from "../components/main/PostBox";
+import PostBox from "../components/common/PostBox";
 import SearchRecoderBox from "../components/main/SearchRecoderBox";
 import testProfileImg from "../assets/images/testProfileImg.png";
 import Header from "../components/common/Header";

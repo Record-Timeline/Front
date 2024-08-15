@@ -2,7 +2,7 @@
 
 import React, {useState, useEffect} from "react";
 import {css} from "@emotion/react";
-import SearchPostBox from "../components/main/SearchPostBox";
+import PostBox from "../components/common/PostBox";
 import Header from "../components/common/Header";
 import axiosInstance from "../utils/axiosInstance";
 import { TbNotesOff } from "react-icons/tb";
@@ -43,7 +43,11 @@ export default function Bookmark() {
   }, [])
 
   return (
-    <div>
+    <div
+      css={css({
+        marginBottom: "140px",
+      })}
+    >
       <Header/>
       <div
         css={css({
@@ -85,7 +89,7 @@ export default function Bookmark() {
           </div>
         ) : (
           bookmarkList.map((post, index) => ( // 북마크한 게시글 목록 뿌리기
-            <SearchPostBox
+            <PostBox
               key={index}
               nickName={post.authorName}
               title={post.title}

@@ -8,22 +8,24 @@ import ReadSubTimelinePost from "../components/subTimeline/ReadSubTimelinePost";
 import SubTimelineItem from "../components/subTimeline/SubTimelineItem";
 import Button from "../components/common/Button";
 import axios from "axios";
-import {useParams, useLocation} from 'react-router-dom';
+import {useParams, useLocation, useSearchParams} from 'react-router-dom';
 import axiosInstance from "../utils/axiosInstance";
+import Header from "../components/common/Header";
 
 export default function SubTimeline() {
   const {mainTimelineId} = useParams(); // URL 파라미터로부터 id 받아오기
-  const location = useLocation(); // navigate의 state를 통해 메인 타임라인의 제목을 받아오기 위함
+  const location = useLocation(); // 토큰 때문에 필요한 거인듯 (연동할때) -> 연동 코드 바꾸기 by axiosInstance
+  const [searchParams, setSearchParams] = useSearchParams(); // 쿼리 스트링의 value를 가져오기 위함
+  const targetId = searchParams.get("subtimelineId") // 타겟 서브타임라인 id
 
-  const sessionTitle = sessionStorage.getItem('mainTimelineTitle'); // sessionStorage에서 title 가져오기
-  const [title, setTitle] = useState(sessionTitle || "메인 타임라인 제목");
+  const [title, setTitle] = useState("메인 타임라인 제목");
   const [profile, setProfile] = useState(null); // 프로필 상태 추가
 
   const [isDone, setIsDone] = useState(false); // 체크를 사용자가 직접 체크 안할 경우
   const [isChecked, setIsChecked] = useState(false); // 사용자가 직접 체크 할 경우
   const [isCreating, setIsCreating] = useState(false);
   const [editablePost, setEditablePost] = useState(null);
-  const [subTimelineItems, setSubTimelineItems] = useState([]);
+  const [subTimelineItems, setSubTimelineItems] = useState([]); // 타임라인 항목들을 관리할 상태 생성
   const [selectedItem, setSelectedItem] = useState(null);
 
   // 토큰 정보 받아오기
@@ -159,6 +161,16 @@ export default function SubTimeline() {
         const data = response.data.subTimelines;
         setSubTimelineItems(data);
 
+        const targetIndex = data.findIndex(item => item.id.toString() === targetId);
+
+        if (targetIndex !== -1) {
+          setSelectedItem(data[targetIndex]); // 해당 id를 가진 아이템이 있으면 그 아이템을 선택
+        } else if (data.length > 0) { // url에 쿼리스트링이 없고, 서브 타임라인 아이템들은 있을 경우
+          setSelectedItem(data[0]); // 해당 id가 없으면 첫번째 서브 타임라인 아이템을 선택
+        } else {
+          // 서브 타임라인이 하나도 없는 경우 -> ui 디자인 해야 함
+        }
+
         if (data.length > 0) { // 서브 타임라인 아이템이 있으면
           setSelectedItem(data[0]); // 첫번째 서브 타임라인을 보여주고
           setIsCreating(false); // 글쓰기 모드 활성화 x
@@ -190,15 +202,21 @@ export default function SubTimeline() {
         marginBottom: "150px",
       })}
     >
+      <Header backgroundColor="#F2F5FA"/>
       {profile && <MyProfile profile={profile}/>} {/* 프로필 컴포넌트에 프로필 정보 전달 */}
+      <div
+        css={css({
+          width: "1115px", // 포스팅 박스와 서브 타임라인을 감싸는 div의 너비 (margin: "0 auto"를 하기위해 지정해줘야 함)
+          margin: "auto",
+          // border: "1px solid black"
+        })}
+      >
       <div // 포스팅 박스 전체
         css={css({
           width: "760px",
           height: "840px",
-          // height: "100%",
           borderRadius: "30px",
           background: "#FFF",
-          margin: "0px 0px 50px 355px",
           padding: "10px",
           float: "left",
           display: "inline-block", // 서브 타임라인과 나란히 두기 위함
@@ -225,7 +243,6 @@ export default function SubTimeline() {
       <div // 서브 타임라인 박스
         css={css({
           marginTop: "50px",
-          marginBottom: "70px",
           marginLeft: "45px",
           display: "inline-block", // 포스팅과 나란히 두기 위함 (div 두 개 나란히 두기)
           // border: "1px solid black",
@@ -250,6 +267,7 @@ export default function SubTimeline() {
             title={item.title}
             isPublic={item.isPublic}
             onClick={() => handleSelectItem(item)}
+            showLine={index !== subTimelineItems.length - 1} // 마지막 아이템에는 선을 표시하지 않음
           />
         ))}
         <Button
@@ -265,6 +283,7 @@ export default function SubTimeline() {
         >
           +
         </Button>
+      </div>
       </div>
     </div>
   )

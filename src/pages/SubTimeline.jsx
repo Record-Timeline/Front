@@ -167,15 +167,10 @@ export default function SubTimeline() {
           setSelectedItem(data[targetIndex]); // 해당 id를 가진 아이템이 있으면 그 아이템을 선택
         } else if (data.length > 0) { // url에 쿼리스트링이 없고, 서브 타임라인 아이템들은 있을 경우
           setSelectedItem(data[0]); // 해당 id가 없으면 첫번째 서브 타임라인 아이템을 선택
-        } else {
-          // 서브 타임라인이 하나도 없는 경우 -> ui 디자인 해야 함
-        }
-
-        if (data.length > 0) { // 서브 타임라인 아이템이 있으면
-          setSelectedItem(data[0]); // 첫번째 서브 타임라인을 보여주고
           setIsCreating(false); // 글쓰기 모드 활성화 x
         } else {
-          setIsCreating(true) // 서브 타임라인 아이템이 하나도 없으면 글쓰기 모드 활성화
+          setIsCreating(true)
+          // +) 서브 타임라인이 하나도 없는 경우 -> ui 디자인 해야 함
         }
 
         setTitle(response.data.mainTimelineTitle)

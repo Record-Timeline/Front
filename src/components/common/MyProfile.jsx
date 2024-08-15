@@ -6,6 +6,7 @@ import {css} from "@emotion/react";
 import Button from "./Button"
 import testProfileImg from "../../assets/images/testProfileImg.png";
 import {useNavigate} from "react-router-dom";
+import CareerModal from "../timeline/CareerModal";
 
 export default function MyProfile({profile}) {
   const [isFollowed, setIsFollowed] = useState(false);
@@ -167,20 +168,25 @@ export default function MyProfile({profile}) {
               </div>
             </div>
           </div>
-          <div>
-            <Button
-              width="160px"
-              height="40px"
-              margin="0px 0 0 180px"
-              backgroundColor="none"
-              border="2px solid #829FD7"
-              textColor="#7286AD"
-              fontSize="15px"
-              borderRadius="30px"
-              lineHeight="40px"
-            >
-              내 경력 사항 수정
-            </Button>
+          <div
+            css={css({
+              margin: "0px 0 0 180px",
+            })}
+          >
+            <CareerModal />
+            {/*<Button*/}
+            {/*  width="160px"*/}
+            {/*  height="40px"*/}
+            {/*  margin="0px 0 0 180px"*/}
+            {/*  backgroundColor="none"*/}
+            {/*  border="2px solid #829FD7"*/}
+            {/*  textColor="#7286AD"*/}
+            {/*  fontSize="15px"*/}
+            {/*  borderRadius="30px"*/}
+            {/*  lineHeight="40px"*/}
+            {/*>*/}
+            {/*  내 경력 사항 수정*/}
+            {/*</Button>*/}
           </div>
         </div>
       </div>

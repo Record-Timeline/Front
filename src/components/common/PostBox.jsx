@@ -5,6 +5,7 @@ import { css } from "@emotion/react";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import {useNavigate} from "react-router-dom";
+import {useSelector} from "react-redux";
 export default function PostBox({
   nickName,
   title,
@@ -16,11 +17,17 @@ export default function PostBox({
   endDate,
   memeberId,
   maintimelineId,
+  subtimelineId
 }) {
   const navigate = useNavigate();
+  const myMemberId = useSelector(state => state.memberId);
   // 게시물 클릭 시 페이지 이동
-  const onClickPost = (memeberId, maintimelineId) => {
-    navigate(`/otherssub/${memeberId}/${maintimelineId}`);
+  const onClickPost = (memberId, maintimelineId, subtimelineId) => {
+    if (memberId === myMemberId) {
+      navigate(`/subtimeline/${maintimelineId}?subtimelineId=${subtimelineId}`);
+    } else {
+      navigate(`/otherssub/${memberId}/${maintimelineId}?subtimelineId=${subtimelineId}`);
+    }
   };
   return (
     <div
@@ -36,7 +43,7 @@ export default function PostBox({
         color: #474747;
         cursor: pointer;
       `}
-      onClick={() => onClickPost(memeberId, maintimelineId)}
+      onClick={() => onClickPost(memeberId, maintimelineId, subtimelineId)}
     >
       <div
         css={css`

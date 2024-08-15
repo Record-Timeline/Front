@@ -4,14 +4,13 @@ import React from "react";
 import { css } from "@emotion/react";
 import Button from "@mui/material/Button";
 
-export default function FollowerUser({
+export default function OtherFollowerUser({
                                        profileImgSrc,
                                        nickName,
                                        interest,
                                        followerId,
-                                       cancleFollow,
-                                       isFollowing,
-  onClick
+                                       toggleFollow, // 팔로우 상태를 토글하는 함수
+                                       isFollowing, onClick
                                      }) {
   return (
     <div
@@ -20,17 +19,16 @@ export default function FollowerUser({
         align-items: center;
         padding: 30px;
         border-bottom: 1px solid #D8D8D8;
-          width: 500px;
-          cursor: pointer;
+        width: 500px;
+          onClick={() => onClick(followerId)}
       `}
-      onClick={() => onClick(followerId)}
     >
       <img
         css={css`
           width: 80px;
-            height: 80px;
-            overflow: hidden;
-            border-radius: 50%;
+          height: 80px;
+          overflow: hidden;
+          border-radius: 50%;
         `}
         src={profileImgSrc}
         alt={`${nickName}의 프로필 이미지`}
@@ -46,7 +44,7 @@ export default function FollowerUser({
           css={css`
             font-size: 21px;
             font-weight: 700;
-              margin-left: 5px;
+            margin-left: 5px;
           `}
         >
           {nickName}
@@ -66,20 +64,20 @@ export default function FollowerUser({
       </div>
       <Button
         variant="text"
-        color={isFollowing ? "primary" : "error"}
+        color={isFollowing ? "error" : "primary"}
         onClick={(e) => {
           e.stopPropagation(); // 클릭 이벤트가 상위 div로 전달되지 않도록
-          cancleFollow(followerId);
+          toggleFollow(followerId);
         }}
         css={css`
-            margin-left: auto;
-            padding: 5px 20px;
-            font-size: 17px;
-            font-weight: 500;
-            font-family: Pretendard;
+          margin-left: auto;
+          padding: 5px 20px;
+          font-size: 17px;
+          font-weight: 500;
+          font-family: Pretendard;
         `}
       >
-        {isFollowing ? "팔로우 취소" : "삭제"}
+        {isFollowing ? "팔로우 취소" : "팔로우"}
       </Button>
     </div>
   );

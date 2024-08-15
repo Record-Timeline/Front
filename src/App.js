@@ -13,6 +13,7 @@ import OthersMainTimeline from "./pages/OthersMainTimeline";
 import OthersSubTimeline from "./pages/OthersSubTimeline";
 import ModifyProfile from "./pages/ModifyProfile";
 import Follow from "./pages/Follow";
+import OtherFollow from "./pages/OtherFollow";
 import { CssBaseline } from "@mui/material";
 import FindPassword from "./pages/FindPassword";
 import FindPasswordCertification from "./pages/FindPasswordCertification";
@@ -65,7 +66,7 @@ function App() {
         <Route path="/profile" element={<ModifyProfile />} /> {/* 회원정보 수정 페이지 */}
         <Route path="/bookmark" element={<Bookmark />} /> {/* 북마크한 게시물 페이지 */}
         <Route path="/follow" element={<Follow />} /> {/* 팔로우/팔로잉 목록 페이지 */}
-        <Route path="/follow/:memberId" element={<Follow />} /> {/* 다른 사람의 팔로우/팔로잉 목록 */}
+        <Route path="/follow/:memberId" element={<OtherFollow />} /> {/* 다른 사람의 팔로우/팔로잉 목록 */}
         <Route path="/search" element={<Search />} /> {/* 검색 페이지 */}
         <Route path="/search/result/*" element={<SearchResult />} /> {/* 검색 결과 페이지 */}
         <Route path="/mytimeline" element={<MainTimeline />} /> {/* 메인 타임라인 페이지 */}

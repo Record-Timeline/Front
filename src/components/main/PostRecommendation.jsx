@@ -4,11 +4,13 @@ import React, { useState } from "react";
 import { css } from "@emotion/react";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from 'react-redux'; // Import the useSelector hook
 
 export default function PostRecommendation({ postData }) {
   const navigate = useNavigate();
   const [page, setPage] = useState(0); // 페이지 번호 상태
+  const myMemberId = useSelector(state => state.memberId);
 
   // content에서 이미지 추출하는 함수
   const extractImage = (content) => {
@@ -28,7 +30,6 @@ export default function PostRecommendation({ postData }) {
     "Education": "교육",
     "Media_Culture_Sports": "미디어/문화/스포츠",
   };
-
 
   if (!postData || postData.length === 0) {
     return (
@@ -59,9 +60,12 @@ export default function PostRecommendation({ postData }) {
   };
 
   // 게시물 클릭 시 페이지 이동
-  const onClickPost = (memeberId, maintimelineId, subtimelineId) => {
-    navigate(`/otherssub/${memeberId}/${maintimelineId}?subtimelineId=${subtimelineId}`);
-
+  const onClickPost = (memberId, maintimelineId, subtimelineId) => {
+    if (memberId === myMemberId) {
+      navigate(`/subtimeline/${maintimelineId}?subtimelineId=${subtimelineId}`);
+    } else {
+      navigate(`/otherssub/${memberId}/${maintimelineId}?subtimelineId=${subtimelineId}`);
+    }
   };
 
   return (

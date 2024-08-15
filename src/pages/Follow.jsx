@@ -12,7 +12,8 @@ import FollowerUser from "../components/follow/FollowerUser";
 import testProfileImg from "../assets/images/testProfileImg.png";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-
+import { useNavigate } from "react-router-dom";
+import { useSelector } from 'react-redux';
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
   return (
@@ -42,8 +43,8 @@ function a11yProps(index) {
 }
 
 export default function Follow() {
-  const { memberId } = useParams(); // URL에서 memberId를 가져옴
-
+  const navigate = useNavigate();
+  const myMemberId = useSelector(state => state.memberId);
   const [value, setValue] = React.useState(0);
   const [following, setFollowing] = useState([]); // 팔로잉 목록 state
   const [follower, setFollower] = useState([]); // 팔로워 목록 state
@@ -77,9 +78,7 @@ export default function Follow() {
   // 현재 팔로잉 정보 불러오기
   const fetchFollowingData = async () => {
     try {
-      const url = memberId
-        ? `/api/v1/follow/${memberId}/following`  // 다른 사람의 팔로잉 목록
-        : "/api/v1/follow/my-following";             // 내 팔로잉 목록
+      const url = "/api/v1/follow/my-following";
       const response = await axiosInstance.get(url);
       console.log("팔로잉", response.data.result);
       setFollowing(response.data.result);
@@ -90,15 +89,12 @@ export default function Follow() {
 
   useEffect(() => {
     fetchFollowingData();
-  }, [memberId]);
+  }, []);
 
   // 현재 팔로워 정보 불러오기
   const fetchFollowerData = async () => {
     try {
-      const url = memberId
-        ? `/api/v1/follow/${memberId}/followers`  // 다른 사람의 팔로워 목록
-        : "/api/v1/follow/my-" +
-        "followers";             // 내 팔로워 목록
+      const url = "/api/v1/follow/my-followers";// 내 팔로워 목록
       const response = await axiosInstance.get(url);
       console.log("팔로워", response.data.result);
       setFollower(response.data.result);
@@ -108,7 +104,7 @@ export default function Follow() {
   };
   useEffect(() => {
     fetchFollowerData();
-  }, [memberId]);
+  }, []);
 
   // 팔로우 취소
   const cancleFollowing = async (followerId) => {
@@ -135,6 +131,15 @@ export default function Follow() {
       console.error("팔로워 삭제 실패:", error);
     }
   };
+
+  const handleUserClick = (userId) => {
+    if (userId === myMemberId) {
+      navigate('/mytimeline');
+    } else {
+      navigate(`/othersmain/${userId}`);
+    }
+  };
+
 
   // 카테고리
   const interestMapping = {
@@ -220,6 +225,7 @@ export default function Follow() {
                 followerId={follower.memberId}
                 cancleFollow={cancleFollower}
                 isFollowing={false}
+                onClick={handleUserClick}
               />
             ))
           )}
@@ -240,6 +246,7 @@ export default function Follow() {
                 followerId={following.memberId}
                 cancleFollow={cancleFollowing}
                 isFollowing={true}
+                onClick={handleUserClick}
               />
             ))
           )}

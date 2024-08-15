@@ -180,6 +180,7 @@ export default function SearchResult() {
                     endDate={post.endDate}
                     maintimelineId={post.mainTimelineId}
                     memeberId={post.authorId}
+                    subtimelineId={post.id}
                   />
                 ))}
               </div>

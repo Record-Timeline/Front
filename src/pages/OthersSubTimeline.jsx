@@ -53,6 +53,8 @@ export default function OthersSubTimeline() {
           setSelectedItem(data[0]); // 첫번째 서브 타임라인을 보여주고
         } else {
         }
+
+        setTitle(response.data.mainTimelineTitle)
         console.log("서브 타임라인 조회 완료", response)
       } catch (error) {
         console.log("다른 사용자 서브 타임라인 조회 실패: ", error);
@@ -62,11 +64,11 @@ export default function OthersSubTimeline() {
 
     fetchOthersSubTimelines();
 
-    // 메인 타임라인에서 가져온 title 상태 설정 및 sessionStorage에 저장 (유지되도록)
-    if (location.state && location.state.title) {
-      setTitle(location.state.title);
-      sessionStorage.setItem('mainTimelineTitle', location.state.title);
-    }
+    // // 메인 타임라인에서 가져온 title 상태 설정 및 sessionStorage에 저장 (유지되도록)
+    // if (location.state && location.state.title) {
+    //   setTitle(location.state.title);
+    //   sessionStorage.setItem('mainTimelineTitle', location.state.title);
+    // }
   }, []);
 
   return (

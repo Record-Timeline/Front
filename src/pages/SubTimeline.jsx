@@ -165,6 +165,9 @@ export default function SubTimeline() {
         } else {
           setIsCreating(true) // 서브 타임라인 아이템이 하나도 없으면 글쓰기 모드 활성화
         }
+
+        setTitle(response.data.mainTimelineTitle)
+        console.log(response.data.mainTimelineTitle)
         console.log("서브 타임라인 조회 완료", response)
       } catch (error) {
         console.error("서브 타임라인 조회 에러 발생:", error.response ? error.response.data : error.message);
@@ -174,11 +177,11 @@ export default function SubTimeline() {
     fetchProfile();
     fetchSubTimelines();
 
-    // 메인 타임라인에서 가져온 title 상태 설정 및 sessionStorage에 저장 (유지되도록)
-    if (location.state && location.state.title) {
-      setTitle(location.state.title);
-      sessionStorage.setItem('mainTimelineTitle', location.state.title);
-    }
+    // // 메인 타임라인에서 가져온 title 상태 설정 및 sessionStorage에 저장 (유지되도록)
+    // if (location.state && location.state.title) {
+    //   setTitle(location.state.title);
+    //   sessionStorage.setItem('mainTimelineTitle', location.state.title);
+    // }
   }, [token, mainTimelineId, location.state]); // id와 location.state를 의존성 배열에 추가
 
   return (

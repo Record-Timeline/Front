@@ -5,8 +5,8 @@ import {useState} from "react";
 import {css} from "@emotion/react";
 import Button from "./Button"
 import testProfileImg from "../../assets/images/testProfileImg.png";
-import CareerModal from "../timeline/CareerModal";
 import {useNavigate} from "react-router-dom";
+import CareerModal from "../timeline/CareerModal";
 
 export default function MyProfile({profile}) {
   const [isFollowed, setIsFollowed] = useState(false);

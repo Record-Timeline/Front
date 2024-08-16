@@ -3,17 +3,16 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { IconButton, Typography, Divider } from '@mui/material';
+import { IconButton } from '@mui/material';
 import {css} from "@emotion/react";
-import {GoPencil} from "react-icons/go";
+import AddIcon from '@mui/icons-material/Add';
 import Career from '../career/Career';
 import Education from '../career/Education';
 import Certificate from "../career/Certificate";
 import Language from "../career/Language";
+import CareerInput from "../career/CareerInput";
 
 export default function CareerModal() {
   const [open, setOpen] = React.useState(false);
@@ -64,16 +63,39 @@ export default function CareerModal() {
               // border: "2px solid #829FD7",
             })}
           >
-            <h2>경력</h2>
+            <div css={css({display: "flex", alignItems: "center", gap: "1px",})}>
+              <h2>경력</h2>
+              <IconButton aria-label="delete">
+                <AddIcon/>
+              </IconButton>
+            </div>
             <Career/>
-            <Career/>
-            <h2>학력</h2>
+            <CareerInput/>
+
+            <div css={css({display: "flex", alignItems: "center", gap: "1px",})}>
+              <h2>학력</h2>
+              <IconButton aria-label="delete">
+                <AddIcon/>
+              </IconButton>
+            </div>
             <Education/>
             <Education/>
-            <h2>자격증</h2>
+
+            <div css={css({display: "flex", alignItems: "center", gap: "1px",})}>
+              <h2>자격증</h2>
+              <IconButton aria-label="delete">
+                <AddIcon/>
+              </IconButton>
+            </div>
             <Certificate/>
             <Certificate/>
-            <h2>외국어</h2>
+
+            <div css={css({display: "flex", alignItems: "center", gap: "1px",})}>
+              <h2>외국어</h2>
+              <IconButton aria-label="delete">
+                <AddIcon/>
+              </IconButton>
+            </div>
             <Language/>
             <Language/>
           </div>

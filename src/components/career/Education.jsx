@@ -6,7 +6,7 @@ import {GoPencil} from "react-icons/go";
 import {FaRegTrashAlt} from "react-icons/fa";
 import dayjs from 'dayjs';
 
-function Education () {
+function Education ({degree, institutionName, major, startDate, endDate, onEdit}) {
   return (
     <div
       css={css({
@@ -31,11 +31,16 @@ function Education () {
           gap: "20px" // 요소 간 간격 설정
         })}
       >
-        <div>학위</div>
+        <div>석사</div>
+        {/*<div>{degree}</div>*/}
         <div><b>성신여자대학교</b></div>
-        <div css={css({fontSize: "13px", display: "flex", alignItems: "center"})}>시작날짜 ~ 종료날짜</div>
+        {/*<div><b>{institutionName}</b></div>*/}
+        <div>컴퓨터공학과</div>
+        {/*<div>{major}</div>*/}
+        {dayjs(startDate).format('YYYY년 MM월')} ~ {endDate ? dayjs(endDate).format('YYYY년 MM월') : '진행중'}
       </div>
       <div // 수정하기 버튼
+        onClick={onEdit}
         css={css({
           display: "flex", // 내부 요소를 정렬하기 위한 flex 설정
           alignItems: "center", // 수직 중앙 정렬

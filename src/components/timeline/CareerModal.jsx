@@ -103,8 +103,23 @@ export default function CareerModal() {
 
   // 경력 생성
   const createCareer = async (data) => {
-    // 메인 타임라인 생성 연동 (POST, CREATE)
+    // 경력 생성 연동 (POST, CREATE)
       setCareers([...careers, { type: "item", data: {} }]); //response.data
+  };
+  // 학력 생성
+  const createEducation = async (data) => {
+    // 학력 생성 연동 (POST, CREATE)
+    setEducations([...educations, { type: "item", data: {} }]); //response.data
+  };
+  // 자격증 생성
+  const createCertification = async (data) => {
+    // 자격 생성 연동 (POST, CREATE)
+    setCertificates([...certificates, { type: "item", data: {} }]); //response.data
+  };
+  // 외국어 생성
+  const createLanguage = async (data) => {
+    // 외국어 생성 연동 (POST, CREATE)
+    setLanguages([...languages, { type: "item", data: {} }]); //response.data
   };
 
   // 경력 항목을 삭제하는 함수
@@ -190,7 +205,6 @@ export default function CareerModal() {
                 <CareerInput
                   createCareer={createCareer} // 생성 연동
                   // updateCareer={updateCareer} // 수정 연동
-                  key={index}
                   index={index}
                   saveItem={saveCareer}
                   initialData={item.data}
@@ -205,8 +219,29 @@ export default function CareerModal() {
                 <AddIcon/>
               </IconButton>
             </div>
+            {/*{educations.map((item, index) =>*/}
+            {/*  item.type === "item" ? (*/}
+            {/*    <Education*/}
+            {/*      degree={item.data.degree}*/}
+            {/*      startDate={item.data.startDate}*/}
+            {/*      endDate={item.data.endDate}*/}
+            {/*      institutionName={item.data.institutionName}*/}
+            {/*      major={item.data.major}*/}
+            {/*      onEdit={() => editEducation(index)}*/}
+            {/*    />*/}
+            {/*  ) : (*/}
+            {/*    <EducationInput*/}
+            {/*      createEducation={createEducation} // 생성 연동*/}
+            {/*      // updateEducation={updateEducation} // 수정 연동*/}
+            {/*      index={index}*/}
+            {/*      saveItem={saveEducation}*/}
+            {/*      initialData={item.data}*/}
+            {/*      onDelete={() => deleteEducation(index)}*/}
+            {/*    />*/}
+            {/*  )*/}
+            {/*)}*/}
             <Education/>
-            <EducationInput/>
+
 
             <div css={css({display: "flex", alignItems: "center", gap: "1px",})}>
               <h2>자격증</h2>

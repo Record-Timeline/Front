@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import * as React from 'react';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {css} from "@emotion/react";
 import {FaRegTrashAlt} from "react-icons/fa";
 import dayjs from 'dayjs';
@@ -13,16 +13,43 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-function EducationInput() {
+function EducationInput({index, initialData, saveItem, createEducation, onDelete }) {
   const [degree, setDegree] = useState(''); // 학위
   const [institutionName, setInstitutionName] = useState(null); // 학교이름
   const [major, setMajor] = useState(null); // 전공
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
+  // useEffect(() => {
+  //   setDegree(initialData.degree);
+  //   setStartDate(initialData.startDate ? dayjs(initialData.startDate) : null);
+  //   setEndDate(initialData.endDate ? dayjs(initialData.endDate) : null);
+  //   setInstitutionName(initialData.institutionName);
+  //   setMajor(initialData.major);
+  // }, [initialData]);
+
   // 학위 Select Box
   const handleChange = (event) => {
     setDegree(event.target.value);
+  };
+
+  const handleSave = async () => {
+    // alert dialog 추가해야 함
+    const data = {
+      degree,
+      startDate: dayjs(startDate).format("YYYY-MM-DD"),
+      endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
+      institutionName,
+      major
+    };
+
+    // if (initialData.id) {
+    //   await updateCareer(index, data); // 기존 항목 업데이트 (생성)
+    // } else {
+      createEducation(data); // 새 항목 생성 (조회)
+    // }
+
+    saveItem(index, data);
   };
 
   return (
@@ -47,7 +74,7 @@ function EducationInput() {
           <Select
             labelId="demo-simple-select-standard-label"
             id="demo-simple-select-standard"
-            value={degree}
+            value={degree || " "}
             onChange={handleChange}
             label="학위"
           >
@@ -132,6 +159,7 @@ function EducationInput() {
         </div>
       </div>
       <div // 완료하기 버튼 (생성, 수정)
+        onClick={handleSave}
         css={css({
           color: "#829FD7",
           display: "flex", // 내부 요소를 정렬하기 위한 flex 설정
@@ -143,6 +171,7 @@ function EducationInput() {
         <FaRegCircleCheck/>
       </div>
       <div // 삭제하기 버튼
+        onClick={onDelete}
         css={css({
           color: "#E89494",
           display: "flex", // 내부 요소를 정렬하기 위한 flex 설정

@@ -10,8 +10,8 @@ import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 import StarIcon from '@mui/icons-material/Star';
 
-function Language () {
-  const [Level, setLevel] = useState(5);
+function Language ({languageName, level, onEdit}) {
+  const [Level, setLevel] = useState(level);
 
   const labels = {
     1: 'VeryLow',
@@ -45,7 +45,7 @@ function Language () {
           // gap: "20px" // 요소 간 간격 설정
         })}
       >
-        <div><b>프랑스어</b></div>
+        <div><b>{languageName}</b></div>
         <Box
           sx={{
             width: 200,
@@ -56,7 +56,7 @@ function Language () {
         >
           <Rating
             name="text-feedback"
-            value={Level}
+            value={level}
             readOnly
             precision={1}
             emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
@@ -65,6 +65,7 @@ function Language () {
         </Box>
       </div>
       <div // 수정하기 버튼
+        onClick={onEdit}
         css={css({
           display: "flex", // 내부 요소를 정렬하기 위한 flex 설정
           alignItems: "center", // 수직 중앙 정렬

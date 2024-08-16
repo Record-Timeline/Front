@@ -274,8 +274,24 @@ export default function CareerModal() {
                 <AddIcon/>
               </IconButton>
             </div>
-            <Language/>
-            <LanguageInput/>
+            {languages.map((item, index) =>
+              item.type === "item" ? (
+                <Language
+                  languageName={item.data.languageName}
+                  level={item.data.level}
+                  onEdit={() => editLanguage(index)}
+                />
+              ) : (
+                <LanguageInput
+                  createLanguage={createLanguage} // 생성 연동
+                  // updateCareer={updateCareer} // 수정 연동
+                  index={index}
+                  saveItem={saveLanguage}
+                  initialData={item.data}
+                  onDelete={() => deleteLanguage(index)}
+                />
+              )
+            )}
           </div>
         </DialogContent>
       </Dialog>

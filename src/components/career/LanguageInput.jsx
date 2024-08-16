@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import * as React from 'react';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {css} from "@emotion/react";
 import {FaRegTrashAlt} from "react-icons/fa";
 import dayjs from 'dayjs';
@@ -12,7 +12,7 @@ import Rating from '@mui/material/Rating';
 import Box from '@mui/material/Box';
 import StarIcon from '@mui/icons-material/Star';
 
-function LanguageInput() {
+function LanguageInput({createLanguage, index, saveItem, initialData, onDelete}) {
   const [languageName, setLanguageName] = useState(null); // 자격증 이름
   const [level, setLevel] = useState(3);
   const [hover, setHover] = useState(-1);
@@ -27,6 +27,27 @@ function LanguageInput() {
     3: 'Middle',
     4: 'Good',
     5: 'VeryHigh',
+  };
+
+  useEffect(() => {
+    setLanguageName(initialData.languageName);
+    setLevel(initialData.level);
+  }, [initialData]);
+
+  const handleSave = async () => {
+    // alert dialog 추가해야 함
+    const data = {
+      languageName,
+      level,
+    };
+
+    if (initialData.id) {
+      // await updateLanguage(index, data); // 기존 항목 업데이트 (생성)
+    } else {
+      createLanguage(data); // 새 항목 생성 (조회)
+    }
+
+    saveItem(index, data);
   };
 
   return (
@@ -94,6 +115,7 @@ function LanguageInput() {
         </Box>
       </div>
       <div // 완료하기 버튼 (생성, 수정)
+        onClick={handleSave}
         css={css({
           color: "#829FD7",
           display: "flex", // 내부 요소를 정렬하기 위한 flex 설정
@@ -105,6 +127,7 @@ function LanguageInput() {
         <FaRegCircleCheck/>
       </div>
       <div // 삭제하기 버튼
+        onClick={onDelete}
         css={css({
           color: "#E89494",
           display: "flex", // 내부 요소를 정렬하기 위한 flex 설정

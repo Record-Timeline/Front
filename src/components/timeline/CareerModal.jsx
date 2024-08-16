@@ -179,13 +179,11 @@ export default function CareerModal() {
             {careers.map((item, index) =>
               item.type === "item" ? (
                 <Career
-                  key={index}
-                  careerId={item.data.id}
-                  companyName={"성신회사"}
+                  companyName={item.data.companyName}
                   startDate={item.data.startDate}
                   endDate={item.data.endDate}
-                  duty={"개발"}
-                  position={"팀장"}
+                  duty={item.data.duty}
+                  position={item.data.position}
                   onEdit={() => editCareer(index)}
                 />
               ) : (
@@ -200,8 +198,6 @@ export default function CareerModal() {
                 />
               )
             )}
-            <Career/>
-            <CareerInput/>
 
             <div css={css({display: "flex", alignItems: "center", gap: "1px",})}>
               <h2>학력</h2>

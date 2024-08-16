@@ -6,7 +6,7 @@ import {GoPencil} from "react-icons/go";
 import {FaRegTrashAlt} from "react-icons/fa";
 import dayjs from 'dayjs';
 
-function Career ({onEdit}) {
+function Career ({companyName, startDate, endDate, duty, position, onEdit}) {
   return (
     <div
       css={css({
@@ -29,9 +29,9 @@ function Career ({onEdit}) {
           marginLeft: "13px"
         })}
       >
-        <div><b>회사이름</b></div>
-        <div>시작날짜 ~ 종료날짜</div>
-        <div>직무 / 포지션</div>
+        <div><b>{companyName}</b></div>
+        {dayjs(startDate).format('YYYY년 MM월')} ~ {endDate ? dayjs(endDate).format('YYYY년 MM월') : '진행중'}
+        <div>{duty} / {position}</div>
       </div>
       <div // 수정하기 버튼
         onClick={onEdit}

@@ -19,6 +19,11 @@ import LanguageInput from "../career/LanguageInput";
 
 export default function CareerModal() {
   const [open, setOpen] = React.useState(false);
+  // 각 항목들을 관리할 상태 생성
+  const [careers, setCareers] = useState([]);
+  const [educations, setEducations] = useState([]);
+  const [certificates, setCertificates] = useState([]);
+  const [languages, setLanguages] = useState([]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -26,6 +31,23 @@ export default function CareerModal() {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  // 새 경력 입력 항목 추가하는 함수
+  const addInput = () => {
+    setCareers([...careers, { type: "input", data: {} }]);
+  };
+  // 새 학력 입력 항목 추가하는 함수
+  const addInput = () => {
+    setEducations([...educations, { type: "input", data: {} }]);
+  };
+  // 새 자격증 입력 항목 추가하는 함수
+  const addInput = () => {
+    setCertificates([...certificates, { type: "input", data: {} }]);
+  };
+  // 새 외국어 입력 항목 추가하는 함수
+  const addInput = () => {
+    setLanguages([...languages, { type: "input", data: {} }]);
   };
 
   return (

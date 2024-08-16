@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import * as React from 'react';
+import {useState} from "react";
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
@@ -18,7 +19,7 @@ import CertificateInput from "../career/CertificateInput";
 import LanguageInput from "../career/LanguageInput";
 
 export default function CareerModal() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   // 각 항목들을 관리할 상태 생성
   const [careers, setCareers] = useState([]);
   const [educations, setEducations] = useState([]);
@@ -51,10 +52,10 @@ export default function CareerModal() {
   };
 
   // 경력 항목을 저장하는 함수
-  const saveCareers = (index, data) => {
+  const saveCareer = (index, data) => {
     const newCareers = careers.slice();
     newCareers[index] = {type: "item", data: data};
-    setCareers(newItems);
+    setCareers(newCareers);
   };
   // 학력 항목을 저장하는 함수
   const saveEducation = (index, data) => {
@@ -100,8 +101,14 @@ export default function CareerModal() {
     setLanguages(newLanguages);
   };
 
+  // 경력 생성
+  const createCareer = async (data) => {
+    // 메인 타임라인 생성 연동 (POST, CREATE)
+      setCareers([...careers, { type: "item", data: {} }]); //response.data
+  };
+
   // 경력 항목을 삭제하는 함수
-  const deleteCareer = async (index) => {
+  const deleteCareer = (index) => {
     const careerId = careers[index].data.id;
     // 연동코드
     setCareers(careers.filter((_, i) => i !== index));
@@ -165,16 +172,40 @@ export default function CareerModal() {
           >
             <div css={css({display: "flex", alignItems: "center", gap: "1px",})}>
               <h2>경력</h2>
-              <IconButton aria-label="delete">
+              <IconButton onClick={addCareerInput} aria-label="delete">
                 <AddIcon/>
               </IconButton>
             </div>
+            {careers.map((item, index) =>
+              item.type === "item" ? (
+                <Career
+                  key={index}
+                  careerId={item.data.id}
+                  companyName={"성신회사"}
+                  startDate={item.data.startDate}
+                  endDate={item.data.endDate}
+                  duty={"개발"}
+                  position={"팀장"}
+                  onEdit={() => editCareer(index)}
+                />
+              ) : (
+                <CareerInput
+                  createCareer={createCareer} // 생성 연동
+                  // updateCareer={updateCareer} // 수정 연동
+                  key={index}
+                  index={index}
+                  saveItem={saveCareer}
+                  initialData={item.data}
+                  onDelete={() => deleteCareer(index)}
+                />
+              )
+            )}
             <Career/>
             <CareerInput/>
 
             <div css={css({display: "flex", alignItems: "center", gap: "1px",})}>
               <h2>학력</h2>
-              <IconButton aria-label="delete">
+              <IconButton onClick={addEducationInput} aria-label="delete">
                 <AddIcon/>
               </IconButton>
             </div>
@@ -183,7 +214,7 @@ export default function CareerModal() {
 
             <div css={css({display: "flex", alignItems: "center", gap: "1px",})}>
               <h2>자격증</h2>
-              <IconButton aria-label="delete">
+              <IconButton onClick={addCertificateInput} aria-label="delete">
                 <AddIcon/>
               </IconButton>
             </div>
@@ -192,7 +223,7 @@ export default function CareerModal() {
 
             <div css={css({display: "flex", alignItems: "center", gap: "1px",})}>
               <h2>외국어</h2>
-              <IconButton aria-label="delete">
+              <IconButton onClick={addLanguageInput} aria-label="delete">
                 <AddIcon/>
               </IconButton>
             </div>

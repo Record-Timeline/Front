@@ -10,12 +10,30 @@ import DatePickerValue from "../common/DatePickerValue";
 import Input from "@mui/material/Input";
 import {FaRegCircleCheck} from "react-icons/fa6";
 
-function CareerInput() {
+function CareerInput({index, initialData, saveItem, onDelete, createCareer, updateCareer}) {
   const [companyName, setCompanyName] = useState("");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [duty, setDuty] = useState(null); // 직무
   const [position, setPosition] = useState(null); // 직책
+
+  const handleSave = async () => {
+    const data = {
+      companyName,
+      startDate: dayjs(startDate).format("YYYY-MM-DD"),
+      endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
+      duty,
+      position
+    };
+
+    if (initialData.id) {
+      await updateCareer(index, data); // 기존 항목 업데이트 (생성)
+    } else {
+      createCareer(data); // 새 항목 생성 (조회)
+    }
+
+    saveItem(index, data);
+  };
 
   return (
     <div // 회색 박스
@@ -129,6 +147,7 @@ function CareerInput() {
         </div>
       </div>
       <div // 완료하기 버튼 (생성, 수정)
+        onClick={handleSave}
         css={css({
           color: "#829FD7",
           display: "flex", // 내부 요소를 정렬하기 위한 flex 설정
@@ -140,6 +159,7 @@ function CareerInput() {
         <FaRegCircleCheck/>
       </div>
       <div // 삭제하기 버튼
+        onClick={onDelete}
         css={css({
           color: "#E89494",
           display: "flex", // 내부 요소를 정렬하기 위한 flex 설정

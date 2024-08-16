@@ -6,7 +6,7 @@ import {GoPencil} from "react-icons/go";
 import {FaRegTrashAlt} from "react-icons/fa";
 import dayjs from 'dayjs';
 
-function Career () {
+function Career ({onEdit}) {
   return (
     <div
       css={css({
@@ -34,6 +34,7 @@ function Career () {
         <div>직무 / 포지션</div>
       </div>
       <div // 수정하기 버튼
+        onClick={onEdit}
         css={css({
           display: "flex", // 내부 요소를 정렬하기 위한 flex 설정
           alignItems: "center", // 수직 중앙 정렬

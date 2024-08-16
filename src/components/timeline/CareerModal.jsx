@@ -15,6 +15,7 @@ import Language from "../career/Language";
 import CareerInput from "../career/CareerInput";
 import EducationInput from "../career/EducationInput";
 import CertificateInput from "../career/CertificateInput";
+import LanguageInput from "../career/LanguageInput";
 
 export default function CareerModal() {
   const [open, setOpen] = React.useState(false);
@@ -99,7 +100,7 @@ export default function CareerModal() {
               </IconButton>
             </div>
             <Language/>
-            <Language/>
+            <LanguageInput/>
           </div>
         </DialogContent>
       </Dialog>

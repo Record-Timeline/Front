@@ -110,6 +110,7 @@ function CareerInput() {
             color: "#212121",
             textAlign: "left",
             marginTop: "18px",
+            marginBottom: "5px",
             // border: "1px solid black",
           })}
         >
@@ -132,7 +133,7 @@ function CareerInput() {
           color: "#829FD7",
           display: "flex", // 내부 요소를 정렬하기 위한 flex 설정
           alignItems: "center", // 수직 중앙 정렬
-          marginLeft: "70px", // GoPencil을 제일 오른쪽으로 배치
+          marginLeft: "70px",
           cursor: "pointer",
         })}
       >
@@ -143,7 +144,7 @@ function CareerInput() {
           color: "#E89494",
           display: "flex", // 내부 요소를 정렬하기 위한 flex 설정
           alignItems: "center", // 수직 중앙 정렬
-          marginLeft: "auto", // GoPencil을 제일 오른쪽으로 배치
+          marginLeft: "auto", // FaRegCircleCheck을 제일 오른쪽으로 배치
           marginRight: "10px",
           cursor: "pointer",
         })}

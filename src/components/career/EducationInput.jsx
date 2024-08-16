@@ -136,7 +136,7 @@ function EducationInput() {
           color: "#829FD7",
           display: "flex", // 내부 요소를 정렬하기 위한 flex 설정
           alignItems: "center", // 수직 중앙 정렬
-          marginLeft: "115px", // GoPencil을 제일 오른쪽으로 배치
+          marginLeft: "115px",
           cursor: "pointer",
         })}
       >
@@ -147,7 +147,7 @@ function EducationInput() {
           color: "#E89494",
           display: "flex", // 내부 요소를 정렬하기 위한 flex 설정
           alignItems: "center", // 수직 중앙 정렬
-          marginLeft: "auto", // GoPencil을 제일 오른쪽으로 배치
+          marginLeft: "auto", // FaRegTrashAlt을 제일 오른쪽으로 배치
           marginRight: "10px",
           cursor: "pointer",
         })}

@@ -13,6 +13,7 @@ import Education from '../career/Education';
 import Certificate from "../career/Certificate";
 import Language from "../career/Language";
 import CareerInput from "../career/CareerInput";
+import EducationInput from "../career/EducationInput";
 
 export default function CareerModal() {
   const [open, setOpen] = React.useState(false);
@@ -79,7 +80,7 @@ export default function CareerModal() {
               </IconButton>
             </div>
             <Education/>
-            <Education/>
+            <EducationInput/>
 
             <div css={css({display: "flex", alignItems: "center", gap: "1px",})}>
               <h2>자격증</h2>

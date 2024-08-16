@@ -11,6 +11,7 @@ import { IconButton, Typography, Divider } from '@mui/material';
 import {css} from "@emotion/react";
 import {GoPencil} from "react-icons/go";
 import Career from '../career/Career';
+import Education from '../career/Education';
 
 export default function CareerModal() {
   const [open, setOpen] = React.useState(false);
@@ -65,32 +66,9 @@ export default function CareerModal() {
             <Career/>
             <Career/>
             <h2>학력</h2>
+            <Education/>
+            <Education/>
           </div>
-          {/*<DialogContentText id="alert-dialog-description">*/}
-          {/*  /!*<h2>경력</h2>*!/*/}
-          {/*  /!*<div>*!/*/}
-          {/*  /!*  hjkhkjhjkhjkhkjhjkbjk*!/*/}
-          {/*  /!*</div>*!/*/}
-          {/*  /!*<h2>학력</h2>*!/*/}
-          {/*  /!*<h2>자격증</h2>*!/*/}
-          {/*  /!*<h2>외국어</h2>*!/*/}
-          {/*  <Section title="경력" items={[*/}
-          {/*    { company: '삼성전자', period: '2022년 1월 ~ 현재', role: '개발 / 사원' },*/}
-          {/*    { company: '배달의 민족', period: '2020년 7월 ~ 2021년 12월', role: 'Computer engineering / 인턴' },*/}
-          {/*  ]} />*/}
-          {/*  <Section title="학력" items={[*/}
-          {/*    { school: '연세대학교', period: '18-03-02 ~ 22-02-10', degree: '대학원' },*/}
-          {/*    { school: '성신여자대학교 컴퓨터공학과', period: '18-03-02 ~ 22-02-10', degree: '학부' },*/}
-          {/*  ]} />*/}
-          {/*  <Section title="자격증" items={[*/}
-          {/*    { certificate: '정보처리기사', date: '20-04-09' },*/}
-          {/*    { certificate: 'SQLD', date: '20-06-01' },*/}
-          {/*  ]} />*/}
-          {/*  <LanguageSection title="외국어" languages={[*/}
-          {/*    { language: '영어', level: 3 },*/}
-          {/*    { language: '프랑스어', level: 2 },*/}
-          {/*  ]} />*/}
-          {/*</DialogContentText>*/}
         </DialogContent>
       </Dialog>
     </React.Fragment>

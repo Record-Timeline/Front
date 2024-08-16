@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import { IconButton } from '@mui/material';
+import {IconButton} from '@mui/material';
 import {css} from "@emotion/react";
 import AddIcon from '@mui/icons-material/Add';
 import Career from '../career/Career';
@@ -35,69 +35,94 @@ export default function CareerModal() {
 
   // 새 경력 입력 항목 추가하는 함수
   const addCareerInput = () => {
-    setCareers([...careers, { type: "input", data: {} }]);
+    setCareers([...careers, {type: "input", data: {}}]);
   };
   // 새 학력 입력 항목 추가하는 함수
   const addEducationInput = () => {
-    setEducations([...educations, { type: "input", data: {} }]);
+    setEducations([...educations, {type: "input", data: {}}]);
   };
   // 새 자격증 입력 항목 추가하는 함수
   const addCertificateInput = () => {
-    setCertificates([...certificates, { type: "input", data: {} }]);
+    setCertificates([...certificates, {type: "input", data: {}}]);
   };
   // 새 외국어 입력 항목 추가하는 함수
   const addLanguageInput = () => {
-    setLanguages([...languages, { type: "input", data: {} }]);
+    setLanguages([...languages, {type: "input", data: {}}]);
   };
 
   // 경력 항목을 저장하는 함수
   const saveCareers = (index, data) => {
     const newCareers = careers.slice();
-    newCareers[index] = { type: "item", data: data };
+    newCareers[index] = {type: "item", data: data};
     setCareers(newItems);
   };
   // 학력 항목을 저장하는 함수
   const saveEducation = (index, data) => {
     const newEducations = educations.slice();
-    newEducations[index] = { type: "item", data: data };
+    newEducations[index] = {type: "item", data: data};
     setEducations(newEducations);
   };
   // 자격증 항목을 저장하는 함수
   const saveCertificate = (index, data) => {
     const newCertificates = certificates.slice();
-    newCertificates[index] = { type: "item", data: data };
+    newCertificates[index] = {type: "item", data: data};
     setCertificates(newCertificates);
   };
   // 외국어 항목을 저장하는 함수
   const saveLanguage = (index, data) => {
     const newLanguages = languages.slice();
-    newLanguages[index] = { type: "item", data: data };
+    newLanguages[index] = {type: "item", data: data};
     setLanguages(newLanguages);
   };
 
   // 경력 항목을 수정 모드로 전환하는 함수
   const editCareer = (index) => {
     const newCareers = careers.slice();
-    newCareers[index] = { ...newCareers[index], type: "input" };
+    newCareers[index] = {...newCareers[index], type: "input"};
     setCareers(newCareers);
   };
   // 학력 항목을 수정 모드로 전환하는 함수
   const editEducation = (index) => {
     const newEducations = educations.slice();
-    newEducations[index] = { ...newEducations[index], type: "input" };
+    newEducations[index] = {...newEducations[index], type: "input"};
     setEducations(newEducations);
   };
   // 자격증 항목을 수정 모드로 전환하는 함수
   const editCertificate = (index) => {
     const newCertificates = certificates.slice();
-    newCertificates[index] = { ...newCertificates[index], type: "input" };
+    newCertificates[index] = {...newCertificates[index], type: "input"};
     setCertificates(newCertificates);
   };
   // 외국어 항목을 수정 모드로 전환하는 함수
   const editLanguage = (index) => {
     const newLanguages = languages.slice();
-    newLanguages[index] = { ...newLanguages[index], type: "input" };
+    newLanguages[index] = {...newLanguages[index], type: "input"};
     setLanguages(newLanguages);
+  };
+
+  // 경력 항목을 삭제하는 함수
+  const deleteCareer = async (index) => {
+    const careerId = careers[index].data.id;
+    // 연동코드
+    setCareers(careers.filter((_, i) => i !== index));
+  };
+  // 학력 항목을 삭제하는 함수
+  const deleteEducation = async (index) => {
+    const educationId = educations[index].data.id;
+    // 연동코드
+    setEducations(educations.filter((_, i) => i !== index));
+  };
+  // 자격증 항목을 삭제하는 함수
+  const deleteCertificate = async (index) => {
+    const certificateId = certificates[index].data.id;
+    // 연동코드
+    setCertificates(certificates.filter((_, i) => i !== index));
+  };
+  // 외국어 항목을 삭제하는 함수
+  const deleteLanguage = async (index) => {
+    const languageId = languages[index].data.id;
+    // 연동코드
+    setLanguages(languages.filter((_, i) => i !== index));
   };
 
   return (

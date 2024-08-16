@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import * as React from 'react';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {css} from "@emotion/react";
 import {GoPencil} from "react-icons/go";
 import {FaRegTrashAlt} from "react-icons/fa";
@@ -17,7 +17,16 @@ function CareerInput({index, initialData, saveItem, onDelete, createCareer, upda
   const [duty, setDuty] = useState(null); // 직무
   const [position, setPosition] = useState(null); // 직책
 
+  useEffect(() => {
+    setCompanyName(initialData.companyName);
+    setStartDate(initialData.startDate ? dayjs(initialData.startDate) : null);
+    setEndDate(initialData.endDate ? dayjs(initialData.endDate) : null);
+    setDuty(initialData.duty);
+    setPosition(initialData.position);
+  }, [initialData]);
+
   const handleSave = async () => {
+    // alert dialog 추가해야 함
     const data = {
       companyName,
       startDate: dayjs(startDate).format("YYYY-MM-DD"),

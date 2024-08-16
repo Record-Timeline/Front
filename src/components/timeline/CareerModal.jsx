@@ -34,20 +34,45 @@ export default function CareerModal() {
   };
 
   // 새 경력 입력 항목 추가하는 함수
-  const addInput = () => {
+  const addCareerInput = () => {
     setCareers([...careers, { type: "input", data: {} }]);
   };
   // 새 학력 입력 항목 추가하는 함수
-  const addInput = () => {
+  const addEducationInput = () => {
     setEducations([...educations, { type: "input", data: {} }]);
   };
   // 새 자격증 입력 항목 추가하는 함수
-  const addInput = () => {
+  const addCertificateInput = () => {
     setCertificates([...certificates, { type: "input", data: {} }]);
   };
   // 새 외국어 입력 항목 추가하는 함수
-  const addInput = () => {
+  const addLanguageInput = () => {
     setLanguages([...languages, { type: "input", data: {} }]);
+  };
+
+  // 경력 항목을 저장하는 함수
+  const saveCareers = (index, data) => {
+    const newCareers = careers.slice();
+    newCareers[index] = { type: "item", data: data };
+    setCareers(newItems);
+  };
+  // 학력 항목을 저장하는 함수
+  const saveEducation = (index, data) => {
+    const newEducations = educations.slice();
+    newEducations[index] = { type: "item", data: data };
+    setEducations(newEducations);
+  };
+  // 자격증 항목을 저장하는 함수
+  const saveCertificate = (index, data) => {
+    const newCertificates = certificates.slice();
+    newCertificates[index] = { type: "item", data: data };
+    setCertificates(newCertificates);
+  };
+  // 외국어 항목을 저장하는 함수
+  const saveLanguage = (index, data) => {
+    const newLanguages = languages.slice();
+    newLanguages[index] = { type: "item", data: data };
+    setLanguages(newLanguages);
   };
 
   return (

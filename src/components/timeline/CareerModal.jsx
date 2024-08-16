@@ -75,6 +75,31 @@ export default function CareerModal() {
     setLanguages(newLanguages);
   };
 
+  // 경력 항목을 수정 모드로 전환하는 함수
+  const editCareer = (index) => {
+    const newCareers = careers.slice();
+    newCareers[index] = { ...newCareers[index], type: "input" };
+    setCareers(newCareers);
+  };
+  // 학력 항목을 수정 모드로 전환하는 함수
+  const editEducation = (index) => {
+    const newEducations = educations.slice();
+    newEducations[index] = { ...newEducations[index], type: "input" };
+    setEducations(newEducations);
+  };
+  // 자격증 항목을 수정 모드로 전환하는 함수
+  const editCertificate = (index) => {
+    const newCertificates = certificates.slice();
+    newCertificates[index] = { ...newCertificates[index], type: "input" };
+    setCertificates(newCertificates);
+  };
+  // 외국어 항목을 수정 모드로 전환하는 함수
+  const editLanguage = (index) => {
+    const newLanguages = languages.slice();
+    newLanguages[index] = { ...newLanguages[index], type: "input" };
+    setLanguages(newLanguages);
+  };
+
   return (
     <React.Fragment>
       <Button

@@ -6,7 +6,7 @@ import {GoPencil} from "react-icons/go";
 import {FaRegTrashAlt} from "react-icons/fa";
 import dayjs from 'dayjs';
 
-function Certificate () {
+function Certificate ({certificateName, date, onEdit}) {
   return (
     <div
       css={css({
@@ -31,10 +31,11 @@ function Certificate () {
           gap: "20px" // 요소 간 간격 설정
         })}
       >
-        <div><b>정보처리기사</b></div>
-        <div css={css({fontSize: "13px", display: "flex", alignItems: "center"})}>2020년 3월</div>
+        <div><b>{certificateName}</b></div>
+        <div css={css({fontSize: "13px", display: "flex", alignItems: "center"})}>{date}</div>
       </div>
       <div // 수정하기 버튼
+        onClick={onEdit}
         css={css({
           display: "flex", // 내부 요소를 정렬하기 위한 flex 설정
           alignItems: "center", // 수직 중앙 정렬

@@ -249,8 +249,24 @@ export default function CareerModal() {
                 <AddIcon/>
               </IconButton>
             </div>
-            <Certificate/>
-            <CertificateInput/>
+            {certificates.map((item, index) =>
+              item.type === "item" ? (
+                <Certificate
+                  certificateName={item.data.certificateName}
+                  date={item.data.date}
+                  onEdit={() => editCertificate(index)}
+                />
+              ) : (
+                <CertificateInput
+                  createCareer={createCertification} // 생성 연동
+                  // updateCareer={updateCareer} // 수정 연동
+                  index={index}
+                  saveItem={saveCertificate}
+                  initialData={item.data}
+                  onDelete={() => deleteCertificate(index)}
+                />
+              )
+            )}
 
             <div css={css({display: "flex", alignItems: "center", gap: "1px",})}>
               <h2>외국어</h2>

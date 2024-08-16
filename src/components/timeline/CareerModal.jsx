@@ -13,6 +13,7 @@ import {GoPencil} from "react-icons/go";
 import Career from '../career/Career';
 import Education from '../career/Education';
 import Certificate from "../career/Certificate";
+import Language from "../career/Language";
 
 export default function CareerModal() {
   const [open, setOpen] = React.useState(false);
@@ -72,6 +73,9 @@ export default function CareerModal() {
             <h2>자격증</h2>
             <Certificate/>
             <Certificate/>
+            <h2>외국어</h2>
+            <Language/>
+            <Language/>
           </div>
         </DialogContent>
       </Dialog>

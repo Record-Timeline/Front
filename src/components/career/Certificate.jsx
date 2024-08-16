@@ -6,13 +6,13 @@ import {GoPencil} from "react-icons/go";
 import {FaRegTrashAlt} from "react-icons/fa";
 import dayjs from 'dayjs';
 
-function Education () {
+function Certificate () {
   return (
     <div
       css={css({
         // position: "relative",
         width: "530px",
-        height: "65px", // or 65px
+        height: "70px", // or 65px
         background: "#f8f6f6",
         borderRadius: "30px",
         boxShadow: "0 0 8px 0 rgba(0, 0, 0, 0.04)",
@@ -31,9 +31,8 @@ function Education () {
           gap: "20px" // 요소 간 간격 설정
         })}
       >
-        <div>학위</div>
-        <div><b>성신여자대학교</b></div>
-        <div css={css({fontSize: "13px", display: "flex", alignItems: "center"})}>시작날짜 ~ 종료날짜</div>
+        <div><b>정보처리기사</b></div>
+        <div css={css({fontSize: "13px", display: "flex", alignItems: "center"})}>2020년 3월</div>
       </div>
       <div // 수정하기 버튼
         css={css({
@@ -50,4 +49,4 @@ function Education () {
   )
 }
 
-export default Education;
+export default Certificate;

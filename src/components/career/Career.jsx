@@ -26,7 +26,7 @@ function Career () {
     >
       <div
         css={css({
-          marginLeft: "10px"
+          marginLeft: "13px"
         })}
       >
         <div><b>회사이름</b></div>

@@ -31,15 +31,15 @@ function Education ({degree, institutionName, major, startDate, endDate, onEdit}
           gap: "20px" // 요소 간 간격 설정
         })}
       >
-        <div>석사</div>
-        {/*<div>{degree}</div>*/}
-        <div><b>성신여자대학교</b></div>
-        {/*<div><b>{institutionName}</b></div>*/}
-        <div>컴퓨터공학과</div>
-        {/*<div>{major}</div>*/}
-        {dayjs(startDate).format('YYYY년 MM월')} ~ {endDate ? dayjs(endDate).format('YYYY년 MM월') : '진행중'}
-      </div>
-      <div // 수정하기 버튼
+        {/*<div>석사</div>*/}
+        <div>{degree}</div>
+        {/*<div><b>성신여자대학교</b></div>*/}
+        <div><b>{institutionName}</b></div>
+        {/*<div>컴퓨터공학과</div>*/}
+        <div>{major}</div>
+        <div css={css({fontSize: "13px", display: "flex", alignItems: "center"})}>{dayjs(startDate).format('YYYY년 MM월')} ~ {endDate ? dayjs(endDate).format('YYYY년 MM월') : '진행중'}</div>
+        </div>
+        <div // 수정하기 버튼
         onClick={onEdit}
         css={css({
           display: "flex", // 내부 요소를 정렬하기 위한 flex 설정

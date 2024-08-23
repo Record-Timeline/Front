@@ -219,29 +219,27 @@ export default function CareerModal() {
                 <AddIcon/>
               </IconButton>
             </div>
-            {/*{educations.map((item, index) =>*/}
-            {/*  item.type === "item" ? (*/}
-            {/*    <Education*/}
-            {/*      degree={item.data.degree}*/}
-            {/*      startDate={item.data.startDate}*/}
-            {/*      endDate={item.data.endDate}*/}
-            {/*      institutionName={item.data.institutionName}*/}
-            {/*      major={item.data.major}*/}
-            {/*      onEdit={() => editEducation(index)}*/}
-            {/*    />*/}
-            {/*  ) : (*/}
-            {/*    <EducationInput*/}
-            {/*      createEducation={createEducation} // 생성 연동*/}
-            {/*      // updateEducation={updateEducation} // 수정 연동*/}
-            {/*      index={index}*/}
-            {/*      saveItem={saveEducation}*/}
-            {/*      initialData={item.data}*/}
-            {/*      onDelete={() => deleteEducation(index)}*/}
-            {/*    />*/}
-            {/*  )*/}
-            {/*)}*/}
-            <Education/>
-
+            {educations.map((item, index) =>
+              item.type === "item" ? (
+                <Education
+                  degree={item.data.degree}
+                  startDate={item.data.startDate}
+                  endDate={item.data.endDate}
+                  institutionName={item.data.institutionName}
+                  major={item.data.major}
+                  onEdit={() => editEducation(index)}
+                />
+              ) : (
+                <EducationInput
+                  createEducation={createEducation} // 생성 연동
+                  // updateEducation={updateEducation} // 수정 연동
+                  index={index}
+                  saveItem={saveEducation}
+                  initialData={item.data}
+                  onDelete={() => deleteEducation(index)}
+                />
+              )
+            )}
 
             <div css={css({display: "flex", alignItems: "center", gap: "1px",})}>
               <h2>자격증</h2>
@@ -259,7 +257,7 @@ export default function CareerModal() {
               ) : (
                 <CertificateInput
                   createCareer={createCertification} // 생성 연동
-                  // updateCareer={updateCareer} // 수정 연동
+                  // updateCareer={updateCertification} // 수정 연동
                   index={index}
                   saveItem={saveCertificate}
                   initialData={item.data}

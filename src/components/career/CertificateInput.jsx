@@ -22,7 +22,7 @@ function CertificateInput({index, createCareer, saveItem, initialData, onDelete,
     // alert dialog 추가해야 함
     const data = {
       certificateName,
-      date: dayjs(date).format('YYYY년 MM월'),
+      date: date ? dayjs(date).format('YYYY-MM-DD') : null,
     };
 
     if (initialData.id) {

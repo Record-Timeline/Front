@@ -12,7 +12,7 @@ import Rating from '@mui/material/Rating';
 import Box from '@mui/material/Box';
 import StarIcon from '@mui/icons-material/Star';
 
-function LanguageInput({createLanguage, index, saveItem, initialData, onDelete}) {
+function LanguageInput({ index, saveItem, initialData, createLanguage, updateLanguage, onDelete}) {
   const [languageName, setLanguageName] = useState(null); // 자격증 이름
   const [level, setLevel] = useState(3);
   const [hover, setHover] = useState(-1);
@@ -42,7 +42,7 @@ function LanguageInput({createLanguage, index, saveItem, initialData, onDelete})
     };
 
     if (initialData.id) {
-      // await updateLanguage(index, data); // 기존 항목 업데이트 (생성)
+      await updateLanguage(index, data); // 기존 항목 업데이트 (생성)
     } else {
       createLanguage(data); // 새 항목 생성 (조회)
     }

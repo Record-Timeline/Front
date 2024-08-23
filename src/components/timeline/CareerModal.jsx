@@ -377,7 +377,7 @@ export default function CareerModal({memberId}) {
 
       const newEducations = educations.slice();
       newEducations[index] = { type: "item", data: response.data }
-      setCareers(newEducations);
+      setEducations(newEducations);
 
       console.log("학력 업데이트 완료", response.data)
       console.log(educations)
@@ -385,6 +385,62 @@ export default function CareerModal({memberId}) {
       // 수정 후 경력사항 다시 조회
       fetchCareerInfo(memberId)
       console.log(educations)
+    } catch (error) {
+      console.log("업데이트 에러 발생:", error);
+      console.error("업데이트 에러 상세:", error.response ? error.response.data : error.message);
+    }
+  }
+
+  // 자격증 수정 연동
+  const updateCertificate = async (index, data) => {
+    const certificateId = certificates[index].data.id;
+    try {
+      const response = await axiosInstance.put(
+        `/api/v1/certificates/${certificateId}`,
+        {
+          name: data.certificateName,
+          date: data.date,
+        }
+      );
+
+      const newCertificates = certificates.slice();
+      newCertificates[index] = { type: "item", data: response.data }
+      setCertificates(newCertificates);
+
+      console.log("자격증 업데이트 완료", response.data)
+      console.log(certificates)
+
+      // 수정 후 경력사항 다시 조회
+      fetchCareerInfo(memberId)
+      console.log(certificates)
+    } catch (error) {
+      console.log("업데이트 에러 발생:", error);
+      console.error("업데이트 에러 상세:", error.response ? error.response.data : error.message);
+    }
+  }
+
+  // 외국어 수정 연동
+  const updateLanguage = async (index, data) => {
+    const languageId = languages[index].data.id;
+    try {
+      const response = await axiosInstance.put(
+        `/api/v1/languages/${languageId}`,
+        {
+          languageName: data.languageName,
+          proficiency: data.level,
+        }
+      );
+
+      const newLanguages = languages.slice();
+      newLanguages[index] = { type: "item", data: response.data }
+      setLanguages(newLanguages);
+
+      console.log("외국어 업데이트 완료", response.data)
+      console.log(languages)
+
+      // 수정 후 경력사항 다시 조회
+      fetchCareerInfo(memberId)
+      console.log(languages)
     } catch (error) {
       console.log("업데이트 에러 발생:", error);
       console.error("업데이트 에러 상세:", error.response ? error.response.data : error.message);
@@ -487,7 +543,7 @@ export default function CareerModal({memberId}) {
                 ) : (
                   <EducationInput
                     createEducation={createEducation} // 생성 연동
-                    // updateEducation={updateEducation} // 수정 연동
+                    updateEducation={updateEducation} // 수정 연동
                     index={index}
                     saveItem={saveEducation}
                     initialData={item.data}
@@ -518,7 +574,7 @@ export default function CareerModal({memberId}) {
                 ) : (
                   <CertificateInput
                     createCertificate={createCertificate} // 생성 연동
-                    // updateCareer={updateCertification} // 수정 연동
+                    updateCertificate={updateCertificate} // 수정 연동
                     index={index}
                     saveItem={saveCertificate}
                     initialData={item.data}
@@ -549,7 +605,7 @@ export default function CareerModal({memberId}) {
                 ) : (
                   <LanguageInput
                     createLanguage={createLanguage} // 생성 연동
-                    // updateCareer={updateCareer} // 수정 연동
+                    updateLanguage={updateLanguage} // 수정 연동
                     index={index}
                     saveItem={saveLanguage}
                     initialData={item.data}

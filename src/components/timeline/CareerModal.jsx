@@ -185,6 +185,10 @@ export default function CareerModal({memberId}) {
       setEducations(newEducations);
       console.log("학력 생성 완료", response)
       console.log(educations)
+
+      // 생성 후 경력사항 다시 조회
+      fetchCareerInfo(memberId)
+      console.log(careers)
     } catch (error) {
       console.log("학력 생성 실패", error);
       console.error("에러 상세:", error.response ? error.response.data : error.message);
@@ -192,14 +196,62 @@ export default function CareerModal({memberId}) {
   };
 
   // 자격증 생성
-  const createCertification = async (data) => {
-    // 자격 생성 연동 (POST, CREATE)
-    setCertificates([...certificates, {type: "item", data: {}}]); //response.data
+  const createCertificate = async (data) => {
+    // 자격증 생성 연동 (POST, CREATE)
+    try {
+      const response = await axiosInstance.post(
+        `/api/v1/certificates`,
+        {
+          name: data.certificateName,
+          date: data.date,
+        }
+      );
+      // 이전에 사용했던 빈 input 항목을 현재 추가된 항목으로 교체
+      const newCertificates = certificates.slice();
+      const lastIndex = newCertificates.length - 1;
+
+      // 가장 최근에 추가된 항목(input타입)을 item 타입으로 교체
+      newCertificates[lastIndex] = {type: "item", data: response.data.result};
+
+      console.log("자격증 생성 완료", response)
+      console.log(certificates)
+
+      // 생성 후 경력사항 다시 조회
+      fetchCareerInfo(memberId)
+      console.log(certificates)
+    } catch (error) {
+      console.log("자격증 생성 실패", error);
+      console.error("에러 상세:", error.response ? error.response.data : error.message);
+    }
   };
+
   // 외국어 생성
   const createLanguage = async (data) => {
-    // 외국어 생성 연동 (POST, CREATE)
-    setLanguages([...languages, {type: "item", data: {}}]); //response.data
+    try {
+      const response = await axiosInstance.post(
+        `/api/v1/languages`,
+        {
+          languageName: data.languageName,
+          proficiency: data.level,
+        }
+      );
+      // 이전에 사용했던 빈 input 항목을 현재 추가된 항목으로 교체
+      const newLanguages = languages.slice();
+      const lastIndex = newLanguages.length - 1;
+
+      // 가장 최근에 추가된 항목(input타입)을 item 타입으로 교체
+      newLanguages[lastIndex] = {type: "item", data: response.data.result};
+
+      console.log("외국어 생성 완료", response)
+      console.log(languages)
+
+      // 생성 후 경력사항 다시 조회
+      fetchCareerInfo(memberId)
+      console.log(languages)
+    } catch (error) {
+      console.log("외국어 생성 실패", error);
+      console.error("에러 상세:", error.response ? error.response.data : error.message);
+    }
   };
 
   // 경력 항목을 삭제하는 함수 + 삭제 연동
@@ -378,7 +430,7 @@ export default function CareerModal({memberId}) {
                   />
                 ) : (
                   <CertificateInput
-                    createCareer={createCertification} // 생성 연동
+                    createCertificate={createCertificate} // 생성 연동
                     // updateCareer={updateCertification} // 수정 연동
                     index={index}
                     saveItem={saveCertificate}

@@ -9,7 +9,7 @@ import DatePickerValue from "../common/DatePickerValue";
 import Input from "@mui/material/Input";
 import {FaRegCircleCheck} from "react-icons/fa6";
 
-function CertificateInput({index, createCareer, saveItem, initialData, onDelete, updateCertificate}) {
+function CertificateInput({index, createCertificate, saveItem, initialData, onDelete, updateCertificate}) {
   const [certificateName, setCertificateName] = useState(null); // 자격증 이름
   const [date, setDate] = useState(null);
 
@@ -28,7 +28,7 @@ function CertificateInput({index, createCareer, saveItem, initialData, onDelete,
     if (initialData.id) {
       await updateCertificate(index, data); // 기존 항목 업데이트 (생성)
     } else {
-      createCareer(data); // 새 항목 생성 (조회)
+      createCertificate(data); // 새 항목 생성 (조회)
     }
 
     saveItem(index, data);

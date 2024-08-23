@@ -14,7 +14,7 @@ function CertificateInput({index, createCertificate, saveItem, initialData, onDe
   const [date, setDate] = useState(null);
 
   useEffect(() => {
-    setCertificateName(initialData.certificateName);
+    setCertificateName(initialData.name);
     setDate(initialData.date ? dayjs(initialData.date) : null);
   }, [initialData]);
 

@@ -18,7 +18,6 @@ import CareerInput from "../career/CareerInput";
 import EducationInput from "../career/EducationInput";
 import CertificateInput from "../career/CertificateInput";
 import LanguageInput from "../career/LanguageInput";
-import axios from "axios";
 import axiosInstance from "../../utils/axiosInstance";
 
 export default function CareerModal({memberId}) {
@@ -181,8 +180,8 @@ export default function CareerModal({memberId}) {
 
       // 가장 최근에 추가된 항목(input타입)을 item 타입으로 교체
       newEducations[lastIndex] = {type: "item", data: response.data.result};
-      
       setEducations(newEducations);
+
       console.log("학력 생성 완료", response)
       console.log(educations)
 
@@ -257,7 +256,7 @@ export default function CareerModal({memberId}) {
   // 경력 항목을 삭제하는 함수 + 삭제 연동
   const deleteCareer = async (index) => {
     const careerId = careers[index].data.id;
-    // 연동코드
+    // 연동 코드
     try {
       const response = await axiosInstance.delete(`/api/v1/careers/${careerId}`);
       setCareers(careers.filter((_, index) => index !== index));
@@ -276,7 +275,7 @@ export default function CareerModal({memberId}) {
   // 학력 항목을 삭제하는 함수 + 삭제 연동
   const deleteEducation = async (index) => {
     const educationId = educations[index].data.id;
-    // 연동코드
+    // 연동 코드
     try {
       const response = await axiosInstance.delete(`/api/v1/educations/${educationId}`);
       setEducations(educations.filter((_, index) => index !== index));
@@ -295,7 +294,7 @@ export default function CareerModal({memberId}) {
   // 자격증 항목을 삭제하는 함수 + 삭제 연동
   const deleteCertificate = async (index) => {
     const certificateId = certificates[index].data.id;
-    // 연동코드
+    // 연동 코드
     try {
       const response = await axiosInstance.delete(`/api/v1/certificates/${certificateId}`);
       setCertificates(certificates.filter((_, i) => i !== index));
@@ -314,7 +313,7 @@ export default function CareerModal({memberId}) {
   // 외국어 항목을 삭제하는 함수 + 삭제 연동
   const deleteLanguage = async (index) => {
     const languageId = languages[index].data.id;
-    // 연동코드
+    // 연동 코드
     try {
       const response = await axiosInstance.delete(`/api/v1/languages/${languageId}`);
       setLanguages(languages.filter((_, i) => i !== index));
@@ -329,6 +328,68 @@ export default function CareerModal({memberId}) {
       console.error("삭제 에러 상세:", error.response ? error.response.data : error.message);
     }
   };
+
+  // 경력 수정 연동
+  const updateCareer = async (index, data) => {
+    const careerId = careers[index].data.id;
+    try {
+      const response = await axiosInstance.put(
+        `/api/v1/careers/${careerId}`,
+        {
+          companyName: data.companyName,
+          startDate: data.startDate,
+          endDate: data.endDate,
+          duty: data.duty,
+          position: data.position
+        }
+      );
+
+      const newCareers = careers.slice();
+      newCareers[index] = { type: "item", data: response.data }
+      setCareers(newCareers);
+
+      console.log("경력 업데이트 완료", response.data)
+      console.log(careers)
+
+      // 수정 후 경력사항 다시 조회
+      fetchCareerInfo(memberId)
+      console.log(careers)
+    } catch (error) {
+      console.log("업데이트 에러 발생:", error);
+      console.error("업데이트 에러 상세:", error.response ? error.response.data : error.message);
+    }
+  }
+
+  // 학력 수정 연동
+  const updateEducation = async (index, data) => {
+    const edicationId = educations[index].data.id;
+    try {
+      const response = await axiosInstance.put(
+        `/api/v1/educations/${edicationId}`,
+        {
+          degree: data.degree,
+          institution: data.institution,
+          major: data.major,
+          startDate: data.startDate,
+          endDate: data.endDate,
+        }
+      );
+
+      const newEducations = educations.slice();
+      newEducations[index] = { type: "item", data: response.data }
+      setCareers(newEducations);
+
+      console.log("학력 업데이트 완료", response.data)
+      console.log(educations)
+
+      // 수정 후 경력사항 다시 조회
+      fetchCareerInfo(memberId)
+      console.log(educations)
+    } catch (error) {
+      console.log("업데이트 에러 발생:", error);
+      console.error("업데이트 에러 상세:", error.response ? error.response.data : error.message);
+    }
+  }
 
   return (
     <React.Fragment>
@@ -392,7 +453,7 @@ export default function CareerModal({memberId}) {
                 ) : (
                   <CareerInput
                     createCareer={createCareer} // 생성 연동
-                    // updateCareer={updateCareer} // 수정 연동
+                    updateCareer={updateCareer} // 수정 연동
                     index={index}
                     saveItem={saveCareer}
                     initialData={item.data}

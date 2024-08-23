@@ -262,7 +262,7 @@ export default function CareerModal({memberId}) {
                     degree={item.data.degree}
                     startDate={item.data.startDate}
                     endDate={item.data.endDate}
-                    institutionName={item.data.institutionName}
+                    institutionName={item.data.institution}
                     major={item.data.major}
                     onEdit={() => editEducation(index)}
                   />
@@ -325,7 +325,7 @@ export default function CareerModal({memberId}) {
                 item.type === "item" ? (
                   <Language
                     languageName={item.data.languageName}
-                    level={item.data.proficiency}
+                    proficiency={item.data.proficiency}
                     onEdit={() => editLanguage(index)}
                   />
                 ) : (

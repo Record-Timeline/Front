@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import * as React from 'react';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {css} from "@emotion/react";
 import {GoPencil} from "react-icons/go";
 import {FaRegTrashAlt} from "react-icons/fa";
@@ -10,8 +10,8 @@ import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 import StarIcon from '@mui/icons-material/Star';
 
-function Language ({languageName, level, onEdit}) {
-  const [Level, setLevel] = useState(level);
+function Language ({languageName, proficiency, onEdit}) {
+  const [level, setLevel] = useState(null); // 초기값 설정 안해주면 rating이 안됨 (null로라도 해줘야 함)
 
   const labels = {
     LOW: 'VeryLow',
@@ -20,6 +20,24 @@ function Language ({languageName, level, onEdit}) {
     UPPER_MEDIUM: 'Good',
     HIGH: 'VeryHigh',
   };
+
+  const convertIntoNum = (proficiency) => {
+    if (proficiency === "HIGH") {
+      setLevel(5);
+    } else if (proficiency === "UPPER_MEDIUM") {
+      setLevel(4);
+    } else if (proficiency === "MEDIUM") {
+      setLevel(3);
+    } else if (proficiency === "LOWER_MEDIUM") {
+      setLevel(2);
+    } else if (proficiency === "LOW") {
+      setLevel(1);
+    }
+  }
+
+  useEffect(() => {
+    convertIntoNum(proficiency)
+  }, [])
 
   return (
     <div
@@ -61,7 +79,7 @@ function Language ({languageName, level, onEdit}) {
             precision={1}
             emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
           />
-          <Box sx={{ ml: 2 }}>{labels[Level]}</Box>
+          <Box sx={{ ml: 2 }}>{labels[proficiency]}</Box>
         </Box>
       </div>
       <div // 수정하기 버튼

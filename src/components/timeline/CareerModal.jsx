@@ -291,17 +291,43 @@ export default function CareerModal({memberId}) {
       console.error("삭제 에러 상세:", error.response ? error.response.data : error.message);
     }
   };
-  // 자격증 항목을 삭제하는 함수
+
+  // 자격증 항목을 삭제하는 함수 + 삭제 연동
   const deleteCertificate = async (index) => {
     const certificateId = certificates[index].data.id;
     // 연동코드
-    setCertificates(certificates.filter((_, i) => i !== index));
+    try {
+      const response = await axiosInstance.delete(`/api/v1/certificates/${certificateId}`);
+      setCertificates(certificates.filter((_, i) => i !== index));
+      console.log("자격증 삭제 완료", response.data)
+      console.log(certificates)
+
+      // 삭제 후 경력사항 다시 조회
+      fetchCareerInfo(memberId)
+      console.log(certificates)
+    } catch (error) {
+      console.log("삭제 에러 발생:", error);
+      console.error("삭제 에러 상세:", error.response ? error.response.data : error.message);
+    }
   };
-  // 외국어 항목을 삭제하는 함수
+
+  // 외국어 항목을 삭제하는 함수 + 삭제 연동
   const deleteLanguage = async (index) => {
     const languageId = languages[index].data.id;
     // 연동코드
-    setLanguages(languages.filter((_, i) => i !== index));
+    try {
+      const response = await axiosInstance.delete(`/api/v1/languages/${languageId}`);
+      setLanguages(languages.filter((_, i) => i !== index));
+      console.log("외국어 삭제 완료", response.data)
+      console.log(languages)
+
+      // 삭제 후 경력사항 다시 조회
+      fetchCareerInfo(memberId)
+      console.log(languages)
+    } catch (error) {
+      console.log("삭제 에러 발생:", error);
+      console.error("삭제 에러 상세:", error.response ? error.response.data : error.message);
+    }
   };
 
   return (

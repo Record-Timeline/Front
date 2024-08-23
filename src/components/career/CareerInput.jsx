@@ -36,9 +36,9 @@ function CareerInput({index, initialData, saveItem, onDelete, createCareer, upda
     };
 
     if (initialData.id) {
-      await updateCareer(index, data); // 기존 항목 업데이트 (생성)
+      await updateCareer(index, data); // 기존 항목 업데이트
     } else {
-      createCareer(data); // 새 항목 생성 (조회)
+      createCareer(data); // 새 항목 생성
     }
 
     saveItem(index, data);

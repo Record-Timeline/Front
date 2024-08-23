@@ -15,7 +15,7 @@ import Select from '@mui/material/Select';
 
 function EducationInput({index, initialData, saveItem, createEducation, updateEducation, onDelete }) {
   const [degree, setDegree] = useState(""); // 학위 (초기값 null로 설정하면 오류남, " "로 설정해도 오류 남)
-  const [institutionName, setInstitutionName] = useState(null); // 학교이름
+  const [institution, setInstitution] = useState(null); // 학교이름
   const [major, setMajor] = useState(null); // 전공
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -24,7 +24,7 @@ function EducationInput({index, initialData, saveItem, createEducation, updateEd
     setDegree(initialData.degree);
     setStartDate(initialData.startDate ? dayjs(initialData.startDate) : null);
     setEndDate(initialData.endDate ? dayjs(initialData.endDate) : null);
-    setInstitutionName(initialData.institutionName);
+    setInstitution(initialData.institution);
     setMajor(initialData.major);
   }, [initialData]);
 
@@ -39,7 +39,7 @@ function EducationInput({index, initialData, saveItem, createEducation, updateEd
       degree,
       startDate: dayjs(startDate).format("YYYY-MM-DD"),
       endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
-      institutionName,
+      institution,
       major
     };
 
@@ -98,8 +98,8 @@ function EducationInput({index, initialData, saveItem, createEducation, updateEd
               width: '300px', // 전체 TextField의 너비를 설정
             }}
             placeholder="학교/기관 이름을 입력하세요."
-            value={institutionName}
-            onChange={(e) => setInstitutionName(e.target.value)}
+            value={institution}
+            onChange={(e) => setInstitution(e.target.value)}
             inputProps={{
               'aria-label': 'title input',
               style: {fontSize: '16px', fontFamily: "Pretendard"}

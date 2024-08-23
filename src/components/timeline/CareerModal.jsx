@@ -106,14 +106,74 @@ export default function CareerModal({memberId}) {
     setLanguages(newLanguages);
   };
 
+  // 아래부터 연동 코드, 위에는 프론트에서만 의미있는 함수들
+  // 조회 연동
+  const fetchCareerInfo = async (memberId) => {
+    try {
+      const response = await axiosInstance.get(`/api/v1/career-details/${memberId}`);
+      console.log("경력사항 조회 성공")
+      console.log(response.data.result);
+      setCareerInfo(response.data.result);
+      setCertificates(response.data.result.certificates.map(item => ({ type: "item", data: item })));
+      setCareers(response.data.result.careers.map(item => ({ type: "item", data: item })));
+      setEducations(response.data.result.educations.map(item => ({ type: "item", data: item })));
+      setLanguages(response.data.result.languages.map(item => ({ type: "item", data: item })));
+    } catch (error) {
+      console.log("경력사항 조회 실패", error);
+      console.error("에러 상세:", error.response ? error.response.data : error.message);
+    }
+  }
+
+  useEffect(() => {
+    fetchCareerInfo(memberId);
+  }, [])
+
   // 경력 생성
   const createCareer = async (data) => {
     // 경력 생성 연동 (POST, CREATE)
-    setCareers([...careers, {type: "item", data: {}}]); //response.data
+    try {
+      const response = await axiosInstance.post(
+        `/api/v1/careers`,
+        {
+          companyName: data.companyName,
+          startDate: data.startDate,
+          endDate: data.endDate,
+          duty: data.duty,
+          position: data.position,
+        }
+      );
+      setCareers([...careers, { type: "item", data: response.data.result } ])
+      console.log("경력 생성 완료", response)
+      console.log(careers)
+      fetchCareerInfo(memberId)
+      console.log(careers)
+    } catch (error) {
+      console.log("경력 생성 실패", error);
+      console.error("에러 상세:", error.response ? error.response.data : error.message);
+    }
   };
+
   // 학력 생성
   const createEducation = async (data) => {
     // 학력 생성 연동 (POST, CREATE)
+    try {
+      const response = await axiosInstance.post(
+        `/api/v1/educations`,
+        {
+          degree: data.degree,
+          institution: data.institution,
+          major: data.major,
+          startDate: data.startDate,
+          endDate: data.endDate,
+        }
+      );
+      setEducations([...educations, { type: "item", data: response.data.result } ])
+      console.log("학력 생성 완료", response)
+      console.log(educations)
+    } catch (error) {
+      console.log("학력 생성 실패", error);
+      console.error("에러 상세:", error.response ? error.response.data : error.message);
+    }
     setEducations([...educations, {type: "item", data: {}}]); //response.data
   };
   // 자격증 생성
@@ -151,27 +211,6 @@ export default function CareerModal({memberId}) {
     // 연동코드
     setLanguages(languages.filter((_, i) => i !== index));
   };
-
-  // 조회 연동
-  const fetchCareerInfo = async (memberId) => {
-    try {
-      const response = await axiosInstance.get(`/api/v1/career-details/${memberId}`);
-      console.log("경력사항 조회 성공")
-      console.log(response.data.result);
-      setCareerInfo(response.data.result);
-      setCertificates(response.data.result.certificates.map(item => ({ type: "item", data: item })));
-      setCareers(response.data.result.careers.map(item => ({ type: "item", data: item })));
-      setEducations(response.data.result.educations.map(item => ({ type: "item", data: item })));
-      setLanguages(response.data.result.languages.map(item => ({ type: "item", data: item })));
-    } catch (error) {
-      console.log("경력사항 조회 실패", error);
-      console.error("에러 상세:", error.response ? error.response.data : error.message);
-    }
-  }
-
-  useEffect(() => {
-    fetchCareerInfo(memberId);
-  }, [])
 
   return (
     <React.Fragment>
@@ -262,7 +301,7 @@ export default function CareerModal({memberId}) {
                     degree={item.data.degree}
                     startDate={item.data.startDate}
                     endDate={item.data.endDate}
-                    institutionName={item.data.institution}
+                    institution={item.data.institution}
                     major={item.data.major}
                     onEdit={() => editEducation(index)}
                   />

@@ -6,7 +6,7 @@ import {GoPencil} from "react-icons/go";
 import {FaRegTrashAlt} from "react-icons/fa";
 import dayjs from 'dayjs';
 
-function Education({degree, institutionName, major, startDate, endDate, onEdit}) {
+function Education({degree, institution, major, startDate, endDate, onEdit}) {
   return (
     <div
       css={css({
@@ -32,7 +32,7 @@ function Education({degree, institutionName, major, startDate, endDate, onEdit})
         })}
       >
         <div>{degree}</div>
-        <div><b>{institutionName}</b></div>
+        <div><b>{institution}</b></div>
         {/*<div css={css({border: "1px solid black"})}>{major}</div>*/}
         <div>{major}</div>
         <div

@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import * as React from 'react';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
@@ -18,9 +18,13 @@ import CareerInput from "../career/CareerInput";
 import EducationInput from "../career/EducationInput";
 import CertificateInput from "../career/CertificateInput";
 import LanguageInput from "../career/LanguageInput";
+import axios from "axios";
+import axiosInstance from "../../utils/axiosInstance";
 
-export default function CareerModal() {
+export default function CareerModal({memberId}) {
   const [open, setOpen] = useState(false);
+  // 조회한 경력사항 정보 저장
+  const [careerInfo, setCareerInfo] = useState({});
   // 각 항목들을 관리할 상태 생성
   const [careers, setCareers] = useState([]);
   const [educations, setEducations] = useState([]);
@@ -35,7 +39,7 @@ export default function CareerModal() {
     setOpen(false);
   };
 
-  // 새 경력 입력 항목 추가하는 함수
+  // 새 경력 입력 항목 추가하는 함수 (input창 띄우는 함수)
   const addCareerInput = () => {
     setCareers([...careers, {type: "input", data: {}}]);
   };
@@ -147,6 +151,27 @@ export default function CareerModal() {
     // 연동코드
     setLanguages(languages.filter((_, i) => i !== index));
   };
+
+  // 조회 연동
+  const fetchCareerInfo = async (memberId) => {
+    try {
+      const response = await axiosInstance.get(`/api/v1/career-details/${memberId}`);
+      console.log("경력사항 조회 성공")
+      console.log(response.data.result);
+      setCareerInfo(response.data.result);
+      setCertificates(response.data.result.certificates.map(item => ({ type: "item", data: item })));
+      setCareers(response.data.result.careers.map(item => ({ type: "item", data: item })));
+      setEducations(response.data.result.educations.map(item => ({ type: "item", data: item })));
+      setLanguages(response.data.result.languages.map(item => ({ type: "item", data: item })));
+    } catch (error) {
+      console.log("경력사항 조회 실패", error);
+      console.error("에러 상세:", error.response ? error.response.data : error.message);
+    }
+  }
+
+  useEffect(() => {
+    fetchCareerInfo(memberId);
+  }, [])
 
   return (
     <React.Fragment>
@@ -268,7 +293,7 @@ export default function CareerModal() {
               certificates.map((item, index) =>
                 item.type === "item" ? (
                   <Certificate
-                    certificateName={item.data.certificateName}
+                    certificateName={item.data.name}
                     date={item.data.date}
                     onEdit={() => editCertificate(index)}
                   />
@@ -300,7 +325,7 @@ export default function CareerModal() {
                 item.type === "item" ? (
                   <Language
                     languageName={item.data.languageName}
-                    level={item.data.level}
+                    level={item.data.proficiency}
                     onEdit={() => editLanguage(index)}
                   />
                 ) : (

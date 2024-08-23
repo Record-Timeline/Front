@@ -14,11 +14,11 @@ function Language ({languageName, level, onEdit}) {
   const [Level, setLevel] = useState(level);
 
   const labels = {
-    1: 'VeryLow',
-    2: 'Low',
-    3: 'Middle',
-    4: 'Good',
-    5: 'VeryHigh',
+    LOW: 'VeryLow',
+    LOWER_MEDIUM: 'Low',
+    MEDIUM: 'Middle',
+    UPPER_MEDIUM: 'Good',
+    HIGH: 'VeryHigh',
   };
 
   return (

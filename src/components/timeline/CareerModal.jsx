@@ -9,6 +9,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import {IconButton} from '@mui/material';
 import {css} from "@emotion/react";
 import AddIcon from '@mui/icons-material/Add';
+import NoneData from "../career/NoneData";
 import Career from '../career/Career';
 import Education from '../career/Education';
 import Certificate from "../career/Certificate";
@@ -104,22 +105,22 @@ export default function CareerModal() {
   // 경력 생성
   const createCareer = async (data) => {
     // 경력 생성 연동 (POST, CREATE)
-      setCareers([...careers, { type: "item", data: {} }]); //response.data
+    setCareers([...careers, {type: "item", data: {}}]); //response.data
   };
   // 학력 생성
   const createEducation = async (data) => {
     // 학력 생성 연동 (POST, CREATE)
-    setEducations([...educations, { type: "item", data: {} }]); //response.data
+    setEducations([...educations, {type: "item", data: {}}]); //response.data
   };
   // 자격증 생성
   const createCertification = async (data) => {
     // 자격 생성 연동 (POST, CREATE)
-    setCertificates([...certificates, { type: "item", data: {} }]); //response.data
+    setCertificates([...certificates, {type: "item", data: {}}]); //response.data
   };
   // 외국어 생성
   const createLanguage = async (data) => {
     // 외국어 생성 연동 (POST, CREATE)
-    setLanguages([...languages, { type: "item", data: {} }]); //response.data
+    setLanguages([...languages, {type: "item", data: {}}]); //response.data
   };
 
   // 경력 항목을 삭제하는 함수
@@ -191,25 +192,31 @@ export default function CareerModal() {
                 <AddIcon/>
               </IconButton>
             </div>
-            {careers.map((item, index) =>
-              item.type === "item" ? (
-                <Career
-                  companyName={item.data.companyName}
-                  startDate={item.data.startDate}
-                  endDate={item.data.endDate}
-                  duty={item.data.duty}
-                  position={item.data.position}
-                  onEdit={() => editCareer(index)}
-                />
-              ) : (
-                <CareerInput
-                  createCareer={createCareer} // 생성 연동
-                  // updateCareer={updateCareer} // 수정 연동
-                  index={index}
-                  saveItem={saveCareer}
-                  initialData={item.data}
-                  onDelete={() => deleteCareer(index)}
-                />
+            {careers.length === 0 ? (
+              <NoneData 
+                messege={"아직 입력된 경력이 없습니다."}
+              />
+            ) : (
+              careers.map((item, index) =>
+                item.type === "item" ? (
+                  <Career
+                    companyName={item.data.companyName}
+                    startDate={item.data.startDate}
+                    endDate={item.data.endDate}
+                    duty={item.data.duty}
+                    position={item.data.position}
+                    onEdit={() => editCareer(index)}
+                  />
+                ) : (
+                  <CareerInput
+                    createCareer={createCareer} // 생성 연동
+                    // updateCareer={updateCareer} // 수정 연동
+                    index={index}
+                    saveItem={saveCareer}
+                    initialData={item.data}
+                    onDelete={() => deleteCareer(index)}
+                  />
+                )
               )
             )}
 
@@ -219,25 +226,31 @@ export default function CareerModal() {
                 <AddIcon/>
               </IconButton>
             </div>
-            {educations.map((item, index) =>
-              item.type === "item" ? (
-                <Education
-                  degree={item.data.degree}
-                  startDate={item.data.startDate}
-                  endDate={item.data.endDate}
-                  institutionName={item.data.institutionName}
-                  major={item.data.major}
-                  onEdit={() => editEducation(index)}
-                />
-              ) : (
-                <EducationInput
-                  createEducation={createEducation} // 생성 연동
-                  // updateEducation={updateEducation} // 수정 연동
-                  index={index}
-                  saveItem={saveEducation}
-                  initialData={item.data}
-                  onDelete={() => deleteEducation(index)}
-                />
+            {educations.length === 0 ? (
+              <NoneData
+                messege={"아직 입력된 학력이 없습니다."}
+              />
+            ) : (
+              educations.map((item, index) =>
+                item.type === "item" ? (
+                  <Education
+                    degree={item.data.degree}
+                    startDate={item.data.startDate}
+                    endDate={item.data.endDate}
+                    institutionName={item.data.institutionName}
+                    major={item.data.major}
+                    onEdit={() => editEducation(index)}
+                  />
+                ) : (
+                  <EducationInput
+                    createEducation={createEducation} // 생성 연동
+                    // updateEducation={updateEducation} // 수정 연동
+                    index={index}
+                    saveItem={saveEducation}
+                    initialData={item.data}
+                    onDelete={() => deleteEducation(index)}
+                  />
+                )
               )
             )}
 
@@ -247,22 +260,28 @@ export default function CareerModal() {
                 <AddIcon/>
               </IconButton>
             </div>
-            {certificates.map((item, index) =>
-              item.type === "item" ? (
-                <Certificate
-                  certificateName={item.data.certificateName}
-                  date={item.data.date}
-                  onEdit={() => editCertificate(index)}
-                />
-              ) : (
-                <CertificateInput
-                  createCareer={createCertification} // 생성 연동
-                  // updateCareer={updateCertification} // 수정 연동
-                  index={index}
-                  saveItem={saveCertificate}
-                  initialData={item.data}
-                  onDelete={() => deleteCertificate(index)}
-                />
+            {certificates.length === 0 ? (
+              <NoneData
+                messege={"아직 입력된 자격증 없습니다."}
+              />
+            ) : (
+              certificates.map((item, index) =>
+                item.type === "item" ? (
+                  <Certificate
+                    certificateName={item.data.certificateName}
+                    date={item.data.date}
+                    onEdit={() => editCertificate(index)}
+                  />
+                ) : (
+                  <CertificateInput
+                    createCareer={createCertification} // 생성 연동
+                    // updateCareer={updateCertification} // 수정 연동
+                    index={index}
+                    saveItem={saveCertificate}
+                    initialData={item.data}
+                    onDelete={() => deleteCertificate(index)}
+                  />
+                )
               )
             )}
 
@@ -272,22 +291,28 @@ export default function CareerModal() {
                 <AddIcon/>
               </IconButton>
             </div>
-            {languages.map((item, index) =>
-              item.type === "item" ? (
-                <Language
-                  languageName={item.data.languageName}
-                  level={item.data.level}
-                  onEdit={() => editLanguage(index)}
-                />
-              ) : (
-                <LanguageInput
-                  createLanguage={createLanguage} // 생성 연동
-                  // updateCareer={updateCareer} // 수정 연동
-                  index={index}
-                  saveItem={saveLanguage}
-                  initialData={item.data}
-                  onDelete={() => deleteLanguage(index)}
-                />
+            {languages.length === 0 ? (
+              <NoneData
+                messege={"아직 입력된 외국어가 없습니다."}
+              />
+            ) : (
+              languages.map((item, index) =>
+                item.type === "item" ? (
+                  <Language
+                    languageName={item.data.languageName}
+                    level={item.data.level}
+                    onEdit={() => editLanguage(index)}
+                  />
+                ) : (
+                  <LanguageInput
+                    createLanguage={createLanguage} // 생성 연동
+                    // updateCareer={updateCareer} // 수정 연동
+                    index={index}
+                    saveItem={saveLanguage}
+                    initialData={item.data}
+                    onDelete={() => deleteLanguage(index)}
+                  />
+                )
               )
             )}
           </div>

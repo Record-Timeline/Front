@@ -6,7 +6,7 @@ import {GoPencil} from "react-icons/go";
 import {FaRegTrashAlt} from "react-icons/fa";
 import dayjs from 'dayjs';
 
-function Education ({degree, institutionName, major, startDate, endDate, onEdit}) {
+function Education({degree, institutionName, major, startDate, endDate, onEdit}) {
   return (
     <div
       css={css({
@@ -28,18 +28,25 @@ function Education ({degree, institutionName, major, startDate, endDate, onEdit}
         css={css({
           display: "flex", // 수평 정렬
           marginLeft: "13px",
-          gap: "20px" // 요소 간 간격 설정
+          gap: "15px" // 요소 간 간격 설정
         })}
       >
-        {/*<div>석사</div>*/}
         <div>{degree}</div>
-        {/*<div><b>성신여자대학교</b></div>*/}
         <div><b>{institutionName}</b></div>
-        {/*<div>컴퓨터공학과</div>*/}
+        {/*<div css={css({border: "1px solid black"})}>{major}</div>*/}
         <div>{major}</div>
-        <div css={css({fontSize: "13px", display: "flex", alignItems: "center"})}>{dayjs(startDate).format('YYYY년 MM월')} ~ {endDate ? dayjs(endDate).format('YYYY년 MM월') : '진행중'}</div>
+        <div
+          css={css({
+            fontSize: "13px",
+            display: "flex",
+            alignItems: "center",
+            marginTop: "3px" // 배포판에서 어떻게 보이는지 확인 (다른사람 컴퓨터 에서도)
+          })}
+        >
+          {dayjs(startDate).format('YYYY년 MM월')} ~ {endDate ? dayjs(endDate).format('YYYY년 MM월') : '진행중'}
         </div>
-        <div // 수정하기 버튼
+      </div>
+      <div // 수정하기 버튼
         onClick={onEdit}
         css={css({
           display: "flex", // 내부 요소를 정렬하기 위한 flex 설정
@@ -49,7 +56,7 @@ function Education ({degree, institutionName, major, startDate, endDate, onEdit}
           cursor: "pointer",
         })}
       >
-        <GoPencil />
+        <GoPencil/>
       </div>
     </div>
   )

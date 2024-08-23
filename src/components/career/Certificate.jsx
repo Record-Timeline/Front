@@ -32,7 +32,16 @@ function Certificate ({certificateName, date, onEdit}) {
         })}
       >
         <div><b>{certificateName}</b></div>
-        <div css={css({fontSize: "13px", display: "flex", alignItems: "center"})}>{dayjs(date).format('YYYY년 MM월')}</div>
+        <div
+          css={css({
+            fontSize: "13px",
+            display: "flex",
+            alignItems: "center",
+            marginTop: "3px" // 배포판에서 어떻게 보이는지 확인 (다른사람 컴퓨터 에서도)
+          })}
+        >
+          {dayjs(date).format('YYYY년 MM월')}
+        </div>
       </div>
       <div // 수정하기 버튼
         onClick={onEdit}

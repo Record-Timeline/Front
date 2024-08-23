@@ -114,10 +114,10 @@ export default function CareerModal({memberId}) {
       console.log("경력사항 조회 성공")
       console.log(response.data.result);
       setCareerInfo(response.data.result);
-      setCertificates(response.data.result.certificates.map(item => ({ type: "item", data: item })));
-      setCareers(response.data.result.careers.map(item => ({ type: "item", data: item })));
-      setEducations(response.data.result.educations.map(item => ({ type: "item", data: item })));
-      setLanguages(response.data.result.languages.map(item => ({ type: "item", data: item })));
+      setCertificates(response.data.result.certificates.map(item => ({type: "item", data: item})));
+      setCareers(response.data.result.careers.map(item => ({type: "item", data: item})));
+      setEducations(response.data.result.educations.map(item => ({type: "item", data: item})));
+      setLanguages(response.data.result.languages.map(item => ({type: "item", data: item})));
     } catch (error) {
       console.log("경력사항 조회 실패", error);
       console.error("에러 상세:", error.response ? error.response.data : error.message);
@@ -142,9 +142,17 @@ export default function CareerModal({memberId}) {
           position: data.position,
         }
       );
-      setCareers([...careers, { type: "item", data: response.data.result } ])
+      // 이전에 사용했던 빈 input 항목을 현재 추가된 항목으로 교체
+      const newCareers = careers.slice();
+      const lastIndex = newCareers.length - 1;
+
+      // 가장 최근에 추가된 항목(input타입)을 item 타입으로 교체
+      newCareers[lastIndex] = {type: "item", data: response.data.result};
+      
       console.log("경력 생성 완료", response)
       console.log(careers)
+      
+      // 생성 후 경력사항 다시 조회
       fetchCareerInfo(memberId)
       console.log(careers)
     } catch (error) {
@@ -167,15 +175,22 @@ export default function CareerModal({memberId}) {
           endDate: data.endDate,
         }
       );
-      setEducations([...educations, { type: "item", data: response.data.result } ])
+      // 이전에 사용했던 빈 input 항목을 현재 추가된 항목으로 교체
+      const newEducations = educations.slice();
+      const lastIndex = newEducations.length - 1;
+
+      // 가장 최근에 추가된 항목(input타입)을 item 타입으로 교체
+      newEducations[lastIndex] = {type: "item", data: response.data.result};
+      
+      setEducations(newEducations);
       console.log("학력 생성 완료", response)
       console.log(educations)
     } catch (error) {
       console.log("학력 생성 실패", error);
       console.error("에러 상세:", error.response ? error.response.data : error.message);
     }
-    setEducations([...educations, {type: "item", data: {}}]); //response.data
   };
+
   // 자격증 생성
   const createCertification = async (data) => {
     // 자격 생성 연동 (POST, CREATE)
@@ -187,17 +202,42 @@ export default function CareerModal({memberId}) {
     setLanguages([...languages, {type: "item", data: {}}]); //response.data
   };
 
-  // 경력 항목을 삭제하는 함수
-  const deleteCareer = (index) => {
+  // 경력 항목을 삭제하는 함수 + 삭제 연동
+  const deleteCareer = async (index) => {
     const careerId = careers[index].data.id;
     // 연동코드
-    setCareers(careers.filter((_, i) => i !== index));
+    try {
+      const response = await axiosInstance.delete(`/api/v1/careers/${careerId}`);
+      setCareers(careers.filter((_, index) => index !== index));
+      console.log("경력 삭제 완료", response.data)
+      console.log(careers)
+
+      // 삭제 후 경력사항 다시 조회
+      fetchCareerInfo(memberId)
+      console.log(careers)
+    } catch (error) {
+      console.log("삭제 에러 발생:", error);
+      console.error("삭제 에러 상세:", error.response ? error.response.data : error.message);
+    }
   };
-  // 학력 항목을 삭제하는 함수
+
+  // 학력 항목을 삭제하는 함수 + 삭제 연동
   const deleteEducation = async (index) => {
     const educationId = educations[index].data.id;
     // 연동코드
-    setEducations(educations.filter((_, i) => i !== index));
+    try {
+      const response = await axiosInstance.delete(`/api/v1/educations/${educationId}`);
+      setEducations(educations.filter((_, index) => index !== index));
+      console.log("학력 삭제 완료", response.data)
+      console.log(educations)
+
+      // 삭제 후 경력사항 다시 조회
+      fetchCareerInfo(memberId)
+      console.log(educations)
+    } catch (error) {
+      console.log("삭제 에러 발생:", error);
+      console.error("삭제 에러 상세:", error.response ? error.response.data : error.message);
+    }
   };
   // 자격증 항목을 삭제하는 함수
   const deleteCertificate = async (index) => {
@@ -257,7 +297,7 @@ export default function CareerModal({memberId}) {
               </IconButton>
             </div>
             {careers.length === 0 ? (
-              <NoneData 
+              <NoneData
                 messege={"아직 입력된 경력이 없습니다."}
               />
             ) : (

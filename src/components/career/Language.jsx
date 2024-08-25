@@ -4,13 +4,13 @@ import * as React from 'react';
 import {useEffect, useState} from "react";
 import {css} from "@emotion/react";
 import {GoPencil} from "react-icons/go";
-import {FaRegTrashAlt} from "react-icons/fa";
-import dayjs from 'dayjs';
 import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 import StarIcon from '@mui/icons-material/Star';
+import {useSelector} from "react-redux";
 
-function Language ({languageName, proficiency, onEdit}) {
+function Language({memberId, languageName, proficiency, onEdit}) {
+  const myMemberId = useSelector(state => state.memberId); // 리덕스: 내 멤버 아이디
   const [level, setLevel] = useState(null); // 초기값 설정 안해주면 rating이 안됨 (null로라도 해줘야 함)
 
   const labels = {
@@ -60,23 +60,26 @@ function Language ({languageName, proficiency, onEdit}) {
             value={proficiency}
             readOnly
             precision={1}
-            emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+            emptyIcon={<StarIcon style={{opacity: 0.55}} fontSize="inherit"/>}
           />
-          <Box sx={{ ml: 2 }}>{labels[proficiency]}</Box>
+          <Box sx={{ml: 2}}>{labels[proficiency]}</Box>
         </Box>
       </div>
-      <div // 수정하기 버튼
-        onClick={onEdit}
-        css={css({
-          display: "flex", // 내부 요소를 정렬하기 위한 flex 설정
-          alignItems: "center", // 수직 중앙 정렬
-          marginLeft: "auto", // GoPencil을 제일 오른쪽으로 배치
-          marginRight: "10px",
-          cursor: "pointer",
-        })}
-      >
-        <GoPencil />
-      </div>
+      {/*수정 버튼 조건부 렌더링*/}
+      {memberId === myMemberId && (
+        <div // 수정하기 버튼
+          onClick={onEdit}
+          css={css({
+            display: "flex", // 내부 요소를 정렬하기 위한 flex 설정
+            alignItems: "center", // 수직 중앙 정렬
+            marginLeft: "auto", // GoPencil을 제일 오른쪽으로 배치
+            marginRight: "10px",
+            cursor: "pointer",
+          })}
+        >
+          <GoPencil/>
+        </div>
+      )}
     </div>
   )
 }

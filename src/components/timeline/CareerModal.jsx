@@ -23,8 +23,7 @@ import {useSelector} from 'react-redux';
 import {useLocation} from "react-router-dom";
 
 export default function CareerModal({memberId, buttonTitle}) {
-  const location = useLocation(); // 리덕스
-  const myMemberId = useSelector(state => state.memberId); // 내 멤버 아이디 가져옴 (리덕스)
+  const myMemberId = useSelector(state => state.memberId); // 리덕스: 내 멤버 아이디
   const [open, setOpen] = useState(false); // 모달창 on/off
 
   // 조회한 경력사항 정보 저장
@@ -508,6 +507,7 @@ export default function CareerModal({memberId, buttonTitle}) {
               careers.map((item, index) =>
                 item.type === "item" ? (
                   <Career
+                    memberId={memberId}
                     companyName={item.data.companyName}
                     startDate={item.data.startDate}
                     endDate={item.data.endDate}
@@ -545,6 +545,7 @@ export default function CareerModal({memberId, buttonTitle}) {
               educations.map((item, index) =>
                 item.type === "item" ? (
                   <Education
+                    memberId={memberId}
                     degree={item.data.degree}
                     startDate={item.data.startDate}
                     endDate={item.data.endDate}
@@ -582,6 +583,7 @@ export default function CareerModal({memberId, buttonTitle}) {
               certificates.map((item, index) =>
                 item.type === "item" ? (
                   <Certificate
+                    memberId={memberId}
                     certificateName={item.data.name}
                     date={item.data.date}
                     onEdit={() => editCertificate(index)}
@@ -616,6 +618,7 @@ export default function CareerModal({memberId, buttonTitle}) {
               languages.map((item, index) =>
                 item.type === "item" ? (
                   <Language
+                    memberId={memberId}
                     languageName={item.data.languageName}
                     proficiency={item.data.proficiency}
                     onEdit={() => editLanguage(index)}

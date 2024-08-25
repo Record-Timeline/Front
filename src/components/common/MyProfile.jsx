@@ -173,7 +173,10 @@ export default function MyProfile({profile}) {
               margin: "0px 0 0 180px",
             })}
           >
-            <CareerModal memberId={profile.memberId}/>
+            <CareerModal
+              memberId={profile.memberId}
+              buttonTitle={"내 경력 사항 수정"}
+            />
           </div>
         </div>
       </div>

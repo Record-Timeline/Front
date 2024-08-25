@@ -19,9 +19,14 @@ import EducationInput from "../career/EducationInput";
 import CertificateInput from "../career/CertificateInput";
 import LanguageInput from "../career/LanguageInput";
 import axiosInstance from "../../utils/axiosInstance";
+import {useSelector} from 'react-redux';
+import {useLocation} from "react-router-dom";
 
-export default function CareerModal({memberId}) {
-  const [open, setOpen] = useState(false);
+export default function CareerModal({memberId, buttonTitle}) {
+  const location = useLocation(); // 리덕스
+  const myMemberId = useSelector(state => state.memberId); // 내 멤버 아이디 가져옴 (리덕스)
+  const [open, setOpen] = useState(false); // 모달창 on/off
+
   // 조회한 경력사항 정보 저장
   const [careerInfo, setCareerInfo] = useState({});
   // 각 항목들을 관리할 상태 생성
@@ -147,10 +152,10 @@ export default function CareerModal({memberId}) {
 
       // 가장 최근에 추가된 항목(input타입)을 item 타입으로 교체
       newCareers[lastIndex] = {type: "item", data: response.data.result};
-      
+
       console.log("경력 생성 완료", response)
       console.log(careers)
-      
+
       // 생성 후 경력사항 다시 조회
       fetchCareerInfo(memberId)
       console.log(careers)
@@ -345,7 +350,7 @@ export default function CareerModal({memberId}) {
       );
 
       const newCareers = careers.slice();
-      newCareers[index] = { type: "item", data: response.data }
+      newCareers[index] = {type: "item", data: response.data}
       setCareers(newCareers);
 
       console.log("경력 업데이트 완료", response.data)
@@ -376,7 +381,7 @@ export default function CareerModal({memberId}) {
       );
 
       const newEducations = educations.slice();
-      newEducations[index] = { type: "item", data: response.data }
+      newEducations[index] = {type: "item", data: response.data}
       setEducations(newEducations);
 
       console.log("학력 업데이트 완료", response.data)
@@ -404,7 +409,7 @@ export default function CareerModal({memberId}) {
       );
 
       const newCertificates = certificates.slice();
-      newCertificates[index] = { type: "item", data: response.data }
+      newCertificates[index] = {type: "item", data: response.data}
       setCertificates(newCertificates);
 
       console.log("자격증 업데이트 완료", response.data)
@@ -432,7 +437,7 @@ export default function CareerModal({memberId}) {
       );
 
       const newLanguages = languages.slice();
-      newLanguages[index] = { type: "item", data: response.data }
+      newLanguages[index] = {type: "item", data: response.data}
       setLanguages(newLanguages);
 
       console.log("외국어 업데이트 완료", response.data)
@@ -451,6 +456,7 @@ export default function CareerModal({memberId}) {
     <React.Fragment>
       <Button
         sx={{
+          width: "150px",
           borderRadius: '30px', // 둥근 모서리 반경 설정
           border: "2px solid #829FD7",
           '&:hover': {
@@ -459,7 +465,7 @@ export default function CareerModal({memberId}) {
         }}
         variant="outlined" // 이거 없애면 padding이 없어짐
         onClick={handleClickOpen}>
-        내 경력 사항 수정
+        {buttonTitle}
       </Button>
       <Dialog
         maxWidth={false}
@@ -487,9 +493,12 @@ export default function CareerModal({memberId}) {
           >
             <div css={css({display: "flex", alignItems: "center", gap: "1px",})}>
               <h2>경력</h2>
-              <IconButton onClick={addCareerInput} aria-label="delete">
-                <AddIcon/>
-              </IconButton>
+              {/*추가 버튼 조건부 렌더링*/}
+              {memberId === myMemberId && (
+                <IconButton onClick={addCareerInput} aria-label="add">
+                  <AddIcon/>
+                </IconButton>
+              )}
             </div>
             {careers.length === 0 ? (
               <NoneData
@@ -519,11 +528,14 @@ export default function CareerModal({memberId}) {
               )
             )}
 
-            <div css={css({display: "flex", alignItems: "center", gap: "1px",})}>
+            <div css={css({display: "flex", alignItems: "center", gap: "1px", marginTop: "30px"})}>
               <h2>학력</h2>
-              <IconButton onClick={addEducationInput} aria-label="delete">
-                <AddIcon/>
-              </IconButton>
+              {/*추가 버튼 조건부 렌더링*/}
+              {memberId === myMemberId && (
+                <IconButton onClick={addEducationInput} aria-label="add">
+                  <AddIcon/>
+                </IconButton>
+              )}
             </div>
             {educations.length === 0 ? (
               <NoneData
@@ -553,11 +565,14 @@ export default function CareerModal({memberId}) {
               )
             )}
 
-            <div css={css({display: "flex", alignItems: "center", gap: "1px",})}>
+            <div css={css({display: "flex", alignItems: "center", gap: "1px", marginTop: "30px"})}>
               <h2>자격증</h2>
-              <IconButton onClick={addCertificateInput} aria-label="delete">
-                <AddIcon/>
-              </IconButton>
+              {/*추가 버튼 조건부 렌더링*/}
+              {memberId === myMemberId && (
+                <IconButton onClick={addCertificateInput} aria-label="add">
+                  <AddIcon/>
+                </IconButton>
+              )}
             </div>
             {certificates.length === 0 ? (
               <NoneData
@@ -584,11 +599,14 @@ export default function CareerModal({memberId}) {
               )
             )}
 
-            <div css={css({display: "flex", alignItems: "center", gap: "1px",})}>
+            <div css={css({display: "flex", alignItems: "center", gap: "1px", marginTop: "30px"})}>
               <h2>외국어</h2>
-              <IconButton onClick={addLanguageInput} aria-label="delete">
-                <AddIcon/>
-              </IconButton>
+              {/*추가 버튼 조건부 렌더링*/}
+              {memberId === myMemberId && (
+                <IconButton onClick={addLanguageInput} aria-label="add">
+                  <AddIcon/>
+                </IconButton>
+              )}
             </div>
             {languages.length === 0 ? (
               <NoneData

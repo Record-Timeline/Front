@@ -8,6 +8,7 @@ import MainTimelineItem from "../components/timeline/MainTimelineItem";
 import MainTimelineInput from "../components/timeline/MainTimelineInput";
 import Button from "../components/common/Button";
 import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
 
 export default function MainTimeline() {
   // 타임라인 항목들을 관리할 상태 생성
@@ -66,19 +67,12 @@ export default function MainTimeline() {
     // 메인 타임라인 생성 연동 (POST, CREATE)
     console.log(items)
     try {
-      const response = await axios.post(
+      const response = await axiosInstance.post(
         `/api/v1/main-timelines`,
         {
           title: data.title,
           startDate: data.startDate,
           endDate: data.endDate,
-        },
-        {
-          headers: {
-            Accept: "*/*",
-            "Content-Type": `application/json`,
-            Authorization: `Bearer ${token}`
-          },
         }
       );
       setItems([...items, { type: "item", data: response.data }]);

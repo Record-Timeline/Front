@@ -7,6 +7,7 @@ import Button from "./Button"
 import testProfileImg from "../../assets/images/testProfileImg.png";
 import axiosInstance from "../../utils/axiosInstance";
 import {useNavigate} from "react-router-dom";
+import CareerModal from "../timeline/CareerModal";
 
 export default function OthersProfile({profile}) {
   const [isFollowed, setIsFollowed] = useState(false);
@@ -188,19 +189,17 @@ export default function OthersProfile({profile}) {
           >
             {isFollowed ? "팔로잉" : "팔로우"}
           </Button>
-          <Button
-            width="150px"
-            height="40px"
-            margin="28px 0 0 310px"
-            backgroundColor="none"
-            border="2px solid #829FD7"
-            textColor="#7286AD"
-            fontSize="15px"
-            borderRadius="30px"
-            css={css({display: "inline-block"})}
+          <div
+            css={css({
+              margin: "28px 0 0 310px",
+              display: "inline-block"
+            })}
           >
-            경력 사항 보기
-          </Button>
+            <CareerModal
+              memberId={profile.memberId}
+              buttonTitle={"경력 사항 보기"}
+            />
+          </div>
         </div>
         <div
           css={css({

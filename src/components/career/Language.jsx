@@ -14,30 +14,12 @@ function Language ({languageName, proficiency, onEdit}) {
   const [level, setLevel] = useState(null); // 초기값 설정 안해주면 rating이 안됨 (null로라도 해줘야 함)
 
   const labels = {
-    LOW: 'VeryLow',
-    LOWER_MEDIUM: 'Low',
-    MEDIUM: 'Middle',
-    UPPER_MEDIUM: 'Good',
-    HIGH: 'VeryHigh',
+    1: 'VeryLow',
+    2: 'Low',
+    3: 'Middle',
+    4: 'Good',
+    5: 'VeryHigh',
   };
-
-  const convertIntoNum = (proficiency) => {
-    if (proficiency === "HIGH") {
-      setLevel(5);
-    } else if (proficiency === "UPPER_MEDIUM") {
-      setLevel(4);
-    } else if (proficiency === "MEDIUM") {
-      setLevel(3);
-    } else if (proficiency === "LOWER_MEDIUM") {
-      setLevel(2);
-    } else if (proficiency === "LOW") {
-      setLevel(1);
-    }
-  }
-
-  useEffect(() => {
-    convertIntoNum(proficiency)
-  }, [])
 
   return (
     <div
@@ -73,8 +55,9 @@ function Language ({languageName, proficiency, onEdit}) {
           }}
         >
           <Rating
+            key={proficiency} // key에 proficiency 값을 사용하여 컴포넌트 강제 리렌더링 (생성, 수정 후 rating 반영 바로 안되는 문제 해결 ㅡㅡ)
             name="text-feedback"
-            value={level}
+            value={proficiency}
             readOnly
             precision={1}
             emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}

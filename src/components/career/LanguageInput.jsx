@@ -31,7 +31,7 @@ function LanguageInput({ index, saveItem, initialData, createLanguage, updateLan
 
   useEffect(() => {
     setLanguageName(initialData.languageName);
-    setLevel(initialData.level);
+    setLevel(initialData.proficiency);
   }, [initialData]);
 
   const handleSave = async () => {

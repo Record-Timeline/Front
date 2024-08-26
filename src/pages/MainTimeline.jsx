@@ -190,6 +190,7 @@ export default function MainTimeline() {
               startDate={item.data.startDate}
               endDate={item.data.endDate}
               title={item.data.title}
+              done={item.data.done}
               onEdit={() => editItem(index)}
               onDelete={() => deleteItem(index)}
               showLine={index !== items.length - 1} // 마지막 아이템에는 선을 표시하지 않음

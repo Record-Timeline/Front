@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {css} from "@emotion/react";
 import {FiLock, FiUnlock} from "react-icons/fi";
 import {GoPencil} from "react-icons/go";
@@ -10,9 +10,9 @@ import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from "../../utils/axiosInstance";
 
-function MainTimelineItem({mainTimelineId, startDate, endDate, title, onEdit, onDelete, showLine}) {
+function MainTimelineItem({mainTimelineId, startDate, endDate, title, done, onEdit, onDelete, showLine}) {
   const navigate = useNavigate();
-  const [isDone, setIsDone] = useState(false); // 진행중 체크
+  const [isDone, setIsDone] = useState(done); // 진행중 체크
 
   const handleTitleClick = () => {
     // navigate(`/subtimeline/${mainTimelineId}`, { state: { title } });
@@ -43,6 +43,21 @@ function MainTimelineItem({mainTimelineId, startDate, endDate, title, onEdit, on
       }
     }
   }
+
+  // 진행중 (isDone) 상태 연동
+  const isDoneStatus =  () => {
+    if (done) { // 상위 컴포넌트에서 메인 타임라인 조회할때 알아내서 그냥 props로 가져옴 (연동코드 굳이 또 쓰지 않음)
+      setIsDone(true)
+      console.log(isDone)
+    } else {
+      setIsDone(false)
+      console.log(isDone)
+    }
+  }
+
+  useEffect(() => {
+    isDoneStatus()
+  }, []);
 
   return (
     <div // 회색 타임라인 박스

@@ -7,14 +7,12 @@ import CreateSubTimelinePost from "../components/subTimeline/CreateSubTimelinePo
 import ReadSubTimelinePost from "../components/subTimeline/ReadSubTimelinePost";
 import SubTimelineItem from "../components/subTimeline/SubTimelineItem";
 import Button from "../components/common/Button";
-import axios from "axios";
 import {useParams, useLocation, useSearchParams} from 'react-router-dom';
 import axiosInstance from "../utils/axiosInstance";
 import Header from "../components/common/Header";
 
 export default function SubTimeline() {
   const {mainTimelineId} = useParams(); // URL 파라미터로부터 id 받아오기
-  const location = useLocation(); // 토큰 때문에 필요한 거인듯 (연동할때) -> 연동 코드 바꾸기 by axiosInstance
   const [searchParams, setSearchParams] = useSearchParams(); // 쿼리 스트링의 value를 가져오기 위함
   const targetId = searchParams.get("subtimelineId") // 타겟 서브타임라인 id
 
@@ -119,6 +117,10 @@ export default function SubTimeline() {
 
         console.log("서브 타임라인 수정 완료", response.data)
         console.log(subTimelineItems);
+
+        // 수정 후 서브 타임라인 다시 조회
+        await fetchSubTimelines();
+        setSelectedItem(newItem);
       } catch (error) {
         console.log("서브 타임라인 수정 에러: ", error);
         console.error("에러 상세:", error.response ? error.response.data : error.message);
@@ -144,6 +146,10 @@ export default function SubTimeline() {
 
         console.log("서브 타임라인 생성 완료", response.data)
         console.log(subTimelineItems);
+
+        // 생성 후 서브 타임라인 다시 조회
+        await fetchSubTimelines();
+        setSelectedItem(newItem);
       } catch (error) {
         console.log("서브 타임라인 생성 에러: ", error);
         console.error("에러 상세:", error.response ? error.response.data : error.message);
@@ -168,6 +174,9 @@ export default function SubTimeline() {
       }
       console.log("서브 타임라인 삭제 완료");
       console.log(subTimelineItems);
+
+      // 삭제 후 서브 타임라인 다시 조회
+      fetchSubTimelines();
     } catch (error) {
       console.error("서브 타임라인 삭제 에러 발생:", error.response ? error.response.data : error.message);
     }

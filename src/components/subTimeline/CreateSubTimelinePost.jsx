@@ -15,6 +15,7 @@ import dayjs from "dayjs";
 const ariaLabel = {'aria-label': 'description'};
 
 export default function CreateSubTimelinePost({post, onCancel, onSubmit}) {
+  const [id, setId] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -26,6 +27,7 @@ export default function CreateSubTimelinePost({post, onCancel, onSubmit}) {
   // 수정 모드, 기존 정보 유지 (useEffect)
   useEffect(() => {
     if (post) {
+      setId(post.id)
       setStartDate(post.startDate);
       setEndDate(post.endDate);
       setTitle(post.title);
@@ -40,6 +42,7 @@ export default function CreateSubTimelinePost({post, onCancel, onSubmit}) {
       setAlertOpen(true);
     } else {
       const newSubItem = {
+        id,
         startDate: dayjs(startDate).format("YYYY-MM-DD"),
         endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
         title,

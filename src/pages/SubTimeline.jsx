@@ -28,9 +28,9 @@ export default function SubTimeline() {
   const [subTimelineItems, setSubTimelineItems] = useState([]); // 타임라인 항목들을 관리할 상태 생성
   const [selectedItem, setSelectedItem] = useState(null);
 
-  // 토큰 정보 받아오기
-  const token = localStorage.getItem("token");
-  console.log("토큰 확인:", token); // 토큰 확인을 위한 콘솔 로그 추가
+  const handleSelectItem = (item) => {
+    setSelectedItem(item);
+  };
 
   const handleCreateNew = () => {
     setEditablePost(null); // 새 포스트 작성을 위해 editablePost를 null로 설정
@@ -50,6 +50,52 @@ export default function SubTimeline() {
       setIsCreating(false);
     }
   }
+
+  // 내 프로필 조회 연동
+  const fetchProfile = async () => {
+    try {
+      const response = await axiosInstance.get(`/api/v1/my-profile`);
+      setProfile(response.data);
+      console.log("프로필 조회 완료", response);
+    } catch (error) {
+      console.log("프로필 조회 에러 발생:", error);
+      console.error("에러 상세:", error.response ? error.response.data : error.message);
+    }
+  };
+
+  // 서브 타임라인 조회 연동
+  const fetchSubTimelines = async () => {
+    try {
+      const response = await axiosInstance.get(
+        `/api/v1/sub-timelines/main/${mainTimelineId}/ordered`, // 메인 타임라인 ID로 서브 타임라인 데이터 가져오기
+      );
+      const data = response.data.subTimelines;
+      setSubTimelineItems(data);
+
+      const targetIndex = data.findIndex(item => item.id.toString() === targetId);
+
+      if (targetIndex !== -1) {
+        setSelectedItem(data[targetIndex]); // 해당 id를 가진 아이템이 있으면 그 아이템을 선택
+      } else if (data.length > 0) { // url에 쿼리스트링이 없고, 서브 타임라인 아이템들은 있을 경우
+        setSelectedItem(data[0]); // 해당 id가 없으면 첫번째 서브 타임라인 아이템을 선택
+        setIsCreating(false); // 글쓰기 모드 활성화 x
+      } else {
+        setIsCreating(true)
+        // +) 서브 타임라인이 하나도 없는 경우 -> ui 디자인 해야 함
+      }
+
+      setTitle(response.data.mainTimelineTitle)
+      console.log(response.data.mainTimelineTitle)
+      console.log("서브 타임라인 조회 완료", response)
+    } catch (error) {
+      console.error("서브 타임라인 조회 에러 발생:", error.response ? error.response.data : error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchProfile();
+    fetchSubTimelines();
+  }, [mainTimelineId]); // id를 의존성 배열에 추가
 
   const handleSubmit = async (newItem) => {
     if (editablePost) {
@@ -106,10 +152,6 @@ export default function SubTimeline() {
     setIsCreating(false);
   };
 
-  const handleSelectItem = (item) => {
-    setSelectedItem(item);
-  };
-
   const handleDelete = async (item) => {
     // 서브 타임라인 삭제 연동
     try {
@@ -130,66 +172,6 @@ export default function SubTimeline() {
       console.error("서브 타임라인 삭제 에러 발생:", error.response ? error.response.data : error.message);
     }
   };
-
-  useEffect(() => {
-    // 내 프로필 조회 연동
-    const fetchProfile = async () => {
-      try {
-        const response = await axios.get(
-          `/api/v1/my-profile`,
-          {
-            headers: {
-              Accept: "*/*",
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          });
-        setProfile(response.data);
-        console.log("프로필 조회 완료", response);
-      } catch (error) {
-        console.log("프로필 조회 에러 발생:", error);
-        console.error("에러 상세:", error.response ? error.response.data : error.message);
-      }
-    };
-
-    // 서브 타임라인 조회 연동
-    const fetchSubTimelines = async () => {
-      try {
-        const response = await axiosInstance.get(
-          `/api/v1/sub-timelines/main/${mainTimelineId}/ordered`, // 메인 타임라인 ID로 서브 타임라인 데이터 가져오기
-        );
-        const data = response.data.subTimelines;
-        setSubTimelineItems(data);
-
-        const targetIndex = data.findIndex(item => item.id.toString() === targetId);
-
-        if (targetIndex !== -1) {
-          setSelectedItem(data[targetIndex]); // 해당 id를 가진 아이템이 있으면 그 아이템을 선택
-        } else if (data.length > 0) { // url에 쿼리스트링이 없고, 서브 타임라인 아이템들은 있을 경우
-          setSelectedItem(data[0]); // 해당 id가 없으면 첫번째 서브 타임라인 아이템을 선택
-          setIsCreating(false); // 글쓰기 모드 활성화 x
-        } else {
-          setIsCreating(true)
-          // +) 서브 타임라인이 하나도 없는 경우 -> ui 디자인 해야 함
-        }
-
-        setTitle(response.data.mainTimelineTitle)
-        console.log(response.data.mainTimelineTitle)
-        console.log("서브 타임라인 조회 완료", response)
-      } catch (error) {
-        console.error("서브 타임라인 조회 에러 발생:", error.response ? error.response.data : error.message);
-      }
-    };
-
-    fetchProfile();
-    fetchSubTimelines();
-
-    // // 메인 타임라인에서 가져온 title 상태 설정 및 sessionStorage에 저장 (유지되도록)
-    // if (location.state && location.state.title) {
-    //   setTitle(location.state.title);
-    //   sessionStorage.setItem('mainTimelineTitle', location.state.title);
-    // }
-  }, [token, mainTimelineId, location.state]); // id와 location.state를 의존성 배열에 추가
 
   return (
     <div

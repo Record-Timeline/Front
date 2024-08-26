@@ -19,8 +19,6 @@ export default function SubTimeline() {
   const [title, setTitle] = useState("메인 타임라인 제목");
   const [profile, setProfile] = useState(null); // 프로필 상태 추가
 
-  const [isDone, setIsDone] = useState(false); // 체크를 사용자가 직접 체크 안할 경우
-  const [isChecked, setIsChecked] = useState(false); // 사용자가 직접 체크 할 경우
   const [isCreating, setIsCreating] = useState(false);
   const [editablePost, setEditablePost] = useState(null);
   const [subTimelineItems, setSubTimelineItems] = useState([]); // 타임라인 항목들을 관리할 상태 생성
@@ -254,9 +252,11 @@ export default function SubTimeline() {
         {subTimelineItems.map((item, index) => (
           <SubTimelineItem
             key={index}
+            subTimelineId={item.id}
             startDate={item.startDate}
             endDate={item.endDate}
             title={item.title}
+            done={item.done}
             isPublic={item.isPublic}
             onClick={() => handleSelectItem(item)}
             showLine={index !== subTimelineItems.length - 1} // 마지막 아이템에는 선을 표시하지 않음

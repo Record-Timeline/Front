@@ -1,16 +1,54 @@
 /** @jsxImportSource @emotion/react */
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {css} from "@emotion/react";
-import styled from 'styled-components';
 import {FiLock, FiUnlock} from "react-icons/fi";
-import {GoPencil} from "react-icons/go";
-import {FaRegTrashAlt} from "react-icons/fa";
 import AlertDialog from "../common/AlertDialog";
 import dayjs from "dayjs";
+import axiosInstance from "../../utils/axiosInstance";
 
-function SubTimelineItem({startDate, endDate, title, isPublic, onClick, showLine}) {
-  const [isChecked, setIsChecked] = useState(false);
+function SubTimelineItem({subTimelineId, startDate, endDate, title, done, isPublic, onClick, showLine}) {
+  const [isDone, setIsDone] = useState(done); // 진행중 체크
+
+  // 진행중 (isDone) 연동
+  const onClickIsDone = async () => {
+    if (isDone) {
+      // 체크 해제 연동
+      try {
+        const response = await axiosInstance.put(`/api/v1/sub-timelines/${subTimelineId}/toggle-done`);
+        setIsDone(false);
+        console.log("진행중 체크 해제 완료", response);
+      } catch (error) {
+        console.log("진행중 체크 해제 오류", error);
+        console.error("에러 상세:", error.response ? error.response.data : error.message);
+      }
+    } else {
+      // 체크 연동
+      try {
+        const response = await axiosInstance.put(`/api/v1/sub-timelines/${subTimelineId}/toggle-done`);
+        setIsDone(true);
+        console.log("진행중 체크 완료", response)
+      } catch (error) {
+        console.log("진행중 체크 오류", error);
+        console.error("에러 상세:", error.response ? error.response.data : error.message);
+      }
+    }
+  }
+
+  // 진행중 (isDone) 상태 연동
+  const isDoneStatus =  () => {
+    if (done) { // 상위 컴포넌트에서 서브 타임라인 조회할때 알아내서 그냥 props로 가져옴 (연동코드 굳이 또 쓰지 않음)
+      setIsDone(true)
+      console.log(isDone)
+    } else {
+      setIsDone(false)
+      console.log(isDone)
+    }
+  }
+
+  useEffect(() => {
+    isDoneStatus()
+  }, []);
 
   return (
     <div // 회색 타임라인 박스
@@ -29,8 +67,7 @@ function SubTimelineItem({startDate, endDate, title, isPublic, onClick, showLine
       })}
     >
       <div // 체크 표시
-        done={isChecked}
-        onClick={() => setIsChecked(!isChecked)}
+        onClick={onClickIsDone}
         css={css`
             width: 21px; // 21px
             height: 21px; // 21px
@@ -42,7 +79,7 @@ function SubTimelineItem({startDate, endDate, title, isPublic, onClick, showLine
             margin-left: 30px;
             margin-right: 15px;
             cursor: pointer;
-            background-color: ${isChecked ? "#829FD7" : "#f8f6f6"}; // 선 때문에 뚫린 원일 때도 배경 색 설정
+            background-color: ${isDone ? "#829FD7" : "#f8f6f6"}; // 선 때문에 뚫린 원일 때도 배경 색 설정
         `}
       />
       <div

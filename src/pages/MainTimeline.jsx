@@ -44,16 +44,7 @@ export default function MainTimeline() {
     const itemId = items[index].data.id;
     // 메인 타임라인 삭제 연동 (DEL, DELETE)
     try {
-      await axios.delete(
-        `/api/v1/main-timelines/${itemId}`,
-        {
-          headers: {
-            Accept: "*/*",
-            "Content-Type": `application/json`,
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await axiosInstance.delete(`/api/v1/main-timelines/${itemId}`);
       setItems(items.filter((_, i) => i !== index));
       console.log("메인 타임라인 삭제 완료");
     } catch (error) {
@@ -88,15 +79,7 @@ export default function MainTimeline() {
     // 내 프로필 조회 연동 (메인 타임라인 페이지 내)
     const fetchProfile = async () => {
       try {
-        const response = await axios.get(
-          `/api/v1/my-profile`,
-          {
-            headers: {
-              Accept: "*/*",
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          });
+        const response = await axiosInstance.get(`/api/v1/my-profile`);
         setProfile(response.data);
         console.log("프로필 조회 완료", response);
 
@@ -111,16 +94,7 @@ export default function MainTimeline() {
     // 메인 타임라인 조회 연동 (GET, READ)
     const fetchMainTimelines = async (memberId) => {
       try {
-        const response = await axios.get(
-          `/api/v1/main-timelines/member/${memberId}`,
-          {
-            headers: {
-              Accept: "*/*",
-              "Content-Type": `application/json`,
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await axiosInstance.get(`/api/v1/main-timelines/member/${memberId}`);
         setItems(response.data.map(item => ({ type: "item", data: item })));
         console.log("메인 타임라인 조회 완료", response);
       } catch (error) {
@@ -142,20 +116,13 @@ export default function MainTimeline() {
     // 메인 타임라인 수정 연동 (PUT, UPDATE)
     console.log(items);
     try {
-      const response = await axios.put( // 서버에 put 요청 보냄
+      const response = await axiosInstance.put( // 서버에 put 요청 보냄
         `/api/v1/main-timelines/${itemId}`,
         {
           title: data.title,
           startDate: data.startDate,
           endDate: data.endDate,
         },
-        {
-          headers: {
-            Accept: "*/*",
-            "Content-Type": `application/json`,
-            Authorization: `Bearer ${token}`,
-          },
-        }
       );
       const newItems = items.slice();
       newItems[index] = { type: "item", data: response.data };

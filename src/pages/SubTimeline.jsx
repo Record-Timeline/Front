@@ -62,7 +62,7 @@ export default function SubTimeline() {
   };
 
   // 서브 타임라인 조회 연동
-  const fetchSubTimelines = async () => {
+  const fetchSubTimelines = async (newItemId) => {
     try {
       const response = await axiosInstance.get(
         `/api/v1/sub-timelines/main/${mainTimelineId}/ordered`, // 메인 타임라인 ID로 서브 타임라인 데이터 가져오기
@@ -70,7 +70,8 @@ export default function SubTimeline() {
       const data = response.data.subTimelines;
       setSubTimelineItems(data);
 
-      const targetIndex = data.findIndex(item => item.id.toString() === targetId);
+      const targetIndex = data.findIndex(item => item.id.toString() === targetId); // 쿼리문에서 받은 서브 타임라인 ID와 일치하는 인덱스 찾기
+      const targetIndex2 = data.findIndex(item => item.id === newItemId); // 새로 생성(수정) 서브 타임라인 ID와 일피하는 인덱스 찾기
 
       if (targetIndex !== -1) {
         setSelectedItem(data[targetIndex]); // 해당 id를 가진 아이템이 있으면 그 아이템을 선택
@@ -80,6 +81,10 @@ export default function SubTimeline() {
       } else {
         setIsCreating(true)
         // +) 서브 타임라인이 하나도 없는 경우 -> ui 디자인 해야 함
+      }
+
+      if (targetIndex2 !== -1) {
+        setSelectedItem(data[targetIndex2]); // 해당 id를 가진 아이템이 있으면 그 아이템을 선택
       }
 
       setTitle(response.data.mainTimelineTitle)
@@ -119,8 +124,7 @@ export default function SubTimeline() {
         console.log(subTimelineItems);
 
         // 수정 후 서브 타임라인 다시 조회
-        await fetchSubTimelines();
-        setSelectedItem(newItem);
+        await fetchSubTimelines(editablePost.id);
       } catch (error) {
         console.log("서브 타임라인 수정 에러: ", error);
         console.error("에러 상세:", error.response ? error.response.data : error.message);
@@ -147,9 +151,11 @@ export default function SubTimeline() {
         console.log("서브 타임라인 생성 완료", response.data)
         console.log(subTimelineItems);
 
+        const createdItemId = response.data.subTimelineId; // 새로 생성된 타임라인의 id
+        console.log(createdItemId)
+
         // 생성 후 서브 타임라인 다시 조회
-        await fetchSubTimelines();
-        setSelectedItem(newItem);
+        await fetchSubTimelines(createdItemId);
       } catch (error) {
         console.log("서브 타임라인 생성 에러: ", error);
         console.error("에러 상세:", error.response ? error.response.data : error.message);
@@ -176,7 +182,7 @@ export default function SubTimeline() {
       console.log(subTimelineItems);
 
       // 삭제 후 서브 타임라인 다시 조회
-      fetchSubTimelines();
+      // fetchSubTimelines(); 이거 있으면 위에 selectedItem 설정해놓은게 적용이 안됨 초기화 돼서
     } catch (error) {
       console.error("서브 타임라인 삭제 에러 발생:", error.response ? error.response.data : error.message);
     }

@@ -8,15 +8,41 @@ import {FaRegTrashAlt} from "react-icons/fa";
 import AlertDialog from "../common/AlertDialog";
 import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
+import axiosInstance from "../../utils/axiosInstance";
 
 function MainTimelineItem({mainTimelineId, startDate, endDate, title, onEdit, onDelete, showLine}) {
-  const [isChecked, setIsChecked] = useState(false);
   const navigate = useNavigate();
+  const [isDone, setIsDone] = useState(false); // 진행중 체크
 
   const handleTitleClick = () => {
     // navigate(`/subtimeline/${mainTimelineId}`, { state: { title } });
     navigate(`/subtimeline/${mainTimelineId}`);
   };
+
+  // 진행중 (isDone) 연동
+  const onClickIsDone = async () => {
+    if (isDone) {
+      // 체크 해제 연동
+      try {
+        const response = await axiosInstance.put(`/api/v1/main-timelines/${mainTimelineId}/toggle-done`);
+        setIsDone(false);
+        console.log("진행중 체크 해제 완료", response);
+      } catch (error) {
+        console.log("진행중 체크 해제 오류", error);
+        console.error("에러 상세:", error.response ? error.response.data : error.message);
+      }
+    } else {
+      // 체크 연동
+      try {
+        const response = await axiosInstance.put(`/api/v1/main-timelines/${mainTimelineId}/toggle-done`);
+        setIsDone(true);
+        console.log("진행중 체크 완료", response)
+      } catch (error) {
+        console.log("진행중 체크 오류", error);
+        console.error("에러 상세:", error.response ? error.response.data : error.message);
+      }
+    }
+  }
 
   return (
     <div // 회색 타임라인 박스
@@ -35,8 +61,7 @@ function MainTimelineItem({mainTimelineId, startDate, endDate, title, onEdit, on
       })}
     >
       <div // 체크표시
-        done={isChecked}
-        onClick={() => setIsChecked(!isChecked)}
+        onClick={onClickIsDone}
         css={css`
             width: 22px;
             height: 22px;
@@ -48,7 +73,7 @@ function MainTimelineItem({mainTimelineId, startDate, endDate, title, onEdit, on
             margin-top: 31px;
             margin-left: 40px;
             cursor: pointer;
-            background-color: ${isChecked ? "#829FD7" : "none"};
+            background-color: ${isDone ? "#829FD7" : "none"};
         `}
       />
       <div // 기간

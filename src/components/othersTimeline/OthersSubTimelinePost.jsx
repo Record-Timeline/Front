@@ -48,8 +48,20 @@ export default function OthersSubTimelinePost({item}) {
     }
   }
 
+  // 진행중 (isDone) 상태 연동
+  const isDoneStatus =  () => {
+    if (item.done) { // 상위 컴포넌트에서 서브 타임라인 조회할때 알아내서 그냥 props로 가져옴 (연동코드 굳이 또 쓰지 않음)
+      setIsDone(true)
+      console.log(isDone)
+    } else {
+      setIsDone(false)
+      console.log(isDone)
+    }
+  }
+
   useEffect(() => {
     bookmarkAndLikeStatus();
+    isDoneStatus();
   }, [item])
 
   const onClickLike = async () => {

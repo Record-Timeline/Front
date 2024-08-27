@@ -1,13 +1,29 @@
 /** @jsxImportSource @emotion/react */
 
 import * as React from "react";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {css} from "@emotion/react";
 import dayjs from "dayjs";
 import {useNavigate} from "react-router-dom";
 
-export default function OthersTimelineItem({memberId, mainTimelineId, startDate, endDate, title, isDone, showLine}) {
+export default function OthersTimelineItem({memberId, mainTimelineId, startDate, endDate, title, done, showLine}) {
   const navigate = useNavigate();
+  const [isDone, setIsDone] = useState(done); // 진행중 체크
+
+  // 진행중 (isDone) 상태 연동
+  const isDoneStatus =  () => {
+    if (done) { // 상위 컴포넌트에서 메인 타임라인 조회할때 알아내서 그냥 props로 가져옴 (연동코드 굳이 또 쓰지 않음)
+      setIsDone(true)
+      console.log(isDone)
+    } else {
+      setIsDone(false)
+      console.log(isDone)
+    }
+  }
+
+  useEffect(() => {
+    isDoneStatus()
+  }, []);
 
   const handleTitleClick = () => {
     navigate(`/otherssub/${memberId}/${mainTimelineId}`);
@@ -34,7 +50,6 @@ export default function OthersTimelineItem({memberId, mainTimelineId, startDate,
         })}
       >
         <div // 진행중 여부 (체크 표시)
-          done={isDone}
           css={css`
               width: 21px;
               height: 21px;

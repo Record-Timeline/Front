@@ -173,20 +173,10 @@ export default function MyProfile({profile}) {
               margin: "0px 0 0 180px",
             })}
           >
-            <CareerModal />
-            {/*<Button*/}
-            {/*  width="160px"*/}
-            {/*  height="40px"*/}
-            {/*  margin="0px 0 0 180px"*/}
-            {/*  backgroundColor="none"*/}
-            {/*  border="2px solid #829FD7"*/}
-            {/*  textColor="#7286AD"*/}
-            {/*  fontSize="15px"*/}
-            {/*  borderRadius="30px"*/}
-            {/*  lineHeight="40px"*/}
-            {/*>*/}
-            {/*  내 경력 사항 수정*/}
-            {/*</Button>*/}
+            <CareerModal
+              memberId={profile.memberId}
+              buttonTitle={"내 경력 사항 수정"}
+            />
           </div>
         </div>
       </div>

@@ -32,7 +32,7 @@ function App() {
   function ProtectedRoute({ element }) {
     const { memberId, mainTimelineId } = useParams();
 
-    // 현재 URL에서의 memberId 파라미터와 Redux 상태의 memberId 비교
+    // Redux 상태의 myMemberId와 현재 URL에서의 memberId 파라미터와 비교
     if (String(myMemberId) === String(memberId)) {  // 멤버 ID가 같은 경우
       if(mainTimelineId) {
         // mainTimelineId가 있을 때는 서브 타임라인으로 이동

@@ -7,17 +7,16 @@ import MyProfile from "../components/common/MyProfile";
 import MainTimelineItem from "../components/timeline/MainTimelineItem";
 import MainTimelineInput from "../components/timeline/MainTimelineInput";
 import Button from "../components/common/Button";
-import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
+import {toUnitless} from "@mui/material/styles/cssUtils";
 
 export default function MainTimeline() {
   // 타임라인 항목들을 관리할 상태 생성
   const [items, setItems] = useState([]);
   // 프로필 상태 추가
   const [profile, setProfile] = useState(null);
-
-  // 토큰 정보 받아오기
-  const token = localStorage.getItem("token");
-  console.log("토큰 확인:", token); // 토큰 확인을 위한 콘솔 로그 추가
+  // 멤버 아이디
+  const [memberId, setmemberId] = useState(0)
 
   // 새 타임라인 입력 항목 추가하는 함수
   const addInput = () => {
@@ -38,105 +37,80 @@ export default function MainTimeline() {
     setItems(newItems);
   };
 
-  // 타임라인 항목을 삭제하는 함수
-  const deleteItem = async (index) => {
-    const itemId = items[index].data.id;
-    // 메인 타임라인 삭제 연동 (DEL, DELETE)
+  // 아래부터 연동 코드, 위에는 프론트에서만 의미있는 함수들
+  // 내 프로필 조회 연동 (메인 타임라인 페이지 내)
+  const fetchProfile = async () => {
     try {
-      await axios.delete(
-        `/api/v1/main-timelines/${itemId}`,
-        {
-          headers: {
-            Accept: "*/*",
-            "Content-Type": `application/json`,
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setItems(items.filter((_, i) => i !== index));
-      console.log("메인 타임라인 삭제 완료");
+      const response = await axiosInstance.get(`/api/v1/my-profile`);
+      setProfile(response.data);
+      setmemberId(response.data.memberId);
+      console.log("프로필 조회 완료", response);
+
+      // 프로필 조회가 완료된 후 메인 타임라인 조회 호출
+      fetchMainTimelines(response.data.memberId);
     } catch (error) {
-      console.log("삭제 에러 발생:", error);
-      console.error("삭제 에러 상세:", error.response ? error.response.data : error.message);
+      console.log("프로필 조회 에러 발생:", error);
+      console.error("에러 상세:", error.response ? error.response.data : error.message);
     }
   };
+
+  // 메인 타임라인 조회 연동 (GET, READ)
+  const fetchMainTimelines = async (memberId) => {
+    try {
+      const response = await axiosInstance.get(`/api/v1/main-timelines/member/${memberId}`);
+      setItems(response.data.map(item => ({ type: "item", data: item })));
+      console.log("메인 타임라인 조회 완료", response);
+    } catch (error) {
+      console.log("에러 발생:", error);
+      console.error("에러 상세:", error.response ? error.response.data : error.message);
+    }
+  };
+
+  useEffect(() => { // useEffect 사용해서 컴포넌트가 마운트 될 때 메인 타임라인을 서버에서 가져옴
+    fetchProfile();
+  }, []);
 
   // 메인 타임라인 생성 버튼 (체크 버튼)
   const createMainTimeline = async (data) => {
     // 메인 타임라인 생성 연동 (POST, CREATE)
-    console.log(items)
     try {
-      const response = await axios.post(
+      const response = await axiosInstance.post(
         `/api/v1/main-timelines`,
         {
           title: data.title,
           startDate: data.startDate,
           endDate: data.endDate,
-        },
-        {
-          headers: {
-            Accept: "*/*",
-            "Content-Type": `application/json`,
-            Authorization: `Bearer ${token}`
-          },
         }
       );
       setItems([...items, { type: "item", data: response.data }]);
       console.log("메인 타임라인 생성 완료", response)
       console.log(items)
+
+      // 생성 후 메인 타임라인 다시 조회
+      fetchMainTimelines(memberId)
     } catch (error) {
       console.log("에러!")
       console.error(error);
     }
   };
 
-  useEffect(() => { // useEffect 사용해서 컴포넌트가 마운트 될 때 메인 타임라인을 서버에서 가져옴
-    // 내 프로필 조회 연동 (메인 타임라인 페이지 내)
-    const fetchProfile = async () => {
-      try {
-        const response = await axios.get(
-          `/api/v1/my-profile`,
-          {
-            headers: {
-              Accept: "*/*",
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          });
-        setProfile(response.data);
-        console.log("프로필 조회 완료", response);
+  // 타임라인 항목을 삭제하는 함수
+  const deleteItem = async (index) => {
+    const itemId = items[index].data.id;
+    // 메인 타임라인 삭제 연동 (DEL, DELETE)
+    try {
+      await axiosInstance.delete(`/api/v1/main-timelines/${itemId}`);
+      setItems(items.filter((_, i) => i !== index));
+      console.log("메인 타임라인 삭제 완료");
+      console.log(items)
 
-        // 프로필 조회가 완료된 후 메인 타임라인 조회 호출
-        fetchMainTimelines(response.data.memberId);
-      } catch (error) {
-        console.log("프로필 조회 에러 발생:", error);
-        console.error("에러 상세:", error.response ? error.response.data : error.message);
-      }
-    };
-
-    // 메인 타임라인 조회 연동 (GET, READ)
-    const fetchMainTimelines = async (memberId) => {
-      try {
-        const response = await axios.get(
-          `/api/v1/main-timelines/member/${memberId}`,
-          {
-            headers: {
-              Accept: "*/*",
-              "Content-Type": `application/json`,
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        setItems(response.data.map(item => ({ type: "item", data: item })));
-        console.log("메인 타임라인 조회 완료", response);
-      } catch (error) {
-        console.log("에러 발생:", error);
-        console.error("에러 상세:", error.response ? error.response.data : error.message);
-      }
-    };
-
-    fetchProfile();
-  }, [token]);
+      // 삭제 후 메인 타임라인 다시 조회
+      fetchMainTimelines(memberId)
+    } catch (error) {
+      console.log("삭제 에러 발생:", error);
+      console.error("삭제 에러 상세:", error.response ? error.response.data : error.message);
+    }
+  };
 
   // 메인 타임라인 수정 버튼 (체크 버튼, 생성 버튼과 동일)
   const updateItem = async (index, data) => {
@@ -148,25 +122,21 @@ export default function MainTimeline() {
     // 메인 타임라인 수정 연동 (PUT, UPDATE)
     console.log(items);
     try {
-      const response = await axios.put( // 서버에 put 요청 보냄
+      const response = await axiosInstance.put( // 서버에 put 요청 보냄
         `/api/v1/main-timelines/${itemId}`,
         {
           title: data.title,
           startDate: data.startDate,
           endDate: data.endDate,
         },
-        {
-          headers: {
-            Accept: "*/*",
-            "Content-Type": `application/json`,
-            Authorization: `Bearer ${token}`,
-          },
-        }
       );
       const newItems = items.slice();
       newItems[index] = { type: "item", data: response.data };
       setItems(newItems);
       console.log("메인 타임라인 업데이트 완료", response);
+
+      // 수정 후 메인 타임라인 다시 조회
+      fetchMainTimelines(memberId)
     } catch (error) {
       console.log("업데이트 에러 발생:", error);
       console.error("업데이트 에러 상세:", error.response ? error.response.data : error.message);
@@ -220,6 +190,7 @@ export default function MainTimeline() {
               startDate={item.data.startDate}
               endDate={item.data.endDate}
               title={item.data.title}
+              done={item.data.done}
               onEdit={() => editItem(index)}
               onDelete={() => deleteItem(index)}
               showLine={index !== items.length - 1} // 마지막 아이템에는 선을 표시하지 않음

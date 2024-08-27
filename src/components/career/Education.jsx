@@ -41,7 +41,7 @@ function Education({memberId, degree, institution, major, startDate, endDate, on
             fontSize: "13px",
             display: "flex",
             alignItems: "center",
-            marginTop: "3px" // 배포판에서 어떻게 보이는지 확인 (다른사람 컴퓨터 에서도)
+            // marginTop: "3px" // 배포판에서 어떻게 보이는지 확인 (다른사람 컴퓨터 에서도)
           })}
         >
           {dayjs(startDate).format('YYYY년 MM월')} ~ {endDate ? dayjs(endDate).format('YYYY년 MM월') : '진행중'}

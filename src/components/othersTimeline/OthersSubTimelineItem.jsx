@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {css} from "@emotion/react";
 import styled from 'styled-components';
 import {FiLock, FiUnlock} from "react-icons/fi";
@@ -9,8 +9,23 @@ import {FaRegTrashAlt} from "react-icons/fa";
 import AlertDialog from "../common/AlertDialog";
 import dayjs from "dayjs";
 
-function OthersSubTimelineItem({startDate, endDate, title, isPublic, onClick, isDone, showLine}) {
-  const [isChecked, setIsChecked] = useState(false);
+function OthersSubTimelineItem({ done, startDate, endDate, title, isPublic, onClick, showLine}) {
+  const [isDone, setIsDone] = useState(done); // 진행중 체크
+
+  // 진행중 (isDone) 상태 연동
+  const isDoneStatus =  () => {
+    if (done) { // 상위 컴포넌트에서 서브 타임라인 조회할때 알아내서 그냥 props로 가져옴 (연동코드 굳이 또 쓰지 않음)
+      setIsDone(true)
+      console.log(isDone)
+    } else {
+      setIsDone(false)
+      console.log(isDone)
+    }
+  }
+
+  useEffect(() => {
+    isDoneStatus()
+  }, []);
 
   return (
     <div // 회색 타임라인 박스
@@ -29,7 +44,6 @@ function OthersSubTimelineItem({startDate, endDate, title, isPublic, onClick, is
       })}
     >
       <div // 체크 표시
-        done={isDone}
         css={css`
             width: 21px;
             height: 21px;

@@ -18,7 +18,6 @@ export default function OthersSubTimeline() {
   const [title, setTitle] = useState( "메인 타임라인 제목");
   const [profile, setProfile] = useState(null); // 프로필 상태 추가
 
-  const [isDone, setIsDone] = useState(false);
   const [subTimelineItems, setSubTimelineItems] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
 
@@ -97,7 +96,6 @@ export default function OthersSubTimeline() {
         >
           {selectedItem && (
             <OthersSubTimelinePost
-              isDone={true}
               item={selectedItem}
             />
           )}
@@ -127,6 +125,7 @@ export default function OthersSubTimeline() {
               startDate={item.startDate}
               endDate={item.endDate}
               title={item.title}
+              done={item.done}
               isPublic={item.isPublic}
               onClick={() => handleSelectItem(item)}
               showLine={index !== subTimelineItems.length - 1} // 마지막 아이템에는 선을 표시하지 않음

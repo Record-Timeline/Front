@@ -16,7 +16,8 @@ import axiosInstance from "../../utils/axiosInstance";
 
 const label = {inputProps: {'aria-label': 'Checkbox demo'}};
 
-export default function OthersSubTimelinePost({item, isDone}) {
+export default function OthersSubTimelinePost({item}) {
+  const [isDone, setIsDone] = useState(item.done); // 진행중 체크
   const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [like, setLike] = useState(item.likeCount); // 좋아요 수
@@ -142,7 +143,6 @@ export default function OthersSubTimelinePost({item, isDone}) {
         })}
       >
         <div // 체크표시
-          done={isDone}
           css={css`
               width: 21px;
               height: 21px;

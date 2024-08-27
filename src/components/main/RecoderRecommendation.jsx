@@ -42,7 +42,7 @@ export default function RecoderRecommendation({ recorderData }) {
               profileImgSrc={user.profileImageUrl}
               nickName={user.nickname}
               introduce={user.introduction}
-              followers={23}
+              followers={user.followerCount}
             />
             <div
               css={css`

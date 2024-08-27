@@ -15,7 +15,6 @@ function MainTimelineItem({mainTimelineId, startDate, endDate, title, done, onEd
   const [isDone, setIsDone] = useState(done); // 진행중 체크
 
   const handleTitleClick = () => {
-    // navigate(`/subtimeline/${mainTimelineId}`, { state: { title } });
     navigate(`/subtimeline/${mainTimelineId}`);
   };
 

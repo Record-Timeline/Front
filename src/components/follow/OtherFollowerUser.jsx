@@ -20,8 +20,9 @@ export default function OtherFollowerUser({
         padding: 30px;
         border-bottom: 1px solid #D8D8D8;
         width: 500px;
-          onClick={() => onClick(followerId)}
+          cursor: pointer;
       `}
+      onClick={() => onClick(followerId)}
     >
       <img
         css={css`

@@ -53,39 +53,41 @@ export default function RecoderRecommendation({ recorderData }) {
             >
               {user.mainTimeline && user.mainTimeline.length > 0 ? (
                 user.mainTimeline.map((timeline, idx) => (
-                  <div
-                    key={idx}
-                    css={css`
-                      display: flex;
-                      width: 170px;
-                      margin-top: 12px;
-                      align-items: center;
-                      background: #f5f5f5;
-                      border-radius: 30px;
-                    `}
-                  >
+                  !timeline.private && ( // timeline.private이 false일 때만 표시
                     <div
+                      key={idx}
                       css={css`
-                        border-radius: 20px;
-                        border: 3px solid #829fd7;
-                        background: #829fd7;
-                        width: 9px;
-                        height: 9px;
-                        margin-left: 20px;
-                      `}
-                    />
-                    <div
-                      css={css`
-                        width: 110px;
-                        text-align: center;
-                        font-size: 15px;
-                        font-weight: 400;
-                        margin: 10px 20px 10px 10px;
-                      `}
+          display: flex;
+          width: 170px;
+          margin-top: 12px;
+          align-items: center;
+          background: #f5f5f5;
+          border-radius: 30px;
+        `}
                     >
-                      {timeline.title}
+                      <div
+                        css={css`
+            border-radius: 20px;
+            border: 2px solid #829fd7;
+            background: ${timeline.done ?  '#829fd7' : 'transparent'}; // timeline.done에 따라 배경색 설정
+            width: 9px;
+            height: 9px;
+            margin-left: 20px;
+          `}
+                      />
+                      <div
+                        css={css`
+            width: 110px;
+            text-align: center;
+            font-size: 15px;
+            font-weight: 400;
+            margin: 10px 20px 10px 10px;
+          `}
+                      >
+                        {timeline.title}
+                      </div>
                     </div>
-                  </div>
+                  )
                 ))
               ) : (
                 <div

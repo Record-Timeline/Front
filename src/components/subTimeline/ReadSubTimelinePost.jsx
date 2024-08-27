@@ -18,7 +18,7 @@ import axiosInstance from "../../utils/axiosInstance";
 const label = {inputProps: {'aria-label': 'Checkbox demo'}};
 
 export default function ReadSubTimelinePost({item, onDelete, onEdit}) {
-  const [isChecked, setIsChecked] = useState(false); // 타임라인 체크 circle 상태
+  const [isDone, setIsDone] = useState(item.done); // 진행중 체크
   const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [like, setLike] = useState(item.likeCount); // 좋아요 수
@@ -49,8 +49,20 @@ export default function ReadSubTimelinePost({item, onDelete, onEdit}) {
     }
   }
 
+  // 진행중 (isDone) 상태 연동
+  const isDoneStatus =  () => {
+    if (item.done) { // 상위 컴포넌트에서 서브 타임라인 조회할때 알아내서 그냥 props로 가져옴 (연동코드 굳이 또 쓰지 않음)
+      setIsDone(true)
+      console.log(isDone)
+    } else {
+      setIsDone(false)
+      console.log(isDone)
+    }
+  }
+
   useEffect(() => {
     bookmarkAndLikeStatus();
+    isDoneStatus();
   }, [item])
 
   const onClickLike = async () => {
@@ -88,6 +100,31 @@ export default function ReadSubTimelinePost({item, onDelete, onEdit}) {
       }
     }
     setIsLiked(!isLiked); // 좋아요 상태 토글
+  }
+
+  // 진행중 (isDone) 연동
+  const onClickIsDone = async () => {
+    if (isDone) {
+      // 체크 해제 연동
+      try {
+        const response = await axiosInstance.put(`/api/v1/sub-timelines/${item.id}/toggle-done`);
+        setIsDone(false);
+        console.log("진행중 체크 해제 완료", response);
+      } catch (error) {
+        console.log("진행중 체크 해제 오류", error);
+        console.error("에러 상세:", error.response ? error.response.data : error.message);
+      }
+    } else {
+      // 체크 연동
+      try {
+        const response = await axiosInstance.put(`/api/v1/sub-timelines/${item.id}/toggle-done`);
+        setIsDone(true);
+        console.log("진행중 체크 완료", response)
+      } catch (error) {
+        console.log("진행중 체크 오류", error);
+        console.error("에러 상세:", error.response ? error.response.data : error.message);
+      }
+    }
   }
 
   const onClickBookmark = async () => {
@@ -145,8 +182,7 @@ export default function ReadSubTimelinePost({item, onDelete, onEdit}) {
           })}
         >
           <div // 체크표시
-            done={isChecked}
-            onClick={() => setIsChecked(!isChecked)}
+            onClick={onClickIsDone}
             css={css`
                 width: 21px;
                 height: 21px;
@@ -158,7 +194,7 @@ export default function ReadSubTimelinePost({item, onDelete, onEdit}) {
                 margin-left: 35px;
                 margin-right: 15px;
                 cursor: pointer;
-                background-color: ${isChecked ? "#829FD7" : "#f8f6f6"}; // 선 때문에 뚫린 원일 때도 배경 색 설정
+                background-color: ${isDone ? "#829FD7" : "#f8f6f6"}; // 선 때문에 뚫린 원일 때도 배경 색 설정
             `}
           />
           <div // 기간

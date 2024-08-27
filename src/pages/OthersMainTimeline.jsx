@@ -76,7 +76,7 @@ export default function OthersMainTimeline() {
             startDate={item.data.startDate}
             endDate={item.data.endDate}
             title={item.data.title}
-            isDone={item.isDone}
+            done={item.data.done}
             showLine={index !== items.length - 1} // 마지막 아이템에는 선을 표시하지 않음
           />
         ))}

@@ -27,7 +27,7 @@ function CareerInput({index, initialData, saveItem, onDelete, createCareer, upda
   }, [initialData]);
 
   const handleSave = async () => {
-    // 회사 이름이 비어 있으면 alert dialog를 띄움
+    // 회사 이름, 시작년월, 직무 가 비어 있으면 alert dialog를 띄움
     if (!companyName || !startDate || !duty ) {
       setAlertOpen(true); // AlertDialog를 열도록 상태 업데이트
       return;
@@ -177,7 +177,7 @@ function CareerInput({index, initialData, saveItem, onDelete, createCareer, upda
       >
         {/*<FaRegCircleCheck/>*/}
         <AlertDialog
-          icon={<FaRegCircleCheck/>}
+          icon={<FaRegCircleCheck />}
           // onConfirm={handleAlertClose}
           dialogTitle={"입력 오류"}
           dialogContent={"'회사 이름', '시작년월', '직무' 는 필수 입력 사항 입니다."}

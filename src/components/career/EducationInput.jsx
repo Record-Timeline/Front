@@ -20,6 +20,7 @@ function EducationInput({index, initialData, saveItem, createEducation, updateEd
   const [major, setMajor] = useState(null); // 전공
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [alertOpen, setAlertOpen] = useState(false);
 
   useEffect(() => {
     setDegree(initialData.degree);
@@ -35,7 +36,12 @@ function EducationInput({index, initialData, saveItem, createEducation, updateEd
   };
 
   const handleSave = async () => {
-    // alert dialog 추가해야 함
+    // 학위, 학교/기관명, 전공, 입학년월 이 비어 있으면 alert dialog를 띄움
+    if (!degree || !institution || !major || !startDate) {
+      setAlertOpen(true); // AlertDialog를 열도록 상태 업데이트
+      return;
+    }
+
     const data = {
       degree,
       startDate: dayjs(startDate).format("YYYY-MM-DD"),
@@ -71,7 +77,7 @@ function EducationInput({index, initialData, saveItem, createEducation, updateEd
     >
       <div css={css({marginLeft: "13px"})}>
         <FormControl variant="standard" sx={{ m: 1, minWidth: 120, marginLeft: "0px" }} size="small">
-          <InputLabel id="demo-simple-select-standard-label">학위</InputLabel>
+          <InputLabel id="demo-simple-select-standard-label">학위*</InputLabel>
           <Select
             labelId="demo-simple-select-standard-label"
             id="demo-simple-select-standard"
@@ -98,7 +104,7 @@ function EducationInput({index, initialData, saveItem, createEducation, updateEd
             sx={{
               width: '300px', // 전체 TextField의 너비를 설정
             }}
-            placeholder="학교/기관 이름을 입력하세요."
+            placeholder="학교/기관 이름을 입력하세요*"
             value={institution}
             onChange={(e) => setInstitution(e.target.value)}
             inputProps={{
@@ -120,7 +126,7 @@ function EducationInput({index, initialData, saveItem, createEducation, updateEd
             sx={{
               width: '300px', // 전체 TextField의 너비를 설정
             }}
-            placeholder="전공을 입력하세요."
+            placeholder="전공을 입력하세요*"
             value={major}
             onChange={(e) => setMajor(e.target.value)}
             inputProps={{
@@ -141,7 +147,7 @@ function EducationInput({index, initialData, saveItem, createEducation, updateEd
         >
           <DatePickerValue
             views={['year', 'month']}
-            label="입학년월"
+            label="입학년월*"
             format="YYYY년 MM월"
             value={startDate}
             onChange={setStartDate}
@@ -169,7 +175,17 @@ function EducationInput({index, initialData, saveItem, createEducation, updateEd
           cursor: "pointer",
         })}
       >
-        <FaRegCircleCheck/>
+        {/*<FaRegCircleCheck/>*/}
+        <AlertDialog
+          icon={<FaRegCircleCheck/>}
+          // onConfirm={handleAlertClose}
+          dialogTitle={"입력 오류"}
+          dialogContent={"'학위', '학교/기관명', '전공', '입학년월' 은 필수 입력 사항 입니다."}
+          confirmText={null}
+          cancelText={"확인"}
+          // open={alertOpen} // open 상태 제어
+          // onClose={handleAlertClose} // 닫기 핸들러
+        />
       </div>
       <div // 삭제하기 버튼
         css={css({

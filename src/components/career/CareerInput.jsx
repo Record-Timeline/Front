@@ -16,6 +16,7 @@ function CareerInput({index, initialData, saveItem, onDelete, createCareer, upda
   const [endDate, setEndDate] = useState(null);
   const [duty, setDuty] = useState(null); // 직무
   const [position, setPosition] = useState(null); // 직책
+  const [alertOpen, setAlertOpen] = useState(false);
 
   useEffect(() => {
     setCompanyName(initialData.companyName);
@@ -26,7 +27,12 @@ function CareerInput({index, initialData, saveItem, onDelete, createCareer, upda
   }, [initialData]);
 
   const handleSave = async () => {
-    // alert dialog 추가해야 함
+    // 회사 이름이 비어 있으면 alert dialog를 띄움
+    if (!companyName || !startDate || !duty ) {
+      setAlertOpen(true); // AlertDialog를 열도록 상태 업데이트
+      return;
+    }
+
     const data = {
       companyName,
       startDate: dayjs(startDate).format("YYYY-MM-DD"),
@@ -42,6 +48,10 @@ function CareerInput({index, initialData, saveItem, onDelete, createCareer, upda
     }
 
     saveItem(index, data);
+  };
+
+  const handleAlertClose = () => {
+    setAlertOpen(false); // AlertDialog 닫기
   };
 
   return (
@@ -71,7 +81,7 @@ function CareerInput({index, initialData, saveItem, onDelete, createCareer, upda
           })}
         >
           <Input
-            placeholder="회사 이름을 입력하세요."
+            placeholder="회사 이름을 입력하세요*"
             value={companyName}
             onChange={(e) => setCompanyName(e.target.value)}
             inputProps={{
@@ -92,7 +102,7 @@ function CareerInput({index, initialData, saveItem, onDelete, createCareer, upda
         >
           <DatePickerValue
             views={['year', 'month']}
-            label="시작년월"
+            label="시작년월*"
             format="YYYY년 MM월"
             value={startDate}
             onChange={setStartDate}
@@ -122,7 +132,7 @@ function CareerInput({index, initialData, saveItem, onDelete, createCareer, upda
             sx={{
               width: '370px', // 전체 TextField의 너비를 설정
             }}
-            placeholder="직무 이름  ex) 개발, 마케팅, Computer Engineering"
+            placeholder="직무 이름*  ex) 개발, 마케팅, Computer Engineering"
             value={duty}
             onChange={(e) => setDuty(e.target.value)}
             inputProps={{
@@ -165,7 +175,17 @@ function CareerInput({index, initialData, saveItem, onDelete, createCareer, upda
           cursor: "pointer",
         })}
       >
-        <FaRegCircleCheck/>
+        {/*<FaRegCircleCheck/>*/}
+        <AlertDialog
+          icon={<FaRegCircleCheck/>}
+          // onConfirm={handleAlertClose}
+          dialogTitle={"입력 오류"}
+          dialogContent={"'회사 이름', '시작년월', '직무' 는 필수 입력 사항 입니다."}
+          confirmText={null}
+          cancelText={"확인"}
+          // open={alertOpen} // open 상태 제어
+          // onClose={handleAlertClose} // 닫기 핸들러
+        />
       </div>
       <div // 삭제하기 버튼
         css={css({

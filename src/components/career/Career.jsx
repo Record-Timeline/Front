@@ -33,7 +33,7 @@ function Career({memberId, companyName, startDate, endDate, duty, position, onEd
       >
         <div><b>{companyName}</b></div>
         {dayjs(startDate).format('YYYY년 MM월')} ~ {endDate ? dayjs(endDate).format('YYYY년 MM월') : '진행중'}
-        <div>{duty} / {position}</div>
+        <div>{duty} {position ? '/' : ''} {position}</div>
       </div>
       {/*수정 버튼 조건부 렌더링*/}
       {memberId === myMemberId && (

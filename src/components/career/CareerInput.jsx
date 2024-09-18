@@ -180,7 +180,7 @@ function CareerInput({index, initialData, saveItem, onDelete, createCareer, upda
           icon={<FaRegTrashAlt style={{ color: "#E89494", fontSize: "16px", marginLeft: "1px" }} />}
           onConfirm={onDelete}
           dialogTitle={"정말로 삭제하시겠습니까?"}
-          dialogContent={"해당 경력사항이 삭제됩니다."}
+          dialogContent={"해당 경력이 삭제됩니다."}
           confirmText={"삭제"}
           cancelText={"취소"}
         />

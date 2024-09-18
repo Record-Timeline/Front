@@ -12,6 +12,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import AlertDialog from "../common/AlertDialog";
 
 function EducationInput({index, initialData, saveItem, createEducation, updateEducation, onDelete }) {
   const [degree, setDegree] = useState(""); // 학위 (초기값 null로 설정하면 오류남, " "로 설정해도 오류 남)
@@ -171,9 +172,7 @@ function EducationInput({index, initialData, saveItem, createEducation, updateEd
         <FaRegCircleCheck/>
       </div>
       <div // 삭제하기 버튼
-        onClick={onDelete}
         css={css({
-          color: "#E89494",
           display: "flex", // 내부 요소를 정렬하기 위한 flex 설정
           alignItems: "center", // 수직 중앙 정렬
           marginLeft: "auto", // FaRegTrashAlt을 제일 오른쪽으로 배치
@@ -181,7 +180,15 @@ function EducationInput({index, initialData, saveItem, createEducation, updateEd
           cursor: "pointer",
         })}
       >
-        <FaRegTrashAlt/>
+        {/*<FaRegTrashAlt/>*/}
+        <AlertDialog
+          icon={<FaRegTrashAlt style={{ color: "#E89494", fontSize: "16px", marginLeft: "1px" }} />}
+          onConfirm={onDelete}
+          dialogTitle={"정말로 삭제하시겠습니까?"}
+          dialogContent={"해당 학력이 삭제됩니다."}
+          confirmText={"삭제"}
+          cancelText={"취소"}
+        />
       </div>
     </div>
   )

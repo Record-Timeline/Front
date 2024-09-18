@@ -3,12 +3,12 @@
 import * as React from 'react';
 import {useEffect, useState} from "react";
 import {css} from "@emotion/react";
-import {GoPencil} from "react-icons/go";
 import {FaRegTrashAlt} from "react-icons/fa";
 import dayjs from 'dayjs';
 import DatePickerValue from "../common/DatePickerValue";
 import Input from "@mui/material/Input";
 import {FaRegCircleCheck} from "react-icons/fa6";
+import AlertDialog from "../common/AlertDialog";
 
 function CareerInput({index, initialData, saveItem, onDelete, createCareer, updateCareer}) {
   const [companyName, setCompanyName] = useState("");
@@ -168,9 +168,7 @@ function CareerInput({index, initialData, saveItem, onDelete, createCareer, upda
         <FaRegCircleCheck/>
       </div>
       <div // 삭제하기 버튼
-        onClick={onDelete}
         css={css({
-          color: "#E89494",
           display: "flex", // 내부 요소를 정렬하기 위한 flex 설정
           alignItems: "center", // 수직 중앙 정렬
           marginLeft: "auto", // FaRegCircleCheck을 제일 오른쪽으로 배치
@@ -178,7 +176,14 @@ function CareerInput({index, initialData, saveItem, onDelete, createCareer, upda
           cursor: "pointer",
         })}
       >
-        <FaRegTrashAlt/>
+        <AlertDialog
+          icon={<FaRegTrashAlt style={{ color: "#E89494", fontSize: "16px", marginLeft: "1px" }} />}
+          onConfirm={onDelete}
+          dialogTitle={"정말로 삭제하시겠습니까?"}
+          dialogContent={"해당 경력사항이 삭제됩니다."}
+          confirmText={"삭제"}
+          cancelText={"취소"}
+        />
       </div>
     </div>
   )

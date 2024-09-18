@@ -47,7 +47,9 @@ export default function AlertDialog({ icon, onConfirm, dialogTitle, dialogConten
                 >
                     {dialogTitle}
                 </DialogTitle>
-                <DialogContent>
+                <DialogContent
+                  css={css({ margin: "0 3px" })}
+                >
                     <DialogContentText id="alert-dialog-description">
                         {dialogContent}
                     </DialogContentText>

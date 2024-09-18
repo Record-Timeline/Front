@@ -2,11 +2,6 @@
 
 import React, {useEffect, useState} from "react";
 import {css} from "@emotion/react";
-import styled from 'styled-components';
-import {FiLock, FiUnlock} from "react-icons/fi";
-import {GoPencil} from "react-icons/go";
-import {FaRegTrashAlt} from "react-icons/fa";
-import AlertDialog from "../common/AlertDialog";
 import dayjs from "dayjs";
 
 function OthersSubTimelineItem({ done, startDate, endDate, title, isPublic, onClick, showLine}) {

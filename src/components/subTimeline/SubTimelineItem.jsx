@@ -3,7 +3,6 @@
 import React, {useEffect, useState} from "react";
 import {css} from "@emotion/react";
 import {FiLock, FiUnlock} from "react-icons/fi";
-import AlertDialog from "../common/AlertDialog";
 import dayjs from "dayjs";
 import axiosInstance from "../../utils/axiosInstance";
 

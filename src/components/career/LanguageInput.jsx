@@ -15,6 +15,7 @@ function LanguageInput({ index, saveItem, initialData, createLanguage, updateLan
   const [languageName, setLanguageName] = useState(null); // 자격증 이름
   const [level, setLevel] = useState(3);
   const [hover, setHover] = useState(-1);
+  const [alertOpen, setAlertOpen] = useState(false);
 
   function getLabelText(value) {
     return `${level} Star${level !== 1 ? 's' : ''}, ${labels[level]}`;
@@ -34,7 +35,11 @@ function LanguageInput({ index, saveItem, initialData, createLanguage, updateLan
   }, [initialData]);
 
   const handleSave = async () => {
-    // alert dialog 추가해야 함
+    // 언어명, rating(레벨) 비어 있으면 alert dialog를 띄움
+    if (!languageName || !level) {
+      setAlertOpen(true); // AlertDialog를 열도록 상태 업데이트
+      return;
+    }
     const data = {
       languageName,
       level,
@@ -79,7 +84,7 @@ function LanguageInput({ index, saveItem, initialData, createLanguage, updateLan
             sx={{
               width: '210px', // 전체 TextField의 너비를 설정
             }}
-            placeholder="구사 가능한 언어를 입력하세요."
+            placeholder="구사 가능한 언어를 입력하세요*"
             value={languageName}
             onChange={(e) => setLanguageName(e.target.value)}
             inputProps={{
@@ -123,11 +128,20 @@ function LanguageInput({ index, saveItem, initialData, createLanguage, updateLan
           cursor: "pointer",
         })}
       >
-        <FaRegCircleCheck/>
+        {/*<FaRegCircleCheck/>*/}
+        <AlertDialog
+          icon={<FaRegCircleCheck />}
+          // onConfirm={handleAlertClose}
+          dialogTitle={"입력 오류"}
+          dialogContent={"'언어', '레벨' 은 필수 입력 사항 입니다."}
+          confirmText={null}
+          cancelText={"확인"}
+          // open={alertOpen} // open 상태 제어
+          // onClose={handleAlertClose} // 닫기 핸들러
+        />
       </div>
       <div // 삭제하기 버튼
         css={css({
-          color: "#E89494",
           display: "flex", // 내부 요소를 정렬하기 위한 flex 설정
           alignItems: "center", // 수직 중앙 정렬
           marginLeft: "auto", // FaRegTrashAlt을 제일 오른쪽으로 배치

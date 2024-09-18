@@ -13,6 +13,7 @@ import AlertDialog from "../common/AlertDialog";
 function CertificateInput({index, createCertificate, saveItem, initialData, onDelete, updateCertificate}) {
   const [certificateName, setCertificateName] = useState(null); // 자격증 이름
   const [date, setDate] = useState(null);
+  const [alertOpen, setAlertOpen] = useState(false);
 
   useEffect(() => {
     setCertificateName(initialData.name);
@@ -20,7 +21,12 @@ function CertificateInput({index, createCertificate, saveItem, initialData, onDe
   }, [initialData]);
 
   const handleSave = async () => {
-    // alert dialog 추가해야 함
+    // 자격증 이름, 취득년월 이 비어 있으면 alert dialog를 띄움
+    if (!certificateName || !date) {
+      setAlertOpen(true); // AlertDialog를 열도록 상태 업데이트
+      return;
+    }
+
     const data = {
       certificateName,
       date: date ? dayjs(date).format('YYYY-MM-DD') : null,
@@ -65,7 +71,7 @@ function CertificateInput({index, createCertificate, saveItem, initialData, onDe
             sx={{
               width: '300px', // 전체 TextField의 너비를 설정
             }}
-            placeholder="자격증 이름을 입력하세요."
+            placeholder="자격증 이름을 입력하세요*"
             value={certificateName}
             onChange={(e) => setCertificateName(e.target.value)}
             inputProps={{
@@ -86,7 +92,7 @@ function CertificateInput({index, createCertificate, saveItem, initialData, onDe
         >
           <DatePickerValue
             views={['year', 'month']}
-            label="취득년월"
+            label="취득년월*"
             format="YYYY년 MM월"
             value={date}
             onChange={setDate}
@@ -104,11 +110,20 @@ function CertificateInput({index, createCertificate, saveItem, initialData, onDe
           cursor: "pointer",
         })}
       >
-        <FaRegCircleCheck/>
+        {/*<FaRegCircleCheck/>*/}
+        <AlertDialog
+          icon={<FaRegCircleCheck />}
+          // onConfirm={handleAlertClose}
+          dialogTitle={"입력 오류"}
+          dialogContent={"'자격증 이름', '취득년월' 은 필수 입력 사항 입니다."}
+          confirmText={null}
+          cancelText={"확인"}
+          // open={alertOpen} // open 상태 제어
+          // onClose={handleAlertClose} // 닫기 핸들러
+        />
       </div>
       <div // 삭제하기 버튼
         css={css({
-          color: "#E89494",
           display: "flex", // 내부 요소를 정렬하기 위한 flex 설정
           alignItems: "center", // 수직 중앙 정렬
           marginLeft: "auto", // FaRegTrashAlt을 제일 오른쪽으로 배치

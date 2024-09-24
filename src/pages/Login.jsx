@@ -64,7 +64,7 @@ export default function Login() {
       // 로그인 성공
       if (response.data.code === "SU") {
         dispatch(setOpenLoginSnackbar(true));
-        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("token", response.data.accessToken);
         navigate("/");
       }
       // 로그인 실패

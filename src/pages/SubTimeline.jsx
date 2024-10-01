@@ -10,7 +10,7 @@ import Button from "../components/common/Button";
 import {useParams, useLocation, useSearchParams} from 'react-router-dom';
 import axiosInstance from "../utils/axiosInstance";
 import Header from "../components/common/Header";
-import Comment from "../components/subTimeline/Comment";
+import Comment from "../components/comment/Comment";
 
 export default function SubTimeline() {
   const {mainTimelineId} = useParams(); // URL 파라미터로부터 id 받아오기
@@ -236,13 +236,7 @@ export default function SubTimeline() {
               )
             )}
           </div>
-          <div // 댓글 박스
-            css={css({
-              marginTop: "50px",
-            })}
-          >
-            <Comment/>
-          </div>
+          <Comment/>
         </div>
         <div // 서브 타임라인 박스
           css={css({

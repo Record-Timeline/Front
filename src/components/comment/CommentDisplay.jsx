@@ -32,7 +32,7 @@ export default function CommentDisplay() {
           })}>
           답글
         </div>
-        <FaRegTrashAlt css={css({fontSize: "13px", color: "#E89494"})} />
+        <FaRegTrashAlt css={css({fontSize: "13px", color: "#E89494", cursor: "pointer"})}/>
       </div>
       <div // 댓글 내용
         css={css({
@@ -40,12 +40,11 @@ export default function CommentDisplay() {
           // border: "1px solid red",
         })}
       >
-      헤이 모두들 안녕 내가 누군지 아니?계산을 통해 정해지는 수치로 표현하므로,
+        헤이 모두들 안녕 내가 누군지 아니?계산을 통해 정해지는 수치로 표현하므로,
         정확한 갯수와 아이템의 너비가 같을 경우에 사용가능하며, 만약 갯수가 변경되거나,
         아이템 너비가 각각 변하게 된다면 추가적인 수정이 필요하게 됩니다. 하지만,
         하위 브라우저에 대한 지원도 가능하니, 알아둬야 되는 방법입니다
       </div>
-
       <hr css={css({marginTop: "20px", border: "1px solid #E9E9E9"})}/>
     </div>
   )

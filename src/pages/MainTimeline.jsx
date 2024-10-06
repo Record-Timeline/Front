@@ -8,8 +8,8 @@ import MainTimelineItem from "../components/timeline/MainTimelineItem";
 import MainTimelineInput from "../components/timeline/MainTimelineInput";
 import Button from "../components/common/Button";
 import axiosInstance from "../utils/axiosInstance";
-import {toUnitless} from "@mui/material/styles/cssUtils";
 import IosShareIcon from '@mui/icons-material/IosShare';
+import PdfShareButton from "../components/common/PdfShareButton";
 
 export default function MainTimeline() {
   // 타임라인 항목들을 관리할 상태 생성
@@ -144,6 +144,7 @@ export default function MainTimeline() {
     }
   };
 
+
   return (
     <div
       css={css({
@@ -161,27 +162,8 @@ export default function MainTimeline() {
         })}
       >
         {/* pdf 공유 버튼 */}
-      <div
-        css={css({
-          color: '#787878',
-          display: "flex",
-          alignItems: 'center',
-          width: 'fit-content',
-          position: "absolute",
-          right: "40px",
-          cursor: "pointer"
-        })}
-      >
-        <IosShareIcon />
-        <div
-          css={css({
-            color: '#757575',
-            fontSize: '16px',
-            marginTop: '2px',
-            marginLeft: '4px'
-          })}
-        >pdf 공유 </div>
-      </div>
+        <PdfShareButton targetId="timeline" /> {/* PDF 버튼  */}
+        <div id="timeline">
       <div
         css={css({
           color: "#313131",
@@ -192,6 +174,7 @@ export default function MainTimeline() {
           fontWeight: "700",
           lineHeight: "normal",
           margin: "0 auto",
+          marginTop: '50px'
         })}
       >
         My Timeline
@@ -237,6 +220,7 @@ export default function MainTimeline() {
           )
         )}
         <Button
+          id="button"
           onClick={addInput}  // 버튼 클릭 시 addInput 함수 호출
           width="810px"
           height="85px"
@@ -249,6 +233,7 @@ export default function MainTimeline() {
           +
         </Button>
       </section>
+      </div>
       </div>
     </div>
   );

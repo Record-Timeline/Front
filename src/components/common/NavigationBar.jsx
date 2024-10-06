@@ -239,6 +239,7 @@ export default function NavigationBar() {
   // 로그아웃
   const handleLogout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
     setOpenLogoutSnackbar(true);
     navigate("/")
   };

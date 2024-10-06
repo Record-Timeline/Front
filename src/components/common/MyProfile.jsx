@@ -43,7 +43,7 @@ export default function MyProfile({profile}) {
       css={css({
         width: "100%",
         height: "320px",
-        marginBottom: "80px",
+        marginBottom: "50px",
         backgroundColor: "#F2F5FA"
       })}
     >

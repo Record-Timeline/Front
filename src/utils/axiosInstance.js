@@ -43,8 +43,12 @@ axiosInstance.interceptors.response.use(
     const originalRequest = error.config;
     const refreshToken = localStorage.getItem('refreshToken');
 
-    // 401 에러이고, 토큰 재발급 중이 아니며, 원래 요청이 한번도 재시도된 적이 없다면
+    // 401 에러이고, 토큰 재발급 중이 아니고, 원래 요청이 한번도 재시도된 적이 없다면
     if (error.response?.status === 401 && refreshToken && !originalRequest._retry) {
+      console.log("401 에러 발생!");
+      console.log("accessToken before refresh:", localStorage.getItem('token'));
+      console.log("refreshToken before refresh:", refreshToken);
+
       originalRequest._retry = true; // 재시도 방지 플래그 설정
 
       // 이미 토큰 재발급 중이라면, 대기열에 현재 요청을 추가
@@ -66,7 +70,14 @@ axiosInstance.interceptors.response.use(
           refreshToken: refreshToken,
         });
 
-        const { accessToken: newAccessToken, refreshToken: newRefreshToken } = response.data;
+        const newAccessToken = response.data.accessToken;
+        const newRefreshToken = response.data.refreshToken;
+
+        if (!newAccessToken || !newRefreshToken) {
+          throw new Error('Received invalid tokens during refresh.');
+        }
+
+        console.log("새로운 토큰 발급 :", newAccessToken);
 
         // 새로운 토큰 저장
         localStorage.setItem('token', newAccessToken);
@@ -91,4 +102,5 @@ axiosInstance.interceptors.response.use(
     return Promise.reject(error); // 그 외의 오류 처리
   }
 );
+
 export default axiosInstance;

@@ -9,6 +9,7 @@ import MainTimelineInput from "../components/timeline/MainTimelineInput";
 import Button from "../components/common/Button";
 import axiosInstance from "../utils/axiosInstance";
 import {toUnitless} from "@mui/material/styles/cssUtils";
+import IosShareIcon from '@mui/icons-material/IosShare';
 
 export default function MainTimeline() {
   // 타임라인 항목들을 관리할 상태 생성
@@ -147,12 +148,40 @@ export default function MainTimeline() {
     <div
       css={css({
         margin: "0 auto",
-        marginBottom: "70px"
+        marginBottom: "70px",
         // border: "1px solid black"
       })}
     >
       <Header backgroundColor="#F2F5FA"/>
       {profile && <MyProfile profile={profile} />} {/* 프로필 컴포넌트에 프로필 정보 전달 */}
+      <div
+        css={css({
+          position: "relative"
+
+        })}
+      >
+        {/* pdf 공유 버튼 */}
+      <div
+        css={css({
+          color: '#787878',
+          display: "flex",
+          alignItems: 'center',
+          width: 'fit-content',
+          position: "absolute",
+          right: "40px",
+          cursor: "pointer"
+        })}
+      >
+        <IosShareIcon />
+        <div
+          css={css({
+            color: '#757575',
+            fontSize: '16px',
+            marginTop: '2px',
+            marginLeft: '4px'
+          })}
+        >pdf 공유 </div>
+      </div>
       <div
         css={css({
           color: "#313131",
@@ -220,6 +249,7 @@ export default function MainTimeline() {
           +
         </Button>
       </section>
+      </div>
     </div>
   );
 }

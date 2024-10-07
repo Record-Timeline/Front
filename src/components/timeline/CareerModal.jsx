@@ -258,12 +258,12 @@ export default function CareerModal({memberId, buttonTitle}) {
   };
 
   // 경력 항목을 삭제하는 함수 + 삭제 연동
-  const deleteCareer = async (index) => {
-    const careerId = careers[index].data.id;
+  const deleteCareer = async (targetIndex) => {
+    const careerId = careers[targetIndex].data.id;
     // 연동 코드
     try {
       const response = await axiosInstance.delete(`/api/v1/careers/${careerId}`);
-      setCareers(careers.filter((_, index) => index !== index));
+      setCareers(careers.filter((_, index) => index !== targetIndex));
       console.log("경력 삭제 완료", response.data)
       console.log(careers)
 
@@ -277,12 +277,12 @@ export default function CareerModal({memberId, buttonTitle}) {
   };
 
   // 학력 항목을 삭제하는 함수 + 삭제 연동
-  const deleteEducation = async (index) => {
-    const educationId = educations[index].data.id;
+  const deleteEducation = async (targetIndex) => {
+    const educationId = educations[targetIndex].data.id;
     // 연동 코드
     try {
       const response = await axiosInstance.delete(`/api/v1/educations/${educationId}`);
-      setEducations(educations.filter((_, index) => index !== index));
+      setEducations(educations.filter((_, index) => index !== targetIndex));
       console.log("학력 삭제 완료", response.data)
       console.log(educations)
 
@@ -296,12 +296,12 @@ export default function CareerModal({memberId, buttonTitle}) {
   };
 
   // 자격증 항목을 삭제하는 함수 + 삭제 연동
-  const deleteCertificate = async (index) => {
-    const certificateId = certificates[index].data.id;
+  const deleteCertificate = async (targetIndex) => {
+    const certificateId = certificates[targetIndex].data.id;
     // 연동 코드
     try {
       const response = await axiosInstance.delete(`/api/v1/certificates/${certificateId}`);
-      setCertificates(certificates.filter((_, i) => i !== index));
+      setCertificates(certificates.filter((_, index) => index !== targetIndex));
       console.log("자격증 삭제 완료", response.data)
       console.log(certificates)
 
@@ -315,12 +315,12 @@ export default function CareerModal({memberId, buttonTitle}) {
   };
 
   // 외국어 항목을 삭제하는 함수 + 삭제 연동
-  const deleteLanguage = async (index) => {
-    const languageId = languages[index].data.id;
+  const deleteLanguage = async (targetIndex) => {
+    const languageId = languages[targetIndex].data.id;
     // 연동 코드
     try {
       const response = await axiosInstance.delete(`/api/v1/languages/${languageId}`);
-      setLanguages(languages.filter((_, i) => i !== index));
+      setLanguages(languages.filter((_, index) => index !== targetIndex));
       console.log("외국어 삭제 완료", response.data)
       console.log(languages)
 

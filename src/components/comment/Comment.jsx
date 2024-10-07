@@ -12,7 +12,7 @@ export default function Comment() {
   const [comments, setComments] = useState([]);
   const [commentCount, setCommentCount] = useState(0);
 
-  // 새 댓글 추가(저장)하는 함수
+  // 댓글 추가(저장)하는 함수
   const addComment = (newComment) => {
     setComments((prevComments) => [...prevComments, newComment]);
     setCommentCount((prevCount) => prevCount + 1);
@@ -57,6 +57,7 @@ export default function Comment() {
           <CommentDisplay
             key={index}
             comment={comment}
+            commentCount={commentCount}
             deleteComment={() => deleteComment(index)}
           />
         ))

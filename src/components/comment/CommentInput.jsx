@@ -50,7 +50,6 @@ export default function CommentInput({ addComment }) {
   return (
     <div
       css={css({
-        gap: "18px",
         margin: "20px",
         marginTop: "20px",
         // border: "1px solid black"
@@ -103,6 +102,5 @@ export default function CommentInput({ addComment }) {
       </div>
       {emojiPickerOpen && <EmojiPicker onEmojiClick={emojiClick} />}
     </div>
-
   )
 }

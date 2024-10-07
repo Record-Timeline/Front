@@ -6,12 +6,27 @@ import {FaRegTrashAlt} from "react-icons/fa";
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import Checkbox from "@mui/material/Checkbox";
+import SubCommentInput from "./SubCommentInput";
 
 const label = {inputProps: {'aria-label': 'Checkbox demo'}};
 
-export default function CommentDisplay({comment, deleteComment}) {
+export default function CommentDisplay({comment, commentCount, deleteComment}) {
   const [isCommentLiked, setIsCommentLiked] = useState(false); // 댓글 좋아요 상태
   const [commentLike, setCommentLike] = useState(10); // 댓글 좋아요 수
+
+  const [subComments, setSubComment] = useState([]);
+  const [subCommentCount, setSunCommentCount] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
+
+  // 대댓글 입력창 open 함수
+  const openSubCommentInput = () => {
+    setIsOpen((prevIsOpen) => !prevIsOpen);
+  }
+
+  // 대댓글 추가(저장)하는 함수
+  const addSubComment = (newSubComment) => {
+
+  }
 
   const onClickCommentLike = () => {
     if (isCommentLiked) { // 좋아요 취소
@@ -36,27 +51,28 @@ export default function CommentDisplay({comment, deleteComment}) {
             alignItems: "center",
           })}
       >
-      <div // 닉네임 + 작성일시
-        css={css({
-          display: "flex",
-          alignItems: "center",
-          gap: "15px",
-          // border: "1px solid red",
-        })}
-      >
-        <b>{comment.nickname}</b>
-        <div css={css({fontSize: "13px", color: "#A5A5A5"})}>{comment.currentDate}</div>
-        <div
+        <div // 닉네임 + 작성일시
           css={css({
             display: "flex",
-            justifyContent: "center",
-            width: "fit-content",
-            fontSize: "14px",
-            cursor: "pointer",
-          })}>
-          답글
+            alignItems: "center",
+            gap: "15px",
+            // border: "1px solid red",
+          })}
+        >
+          <b>{comment.nickname}</b>
+          <div css={css({fontSize: "13px", color: "#A5A5A5"})}>{comment.currentDate}</div>
+          <div
+            onClick={openSubCommentInput}
+            css={css({
+              display: "flex",
+              justifyContent: "center",
+              width: "fit-content",
+              fontSize: "14px",
+              cursor: "pointer",
+            })}>
+            답글
+          </div>
         </div>
-      </div>
         <div css={css({display: "flex", alignItems: "center", fontSize: "15px"})}>
           <Checkbox
             checked={isCommentLiked} // 좋아요 버튼 눌렀(었)는지 여부 (상태 체크, 눌렀다면 누른 상태를 유지하기 위함)
@@ -94,6 +110,7 @@ export default function CommentDisplay({comment, deleteComment}) {
         {comment.content}
       </div>
       <hr css={css({marginTop: "20px", border: "1px solid #E9E9E9"})}/>
+      {isOpen && <SubCommentInput/>}
     </div>
   )
 }

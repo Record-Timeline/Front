@@ -247,7 +247,7 @@ export default function SubTimeline() {
             // border: "1px solid black",
           })}
         >
-          <div // 서브 타임라인 제목
+          <div // 메인 타임라인 제목
             css={css({
               width: "280px",
               textAlign: "center",

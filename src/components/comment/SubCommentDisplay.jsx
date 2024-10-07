@@ -6,31 +6,12 @@ import {FaRegTrashAlt} from "react-icons/fa";
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import Checkbox from "@mui/material/Checkbox";
-import SubCommentDisplay from './SubCommentDisplay';
-import SubCommentInput from "./SubCommentInput";
 
 const label = {inputProps: {'aria-label': 'Checkbox demo'}};
 
-export default function CommentDisplay({comment, commentCount, deleteComment}) {
+export default function CommentDisplay({subComment, deleteComment}) {
   const [isCommentLiked, setIsCommentLiked] = useState(false); // 댓글 좋아요 상태
-  const [commentLike, setCommentLike] = useState(10); // 댓글 좋아요 수
-
-  const [subComments, setSubComments] = useState([]);
-  const [subCommentCount, setSubCommentCount] = useState(0);
-  const [isOpen, setIsOpen] = useState(false);
-
-  // 대댓글 입력창 open 함수
-  const openSubCommentInput = () => {
-    setIsOpen((prevIsOpen) => !prevIsOpen);
-  }
-
-  // 대댓글 추가(저장)하는 함수
-  const addSubComment = (newSubComment) => {
-    setSubComments((prevSubComments) => [...prevSubComments, newSubComment]);
-    setSubCommentCount((prevSubCount) => prevSubCount + 1);
-    setIsOpen(false);
-    console.log("대댓글", subComments);
-  }
+  const [commentLike, setCommentLike] = useState(7); // 댓글 좋아요 수
 
   const onClickCommentLike = () => {
     if (isCommentLiked) { // 좋아요 취소
@@ -45,15 +26,17 @@ export default function CommentDisplay({comment, commentCount, deleteComment}) {
   return (
     <div // 댓글
       css={css({
-        padding: "13px 20px 0 20px",
+        padding: "13px 0px 0 30px",
+        // marginLeft: "10px",
+        backgroundColor: "rgba(245,246,248,0.72)"
         // border: "1px solid black",
       })}
     >
       <div
         css={css({
-            display: "flex",
-            alignItems: "center",
-          })}
+          display: "flex",
+          alignItems: "center",
+        })}
       >
         <div // 닉네임 + 작성일시
           css={css({
@@ -63,19 +46,8 @@ export default function CommentDisplay({comment, commentCount, deleteComment}) {
             // border: "1px solid red",
           })}
         >
-          <b>{comment.nickname}</b>
-          <div css={css({fontSize: "13px", color: "#A5A5A5"})}>{comment.currentDate}</div>
-          <div
-            onClick={openSubCommentInput}
-            css={css({
-              display: "flex",
-              justifyContent: "center",
-              width: "fit-content",
-              fontSize: "14px",
-              cursor: "pointer",
-            })}>
-            답글
-          </div>
+          <b>{subComment.nickname}</b>
+          <div css={css({fontSize: "13px", color: "#A5A5A5"})}>{subComment.currentDate}</div>
         </div>
         <div css={css({display: "flex", alignItems: "center", fontSize: "15px"})}>
           <Checkbox
@@ -111,19 +83,9 @@ export default function CommentDisplay({comment, commentCount, deleteComment}) {
           // border: "1px solid red",
         })}
       >
-        {comment.content}
+        {subComment.content}
       </div>
       <hr css={css({marginTop: "20px", border: "1px solid #E9E9E9"})}/>
-      {subCommentCount > 0 && (
-        subComments.map((subComment, index) => (
-          // <div>{subComment.content}</div>
-          <SubCommentDisplay
-            key={index}
-            subComment={subComment}
-          />
-        ))
-      )}
-      {isOpen && <SubCommentInput addSubComment={addSubComment}/>}
     </div>
   )
 }

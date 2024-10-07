@@ -11,10 +11,30 @@ import dayjs from "dayjs";
 import {useSelector} from 'react-redux';
 import { BsArrowReturnRight } from "react-icons/bs";
 
-export default function SubCommentInput() {
+export default function SubCommentInput({ addSubComment }) {
   const myNickname = useSelector(state => state.nickname); // 리덕스: 내 닉네임
   const [content, setContent] = useState("");
   const [emojiPickerOpen, setEmojiPickerOpen] = useState(false);
+
+  const handleSave = () => {
+    if (content === "") { // 내용이 비어있을 때는 추가하지 않음
+      console.log("내용을 입력해주세요. alert Dialog 창 넣기");
+      return;
+    }
+
+    const currentDate = dayjs().format('YY-MM-DD HH:mm');
+
+    const newSubComment = {
+      nickname: myNickname,
+      currentDate,
+      content,
+    }
+
+    // 부모 컴포넌트의 addComment 함수를 호출하여 댓글 추가
+    addSubComment(newSubComment);
+    setContent(""); // 입력 필드를 초기화
+    setEmojiPickerOpen(false); // 이모지 선택 창 닫기
+  }
 
   // 이모지 picker의 open 상태를 토글
   const showEmojiPicker = () => {
@@ -30,7 +50,7 @@ export default function SubCommentInput() {
     <div>
       <div
         css={css({
-          marginLeft: "15px",
+          marginLeft: "22px",
           marginTop: "25px",
           // border: "1px solid black"
         })}
@@ -67,7 +87,7 @@ export default function SubCommentInput() {
             })}
           />
           <div
-            // onClick={handleSave}
+            onClick={handleSave}
             css={css({
               width: '10%',
               height: '35px',

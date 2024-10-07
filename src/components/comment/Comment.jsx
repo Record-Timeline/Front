@@ -6,15 +6,23 @@ import {BiCommentDetail} from "react-icons/bi";
 import CommentDisplay from "./CommentDisplay";
 import CommentInput from "./CommentInput";
 import NoneData from "../common/NoneData";
+import axiosInstance from "../../utils/axiosInstance";
 
 export default function Comment() {
   const [comments, setComments] = useState([]);
   const [commentCount, setCommentCount] = useState(0);
 
+  // 새 댓글 추가(저장)하는 함수
   const addComment = (newComment) => {
     setComments((prevComments) => [...prevComments, newComment]);
     setCommentCount((prevCount) => prevCount + 1);
     console.log(comments);
+  }
+
+  // 댓글 삭제 함수
+  const deleteComment = (targetIndex) => {
+    setComments(comments.filter((_, index) => index !== targetIndex));
+    setCommentCount((prevCount) => prevCount - 1);
   }
 
   return (
@@ -49,6 +57,7 @@ export default function Comment() {
           <CommentDisplay
             key={index}
             comment={comment}
+            deleteComment={() => deleteComment(index)}
           />
         ))
       )}

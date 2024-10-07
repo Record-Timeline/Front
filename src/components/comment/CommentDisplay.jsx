@@ -9,7 +9,7 @@ import Checkbox from "@mui/material/Checkbox";
 
 const label = {inputProps: {'aria-label': 'Checkbox demo'}};
 
-export default function CommentDisplay({comment}) {
+export default function CommentDisplay({comment, deleteComment}) {
   const [isCommentLiked, setIsCommentLiked] = useState(false); // 댓글 좋아요 상태
   const [commentLike, setCommentLike] = useState(10); // 댓글 좋아요 수
 
@@ -75,6 +75,7 @@ export default function CommentDisplay({comment}) {
           {commentLike}
         </div>
         <FaRegTrashAlt
+          onClick={deleteComment}
           css={css({
             fontSize: "13px",
             color: "#E89494",

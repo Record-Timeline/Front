@@ -9,7 +9,7 @@ import Checkbox from "@mui/material/Checkbox";
 
 const label = {inputProps: {'aria-label': 'Checkbox demo'}};
 
-export default function CommentDisplay() {
+export default function CommentDisplay({comment}) {
   const [isCommentLiked, setIsCommentLiked] = useState(false); // 댓글 좋아요 상태
   const [commentLike, setCommentLike] = useState(10); // 댓글 좋아요 수
 
@@ -44,8 +44,8 @@ export default function CommentDisplay() {
           // border: "1px solid red",
         })}
       >
-        <b>닉네임</b>
-        <div css={css({fontSize: "13px", color: "#A5A5A5"})}>24-03-23 19:23</div>
+        <b>{comment.nickname}</b>
+        <div css={css({fontSize: "13px", color: "#A5A5A5"})}>{comment.currentDate}</div>
         <div
           css={css({
             display: "flex",
@@ -90,10 +90,7 @@ export default function CommentDisplay() {
           // border: "1px solid red",
         })}
       >
-        헤이 모두들 안녕 내가 누군지 아니?계산을 통해 정해지는 수치로 표현하므로,
-        정확한 갯수와 아이템의 너비가 같을 경우에 사용가능하며, 만약 갯수가 변경되거나,
-        아이템 너비가 각각 변하게 된다면 추가적인 수정이 필요하게 됩니다. 하지만,
-        하위 브라우저에 대한 지원도 가능하니, 알아둬야 되는 방법입니다
+        {comment.content}
       </div>
       <hr css={css({marginTop: "20px", border: "1px solid #E9E9E9"})}/>
     </div>

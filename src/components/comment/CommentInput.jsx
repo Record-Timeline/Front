@@ -8,8 +8,10 @@ import EmojiPicker from 'emoji-picker-react';
 import {FaRegSmile} from "react-icons/fa";
 import {EmojiClickData} from "emoji-picker-react";
 import dayjs from "dayjs";
+import { useSelector } from 'react-redux';
 
 export default function CommentInput({ addComment }) {
+  const myNickname = useSelector(state => state.nickname); // 리덕스: 내 닉네임
   const [content, setContent] = useState("");
   const [emojiPickerOpen, setEmojiPickerOpen] = useState(false);
 
@@ -20,9 +22,9 @@ export default function CommentInput({ addComment }) {
     }
 
     const currentDate = dayjs().format('YY-MM-DD HH:mm');
-    console.log(currentDate)
 
     const newComment = {
+      nickname: myNickname,
       currentDate,
       content,
     }

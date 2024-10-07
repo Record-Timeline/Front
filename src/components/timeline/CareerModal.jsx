@@ -9,7 +9,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import {IconButton} from '@mui/material';
 import {css} from "@emotion/react";
 import AddIcon from '@mui/icons-material/Add';
-import NoneData from "../career/NoneData";
+import NoneData from "../common/NoneData";
 import Career from '../career/Career';
 import Education from '../career/Education';
 import Certificate from "../career/Certificate";

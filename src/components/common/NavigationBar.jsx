@@ -19,7 +19,7 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import axiosInstance from '../../utils/axiosInstance';
 import { useDispatch } from 'react-redux';
-import {setMemberId} from "../../actions/actions";
+import {setMemberId, setNickname} from "../../actions/actions";
 import {useNavigation} from "react-router-dom";
 import Drawer from '@mui/material/Drawer';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
@@ -158,6 +158,7 @@ export default function NavigationBar() {
       const response = await axiosInstance.get("/api/v1/my-profile");
       setProfileInfo(response.data);
       dispatch(setMemberId(response.data.memberId)); // 멤버 아이디 redux 저장
+      dispatch(setNickname(response.data.nickname)); // 닉네임 redux 저장
       console.log("사용자 정보", response.data)
     } catch (error) {
       console.error(error);

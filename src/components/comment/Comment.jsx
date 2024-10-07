@@ -5,7 +5,7 @@ import {css} from "@emotion/react";
 import {BiCommentDetail} from "react-icons/bi";
 import CommentDisplay from "./CommentDisplay";
 import CommentInput from "./CommentInput";
-import NoneData from "../career/NoneData";
+import NoneData from "../common/NoneData";
 
 export default function Comment() {
   const [comments, setComments] = useState([]);
@@ -14,6 +14,7 @@ export default function Comment() {
   const addComment = (newComment) => {
     setComments((prevComments) => [...prevComments, newComment]);
     setCommentCount((prevCount) => prevCount + 1);
+    console.log(comments);
   }
 
   return (
@@ -45,10 +46,15 @@ export default function Comment() {
         />
       ) : (
         comments.map((comment, index) => (
-          <CommentDisplay key={index} comment={comment} />
+          <CommentDisplay
+            key={index}
+            comment={comment}
+          />
         ))
       )}
-      <CommentInput addComment={addComment} />
+      <CommentInput
+        addComment={addComment}
+      />
     </div>
   )
 }

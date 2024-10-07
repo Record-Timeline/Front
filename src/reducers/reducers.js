@@ -3,6 +3,7 @@ const initialState = {
   openLoginSnackbar: false,
   openFindSnackbar: false,
   memberId: null,
+  nickname: '',
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -27,6 +28,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         memberId: action.payload,
       };
+    case 'SET_NICKNAME':
+        return {
+          ...state,
+          nickname: action.payload,
+        }
     default:
       return state;
   }

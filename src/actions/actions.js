@@ -17,3 +17,8 @@ export const setMemberId = (memberId) => ({
   type: 'SET_MEMBER_ID',
   payload: memberId,
 });
+
+export const setNickname = (nickname) => ({
+  type: 'SET_NICKNAME',
+  payload: nickname,
+})

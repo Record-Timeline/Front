@@ -5,9 +5,17 @@ import {css} from "@emotion/react";
 import {BiCommentDetail} from "react-icons/bi";
 import CommentDisplay from "./CommentDisplay";
 import CommentInput from "./CommentInput";
+import NoneData from "../career/NoneData";
 
 export default function Comment() {
-  const [commentCount, setCommentCount] = useState(5);
+  const [comments, setComments] = useState([]);
+  const [commentCount, setCommentCount] = useState(0);
+
+  const addComment = (newComment) => {
+    setComments((prevComments) => [...prevComments, newComment]);
+    setCommentCount((prevCount) => prevCount + 1);
+  }
+
   return (
     <div // 댓글 전체 박스
       css={css({
@@ -30,9 +38,17 @@ export default function Comment() {
       >
         <BiCommentDetail/> 댓글 {commentCount}
       </div>
-      <CommentDisplay />
-      <CommentDisplay />
-      <CommentInput />
+      {comments.length === 0 ? (
+        <NoneData
+          messege={"아직 등록된 댓글이 없습니다."}
+          boxShadow={"none"}
+        />
+      ) : (
+        comments.map((comment, index) => (
+          <CommentDisplay key={index} comment={comment} />
+        ))
+      )}
+      <CommentInput addComment={addComment} />
     </div>
   )
 }

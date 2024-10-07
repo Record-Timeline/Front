@@ -15,6 +15,7 @@ export default function CommentDisplay({comment, commentCount, deleteComment}) {
   const [isCommentLiked, setIsCommentLiked] = useState(false); // 댓글 좋아요 상태
   const [commentLike, setCommentLike] = useState(10); // 댓글 좋아요 수
 
+  // 대댓글 상태 관리
   const [subComments, setSubComments] = useState([]);
   const [subCommentCount, setSubCommentCount] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
@@ -32,6 +33,13 @@ export default function CommentDisplay({comment, commentCount, deleteComment}) {
     console.log("대댓글", subComments);
   }
 
+  // 대댓글 삭제 함수
+  const deleteSubComment = (targetIndex) => {
+    setSubComments(subComments.filter((_, index) => index !== targetIndex));
+    setSubCommentCount((prevCount) => prevCount - 1);
+  }
+
+  // 댓글 좋아요 토글
   const onClickCommentLike = () => {
     if (isCommentLiked) { // 좋아요 취소
       setIsCommentLiked(false);
@@ -116,10 +124,10 @@ export default function CommentDisplay({comment, commentCount, deleteComment}) {
       <hr css={css({marginTop: "20px", border: "1px solid #E9E9E9"})}/>
       {subCommentCount > 0 && (
         subComments.map((subComment, index) => (
-          // <div>{subComment.content}</div>
           <SubCommentDisplay
             key={index}
             subComment={subComment}
+            deleteSubComment={() => deleteSubComment(index)}
           />
         ))
       )}

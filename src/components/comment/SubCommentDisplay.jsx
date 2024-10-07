@@ -9,10 +9,11 @@ import Checkbox from "@mui/material/Checkbox";
 
 const label = {inputProps: {'aria-label': 'Checkbox demo'}};
 
-export default function CommentDisplay({subComment, deleteComment}) {
-  const [isCommentLiked, setIsCommentLiked] = useState(false); // 댓글 좋아요 상태
-  const [commentLike, setCommentLike] = useState(7); // 댓글 좋아요 수
+export default function CommentDisplay({subComment, deleteSubComment}) {
+  const [isCommentLiked, setIsCommentLiked] = useState(false); // 대댓글 좋아요 상태
+  const [commentLike, setCommentLike] = useState(7); // 대댓글 좋아요 수
 
+  // 대댓글 좋아요 토글
   const onClickCommentLike = () => {
     if (isCommentLiked) { // 좋아요 취소
       setIsCommentLiked(false);
@@ -67,7 +68,7 @@ export default function CommentDisplay({subComment, deleteComment}) {
           {commentLike}
         </div>
         <FaRegTrashAlt
-          onClick={deleteComment}
+          onClick={deleteSubComment}
           css={css({
             fontSize: "13px",
             color: "#E89494",
@@ -77,7 +78,7 @@ export default function CommentDisplay({subComment, deleteComment}) {
           })}
         />
       </div>
-      <div // 댓글 내용
+      <div // 대댓글 내용
         css={css({
           marginTop: "3px",
           // border: "1px solid red",

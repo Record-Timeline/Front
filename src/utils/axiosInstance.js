@@ -45,10 +45,6 @@ axiosInstance.interceptors.response.use(
 
     // 401 에러이고, 토큰 재발급 중이 아니고, 원래 요청이 한번도 재시도된 적이 없다면
     if (error.response?.status === 401 && refreshToken && !originalRequest._retry) {
-      console.log("401 에러 발생!");
-      console.log("accessToken before refresh:", localStorage.getItem('token'));
-      console.log("refreshToken before refresh:", refreshToken);
-
       originalRequest._retry = true; // 재시도 방지 플래그 설정
 
       // 이미 토큰 재발급 중이라면, 대기열에 현재 요청을 추가
@@ -66,7 +62,6 @@ axiosInstance.interceptors.response.use(
       try {
         // refresh token을 사용해 새로운 access token 요청
         const response = await axios.post('/api/v1/auth/renew-tokens', {
-          accessToken: localStorage.getItem('token'),
           refreshToken: refreshToken,
         });
 
@@ -74,10 +69,8 @@ axiosInstance.interceptors.response.use(
         const newRefreshToken = response.data.refreshToken;
 
         if (!newAccessToken || !newRefreshToken) {
-          throw new Error('Received invalid tokens during refresh.');
+          throw new Error('유호하지 않은 토큰입니다');
         }
-
-        console.log("새로운 토큰 발급 :", newAccessToken);
 
         // 새로운 토큰 저장
         localStorage.setItem('token', newAccessToken);

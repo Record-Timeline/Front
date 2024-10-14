@@ -26,8 +26,8 @@ export default function PdfButton({ targetId }) {
     // 여백 설정
     const marginTop = 10;
     const marginBottom = 10;
-    const marginLeft = -50;
-    const marginRight = -50;
+    const marginLeft = -70;
+    const marginRight = -70;
 
     // 이미지의 실제 크기 계산 (픽셀 단위에서 밀리미터 단위로 변환)
     const imgProps = pdf.getImageProperties(imageData);

@@ -8,7 +8,6 @@ import MainTimelineItem from "../components/timeline/MainTimelineItem";
 import MainTimelineInput from "../components/timeline/MainTimelineInput";
 import Button from "../components/common/Button";
 import axiosInstance from "../utils/axiosInstance";
-import {toUnitless} from "@mui/material/styles/cssUtils";
 
 export default function MainTimeline() {
   // 타임라인 항목들을 관리할 상태 생성
@@ -47,7 +46,7 @@ export default function MainTimeline() {
       console.log("프로필 조회 완료", response);
 
       // 프로필 조회가 완료된 후 메인 타임라인 조회 호출
-      fetchMainTimelines(response.data.memberId);
+      await fetchMainTimelines(response.data.memberId);
     } catch (error) {
       console.log("프로필 조회 에러 발생:", error);
       console.error("에러 상세:", error.response ? error.response.data : error.message);
@@ -80,14 +79,15 @@ export default function MainTimeline() {
           title: data.title,
           startDate: data.startDate,
           endDate: data.endDate,
+          done: data.isDone,
         }
       );
-      setItems([...items, { type: "item", data: response.data }]);
+
       console.log("메인 타임라인 생성 완료", response)
       console.log(items)
 
       // 생성 후 메인 타임라인 다시 조회
-      fetchMainTimelines(memberId)
+      await fetchMainTimelines(memberId)
     } catch (error) {
       console.log("에러!")
       console.error(error);
@@ -105,7 +105,7 @@ export default function MainTimeline() {
       console.log(items)
 
       // 삭제 후 메인 타임라인 다시 조회
-      fetchMainTimelines(memberId)
+      await fetchMainTimelines(memberId)
     } catch (error) {
       console.log("삭제 에러 발생:", error);
       console.error("삭제 에러 상세:", error.response ? error.response.data : error.message);
@@ -128,6 +128,7 @@ export default function MainTimeline() {
           title: data.title,
           startDate: data.startDate,
           endDate: data.endDate,
+          done: data.isDone,
         },
       );
       const newItems = items.slice();
@@ -136,7 +137,7 @@ export default function MainTimeline() {
       console.log("메인 타임라인 업데이트 완료", response);
 
       // 수정 후 메인 타임라인 다시 조회
-      fetchMainTimelines(memberId)
+      await fetchMainTimelines(memberId)
     } catch (error) {
       console.log("업데이트 에러 발생:", error);
       console.error("업데이트 에러 상세:", error.response ? error.response.data : error.message);

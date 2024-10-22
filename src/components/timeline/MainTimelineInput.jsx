@@ -12,16 +12,17 @@ import {FaRegCircleCheck} from "react-icons/fa6";
 import dayjs from 'dayjs';
 
 function MainTimelineInput({ index, saveItem, initialData, onDelete, createMainTimeline, updateItem }) {
-  const [isChecked, setIsChecked] = useState(false);
   const [title, setTitle] = useState("");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [isDone, setIsDone] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
 
   useEffect(() => {
     setTitle(initialData.title);
     setStartDate(initialData.startDate ? dayjs(initialData.startDate) : null);
     setEndDate(initialData.endDate ? dayjs(initialData.endDate) : null);
+    setIsDone(initialData.done)
   }, [initialData]);
 
   const handleSave = async () => {
@@ -31,9 +32,10 @@ function MainTimelineInput({ index, saveItem, initialData, onDelete, createMainT
       // const data = { startDate, endDate, title };
       setAlertOpen(false); // 조건을 만족하므로 Alert Dialog를 닫음
       const data = {
+        title,
         startDate: dayjs(startDate).format("YYYY-MM-DD"),
         endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
-        title
+        isDone,
       };
 
       if (initialData.id) {
@@ -71,8 +73,11 @@ function MainTimelineInput({ index, saveItem, initialData, onDelete, createMainT
         })}
       >
         <div // 체크표시
-          done={isChecked}
-          onClick={() => setIsChecked(!isChecked)}
+          // onClick={() => setIsDone(!isDone)}
+          onClick={() => {
+            setIsDone(!isDone);
+            console.log(isDone)
+          }}
           css={css`
               width: 22px;
               height: 22px;
@@ -83,7 +88,7 @@ function MainTimelineInput({ index, saveItem, initialData, onDelete, createMainT
               //margin: 35px;
               margin-top: 31px;
               cursor: pointer;
-              background-color: ${isChecked ? "#829FD7" : "none"};
+              background-color: ${isDone ? "#829FD7" : "none"};
           `}
         />
       </div>

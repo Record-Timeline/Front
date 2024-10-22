@@ -86,7 +86,7 @@ export default function OthersSubTimeline() {
           alignItems: "flex-start",   // 상단 정렬
         })}
       >
-        <div // 포스팅 박스 + 댓글
+        <div // 포스팅 박스
           css={css({
             margin: "0 auto",
             marginRight: "20px"
@@ -98,7 +98,7 @@ export default function OthersSubTimeline() {
               height: "840px",
               borderRadius: "30px",
               background: "#FFF",
-              padding: "10px",
+              paddingTop: "10px",
               border: "3px solid #f8f6f6",
               margin: "0 auto",
             })}
@@ -109,7 +109,6 @@ export default function OthersSubTimeline() {
             />
           )}
           </div>
-          <Comment/>
         </div>
         <div // 서브 타임라인 박스
           css={css({

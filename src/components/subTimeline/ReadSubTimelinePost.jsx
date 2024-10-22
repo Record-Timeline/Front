@@ -14,6 +14,7 @@ import BookmarkIcon from '@mui/icons-material/Bookmark';
 import dayjs from "dayjs";
 import AlertDialog from "../common/AlertDialog";
 import axiosInstance from "../../utils/axiosInstance";
+import Comment from "../comment/Comment";
 
 const label = {inputProps: {'aria-label': 'Checkbox demo'}};
 
@@ -50,7 +51,7 @@ export default function ReadSubTimelinePost({item, onDelete, onEdit}) {
   }
 
   // 진행중 (isDone) 상태 연동
-  const isDoneStatus =  () => {
+  const isDoneStatus = () => {
     if (item.done) { // 상위 컴포넌트에서 서브 타임라인 조회할때 알아내서 그냥 props로 가져옴 (연동코드 굳이 또 쓰지 않음)
       setIsDone(true)
       console.log(isDone)
@@ -262,7 +263,7 @@ export default function ReadSubTimelinePost({item, onDelete, onEdit}) {
               padding: "50px",
               overflowY: "scroll",
             })}
-            dangerouslySetInnerHTML={{ __html: item.content }} // 저장된 글 내용을 표시
+            dangerouslySetInnerHTML={{__html: item.content}} // 저장된 글 내용을 표시
           />
         </div>
         <div // 좋아요, 북마크 감싸는 div
@@ -333,7 +334,7 @@ export default function ReadSubTimelinePost({item, onDelete, onEdit}) {
             dialogContent="해당 서브 타임라인에 작성한 글도 함께 삭제됩니다."
             confirmText="삭제"
             cancelText="취소"
-            />
+          />
           <Button
             onClick={() => onEdit(item)}
             width="120px"
@@ -351,6 +352,7 @@ export default function ReadSubTimelinePost({item, onDelete, onEdit}) {
           </Button>
         </div>
       </div>
+      <Comment subTimeline={item}/>
     </div>
   );
 }

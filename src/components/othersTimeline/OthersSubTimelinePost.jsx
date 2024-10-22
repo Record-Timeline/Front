@@ -13,6 +13,7 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import dayjs from "dayjs";
 import axiosInstance from "../../utils/axiosInstance";
+import Comment from "../comment/Comment";
 
 const label = {inputProps: {'aria-label': 'Checkbox demo'}};
 
@@ -262,6 +263,7 @@ export default function OthersSubTimelinePost({item}) {
         />
         <p css={css({display: "inline-block", marginRight: "20px"})}>{bookmark}</p>
       </div>
+      <Comment/>
     </div>
   )
 }

@@ -204,10 +204,10 @@ export default function SubTimeline() {
           alignItems: "flex-start",   // 상단 정렬
         })}
       >
-        <div // 포스팅 박스 + 댓글
+        <div // 포스팅 박스
           css={css({
             margin: "0 auto",
-            marginRight: "20px"
+            marginRight: "20px",
           })} // margin은 두 박스 사이의 간격
         >
           <div // 포스팅 박스 전체
@@ -216,7 +216,7 @@ export default function SubTimeline() {
               height: "840px",
               borderRadius: "30px",
               background: "#FFF",
-              padding: "10px",
+              paddingTop: "10px",
               border: "3px solid #f8f6f6",
               margin: "0 auto",
             })}
@@ -238,7 +238,6 @@ export default function SubTimeline() {
               )
             )}
           </div>
-          <Comment/>
         </div>
         <div // 서브 타임라인 박스
           css={css({

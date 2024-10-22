@@ -7,8 +7,12 @@ import CommentDisplay from "./CommentDisplay";
 import CommentInput from "./CommentInput";
 import NoneData from "../common/NoneData";
 import axiosInstance from "../../utils/axiosInstance";
+import { useSelector } from 'react-redux';
 
 export default function Comment() {
+  const myMemberId = useSelector(state => state.memberId);
+  const myNickname = useSelector(state => state.nickname); // 리덕스: 내 닉네임
+
   const [comments, setComments] = useState([]);
   const [commentCount, setCommentCount] = useState(0);
 
@@ -29,7 +33,7 @@ export default function Comment() {
     <div // 댓글 전체 박스
       css={css({
         width: "760px",
-        margin: "50px auto",
+        margin: "100px auto",
         // border: "1px solid black",
       })}
     >

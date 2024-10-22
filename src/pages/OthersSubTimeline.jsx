@@ -9,6 +9,7 @@ import {useLocation, useParams, useSearchParams } from "react-router-dom";
 import axiosInstance from "../utils/axiosInstance";
 import SubTimelineItem from "../components/subTimeline/SubTimelineItem";
 import Header from "../components/common/Header";
+import Comment from "../components/comment/Comment";
 
 export default function OthersSubTimeline() {
   const {memberId, mainTimelineId} = useParams(); // URL 파라미터로부터 id 받아오기
@@ -71,44 +72,55 @@ export default function OthersSubTimeline() {
   }, []);
 
   return (
-    <div css={css({marginBottom: "150px",})}>
+    <div css={css({marginBottom: "150px"})}>
       <Header backgroundColor="#F2F5FA"/>
       {profile && <OthersProfile profile={profile}/>} {/* 프로필 컴포넌트에 프로필 정보 전달 */}
       <div
         css={css({
-          width: "1115px", // 포스팅 박스와 서브 타임라인을 감싸는 div의 너비 (margin: "0 auto"를 하기위해 지정해줘야 함)
-          margin: "auto",
-          // border: "1px solid black"
+          width: "100%", // 포스팅 박스와 서브 타임라인을 감싸는 div의 너비 (margin: "0 auto"를 하기위해 지정해줘야 함)
+          height: "100%",
+          margin: "0 auto",
+          // border: "1px solid black",
+          display: "flex", // 두 박스를 나란히 놓기 위함
+          justifyContent: "space-between", // 두 박스(포스팅+댓글 박스 & 서브타임라인 박스) 사이에 간격을 두고 정렬
+          alignItems: "flex-start",   // 상단 정렬
         })}
       >
-        <div // 포스팅 박스 전체
+        <div // 포스팅 박스 + 댓글
           css={css({
-            width: "760px",
-            height: "820px",
-            marginBottom: "150px",
-            borderRadius: "30px",
-            background: "#FFF",
-            padding: "10px",
-            float: "left",
-            display: "inline-block", // 서브 타임라인과 나란히 두기 위함
-            border: "3px solid #f8f6f6",
-          })}
+            margin: "0 auto",
+            marginRight: "20px"
+          })} // margin은 두 박스 사이의 간격
         >
-          {selectedItem && (
+          <div // 포스팅 박스 전체
+            css={css({
+              width: "760px",
+              height: "840px",
+              borderRadius: "30px",
+              background: "#FFF",
+              padding: "10px",
+              border: "3px solid #f8f6f6",
+              margin: "0 auto",
+            })}
+          >
+            {selectedItem && (
             <OthersSubTimelinePost
               item={selectedItem}
             />
           )}
+          </div>
+          <Comment/>
         </div>
         <div // 서브 타임라인 박스
           css={css({
+            width: "320px",
+            margin: "0 auto",
+            marginLeft: "25px",
             marginTop: "50px",
-            marginLeft: "45px",
-            display: "inline-block", // 포스팅과 나란히 두기 위함 (div 두 개 나란히 두기)
             // border: "1px solid black",
           })}
         >
-          <div // 서브 타임라인 제목
+          <div // 메인 타임라인 제목
             css={css({
               width: "280px",
               textAlign: "center",
@@ -117,7 +129,7 @@ export default function OthersSubTimeline() {
               // border: "4px solid #f8f6f6",
             })}
           >
-            <h1>{title}</h1>
+            <h1>{title}</h1> {/* 메인 타임라인 제목 */}
           </div>
           {subTimelineItems.map((item, index) => (
             <OthersSubTimelineItem

@@ -111,6 +111,7 @@ export default function SubTimeline() {
             startDate: newItem.startDate,
             endDate: newItem.endDate,
             content: newItem.content,
+            done: newItem.isDone
           }
         );
         const updatedItems = subTimelineItems.map((item) =>
@@ -140,6 +141,7 @@ export default function SubTimeline() {
             startDate: newItem.startDate,
             endDate: newItem.endDate,
             content: newItem.content,
+            done: newItem.isDone
           }
         );
 

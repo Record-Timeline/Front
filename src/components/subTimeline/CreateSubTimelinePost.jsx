@@ -15,7 +15,7 @@ import dayjs from "dayjs";
 const ariaLabel = {'aria-label': 'description'};
 
 export default function CreateSubTimelinePost({post, onCancel, onSubmit}) {
-  const [isChecked, setIsChecked] = useState(false);
+  const [isDone, setIsDone] = useState(false);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [title, setTitle] = useState("");
@@ -26,6 +26,7 @@ export default function CreateSubTimelinePost({post, onCancel, onSubmit}) {
   // 수정 모드, 기존 정보 유지 (useEffect)
   useEffect(() => {
     if (post) {
+      setIsDone(post.done);
       setStartDate(post.startDate);
       setEndDate(post.endDate);
       setTitle(post.title);
@@ -40,6 +41,7 @@ export default function CreateSubTimelinePost({post, onCancel, onSubmit}) {
       setAlertOpen(true);
     } else {
       const newSubItem = {
+        isDone,
         startDate: dayjs(startDate).format("YYYY-MM-DD"),
         endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
         title,
@@ -86,8 +88,7 @@ export default function CreateSubTimelinePost({post, onCancel, onSubmit}) {
           })}
         >
           <div // 체크표시
-            done={isChecked}
-            onClick={() => setIsChecked(!isChecked)}
+            onClick={() => setIsDone(!isDone)}
             css={css`
                 width: 21px;
                 height: 21px;
@@ -99,7 +100,7 @@ export default function CreateSubTimelinePost({post, onCancel, onSubmit}) {
                 margin-left: 33px;
                 margin-right: 20px;
                 cursor: pointer;
-                background-color: ${isChecked ? "#829FD7" : "#f8f6f6"}; // 선 때문에 뚫린 원일 때도 배경 색 설정
+                background-color: ${isDone ? "#829FD7" : "#f8f6f6"}; // 선 때문에 뚫린 원일 때도 배경 색 설정
             `}
           />
           <div // 기간

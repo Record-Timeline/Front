@@ -10,9 +10,10 @@ import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from "../../utils/axiosInstance";
 
-function MainTimelineItem({mainTimelineId, startDate, endDate, title, done, onEdit, onDelete, showLine}) {
+function MainTimelineItem({mainTimelineId, startDate, endDate, title, done, accessible, onEdit, onDelete, showLine}) {
   const navigate = useNavigate();
   const [isDone, setIsDone] = useState(done); // 진행중 체크
+  const [isPrivate, setIsPrivate] = useState(accessible);
 
   const handleTitleClick = () => {
     navigate(`/subtimeline/${mainTimelineId}`);
@@ -120,7 +121,7 @@ function MainTimelineItem({mainTimelineId, startDate, endDate, title, done, onEd
           // border: "1px solid black",
         })}
       >
-        <FiUnlock/>
+        {isPrivate ? <FiLock/> : <FiUnlock/>}
       </div>
       <div // 타임라인 제목
         onClick={handleTitleClick} // 제목 클릭시 해당 서브 타임라인으로 이동

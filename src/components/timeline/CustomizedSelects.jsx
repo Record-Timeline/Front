@@ -43,10 +43,12 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-export default function CustomizedSelects({ text1, text2}) {
+export default function CustomizedSelects({ setIsPrivate, text1, text2}) {
     const [openStatus, setOpenStatus] = React.useState(true);
     const handleChange = (event: { target: { value: string } }) => {
         setOpenStatus(event.target.value);
+        console.log(openStatus);
+        setIsPrivate(openStatus);
     };
     return (
         <div>

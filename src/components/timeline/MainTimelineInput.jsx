@@ -16,6 +16,7 @@ function MainTimelineInput({ index, saveItem, initialData, onDelete, createMainT
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [isDone, setIsDone] = useState(false);
+  const [isPrivate, setIsPrivate] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
 
   useEffect(() => {
@@ -23,6 +24,7 @@ function MainTimelineInput({ index, saveItem, initialData, onDelete, createMainT
     setStartDate(initialData.startDate ? dayjs(initialData.startDate) : null);
     setEndDate(initialData.endDate ? dayjs(initialData.endDate) : null);
     setIsDone(initialData.done)
+    setIsPrivate(initialData.isPrivate);
   }, [initialData]);
 
   const handleSave = async () => {
@@ -36,7 +38,10 @@ function MainTimelineInput({ index, saveItem, initialData, onDelete, createMainT
         startDate: dayjs(startDate).format("YYYY-MM-DD"),
         endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
         isDone,
+        isPrivate
       };
+
+      console.log("공개여부:", isPrivate);
 
       if (initialData.id) {
         await updateItem(index, data); // 기존 항목 업데이트 (생성)
@@ -128,8 +133,7 @@ function MainTimelineInput({ index, saveItem, initialData, onDelete, createMainT
           // border: "1px solid black",
         })}
       >
-        {/*<SelectAutoWidth />*/}
-        <CustomizedSelects/>
+        <CustomizedSelects isPrivate={isPrivate} setIsPrivate={setIsPrivate}/>
       </div>
       <div // 타임라인 제목
         css={css({

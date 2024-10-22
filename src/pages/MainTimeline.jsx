@@ -80,6 +80,7 @@ export default function MainTimeline() {
           startDate: data.startDate,
           endDate: data.endDate,
           done: data.isDone,
+          private: data.isPrivate,
         }
       );
 
@@ -129,6 +130,7 @@ export default function MainTimeline() {
           startDate: data.startDate,
           endDate: data.endDate,
           done: data.isDone,
+          private: data.isPrivate,
         },
       );
       const newItems = items.slice();
@@ -192,6 +194,7 @@ export default function MainTimeline() {
               endDate={item.data.endDate}
               title={item.data.title}
               done={item.data.done}
+              accessible={item.data.private}
               onEdit={() => editItem(index)}
               onDelete={() => deleteItem(index)}
               showLine={index !== items.length - 1} // 마지막 아이템에는 선을 표시하지 않음

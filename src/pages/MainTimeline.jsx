@@ -162,7 +162,7 @@ export default function MainTimeline() {
         })}
       >
         {/* pdf 공유 버튼 */}
-        <PdfShareButton targetId="timeline" /> {/* PDF 버튼  */}
+        <PdfShareButton type={'main'} /> {/* PDF 버튼  */}
         <div id="timeline">
       <div
         css={css({

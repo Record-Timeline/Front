@@ -1,11 +1,29 @@
 /** @jsxImportSource @emotion/react */
 
-import React from 'react';
-import IosShareIcon from '@mui/icons-material/IosShare';
+import React, { useState } from "react";
+import IosShareIcon from "@mui/icons-material/IosShare";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import {
+  Modal,
+  Box,
+  Button,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
+} from "@mui/material";
 
-export default function PdfButton({ targetId }) {
+export default function PdfShareButton( { type, subTimelineItems = [] }) {
+  const [open, setOpen] = useState(false);
+  const [checkedItems, setCheckedItems] = useState(
+    Array.isArray(subTimelineItems)
+      ? subTimelineItems.reduce((acc, item) => ({ ...acc, [item.id]: false }), {})
+      : {}
+  );
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   // PDF 저장 기능
   const generatePDF = async () => {
     const timelineElement = document.querySelector("#timeline");
@@ -14,7 +32,6 @@ export default function PdfButton({ targetId }) {
 
     // HTML 요소의 실제 크기 계산
     const canvas = await html2canvas(timelineElement, { scale: 3 });
-
     const imageData = canvas.toDataURL("image/png");
 
     // PDF 설정 (A4 비율)
@@ -54,31 +71,124 @@ export default function PdfButton({ targetId }) {
     button.style.display = "flex"; // 버튼 다시 표시
   };
 
+  // pdf 공유 버튼 클릭했을 때
+  const handleClick = () => {
+    console.log(type);
+    if (type === "sub") {
+      handleOpen(); // 모달 열기
+    } else {
+      generatePDF(); // 바로 PDF 생성
+    }
+  };
+
+  // 체크박스 변경 핸들러
+  const handleCheckboxChange = (id) => {
+    setCheckedItems((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
   return (
-    <div
-      id="pdfButton"
-      css={{
-        color: '#787878',
-        display: "flex",
-        alignItems: 'center',
-        position: "absolute",
-        right: "40px",
-        cursor: "pointer",
-      }}
-      onClick={generatePDF}
-    >
-      <IosShareIcon />
+    <>
       <div
+        id="pdfButton"
         css={{
-          color: '#757575',
-          fontSize: '16px',
-          marginTop: '2px',
-          marginLeft: '4px',
-          width: 'fit-content'
+          color: "#787878",
+          display: "flex",
+          alignItems: "center",
+          position: "absolute",
+          right: "40px",
+          cursor: "pointer",
         }}
+        onClick={handleClick}
       >
-        pdf 공유
+        <IosShareIcon />
+        <div
+          css={{
+            color: "#757575",
+            fontSize: "16px",
+            marginTop: "2px",
+            marginLeft: "4px",
+            width: "fit-content",
+          }}
+        >
+          pdf 공유
+        </div>
       </div>
-    </div>
+      <Modal open={open} onClose={handleClose}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            bgcolor: "background.paper",
+            borderRadius: 1,
+            boxShadow: 24,
+            p: 4,
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+          }}
+        >
+          <div
+            css={{
+              textAlign: "center",
+              fontFamily: "Pretendard",
+              fontSize: "18px",
+              color: "#404040",
+              fontWeight: "bold",
+              marginBottom: '15px'
+            }}
+          >
+            pdf 공유
+          </div>
+
+          <FormGroup
+          >
+            {subTimelineItems.map((item) => (
+              <FormControlLabel
+                key={item.id}
+                control={
+                  <Checkbox
+                    checked={checkedItems[item.id]}
+                    onChange={() => handleCheckboxChange(item.id)}
+                    sx={{
+                      fontFamily: "Pretendard",
+                    }}
+                  />
+                }
+                label={item.title}
+                sx={{
+                  "& .MuiTypography-root": {
+                    fontFamily: "Pretendard",
+                    fontSize: "16px",
+                    color: "#404040"
+                  }
+                }}
+              />
+            ))}
+          </FormGroup>
+          <div css={{display: 'flex', justifyContent: 'center', marginTop: '10px'}}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={generatePDF}
+              sx={{
+                ml: 2,
+                fontFamily: "Pretendard",
+                backgroundColor: "#829fd7",
+              }}
+            >
+              확인
+            </Button>
+            <Button
+              onClick={handleClose}
+              sx={{ ml: 2, color: "#829fd7", fontFamily: "Pretendard", marginRight: '16px' }}
+            >
+              취소
+            </Button>
+          </div>
+        </Box>
+      </Modal>
+    </>
   );
 }

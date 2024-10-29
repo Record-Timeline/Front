@@ -20,7 +20,6 @@ import CertificateInput from "../career/CertificateInput";
 import LanguageInput from "../career/LanguageInput";
 import axiosInstance from "../../utils/axiosInstance";
 import {useSelector} from 'react-redux';
-import {useLocation} from "react-router-dom";
 
 export default function CareerModal({memberId, buttonTitle}) {
   const myMemberId = useSelector(state => state.memberId); // 리덕스: 내 멤버 아이디

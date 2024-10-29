@@ -56,7 +56,7 @@ export default function MainTimeline() {
   // 메인 타임라인 조회 연동 (GET, READ)
   const fetchMainTimelines = async (memberId) => {
     try {
-      const response = await axiosInstance.get(`/api/v1/main-timelines/member/${memberId}`);
+      const response = await axiosInstance.get(`/api/v1/main-timelines/my`);
       setItems(response.data.map(item => ({ type: "item", data: item })));
       console.log("메인 타임라인 조회 완료", response);
     } catch (error) {
@@ -129,8 +129,8 @@ export default function MainTimeline() {
           title: data.title,
           startDate: data.startDate,
           endDate: data.endDate,
-          done: data.isDone,
-          private: data.isPrivate,
+          isDone: data.isDone,
+          isPrivate: data.isPrivate,
         },
       );
       const newItems = items.slice();
@@ -203,7 +203,6 @@ export default function MainTimeline() {
             <MainTimelineInput
               createMainTimeline={createMainTimeline} // 생성 연동
               updateItem={updateItem} // 수정 연동
-              key={index}
               index={index}
               saveItem={saveItem}
               initialData={item.data}

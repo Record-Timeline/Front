@@ -10,7 +10,7 @@ import {EmojiClickData} from "emoji-picker-react";
 import dayjs from "dayjs";
 import { useSelector } from 'react-redux';
 
-export default function CommentInput({ addComment }) {
+export default function CommentInput({ addComment, createComment }) {
   const myNickname = useSelector(state => state.nickname); // 리덕스: 내 닉네임
   const [content, setContent] = useState("");
   const [emojiPickerOpen, setEmojiPickerOpen] = useState(false);
@@ -31,6 +31,8 @@ export default function CommentInput({ addComment }) {
 
     // 부모 컴포넌트의 addComment 함수를 호출하여 댓글 추가
     addComment(newComment);
+    // 댓글 생성 연동 함수
+    createComment(newComment);
     setContent(""); // 입력 필드를 초기화
     setEmojiPickerOpen(false); // 이모지 선택 창 닫기
   }

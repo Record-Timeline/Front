@@ -11,14 +11,14 @@ import SubCommentInput from "./SubCommentInput";
 
 const label = {inputProps: {'aria-label': 'Checkbox demo'}};
 
-export default function CommentDisplay({comment, commentCount, deleteComment}) {
+export default function CommentDisplay({comment, setCommentCount, deleteComment}) {
   const [isCommentLiked, setIsCommentLiked] = useState(false); // 댓글 좋아요 상태
   const [commentLike, setCommentLike] = useState(10); // 댓글 좋아요 수
 
   // 대댓글 상태 관리
   const [subComments, setSubComments] = useState([]);
   const [subCommentCount, setSubCommentCount] = useState(0);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false); // 대댓글 input 컴포넌트
 
   // 대댓글 입력창 open 함수
   const openSubCommentInput = () => {
@@ -29,6 +29,7 @@ export default function CommentDisplay({comment, commentCount, deleteComment}) {
   const addSubComment = (newSubComment) => {
     setSubComments((prevSubComments) => [...prevSubComments, newSubComment]);
     setSubCommentCount((prevSubCount) => prevSubCount + 1);
+    setCommentCount((prevCount) => prevCount + 1); // 전체 댓글 수 증가
     setIsOpen(false);
     console.log("대댓글", subComments);
   }

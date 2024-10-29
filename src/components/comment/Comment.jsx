@@ -9,7 +9,7 @@ import NoneData from "../common/NoneData";
 import axiosInstance from "../../utils/axiosInstance";
 import { useSelector } from 'react-redux';
 
-export default function Comment() {
+export default function Comment({subTimeline}) {
   const myMemberId = useSelector(state => state.memberId);
   const myNickname = useSelector(state => state.nickname); // 리덕스: 내 닉네임
 
@@ -27,6 +27,24 @@ export default function Comment() {
   const deleteComment = (targetIndex) => {
     setComments(comments.filter((_, index) => index !== targetIndex));
     setCommentCount((prevCount) => prevCount - 1);
+  }
+
+  // 댓글 생성 연동
+  const createComment = async (newComment) => {
+    try {
+      const response = await axiosInstance.post(
+        `/api/v1/comments`,
+        {
+          "subTimelineId": subTimeline.id,
+          "memberId": myMemberId,
+          "content": newComment.content,
+        }
+      )
+      console.log("댓글 생성 완료", response)
+    } catch (error) {
+      console.log("댓글 생성 실패", error);
+      console.error("에러 상세:", error.response ? error.response.data : error.message);
+    }
   }
 
   return (
@@ -61,13 +79,14 @@ export default function Comment() {
           <CommentDisplay
             key={index}
             comment={comment}
-            commentCount={commentCount}
+            setCommentCount={setCommentCount}
             deleteComment={() => deleteComment(index)}
           />
         ))
       )}
       <CommentInput
         addComment={addComment}
+        createComment={createComment}
       />
     </div>
   )

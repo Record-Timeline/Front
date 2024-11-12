@@ -56,12 +56,29 @@ export default function CommentDisplay({comment, setCommentCount, deleteComment}
           "content": newSubComment.content,
         }
       )
-      console.log("댓글 생성 완료", response)
+      console.log("대댓글 생성 완료", response)
     } catch (error) {
-      console.log("댓글 생성 실패", error);
+      console.log("대댓글 생성 실패", error);
       console.error("에러 상세:", error.response ? error.response.data : error.message);
     }
   }
+
+  // 대댓글 조회 연동
+  const fetchSubComments = async () => {
+    try {
+      const response = await axiosInstance.get(`/api/v1/replies/comment/${comment.data.id}`);
+      setSubComments(response.data.map(item => ({ type: "item", data: item })));
+      console.log("대댓글 조회 완료")
+    } catch (error) {
+      console.log("대댓글 조회 실패", error);
+      console.error("에러 상세:", error.response ? error.response.data : error.message);
+    }
+  }
+
+  useEffect(() => {
+    fetchSubComments();
+    console.log(subComments);
+  }, [])
 
   // 댓글 좋아요 토글
   const onClickCommentLike = () => {

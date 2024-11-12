@@ -8,6 +8,7 @@ import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import Checkbox from "@mui/material/Checkbox";
 import SubCommentDisplay from './SubCommentDisplay';
 import SubCommentInput from "./SubCommentInput";
+import dayjs from "dayjs";
 
 const label = {inputProps: {'aria-label': 'Checkbox demo'}};
 
@@ -72,8 +73,8 @@ export default function CommentDisplay({comment, setCommentCount, deleteComment}
             // border: "1px solid red",
           })}
         >
-          <b>{comment.nickname}</b>
-          <div css={css({fontSize: "13px", color: "#A5A5A5"})}>{comment.currentDate}</div>
+          <b>{comment.data.nickname}</b>
+          <div css={css({fontSize: "13px", color: "#A5A5A5"})}>{dayjs(comment.data.createdDate).format('YY-MM-DD HH:mm')}</div>
           <div
             onClick={openSubCommentInput}
             css={css({
@@ -120,7 +121,7 @@ export default function CommentDisplay({comment, setCommentCount, deleteComment}
           // border: "1px solid red",
         })}
       >
-        {comment.content}
+        {comment.data.content}
       </div>
       <hr css={css({marginTop: "20px", border: "1px solid #E9E9E9"})}/>
       {subCommentCount > 0 && (

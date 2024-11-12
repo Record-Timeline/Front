@@ -25,7 +25,6 @@ export default function CommentInput({ addComment, createComment }) {
 
     const newComment = {
       nickname: myNickname,
-      currentDate,
       content,
     }
 

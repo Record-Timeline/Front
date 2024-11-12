@@ -47,6 +47,23 @@ export default function Comment({subTimeline}) {
     }
   }
 
+  // 댓글 조회 연동
+  const fetchComments = async () => {
+    try {
+      const response = await axiosInstance.get(`/api/v1/comments/sub-timeline/${subTimeline.id}`)
+      setComments(response.data.map(item => ({ type: "item", data: item })));
+      console.log("댓글 조회 완료", response)
+    } catch (error) {
+      console.log("댓글 생성 실패", error);
+      console.error("에러 상세:", error.response ? error.response.data : error.message);
+    }
+  }
+
+  useEffect(() => {
+    fetchComments();
+    console.log(comments)
+  }, [])
+
   return (
     <div // 댓글 전체 박스
       css={css({

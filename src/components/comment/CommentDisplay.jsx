@@ -9,10 +9,14 @@ import Checkbox from "@mui/material/Checkbox";
 import SubCommentDisplay from './SubCommentDisplay';
 import SubCommentInput from "./SubCommentInput";
 import dayjs from "dayjs";
+import axiosInstance from "../../utils/axiosInstance";
+import {useSelector} from "react-redux";
 
 const label = {inputProps: {'aria-label': 'Checkbox demo'}};
 
 export default function CommentDisplay({comment, setCommentCount, deleteComment}) {
+  const myMemberId = useSelector(state => state.memberId); // 리덕스 멤버 아이디
+
   const [isCommentLiked, setIsCommentLiked] = useState(false); // 댓글 좋아요 상태
   const [commentLike, setCommentLike] = useState(10); // 댓글 좋아요 수
 
@@ -41,6 +45,24 @@ export default function CommentDisplay({comment, setCommentCount, deleteComment}
     setSubCommentCount((prevCount) => prevCount - 1);
   }
 
+  // 대댓글 생성 연동
+  const createSubComment = async (newSubComment) => {
+    try {
+      const response = await axiosInstance.post(
+        `/api/v1/replies`,
+        {
+          "commentId": comment.data.id,
+          "memberId": myMemberId,
+          "content": newSubComment.content,
+        }
+      )
+      console.log("댓글 생성 완료", response)
+    } catch (error) {
+      console.log("댓글 생성 실패", error);
+      console.error("에러 상세:", error.response ? error.response.data : error.message);
+    }
+  }
+
   // 댓글 좋아요 토글
   const onClickCommentLike = () => {
     if (isCommentLiked) { // 좋아요 취소
@@ -61,9 +83,9 @@ export default function CommentDisplay({comment, setCommentCount, deleteComment}
     >
       <div
         css={css({
-            display: "flex",
-            alignItems: "center",
-          })}
+          display: "flex",
+          alignItems: "center",
+        })}
       >
         <div // 닉네임 + 작성일시
           css={css({
@@ -74,7 +96,10 @@ export default function CommentDisplay({comment, setCommentCount, deleteComment}
           })}
         >
           <b>{comment.data.nickname}</b>
-          <div css={css({fontSize: "13px", color: "#A5A5A5"})}>{dayjs(comment.data.createdDate).format('YY-MM-DD HH:mm')}</div>
+          <div css={css({
+            fontSize: "13px",
+            color: "#A5A5A5"
+          })}>{dayjs(comment.data.createdDate).format('YY-MM-DD HH:mm')}</div>
           <div
             onClick={openSubCommentInput}
             css={css({
@@ -133,7 +158,12 @@ export default function CommentDisplay({comment, setCommentCount, deleteComment}
           />
         ))
       )}
-      {isOpen && <SubCommentInput addSubComment={addSubComment}/>}
+      {isOpen &&
+        <SubCommentInput
+          addSubComment={addSubComment}
+          createSubComment={createSubComment}
+        />
+      }
     </div>
   )
 }

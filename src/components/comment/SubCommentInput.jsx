@@ -11,7 +11,7 @@ import dayjs from "dayjs";
 import {useSelector} from 'react-redux';
 import { BsArrowReturnRight } from "react-icons/bs";
 
-export default function SubCommentInput({ addSubComment }) {
+export default function SubCommentInput({ addSubComment, createSubComment }) {
   const myNickname = useSelector(state => state.nickname); // 리덕스: 내 닉네임
   const [content, setContent] = useState("");
   const [emojiPickerOpen, setEmojiPickerOpen] = useState(false);
@@ -22,16 +22,17 @@ export default function SubCommentInput({ addSubComment }) {
       return;
     }
 
-    const currentDate = dayjs().format('YY-MM-DD HH:mm');
+    // const currentDate = dayjs().format('YY-MM-DD HH:mm');
 
     const newSubComment = {
       nickname: myNickname,
-      currentDate,
       content,
     }
 
     // 부모 컴포넌트의 addComment 함수를 호출하여 댓글 추가
     addSubComment(newSubComment);
+    // 대댓글 생성 연동 함수
+    createSubComment(newSubComment);
     setContent(""); // 입력 필드를 초기화
     setEmojiPickerOpen(false); // 이모지 선택 창 닫기
   }

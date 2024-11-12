@@ -21,7 +21,7 @@ export default function CommentInput({ addComment, createComment }) {
       return;
     }
 
-    const currentDate = dayjs().format('YY-MM-DD HH:mm');
+    // const currentDate = dayjs().format('YY-MM-DD HH:mm');
 
     const newComment = {
       nickname: myNickname,

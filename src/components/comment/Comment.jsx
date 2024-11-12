@@ -41,7 +41,6 @@ export default function Comment({subTimeline}) {
       console.log("삭제 에러 발생:", error);
       console.error("삭제 에러 상세:", error.response ? error.response.data : error.message);
     }
-
   }
 
   // 댓글 생성 연동

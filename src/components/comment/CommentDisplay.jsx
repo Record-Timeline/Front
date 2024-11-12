@@ -39,8 +39,24 @@ export default function CommentDisplay({comment, setCommentCount, deleteComment}
     console.log("대댓글", subComments);
   }
 
-  // 대댓글 삭제 함수
-  const deleteSubComment = (targetIndex) => {
+  // 대댓글 삭제 함수 + 삭제 연동
+  const deleteSubComment = async (targetIndex) => {
+    const subCommentId = subComments[targetIndex].data.id;
+    // 연동 코드
+    try {
+      const response = await axiosInstance.delete(`/api/v1/replies/${subCommentId}`)
+      setSubComments(subComments.filter((_, index) => index !== targetIndex));
+      setSubCommentCount((prevCount) => prevCount - 1);
+
+      console.log("대댓글 삭제 완료", response.data)
+
+      // 삭제후 대댓글 다시 조회
+      await fetchSubComments();
+      console.log(subComments);
+    } catch (error) {
+      console.log("삭제 에러 발생:", error);
+      console.error("삭제 에러 상세:", error.response ? error.response.data : error.message);
+    }
     setSubComments(subComments.filter((_, index) => index !== targetIndex));
     setSubCommentCount((prevCount) => prevCount - 1);
   }
@@ -171,6 +187,7 @@ export default function CommentDisplay({comment, setCommentCount, deleteComment}
           <SubCommentDisplay
             key={index}
             subComment={subComment}
+            setSubCommentCount={setSubCommentCount}
             deleteSubComment={() => deleteSubComment(index)}
           />
         ))

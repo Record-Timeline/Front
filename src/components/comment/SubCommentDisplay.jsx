@@ -6,10 +6,11 @@ import {FaRegTrashAlt} from "react-icons/fa";
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import Checkbox from "@mui/material/Checkbox";
+import dayjs from "dayjs";
 
 const label = {inputProps: {'aria-label': 'Checkbox demo'}};
 
-export default function CommentDisplay({subComment, deleteSubComment}) {
+export default function SubCommentDisplay({subComment, setSubCommentCount, deleteSubComment}) {
   const [isCommentLiked, setIsCommentLiked] = useState(false); // 대댓글 좋아요 상태
   const [commentLike, setCommentLike] = useState(7); // 대댓글 좋아요 수
 
@@ -47,8 +48,10 @@ export default function CommentDisplay({subComment, deleteSubComment}) {
             // border: "1px solid red",
           })}
         >
-          <b>{subComment.nickname}</b>
-          <div css={css({fontSize: "13px", color: "#A5A5A5"})}>{subComment.currentDate}</div>
+          <b>{subComment.data.nickname}</b>
+          <div css={css({fontSize: "13px", color: "#A5A5A5"})}>
+            {dayjs(subComment.data.createdDate).format('YY-MM-DD HH:mm')}
+          </div>
         </div>
         <div css={css({display: "flex", alignItems: "center", fontSize: "15px"})}>
           <Checkbox
@@ -84,7 +87,7 @@ export default function CommentDisplay({subComment, deleteSubComment}) {
           // border: "1px solid red",
         })}
       >
-        {subComment.content}
+        {subComment.data.content}
       </div>
       <hr css={css({marginTop: "20px", border: "1px solid #E9E9E9"})}/>
     </div>

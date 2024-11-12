@@ -15,7 +15,7 @@ export default function MainTimeline() {
   // 프로필 상태 추가
   const [profile, setProfile] = useState(null);
   // 멤버 아이디
-  const [memberId, setmemberId] = useState(0)
+  const [memberId, setMemberId] = useState(0)
 
   // 새 타임라인 입력 항목 추가하는 함수
   const addInput = () => {
@@ -42,7 +42,7 @@ export default function MainTimeline() {
     try {
       const response = await axiosInstance.get(`/api/v1/my-profile`);
       setProfile(response.data);
-      setmemberId(response.data.memberId);
+      setMemberId(response.data.memberId);
       console.log("프로필 조회 완료", response);
 
       // 프로필 조회가 완료된 후 메인 타임라인 조회 호출

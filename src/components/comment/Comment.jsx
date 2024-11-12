@@ -23,10 +23,25 @@ export default function Comment({subTimeline}) {
     console.log(comments);
   }
 
-  // 댓글 삭제 함수
-  const deleteComment = (targetIndex) => {
-    setComments(comments.filter((_, index) => index !== targetIndex));
-    setCommentCount((prevCount) => prevCount - 1);
+  // 댓글 삭제 함수 + 삭제 연동
+  const deleteComment = async (targetIndex) => {
+    const commentId = comments[targetIndex].data.id;
+    // 연동 코드
+    try {
+      const response = await axiosInstance.delete(`/api/v1/comments/${commentId}`);
+      setComments(comments.filter((_, index) => index !== targetIndex));
+      setCommentCount((prevCount) => prevCount - 1);
+
+      console.log("댓글 삭제 완료", response.data)
+
+      // 삭제 후 댓글 다시 조회
+      await fetchComments();
+      console.log(comments)
+    } catch (error) {
+      console.log("삭제 에러 발생:", error);
+      console.error("삭제 에러 상세:", error.response ? error.response.data : error.message);
+    }
+
   }
 
   // 댓글 생성 연동

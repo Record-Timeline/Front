@@ -101,6 +101,11 @@ export default function Search() {
             placeholder="검색어를 입력해주세요"
             value={searchKeyword}
             onChange={(e) => setSearchKeyword(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSearch(); // 엔터 키 입력 시 handleSearch 호출
+              }
+            }}
           ></input>
           <SearchIcon
             style={{

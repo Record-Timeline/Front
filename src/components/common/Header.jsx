@@ -8,11 +8,16 @@ import React, { useState, useEffect } from "react";
 import { Popover, Typography, Box } from "@mui/material";
 import axiosInstance from "../../utils/axiosInstance";
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { useNavigate } from 'react-router-dom';
+
 export default function Header(props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [unreadCount, setUnreadCount] = useState(0); // 안 읽은 알림 개수
+
+  const navigate = useNavigate();
 
   // 알림 api
   useEffect(() => {
@@ -34,7 +39,17 @@ export default function Header(props) {
       }
     };
 
+    const fetchUnreadCount = async () => {
+      try {
+        const response = await axiosInstance.get("/api/v1/notifications/unread/count");
+        setUnreadCount(response.data.result); // unreadCount 상태 업데이트
+      } catch (error) {
+        console.error("Unread count fetch failed:", error);
+      }
+    };
+
     fetchNotifications();
+    fetchUnreadCount();
   }, []);
 
   // 알림 버튼 클릭 핸들러
@@ -67,6 +82,24 @@ export default function Header(props) {
   };
 
   const isLoggedIn = !!localStorage.getItem("token"); // 로그인 여부 확인
+
+  // 알림 클릭 시 호출되는 함수
+  const handleNotificationNavigation = async (notification) => {
+    try {
+      // 알림 읽음 상태로 변경하는 API 호출
+      await axiosInstance.put(`/api/v1/notifications/${notification.id}/read`);
+
+      // 알림 유형에 따라 이동 처리
+      if (notification.type === 'FOLLOW' && notification.followerId) {
+        navigate(`/othersmain/${notification.followerId}`);
+      } else if (notification.postId) {
+        navigate(`/othersmain/${notification.postId}`);
+      }
+    } catch (error) {
+      console.error(`Failed to mark notification ${notification.id} as read:`, error);
+    }
+  };
+
 
   return (
     <div
@@ -116,15 +149,34 @@ export default function Header(props) {
         )}
       </div>
       {isLoggedIn && ( // 로그인된 경우에만 알림 아이콘을 렌더링
-        <NotificationsIcon
-          style={{
-            fontSize: "30px",
-            cursor: "pointer",
-            color: "#525252",
-            margin: "0px 0px 0px 20px",
-          }}
-          onClick={handleNotificationClick}
-        />
+        <div style={{ position: 'relative' }}>
+          <NotificationsIcon
+            style={{
+              fontSize: "30px",
+              cursor: "pointer",
+              color: "#525252",
+              margin: "5px 2px 0px 20px",
+            }}
+            onClick={handleNotificationClick}
+          />
+          {unreadCount > 0 && ( // 안읽은 알림이 있을 경우 개수 표시
+            <span
+              style={{
+                position: 'absolute',
+                top: '0px',
+                right: '-5px',
+                backgroundColor: '#829fd7',
+                color: 'white',
+                borderRadius: '50%',
+                padding: '2px 7px',
+                fontSize: '11px',
+                fontWeight: 'bold',
+              }}
+            >
+              {unreadCount}
+            </span>
+          )}
+        </div>
       )}
       <Popover
         id={id}
@@ -196,9 +248,10 @@ export default function Header(props) {
                       paddingBottom: index === notifications.length - 1 ? 0 : "20px", // 마지막 알림에는 paddingBottom을 0으로 설정
                       borderBottom: index === notifications.length - 1 ? "none" : "1px solid #E4E4E4", // 마지막 알림에는 borderBottom을 제거
                       fontWeight: notification.read ? "normal" : "bold", // 읽은 상태에 따라 글자 두께 설정
-                      opacity: notification.read ? 0.6 : 1, // 읽은 상태에 따라 불투명도 조절
+                      opacity: notification.read ? 0.4 : 1, // 읽은 상태에 따라 불투명도 조절
                       cursor: 'pointer',
                     }}
+                    onClick={() => handleNotificationNavigation(notification)}
                   >
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <div style={{ display: 'flex', alignItems: 'center' }}>

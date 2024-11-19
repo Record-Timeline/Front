@@ -263,7 +263,7 @@ export default function OthersSubTimelinePost({item}) {
         />
         <p css={css({display: "inline-block", marginRight: "20px"})}>{bookmark}</p>
       </div>
-      <Comment/>
+      <Comment subTimeline={item} />
     </div>
   )
 }

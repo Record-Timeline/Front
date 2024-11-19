@@ -15,7 +15,7 @@ import {useSelector} from "react-redux";
 const label = {inputProps: {'aria-label': 'Checkbox demo'}};
 
 export default function CommentDisplay({comment, setCommentCount, deleteComment}) {
-  const myMemberId = useSelector(state => state.memberId); // 리덕스 멤버 아이디
+  const myNickname = useSelector(state => state.nickname); // 리덕스: 내 닉네임
 
   const [isCommentLiked, setIsCommentLiked] = useState(false); // 댓글 좋아요 상태
   const [commentLike, setCommentLike] = useState(10); // 댓글 좋아요 수
@@ -63,19 +63,53 @@ export default function CommentDisplay({comment, setCommentCount, deleteComment}
 
   // 대댓글 생성 연동
   const createSubComment = async (newSubComment) => {
+    // 낙관적 업데이트 : 프론트엔드에 임시 댓글을 먼저 추가
+    const tempSubComment = {
+      type: "item",
+      data: {
+        id: Date.now(),
+        nickname: myNickname,
+        content: newSubComment.content,
+        createDate: new Date().toISOString(),
+      }
+    }
+
+    // 1. 상태에 임시 대댓글 추가
+    addSubComment(tempSubComment);
+
     try {
+      // 2. 서버에 대댓글 저장 요청 (대댓글 생성)
       const response = await axiosInstance.post(
         `/api/v1/replies`,
         {
           "commentId": comment.data.id,
-          "memberId": myMemberId,
           "content": newSubComment.content,
         }
       )
+
+      // 3. 서버 응답으로 상태 업데이트
+      const savedSubComment = {
+        type: "item",
+        data: response.data,
+      }
+
+      await fetchSubComments();
+
+      setSubComments((prevSubComments) =>
+        prevSubComments.map((subComment) =>
+          subComment.data.id === tempSubComment.data.id ? savedSubComment : subComment
+        )
+      );
+
       console.log("대댓글 생성 완료", response)
     } catch (error) {
       console.log("대댓글 생성 실패", error);
       console.error("에러 상세:", error.response ? error.response.data : error.message);
+
+      // 4. 서버 요청 실패 시 임시 대댓글 롤백
+      setSubComments((prevSubComments) =>
+        prevSubComments.filter((subComment) => subComment.data.id !== tempSubComment.data.id)
+      );
     }
   }
 
@@ -85,6 +119,7 @@ export default function CommentDisplay({comment, setCommentCount, deleteComment}
       const response = await axiosInstance.get(`/api/v1/replies/comment/${comment.data.id}`);
       setSubComments(response.data.map(item => ({ type: "item", data: item })));
       console.log("대댓글 조회 완료")
+      console.log(response.data);
     } catch (error) {
       console.log("대댓글 조회 실패", error);
       console.error("에러 상세:", error.response ? error.response.data : error.message);
@@ -95,6 +130,14 @@ export default function CommentDisplay({comment, setCommentCount, deleteComment}
     fetchSubComments();
     console.log(subComments);
   }, [])
+
+
+  if(!comment?.data) {
+    console.log("Comment data is missing or undefined");
+    return null; // 데이터가 없을 경우 렌더링하지 않음
+  }
+
+  const { nickname, content, createdDate } = comment.data
 
   // 댓글 좋아요 토글
   const onClickCommentLike = () => {
@@ -128,7 +171,7 @@ export default function CommentDisplay({comment, setCommentCount, deleteComment}
             // border: "1px solid red",
           })}
         >
-          <b>{comment.data.nickname}</b>
+          <b>{comment.data.nickname || "익명"}</b>
           <div css={css({
             fontSize: "13px",
             color: "#A5A5A5"
@@ -179,10 +222,10 @@ export default function CommentDisplay({comment, setCommentCount, deleteComment}
           // border: "1px solid red",
         })}
       >
-        {comment.data.content}
+        {comment.data.content || "내용 없음"}
       </div>
       <hr css={css({marginTop: "20px", border: "1px solid #E9E9E9"})}/>
-      {subCommentCount > 0 && (
+      {subComments.length > 0 && (
         subComments.map((subComment, index) => (
           <SubCommentDisplay
             key={index}

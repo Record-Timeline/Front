@@ -7,31 +7,42 @@ import TextField from '@mui/material/TextField';
 import EmojiPicker from 'emoji-picker-react';
 import {FaRegSmile} from "react-icons/fa";
 import {EmojiClickData} from "emoji-picker-react";
-import dayjs from "dayjs";
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
 export default function CommentInput({ addComment, createComment }) {
   const myNickname = useSelector(state => state.nickname); // 리덕스: 내 닉네임
+
   const [content, setContent] = useState("");
   const [emojiPickerOpen, setEmojiPickerOpen] = useState(false);
 
-  const handleSave = () => {
-    if (content === "") { // 내용이 비어있을 때는 추가하지 않음
+  const handleSave = async () => {
+    if (content.trim() === "") { // 내용이 비어있을 때는 추가하지 않음 + 공백이 있는 댓글 방지
       console.log("내용을 입력해주세요. alert Dialog 창 넣기");
       return;
     }
 
-    // const currentDate = dayjs().format('YY-MM-DD HH:mm');
-
     const newComment = {
-      nickname: myNickname,
       content,
     }
 
     // 부모 컴포넌트의 addComment 함수를 호출하여 댓글 추가
-    addComment(newComment);
-    // 댓글 생성 연동 함수
-    createComment(newComment);
+    // 1. 상태에 임시 댓글 추가
+    // addComment(newComment);
+    addComment({
+      id: Date.now(),
+      nickname: myNickname,
+      createAt: new Date().toISOString(),
+      content: newComment.content,
+    })
+
+    // 2. 서버에 댓글 생성 요청 (댓글 생성 연동 함수)
+    // createComment(newComment);
+    try {
+      await createComment(newComment);
+    } catch (error) {
+      console.log("댓글 생성 실패!", error)
+    }
+
     setContent(""); // 입력 필드를 초기화
     setEmojiPickerOpen(false); // 이모지 선택 창 닫기
   }

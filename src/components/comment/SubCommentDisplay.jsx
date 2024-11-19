@@ -14,6 +14,13 @@ export default function SubCommentDisplay({subComment, setSubCommentCount, delet
   const [isCommentLiked, setIsCommentLiked] = useState(false); // 대댓글 좋아요 상태
   const [commentLike, setCommentLike] = useState(7); // 대댓글 좋아요 수
 
+  if(!subComment?.data) {
+    console.log("Sub Comment data is missing or undefined");
+    return null; // 데이터가 없을 경우 렌더링하지 않음
+  }
+
+  const { nickname, content, createdDate } = subComment.data
+
   // 대댓글 좋아요 토글
   const onClickCommentLike = () => {
     if (isCommentLiked) { // 좋아요 취소
@@ -48,7 +55,7 @@ export default function SubCommentDisplay({subComment, setSubCommentCount, delet
             // border: "1px solid red",
           })}
         >
-          <b>{subComment.data.nickname}</b>
+          <b>{subComment.data.nickname || "익명"}</b>
           <div css={css({fontSize: "13px", color: "#A5A5A5"})}>
             {dayjs(subComment.data.createdDate).format('YY-MM-DD HH:mm')}
           </div>

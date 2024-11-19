@@ -7,10 +7,9 @@ import CommentDisplay from "./CommentDisplay";
 import CommentInput from "./CommentInput";
 import NoneData from "../common/NoneData";
 import axiosInstance from "../../utils/axiosInstance";
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
 export default function Comment({subTimeline}) {
-  const myMemberId = useSelector(state => state.memberId);
   const myNickname = useSelector(state => state.nickname); // 리덕스: 내 닉네임
 
   const [comments, setComments] = useState([]);
@@ -45,21 +44,55 @@ export default function Comment({subTimeline}) {
 
   // 댓글 생성 연동
   const createComment = async (newComment) => {
+    // 낙관적 업데이트 : 프론트엔드에 임시 댓글을 먼저 추가
+    const tempComment = {
+      type: "item",
+      data: {
+        id: Date.now(), // 임시 ID
+        nickname: myNickname, // 리덕스에서 가져온 사용자 닉네임
+        content: newComment.content,
+        createdAt: new Date().toISOString(), // 현재 시간
+      }
+    }
+
+    // 1. 프론트엔드 상태에 임시 댓글 추가
+    addComment(tempComment);
+
     try {
+      // 2. 서버에 댓글 저장 요청 (댓글 생성)
       const response = await axiosInstance.post(
         `/api/v1/comments`,
         {
           "subTimelineId": subTimeline.id,
-          "memberId": myMemberId,
           "content": newComment.content,
         }
       )
+
+      // 3. 서버 응답으로 상태 업데이트
+      const savedComment = {
+        type: "item",
+        data: response.data,
+      };
+
+      await fetchComments();
+
+      setComments((prevComments) =>
+        prevComments.map((comment) =>
+          comment.data.id === tempComment.data.id ? savedComment : comment
+        )
+      );
+
       console.log("댓글 생성 완료", response)
     } catch (error) {
       console.log("댓글 생성 실패", error);
       console.error("에러 상세:", error.response ? error.response.data : error.message);
+
+      // 4. 서버 요청 실패 시 임시 댓글 롤백
+      setComments((prevComments) =>
+        prevComments.filter((comment) => comment.data.id !== tempComment.data.id)
+      );
     }
-  }
+  };
 
   // 댓글 조회 연동
   const fetchComments = async () => {
@@ -68,7 +101,7 @@ export default function Comment({subTimeline}) {
       setComments(response.data.map(item => ({ type: "item", data: item })));
       console.log("댓글 조회 완료", response)
     } catch (error) {
-      console.log("댓글 생성 실패", error);
+      console.log("댓글 조회 실패", error);
       console.error("에러 상세:", error.response ? error.response.data : error.message);
     }
   }

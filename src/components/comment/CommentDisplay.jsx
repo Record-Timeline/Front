@@ -205,16 +205,18 @@ export default function CommentDisplay({comment, setCommentCount, deleteComment}
           />
           {commentLike}
         </div>
-        <FaRegTrashAlt
-          onClick={deleteComment}
-          css={css({
-            fontSize: "13px",
-            color: "#E89494",
-            cursor: "pointer",
-            marginLeft: "15px",
-            marginRight: "5px",
-          })}
-        />
+        {comment.data.nickname === myNickname && (
+          <FaRegTrashAlt
+            onClick={deleteComment}
+            css={css({
+              fontSize: "13px",
+              color: "#E89494",
+              cursor: "pointer",
+              marginLeft: "15px",
+              marginRight: "5px",
+            })}
+          />
+        )}
       </div>
       <div // 댓글 내용
         css={css({

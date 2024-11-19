@@ -59,7 +59,6 @@ export default function Comment({subTimeline}) {
     addComment(tempComment);
 
     try {
-      // 2. 서버에 댓글 저장 요청 (댓글 생성)
       const response = await axiosInstance.post(
         `/api/v1/comments`,
         {

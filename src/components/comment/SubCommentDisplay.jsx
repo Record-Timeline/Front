@@ -7,10 +7,13 @@ import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import Checkbox from "@mui/material/Checkbox";
 import dayjs from "dayjs";
+import {useSelector} from "react-redux";
 
 const label = {inputProps: {'aria-label': 'Checkbox demo'}};
 
 export default function SubCommentDisplay({subComment, setSubCommentCount, deleteSubComment}) {
+  const myNickname = useSelector(state => state.nickname); // 리덕스: 내 닉네임
+
   const [isCommentLiked, setIsCommentLiked] = useState(false); // 대댓글 좋아요 상태
   const [commentLike, setCommentLike] = useState(7); // 대댓글 좋아요 수
 
@@ -77,16 +80,18 @@ export default function SubCommentDisplay({subComment, setSubCommentCount, delet
           />
           {commentLike}
         </div>
-        <FaRegTrashAlt
-          onClick={deleteSubComment}
-          css={css({
-            fontSize: "13px",
-            color: "#E89494",
-            cursor: "pointer",
-            marginLeft: "15px",
-            marginRight: "5px",
-          })}
-        />
+        {subComment.data.nickname === myNickname && (
+          <FaRegTrashAlt
+            onClick={deleteSubComment}
+            css={css({
+              fontSize: "13px",
+              color: "#E89494",
+              cursor: "pointer",
+              marginLeft: "15px",
+              marginRight: "5px",
+            })}
+          />
+        )}
       </div>
       <div // 대댓글 내용
         css={css({

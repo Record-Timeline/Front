@@ -12,6 +12,8 @@ import {
   FormControlLabel,
   Checkbox,
 } from "@mui/material";
+import {useSelector, useDispatch} from "react-redux";
+import {setIsGenerating} from "../../actions/actions";
 
 export default function PdfShareButton( { type, subTimelineItems = [] }) {
   const [open, setOpen] = useState(false);
@@ -24,8 +26,12 @@ export default function PdfShareButton( { type, subTimelineItems = [] }) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const isGenerating = useSelector((state) => state.isGenerating);
+  const dispatch = useDispatch();
+
   // PDF 저장 기능
   const generatePDF = async () => {
+    dispatch(setIsGenerating(true));
     const timelineElement = document.querySelector("#timeline");
     const button = document.querySelector("#button");
     button.style.display = "none"; // 버튼 숨기기
@@ -41,10 +47,19 @@ export default function PdfShareButton( { type, subTimelineItems = [] }) {
     const pageHeight = pdf.internal.pageSize.getHeight();
 
     // 여백 설정
-    const marginTop = 10;
-    const marginBottom = 10;
-    const marginLeft = -70;
-    const marginRight = -70;
+    let marginTop, marginBottom, marginLeft, marginRight;
+
+    if (type === "sub") {
+      marginTop = 15;
+      marginBottom = 15;
+      marginLeft = -10;
+      marginRight = 100;
+    } else {
+      marginTop = 10;
+      marginBottom = 10;
+      marginLeft = -70;
+      marginRight = -70;
+    }
 
     // 이미지의 실제 크기 계산 (픽셀 단위에서 밀리미터 단위로 변환)
     const imgProps = pdf.getImageProperties(imageData);
@@ -69,6 +84,7 @@ export default function PdfShareButton( { type, subTimelineItems = [] }) {
     // PDF 저장
     pdf.save("timeline.pdf");
     button.style.display = "flex"; // 버튼 다시 표시
+    dispatch(setIsGenerating(false));
   };
 
   // pdf 공유 버튼 클릭했을 때

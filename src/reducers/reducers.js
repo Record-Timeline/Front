@@ -27,6 +27,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         memberId: action.payload,
       };
+    case 'SET_IS_GENERATING':
+      return {
+        ...state,
+        isGenerating: action.payload,
+      };
     default:
       return state;
   }

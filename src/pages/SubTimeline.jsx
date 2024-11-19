@@ -25,6 +25,8 @@ export default function SubTimeline() {
   const [subTimelineItems, setSubTimelineItems] = useState([]); // 타임라인 항목들을 관리할 상태 생성
   const [selectedItem, setSelectedItem] = useState(null);
 
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
+
   const handleSelectItem = (item) => {
     setSelectedItem(item);
   };
@@ -204,7 +206,7 @@ export default function SubTimeline() {
       >
         {/* pdf 공유 버튼 */}
         <PdfShareButton type={'sub'} subTimelineItems={subTimelineItems}/>
-        <div id="timeline">
+
         <div // 포스팅 박스 전체
           css={css({
             width: "760px",
@@ -234,53 +236,54 @@ export default function SubTimeline() {
             )
           )}
         </div>
-        <div // 서브 타임라인 박스
-          css={css({
-            marginTop: "50px",
-            marginLeft: "45px",
-            display: "inline-block", // 포스팅과 나란히 두기 위함 (div 두 개 나란히 두기)
-            // border: "1px solid black",
-          })}
-        >
-          <div // 서브 타임라인 제목
+        <div id="timeline">
+          <div // 서브 타임라인 박스
             css={css({
-              width: "280px",
-              textAlign: "center",
-              margin: "0 auto", // 가운데 정렬을 하기 위함
-              // overflow: "hidden",
-              // border: "4px solid #f8f6f6",
+              marginTop: "50px",
+              marginLeft: "45px",
+              display: "inline-block", // 포스팅과 나란히 두기 위함 (div 두 개 나란히 두기)
+              // border: "1px solid black",
             })}
           >
-            <h1>{title}</h1> {/* 메인 타임라인 제목 */}
+            <div // 서브 타임라인 제목
+              css={css({
+                width: "280px",
+                textAlign: "center",
+                margin: "0 auto", // 가운데 정렬을 하기 위함
+                // overflow: "hidden",
+                // border: "4px solid #f8f6f6",
+              })}
+            >
+              <h1>{title}</h1> {/* 메인 타임라인 제목 */}
+            </div>
+            {subTimelineItems.map((item, index) => (
+              <SubTimelineItem
+                key={index}
+                subTimelineId={item.id}
+                startDate={item.startDate}
+                endDate={item.endDate}
+                title={item.title}
+                done={item.done}
+                isPublic={item.isPublic}
+                onClick={() => handleSelectItem(item)}
+                showLine={index !== subTimelineItems.length - 1} // 마지막 아이템에는 선을 표시하지 않음
+              />
+            ))}
+            <Button
+              id="button"
+              onClick={handleCreateNew}
+              width="300px"
+              height="100px"
+              margin="45px auto"
+              backgroundColor="#f8f6f6"
+              textColor="#717171"
+              fontSize="35px"
+              border="none"
+              borderRadius="50px"
+            >
+              +
+            </Button>
           </div>
-          {subTimelineItems.map((item, index) => (
-            <SubTimelineItem
-              key={index}
-              subTimelineId={item.id}
-              startDate={item.startDate}
-              endDate={item.endDate}
-              title={item.title}
-              done={item.done}
-              isPublic={item.isPublic}
-              onClick={() => handleSelectItem(item)}
-              showLine={index !== subTimelineItems.length - 1} // 마지막 아이템에는 선을 표시하지 않음
-            />
-          ))}
-          <Button
-            id="button"
-            onClick={handleCreateNew}
-            width="300px"
-            height="100px"
-            margin="45px auto"
-            backgroundColor="#f8f6f6"
-            textColor="#717171"
-            fontSize="35px"
-            border="none"
-            borderRadius="50px"
-          >
-            +
-          </Button>
-        </div>
         </div>
       </div>
     </div>

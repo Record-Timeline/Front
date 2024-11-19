@@ -37,7 +37,6 @@ export default function Main() {
     "미디어/문화/스포츠": "Media_Culture_Sports",
   };
 
-
   const [hoveredInterest, setHoveredInterest] = useState(null); // 관심분야 호버 상태
   const [selectedInterest, setSelectedInterest] = useState(null); // 선택한 관심분야
   const [englishInterest, setEnglishInterest] = useState(null); // 연동에 사용할 영문 관심분야

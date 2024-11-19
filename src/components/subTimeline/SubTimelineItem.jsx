@@ -6,9 +6,13 @@ import {FiLock, FiUnlock} from "react-icons/fi";
 import AlertDialog from "../common/AlertDialog";
 import dayjs from "dayjs";
 import axiosInstance from "../../utils/axiosInstance";
+import { useDispatch, useSelector } from 'react-redux';
 
-function SubTimelineItem({subTimelineId, startDate, endDate, title, done, isPublic, onClick, showLine}) {
+function SubTimelineItem({subTimelineId, startDate, endDate, title, done, isPublic, onClick, showLine }) {
   const [isDone, setIsDone] = useState(done); // 진행중 체크
+
+  const dispatch = useDispatch();
+  const isGenerating = useSelector((state) => state.isGenerating);
 
   // 진행중 (isDone) 연동
   const onClickIsDone = async () => {
@@ -54,7 +58,7 @@ function SubTimelineItem({subTimelineId, startDate, endDate, title, done, isPubl
     <div // 회색 타임라인 박스
       css={css({
         position: "relative",
-        width: "310px",
+        width: isGenerating ? "610px" : "310px",
         height: "100px",
         background: "#f8f6f6",
         borderRadius: "50px",

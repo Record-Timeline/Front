@@ -17,3 +17,8 @@ export const setMemberId = (memberId) => ({
   type: 'SET_MEMBER_ID',
   payload: memberId,
 });
+
+export const setIsGenerating = (isGenerating) => ({
+  type: 'SET_IS_GENERATING',
+  payload: isGenerating,
+});

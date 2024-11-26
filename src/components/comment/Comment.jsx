@@ -13,12 +13,12 @@ export default function Comment({subTimeline}) {
   const myNickname = useSelector(state => state.nickname); // 리덕스: 내 닉네임
 
   const [comments, setComments] = useState([]);
-  const [commentCount, setCommentCount] = useState(0);
+  const [commentCount, setCommentCount] = useState(subTimeline.totalCommentAndReplyCount);
 
   // 댓글 추가(저장)하는 함수
   const addComment = (newComment) => {
     setComments((prevComments) => [...prevComments, newComment]);
-    setCommentCount((prevCount) => prevCount + 1);
+    // setCommentCount((prevCount) => prevCount + 1);
     console.log(comments);
   }
 
@@ -29,12 +29,13 @@ export default function Comment({subTimeline}) {
     try {
       const response = await axiosInstance.delete(`/api/v1/comments/${commentId}`);
       setComments(comments.filter((_, index) => index !== targetIndex));
-      setCommentCount((prevCount) => prevCount - 1);
+      // setCommentCount((prevCount) => prevCount - 1);
 
       console.log("댓글 삭제 완료", response.data)
 
-      // 삭제 후 댓글 다시 조회
+      // 삭제 후 댓글, 댓글 수 다시 조회
       await fetchComments();
+      await fetchCommentsCount();
       console.log(comments)
     } catch (error) {
       console.log("삭제 에러 발생:", error);
@@ -74,12 +75,14 @@ export default function Comment({subTimeline}) {
       };
 
       await fetchComments();
+      await fetchCommentsCount();
 
       setComments((prevComments) =>
         prevComments.map((comment) =>
           comment.data.id === tempComment.data.id ? savedComment : comment
         )
       );
+
 
       console.log("댓글 생성 완료", response)
     } catch (error) {
@@ -105,8 +108,21 @@ export default function Comment({subTimeline}) {
     }
   }
 
+  // 댓글 수 연동
+  const fetchCommentsCount = async () => {
+    try {
+      const response = await axiosInstance.get(`/api/v1/comments/sub-timeline/${subTimeline.id}/count`)
+      setCommentCount(response.data.totalCount)
+      console.log("댓글 수 조회 완료", response.data)
+    } catch (error) {
+      console.log("댓글 조회 실패", error);
+      console.error("에러 상세:", error.response ? error.response.data : error.message);
+    }
+  }
+
   useEffect(() => {
     fetchComments();
+    fetchCommentsCount();
     console.log(comments)
   }, [subTimeline])
 

@@ -22,7 +22,6 @@ export default function CommentDisplay({comment, updateCommentCount, deleteComme
 
   // 대댓글 상태 관리
   const [subComments, setSubComments] = useState([]);
-  const [subCommentCount, setSubCommentCount] = useState(0);
   const [isOpen, setIsOpen] = useState(false); // 대댓글 input 컴포넌트
 
   // 대댓글 입력창 open 함수
@@ -44,7 +43,6 @@ export default function CommentDisplay({comment, updateCommentCount, deleteComme
     try {
       const response = await axiosInstance.delete(`/api/v1/replies/${subCommentId}`)
       setSubComments(subComments.filter((_, index) => index !== targetIndex));
-      setSubCommentCount((prevCount) => prevCount - 1);
 
       console.log("대댓글 삭제 완료", response.data)
 
@@ -56,8 +54,7 @@ export default function CommentDisplay({comment, updateCommentCount, deleteComme
       console.log("삭제 에러 발생:", error);
       console.error("삭제 에러 상세:", error.response ? error.response.data : error.message);
     }
-    setSubComments(subComments.filter((_, index) => index !== targetIndex));
-    setSubCommentCount((prevCount) => prevCount - 1);
+    // setSubComments(subComments.filter((_, index) => index !== targetIndex));
   }
 
   // 대댓글 생성 연동
@@ -140,14 +137,29 @@ export default function CommentDisplay({comment, updateCommentCount, deleteComme
   const { nickname, content, createdDate } = comment.data
 
   // 댓글 좋아요 토글
-  const onClickCommentLike = () => {
-    if (isCommentLiked) { // 좋아요 취소
-      setIsCommentLiked(false);
-      setCommentLike(commentLike - 1);
-    } else { // 좋아요 완료
-      setIsCommentLiked(true);
-      setCommentLike(commentLike + 1);
+  const onClickCommentLike = async () => {
+    if (isCommentLiked) {
+      // 좋아요 취소 연동
+      try {
+        const response = await axiosInstance.post(`/api/v1/comments/${comment.data.id}/like`)
+        setCommentLike(response.data.likeCount); // 좋아요 수 갱신
+        console.log("댓글 좋아요 취소 완료", response)
+      } catch (error) {
+        console.log("댓글 좋아용 취소 오류", error);
+        console.error("에러 상세:", error.response ? error.response.data : error.message);
+      }
+    } else {
+      // 좋아요 연동
+      try {
+        const response = await axiosInstance.post(`/api/v1/comments/${comment.data.id}/like`)
+        setCommentLike(response.data.likeCount); // 좋아요 수 갱신
+        console.log("댓글 좋아요 완료", response)
+      } catch (error) {
+        console.log("댓글 좋아용 오류", error);
+        console.error("에러 상세:", error.response ? error.response.data : error.message);
+      };
     }
+    setIsCommentLiked(!isCommentLiked); // 좋아요 상태 토글
   }
 
   return (
@@ -232,7 +244,6 @@ export default function CommentDisplay({comment, updateCommentCount, deleteComme
           <SubCommentDisplay
             key={index}
             subComment={subComment}
-            setSubCommentCount={setSubCommentCount}
             deleteSubComment={() => deleteSubComment(index)}
           />
         ))

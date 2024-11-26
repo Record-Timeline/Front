@@ -28,7 +28,6 @@ export default function Comment({subTimeline}) {
     try {
       const response = await axiosInstance.delete(`/api/v1/comments/${commentId}`);
       setComments(comments.filter((_, index) => index !== targetIndex));
-      // setCommentCount((prevCount) => prevCount - 1);
 
       console.log("댓글 삭제 완료", response.data)
 

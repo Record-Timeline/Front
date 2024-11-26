@@ -103,31 +103,6 @@ export default function ReadSubTimelinePost({item, onDelete, onEdit}) {
     setIsLiked(!isLiked); // 좋아요 상태 토글
   }
 
-  // 진행중 (isDone) 연동
-  const onClickIsDone = async () => {
-    if (isDone) {
-      // 체크 해제 연동
-      try {
-        const response = await axiosInstance.put(`/api/v1/sub-timelines/${item.id}/toggle-done`);
-        setIsDone(false);
-        console.log("진행중 체크 해제 완료", response);
-      } catch (error) {
-        console.log("진행중 체크 해제 오류", error);
-        console.error("에러 상세:", error.response ? error.response.data : error.message);
-      }
-    } else {
-      // 체크 연동
-      try {
-        const response = await axiosInstance.put(`/api/v1/sub-timelines/${item.id}/toggle-done`);
-        setIsDone(true);
-        console.log("진행중 체크 완료", response)
-      } catch (error) {
-        console.log("진행중 체크 오류", error);
-        console.error("에러 상세:", error.response ? error.response.data : error.message);
-      }
-    }
-  }
-
   const onClickBookmark = async () => {
     if (isBookmarked) {
       // 북마크 취소 연동
@@ -163,6 +138,31 @@ export default function ReadSubTimelinePost({item, onDelete, onEdit}) {
       }
     }
     setIsBookmarked(!isBookmarked); // 북마크 상태 토글
+  }
+
+  // 진행중 (isDone) 연동
+  const onClickIsDone = async () => {
+    if (isDone) {
+      // 체크 해제 연동
+      try {
+        const response = await axiosInstance.put(`/api/v1/sub-timelines/${item.id}/toggle-done`);
+        setIsDone(false);
+        console.log("진행중 체크 해제 완료", response);
+      } catch (error) {
+        console.log("진행중 체크 해제 오류", error);
+        console.error("에러 상세:", error.response ? error.response.data : error.message);
+      }
+    } else {
+      // 체크 연동
+      try {
+        const response = await axiosInstance.put(`/api/v1/sub-timelines/${item.id}/toggle-done`);
+        setIsDone(true);
+        console.log("진행중 체크 완료", response)
+      } catch (error) {
+        console.log("진행중 체크 오류", error);
+        console.error("에러 상세:", error.response ? error.response.data : error.message);
+      }
+    }
   }
 
   return (

@@ -14,7 +14,7 @@ import {useSelector} from "react-redux";
 
 const label = {inputProps: {'aria-label': 'Checkbox demo'}};
 
-export default function CommentDisplay({comment, setCommentCount, deleteComment}) {
+export default function CommentDisplay({comment, updateCommentCount, deleteComment}) {
   const myNickname = useSelector(state => state.nickname); // 리덕스: 내 닉네임
 
   const [isCommentLiked, setIsCommentLiked] = useState(false); // 댓글 좋아요 상태
@@ -33,8 +33,6 @@ export default function CommentDisplay({comment, setCommentCount, deleteComment}
   // 대댓글 추가(저장)하는 함수
   const addSubComment = (newSubComment) => {
     setSubComments((prevSubComments) => [...prevSubComments, newSubComment]);
-    setSubCommentCount((prevSubCount) => prevSubCount + 1);
-    setCommentCount((prevCount) => prevCount + 1); // 전체 댓글 수 증가
     setIsOpen(false);
     console.log("대댓글", subComments);
   }
@@ -50,8 +48,9 @@ export default function CommentDisplay({comment, setCommentCount, deleteComment}
 
       console.log("대댓글 삭제 완료", response.data)
 
-      // 삭제후 대댓글 다시 조회
+      // 삭제후 대댓글, 댓글 수 다시 조회
       await fetchSubComments();
+      await updateCommentCount();
       console.log(subComments);
     } catch (error) {
       console.log("삭제 에러 발생:", error);
@@ -94,6 +93,7 @@ export default function CommentDisplay({comment, setCommentCount, deleteComment}
       }
 
       await fetchSubComments();
+      await updateCommentCount();
 
       setSubComments((prevSubComments) =>
         prevSubComments.map((subComment) =>

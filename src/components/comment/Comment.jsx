@@ -18,7 +18,6 @@ export default function Comment({subTimeline}) {
   // 댓글 추가(저장)하는 함수
   const addComment = (newComment) => {
     setComments((prevComments) => [...prevComments, newComment]);
-    // setCommentCount((prevCount) => prevCount + 1);
     console.log(comments);
   }
 
@@ -158,7 +157,7 @@ export default function Comment({subTimeline}) {
           <CommentDisplay
             key={index}
             comment={comment}
-            setCommentCount={setCommentCount}
+            updateCommentCount={() => fetchCommentsCount()}
             deleteComment={() => deleteComment(index)}
           />
         ))

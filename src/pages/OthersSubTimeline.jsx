@@ -46,7 +46,7 @@ export default function OthersSubTimeline() {
   useEffect(() => {
     const fetchOthersSubTimelines = async () => {
       try {
-        const response = await axiosInstance.get(`/api/v1/sub-timelines/main/${mainTimelineId}/ordered`)
+        const response = await axiosInstance.get(`/api/v1/sub-timelines/main/${mainTimelineId}`)
         const data = response.data.subTimelines;
         setSubTimelineItems(data);
 

@@ -108,7 +108,7 @@ export default function Comment({subTimeline}) {
   useEffect(() => {
     fetchComments();
     console.log(comments)
-  }, [])
+  }, [subTimeline])
 
   return (
     <div // 댓글 전체 박스

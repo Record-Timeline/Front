@@ -123,7 +123,24 @@ export default function CommentDisplay({comment, updateCommentCount, deleteComme
     }
   }
 
+  // 댓글 좋아요 상태 연동
+  const commentLikeStatus = async () => {
+    try {
+      const response = await axiosInstance.get(`/api/v1/comments/${comment.data.id}/like/status`);
+      console.log("댓글 좋아요 상태 체크", response.data);
+      if (response.data) {
+        setIsCommentLiked(true);
+      } else {
+        setIsCommentLiked(false);
+      }
+    } catch (error) {
+      console.log("댓글 좋아요 상태 체크 오류", error);
+      console.error("에러 상세:", error.response ? error.response.data : error.message);
+    }
+  }
+
   useEffect(() => {
+    commentLikeStatus();
     fetchSubComments();
     console.log(subComments);
   }, [])

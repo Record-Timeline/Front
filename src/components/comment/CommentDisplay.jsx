@@ -123,6 +123,13 @@ export default function CommentDisplay({comment, updateCommentCount, deleteComme
     }
   }
 
+  // if(!comment?.data) {
+  //   console.log("Comment data is missing or undefined");
+  //   return null; // 데이터가 없을 경우 렌더링하지 않음
+  // }
+  //
+  // const { nickname, content, createdDate } = comment.data
+
   // 댓글 좋아요 상태 연동
   const commentLikeStatus = async () => {
     try {

@@ -8,6 +8,7 @@ import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import Checkbox from "@mui/material/Checkbox";
 import dayjs from "dayjs";
 import {useSelector} from "react-redux";
+import axiosInstance from "../../utils/axiosInstance";
 
 const label = {inputProps: {'aria-label': 'Checkbox demo'}};
 
@@ -17,6 +18,26 @@ export default function SubCommentDisplay({subComment, setSubCommentCount, delet
   const [isCommentLiked, setIsCommentLiked] = useState(false); // 대댓글 좋아요 상태
   const [commentLike, setCommentLike] = useState(7); // 대댓글 좋아요 수
 
+  // 대댓글 좋아요 상태 연동
+  const commentLikeStatus = async () => {
+    try {
+      const response = await axiosInstance.get(`/api/v1/replies/${subComment.data.id}/like/status`);
+      console.log("대댓글 좋아요 상태 체크", response.data);
+      if (response.data) {
+        setIsCommentLiked(true);
+      } else {
+        setIsCommentLiked(false);
+      }
+    } catch (error) {
+      console.log("대댓글 좋아요 상태 체크 오류", error);
+      console.error("에러 상세:", error.response ? error.response.data : error.message);
+    }
+  }
+
+  useEffect(() => {
+    commentLikeStatus();
+  }, [])
+
   if(!subComment?.data) {
     console.log("Sub Comment data is missing or undefined");
     return null; // 데이터가 없을 경우 렌더링하지 않음
@@ -25,14 +46,29 @@ export default function SubCommentDisplay({subComment, setSubCommentCount, delet
   const { nickname, content, createdDate } = subComment.data
 
   // 대댓글 좋아요 토글
-  const onClickCommentLike = () => {
-    if (isCommentLiked) { // 좋아요 취소
-      setIsCommentLiked(false);
-      setCommentLike(commentLike - 1);
-    } else { // 좋아요 완료
-      setIsCommentLiked(true);
-      setCommentLike(commentLike + 1);
+  const onClickCommentLike = async () => {
+    if (isCommentLiked) {
+      // 좋아요 취소 연동
+      try {
+        const response = await axiosInstance.post(`/api/v1/replies/${subComment.data.id}/like`)
+        setCommentLike(response.data.likeCount); // 좋아요 수 갱신
+        console.log("대댓글 좋아요 취소 완료", response)
+      } catch (error) {
+        console.log("대댓글 좋아용 취소 오류", error);
+        console.error("에러 상세:", error.response ? error.response.data : error.message);
+      }
+    } else {
+      // 좋아요 연동
+      try {
+        const response = await axiosInstance.post(`/api/v1/replies/${subComment.data.id}/like`)
+        setCommentLike(response.data.likeCount); // 좋아요 수 갱신
+        console.log("대댓글 좋아요 완료", response)
+      } catch (error) {
+        console.log("대댓글 좋아용 오류", error);
+        console.error("에러 상세:", error.response ? error.response.data : error.message);
+      };
     }
+    setIsCommentLiked(!isCommentLiked); // 좋아요 상태 토글
   }
 
   return (
